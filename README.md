@@ -1,4 +1,6 @@
 # Paperdaz
+## Hosted links
+dev: https://paperdaz-dev.herokuapp.com/
 
 ## Build Setup
 
