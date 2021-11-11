@@ -12,7 +12,8 @@ module.exports = {
     extend: {
       colors: {
         paperdazgreen: {
-          50: '#ebf4e5',
+          100: '#EAFFE5',
+          200: '#ebf4e5',
           250: '#84C870',
           300: '#77C360',
           400: '#5FA348',
@@ -21,7 +22,7 @@ module.exports = {
         },
         paperdazgray: {
           100: '#E3E3E3',
-          200: '#949494',
+          300: '#9E9E9E',
           400: '#949494',
           500: '#414142',
           600: '#373737',

@@ -11,13 +11,3 @@ export default Vue.extend({
   components: { AppBar },
 })
 </script>
-
-<style scoped>
-#landing-layout {
-  /* height: var(--viewport-height, 100vh);
-  min-height: var(--viewport-height, 100vh);
-  max-height: var(--viewport-height, 100vh);
-  overflow: hidden;
-  overflow-y: auto; */
-}
-</style>
