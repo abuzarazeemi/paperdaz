@@ -2,7 +2,7 @@
   <div class="bg-white h-14 shadow">
     <nav class="container h-full flex items-center justify-between">
       <logo-with-text class="mr-2" />
-      <div class="text-sm font-medium flex items-center gap-9">
+      <div class="text-sm font-medium items-center gap-9 hidden sm:flex">
         <nuxt-link to="#">Why Paperdaz? </nuxt-link>
         <nuxt-link to="#">Features </nuxt-link>
         <nuxt-link to="#">Upload File </nuxt-link>
@@ -17,6 +17,6 @@ import Vue from 'vue'
 import LogoWithText from '../LogoWithText.vue'
 export default Vue.extend({
   name: 'AppBar',
-  components: { LogoWithText }
+  components: { LogoWithText },
 })
 </script>

@@ -4,11 +4,20 @@
 @tailwind utilities;
 
 html {
-  @apply text-gray-600;
+  @apply text-paperdazgray-600;
   font-family: 'Poppins', sans-serif;
 }
 
 .container {
   margin-right: auto;
   margin-left: auto;
+  @apply px-4 sm:px-6 lg:px-7 xl:px-8 2xl:px-9;
+
+
+}
+
+@screen xl {
+  .container {
+    max-width: 1070px !important;
+  }
 }

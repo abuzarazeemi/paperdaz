@@ -1,4 +1,5 @@
 module.exports = {
+  mode: 'jit',
   purge: [
     './components/**/*.{vue,js}',
     './layouts/**/*.vue',
@@ -15,7 +16,7 @@ module.exports = {
           250: '#84C870',
           300: '#77C360',
           400: '#5FA348',
-          500: '#77B550',
+          500: '#62A44E',
           700: '#009549',
         },
         paperdazgray: {
