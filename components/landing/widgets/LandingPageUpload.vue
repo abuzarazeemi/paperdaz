@@ -98,7 +98,7 @@
           <div
             v-for="(field, i) in notAllowedFields"
             :key="i"
-            class="flex items-center gap-5"
+            class="flex items-center gap-3 sm:gap-5"
           >
             <div
               class="
