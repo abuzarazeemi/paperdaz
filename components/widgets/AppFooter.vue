@@ -1,8 +1,6 @@
 <template>
-  <footer>
-    <div
-      class="flex flex-wrap items-center container py-12 bg-paperdazgreen-50"
-    >
+  <footer class="bg-paperdazgreen-50">
+    <div class="flex flex-wrap items-center container py-12">
       <div class="flex flex-col gap-2 items-center">
         <logo-with-text height="40" width="auto" />
         <span class="text-[#888392]">Contactless Paper</span>
