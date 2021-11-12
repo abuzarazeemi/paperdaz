@@ -9,7 +9,11 @@ module.exports = {
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
+
     extend: {
+      screen: {
+        xs: '425px'
+      },
       colors: {
         paperdazgreen: {
           50: '#EEF7EC',
