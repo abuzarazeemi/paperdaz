@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import 'keyframes';
+@import 'cursor';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -20,4 +22,49 @@ html {
   .container {
     max-width: 1070px !important;
   }
+}
+
+
+
+.h-0\.25 {
+  height: 1px;
+}
+
+.w-0\.25 {
+  width: 1px;
+}
+
+.initials-image {
+  @apply text-black inline-flex items-center justify-center;
+  border-radius: 50%;
+}
+
+@for $i from 1 through 10 {
+  .initials-image-#{$i} {
+    $t: calc(32px * calc(1 + (#{$i} - 1) * 0.25));
+    height: $t;
+    width: $t;
+    min-height: $t;
+    min-width: $t;
+  }
+}
+
+.circle {
+  @apply inline-flex items-center justify-center;
+  border-radius: 50%;
+}
+
+@for $i from 1 through 100 {
+  .circle-#{$i} {
+    $t: calc(2px * #{$i});
+    height: $t;
+    width: $t;
+    min-height: $t;
+    min-width: $t;
+  }
+}
+
+// Check the spinner keyframe in ./_keyframes.scss
+.spinner {
+  animation: spinner 1s linear infinite;
 }
