@@ -13,7 +13,7 @@
         <span class="lg:hidden" @click="collapsed = true">
           <hamburger-icon />
         </span>
-        <logo-with-text class="mr-2 h-6 xs:h-7 sm:h-8" />
+        <logo-with-text class="mr-2 h-6 xs:h-7 sm:h-8" width="auto" />
       </div>
       <div
         class="
@@ -39,6 +39,7 @@
           lg:bg-transparent
           lg:w-auto
           lg:flex-row
+          lg:translate-x-0
         "
         :class="[collapsed ? 'translate-x-0' : '-translate-x-56']"
       >
