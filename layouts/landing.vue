@@ -1,6 +1,6 @@
 <template>
   <div id="landing-layout" class="relative">
-    <app-bar class="sticky z-10 top-0" />
+    <app-bar />
     <main><Nuxt /></main>
     <app-footer />
   </div>
