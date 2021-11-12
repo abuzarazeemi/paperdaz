@@ -12,6 +12,7 @@ module.exports = {
     extend: {
       colors: {
         paperdazgreen: {
+          50: '#EEF7EC',
           100: '#EAFFE5',
           200: '#ebf4e5',
           250: '#84C870',
