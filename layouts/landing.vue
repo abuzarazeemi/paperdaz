@@ -1,7 +1,7 @@
 <template>
-  <div id="landing-layout" class="relative">
-    <app-bar class="sticky z-10 top-0" />
-    <main><Nuxt /></main>
+  <div id="landing-layout" class="relative bg-[rgba(119,195,96,0.1)]">
+    <app-bar />
+    <main class="bg-white"><Nuxt /></main>
     <app-footer />
   </div>
 </template>

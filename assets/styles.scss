@@ -10,6 +10,10 @@ html {
   font-family: 'Poppins', sans-serif;
 }
 
+body {
+  @apply bg-white;
+}
+
 .container {
   margin-right: auto;
   margin-left: auto;

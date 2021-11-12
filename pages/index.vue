@@ -1,6 +1,8 @@
 <template>
   <div class="">
-    <hero-page />
+    <div class="bg-gradient-to-t from-transparent to-[rgba(119,195,96,0.1)]">
+      <hero-page />
+    </div>
     <landing-page-info />
     <landing-page-upload />
     <landing-page-key-features

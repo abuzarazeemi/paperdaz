@@ -1,7 +1,14 @@
 <template>
-  <footer>
+  <footer class="bg-paperdazgreen-50">
     <div
-      class="flex flex-wrap items-center container py-12 bg-paperdazgreen-50"
+      class="
+        flex flex-wrap flex-col
+        gap-10
+        lg:gap-5 lg:flex-row
+        items-center
+        container
+        py-12
+      "
     >
       <div class="flex flex-col gap-2 items-center">
         <logo-with-text height="40" width="auto" />
@@ -9,7 +16,8 @@
       </div>
       <div
         class="
-          flex-1 flex flex-wrap
+          flex-1 flex flex-wrap flex-col
+          lg:flex-row
           items-center
           gap-3
           sm:gap-10
