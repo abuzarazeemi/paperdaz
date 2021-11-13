@@ -22,6 +22,7 @@ import LandingPageUpload from '~/components/landing/widgets/LandingPageUpload.vu
 
 @Component({
   layout: 'landing',
+  auth: false,
   components: {
     HeroPage,
     LandingPageInfo,
