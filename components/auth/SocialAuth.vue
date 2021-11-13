@@ -77,6 +77,7 @@ export default Vue.extend({
         const authData = await this.$fire.auth.signInWithPopup(provider)
         const accessToken = authData.credential.accessToken
         const secretToken = authData.credential.secret
+        console.log(accessToken, secretToken)
         this.signIn('twitter', {
           oauth_token: accessToken,
           oauth_token_secret: secretToken,

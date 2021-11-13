@@ -97,6 +97,7 @@
           text-xxs
           xs:text-xs
           sm:text-sm
+          md:text-base
         "
       >
         <span>
