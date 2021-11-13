@@ -80,13 +80,13 @@ export default {
   },
   firebase: {
     config: {
-      apiKey: 'AIzaSyDQXoTt1ajdkqUynsmhZl-jjaKJg30PZlM',
-      authDomain: 'paperdaz-85623.firebaseapp.com',
-      projectId: 'paperdaz-85623',
-      storageBucket: 'paperdaz-85623.appspot.com',
-      messagingSenderId: '873116269205',
-      appId: '1:873116269205:web:f7e52daacc3cc7f858f99c',
-      measurementId: 'G-T21NHFYJ24',
+      apiKey: 'AIzaSyDtoyL38ZWagdtu2w-_mZIZrE2JQALfiss',
+      authDomain: 'paperdaz-52bcb.firebaseapp.com',
+      projectId: 'paperdaz-52bcb',
+      storageBucket: 'paperdaz-52bcb.appspot.com',
+      messagingSenderId: '568264793203',
+      appId: '1:568264793203:web:2034e66185390567fede06',
+      measurementId: 'G-NDNJE6P9HN',
     },
     services: {
       auth: true

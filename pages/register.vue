@@ -179,6 +179,8 @@ export default Vue.extend({
       if (this.isLoading) return
 
       this.isLoading = true
+
+      console.log(this.user)
       this.$axios
         .$post('/api/auth/signup', this.user)
         .then(async () => {
@@ -186,6 +188,9 @@ export default Vue.extend({
             data: { email: this.user.email, password: this.user.password },
           })
           this.$router.push('/dashboard')
+        })
+        .catch((err) => {
+          console.log(err.response.data)
         })
         .finally(() => {
           this.isLoading = false

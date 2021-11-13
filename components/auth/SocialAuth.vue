@@ -1,6 +1,15 @@
 <template>
   <div>
-    <div class="flex flex-wrap gap-4 text-sm font-medium text-paperdazgray-400">
+    <div
+      class="
+        flex flex-wrap
+        gap-2
+        xs:gap-4
+        text-sm
+        font-medium
+        text-paperdazgray-400
+      "
+    >
       <div
         class="flex-1 cursor-pointer social-card"
         @click="signInWithFacebook"
@@ -87,11 +96,11 @@ export default Vue.extend({
     },
     async setUser(user: any) {
       const token = user.token
-      this.$auth.setUser(user)
       // @ts-ignore
-      this.$auth.strategies.local.setUserToken(token)
+      await this.$auth.strategies.local.setUserToken(token)
+      await this.$auth.fetchUser()
       // this.$auth.strategy.token.set(token)
-      this.$router.push('/dashboard').catch(() => true)
+      this.$router.push('/dashboard')
       await this.$fire.auth.signOut()
     },
   },
@@ -105,7 +114,7 @@ export default Vue.extend({
             bg-white
             rounded-md
             shadow
-            px-2
+            px-3
             py-3
             gap-2 hover:text-paperdazgray-500;
 }
