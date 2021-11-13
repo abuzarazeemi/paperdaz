@@ -10,10 +10,12 @@
   >
     <nav class="container h-full flex items-center justify-between">
       <div class="flex items-center gap-2">
-        <span class="lg:hidden" @click="collapsed = true">
+        <span class="lg:hidden cursor-pointer" @click="collapsed = true">
           <hamburger-icon />
         </span>
-        <logo-with-text class="mr-2 h-6 xs:h-7 sm:h-8" />
+        <nuxt-link to="/">
+          <logo-with-text class="mr-2 h-6 xs:h-7 sm:h-8" />
+        </nuxt-link>
       </div>
       <div
         class="
@@ -45,13 +47,15 @@
       >
         <div class="flex justify-end lg:hidden">
           <span
-            class="circle circle-15 bg-paperdazgray-100"
+            class="circle circle-15 bg-paperdazgray-100 cursor-pointer"
             @click="collapsed = false"
             >&times;</span
           >
         </div>
         <div class="w-full flex justify-center lg:hidden">
-          <logo-with-text class="mb-4 h-7" />
+          <nuxt-link to="/">
+            <logo-with-text class="mb-4 h-7" />
+          </nuxt-link>
         </div>
         <nuxt-link to="#" class="">Why Paperdaz? </nuxt-link>
         <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
