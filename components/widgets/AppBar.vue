@@ -14,7 +14,10 @@
           <hamburger-icon />
         </span>
         <nuxt-link to="/">
-          <logo-with-text class="mr-2 h-6 xs:h-7 sm:h-8" />
+          <logo-with-text
+            class="mr-2 h-4 xxs:h-6 xs:h-8 sm:h-10 w-auto"
+            width=""
+          />
         </nuxt-link>
       </div>
       <div
@@ -87,7 +90,18 @@
           >
         </div>
       </div>
-      <div class="flex items-center gap-3 sm:gap-5 text-xs sm:text-sm">
+      <div
+        class="
+          flex
+          items-center
+          gap-1.5
+          xs:gap-3
+          sm:gap-5
+          text-xxs
+          xs:text-xs
+          sm:text-sm
+        "
+      >
         <span>
           <search-icon width="15" />
         </span>
@@ -97,10 +111,12 @@
           class="
             bg-paperdazgreen-300
             text-white
-            h-8
+            h-7
+            xs:h-8
             rounded
             shadow
-            px-3
+            px-2
+            xs:px-3
             flex
             items-center
             justify-center
