@@ -34,14 +34,21 @@
           >
         </div>
 
-        <form action="" class="text-sm">
+        <form action="" class="text-sm" @submit.prevent="login">
           <div class="mb-6">
             <label for="" class="mb-2 block">Email</label>
-            <input-field type="email" placeholder="example@email.com" />
+            <input-field
+              v-model="user.email"
+              type="email"
+              placeholder="example@email.com"
+            />
           </div>
           <div class="mb-10">
             <label for="" class="mb-2 block">Password</label>
-            <password-field placeholder="xxxxxxxxxxxxxxxxxxxx" />
+            <password-field
+              v-model="user.password"
+              placeholder="xxxxxxxxxxxxxxxxxxxx"
+            />
           </div>
 
           <div class="flex justify-between text-xs mb-10">
@@ -105,6 +112,35 @@ export default Vue.extend({
   name: 'LoginPage',
   components: { SocialAuth, InputField, PasswordField, SvgIcon },
   layout: 'landing',
+  data() {
+    return {
+      user: {
+        email: undefined,
+        password: undefined,
+      },
+      isLoading: false,
+    }
+  },
+  methods: {
+    login() {
+      event?.preventDefault()
+
+      if (this.isLoading) return
+
+      this.isLoading = true
+      this.$auth
+        .loginWith('local', { data: this.user })
+        .then(() => {
+          this.$router.push('/dashboard')
+        })
+        .then((err) => {
+          console.log(err)
+        })
+        .finally(() => {
+          this.isLoading = false
+        })
+    },
+  },
 })
 </script>
 

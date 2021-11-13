@@ -1,5 +1,10 @@
 <template>
-  <input type="text" class="input-field" placeholder="" />
+  <input
+    type="text"
+    class="input-field"
+    placeholder=""
+    @input="$emit('input', $event.currentTarget.value)"
+  />
 </template>
 
 <script lang="ts">

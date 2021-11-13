@@ -58,13 +58,22 @@ export default {
     },
     strategies: {
       local: {
+        token: {
+          property: 'data.0.token',
+          global: true,
+          // required: true,
+          // type: 'Bearer'
+        },
+        user: {
+          property: 'data',
+          // autoFetch: true
+        },
         endpoints: {
           login: {
             url: '/api/auth/signin',
             method: 'post',
-            propertyName: 'data.0.token',
           },
-          user: { url: '/api/self', method: 'get', propertyName: 'data' },
+          user: { url: '/api/self', method: 'get' },
         },
       },
     },
