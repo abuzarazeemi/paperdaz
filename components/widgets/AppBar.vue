@@ -13,7 +13,7 @@
         <span class="lg:hidden" @click="collapsed = true">
           <hamburger-icon />
         </span>
-        <logo-with-text class="mr-2 h-6 xs:h-7 sm:h-8" width="auto" />
+        <logo-with-text class="mr-2 h-6 xs:h-7 sm:h-8" />
       </div>
       <div
         class="
@@ -62,7 +62,7 @@
         <nuxt-link to="#" class="">Packages </nuxt-link>
         <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
         <div class="flex flex-col items-center gap-4 lg:hidden">
-          <nuxt-link to="#" class="text-paperdazgreen-300 mt-5"
+          <nuxt-link to="/login" class="text-paperdazgreen-300 mt-5"
             >Signin</nuxt-link
           >
           <nuxt-link
@@ -87,7 +87,7 @@
         <span>
           <search-icon width="15" />
         </span>
-        <nuxt-link to="#" class="text-paperdazgreen-300">Signin</nuxt-link>
+        <nuxt-link to="/login" class="text-paperdazgreen-300">Signin</nuxt-link>
         <nuxt-link
           to="#"
           class="
@@ -121,6 +121,13 @@ export default Vue.extend({
       scrolled: false,
       collapsed: false,
     }
+  },
+  watch: {
+    $route(formerVal, currentVal) {
+      if (formerVal.fullPath !== currentVal.fullPath) {
+        this.collapsed = false
+      }
+    },
   },
   mounted() {
     const self = this

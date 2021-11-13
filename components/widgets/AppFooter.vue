@@ -11,7 +11,7 @@
       "
     >
       <div class="flex flex-col gap-2 items-center">
-        <logo-with-text height="40" width="auto" />
+        <logo-with-text height="40" />
         <span class="text-[#888392]">Contactless Paper</span>
       </div>
       <div

@@ -13,6 +13,10 @@ export default {
     ]
   },
 
+  router: {
+    middleware: ['auth']
+  },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     "~assets/styles.scss"
@@ -39,10 +43,47 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    '@nuxtjs/auth-next',
+    '@nuxtjs/firebase',
   ],
+  axios: {
+    baseURL: 'https://dev-api.paperdaz.com',
+  },
+  auth: {
+    redirect: {
+      login: '/login',
+      logout: '/',
+      callback: '/login',
+      home: '/dashboard'
+    },
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: '/api/auth/signin',
+            method: 'post',
+            propertyName: 'data.0.token',
+          },
+          user: { url: '/api/self', method: 'get', propertyName: 'data' },
+        },
+      },
+    },
+  },
+  firebase: {
+    config: {
+      apiKey: 'AIzaSyDQXoTt1ajdkqUynsmhZl-jjaKJg30PZlM',
+      authDomain: 'paperdaz-85623.firebaseapp.com',
+      projectId: 'paperdaz-85623',
+      storageBucket: 'paperdaz-85623.appspot.com',
+      messagingSenderId: '873116269205',
+      appId: '1:873116269205:web:f7e52daacc3cc7f858f99c',
+      measurementId: 'G-T21NHFYJ24',
+    },
+    services: {
+      auth: true
+    },
+  },
 
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {

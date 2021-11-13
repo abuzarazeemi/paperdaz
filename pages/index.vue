@@ -1,12 +1,12 @@
 <template>
-  <div class="">
-    <div class="bg-gradient-to-t from-transparent to-[rgba(119,195,96,0.1)]">
+  <div class="bg-white">
+    <div class="bg-gradient-to-t from-white to-[rgba(119,195,96,0.1)]">
       <hero-page />
     </div>
     <landing-page-info />
     <landing-page-upload />
     <landing-page-key-features
-      class="bg-gradient-to-t from-transparent to-[rgba(119,195,96,0.1)]"
+      class="bg-gradient-to-t from-white to-[rgba(119,195,96,0.1)]"
     />
     <landing-join-section />
   </div>
