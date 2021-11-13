@@ -13,7 +13,9 @@
           py-10
         "
       >
-        <h4 class="text-lg font-medium mb-8 text-center">Signin to paperdaz</h4>
+        <h4 class="text-lg font-medium mb-8 text-center">
+          Sign up to paperdaz
+        </h4>
         <social-auth class="mb-10" />
         <div class="h-px bg-paperdazgray-100 w-full relative mb-10">
           <span
@@ -34,14 +36,32 @@
           >
         </div>
 
-        <form action="" class="text-sm" @submit.prevent="login">
+        <form action="" class="text-sm" @submit.prevent="submit">
+          <div class="mb-6">
+            <label for="" class="mb-2 block">First Name</label>
+            <input-field
+              v-model="user.firstName"
+              required
+              type="text"
+              placeholder="Jane"
+            />
+          </div>
+          <div class="mb-6">
+            <label for="" class="mb-2 block">Last Name</label>
+            <input-field
+              v-model="user.lastName"
+              required
+              type="text"
+              placeholder="Doe"
+            />
+          </div>
           <div class="mb-6">
             <label for="" class="mb-2 block">Email</label>
             <input-field
               v-model="user.email"
+              required
               type="email"
               placeholder="example@email.com"
-              required
             />
           </div>
           <div class="mb-10">
@@ -51,6 +71,28 @@
               required
               placeholder="xxxxxxxxxxxxxxxxxxxx"
             />
+          </div>
+          <div class="mb-10">
+            <label for="" class="mb-2 block">Confirm Password</label>
+            <password-field
+              v-model="confirmPassword"
+              placeholder="xxxxxxxxxxxxxxxxxxxx"
+              :class="{
+                'border-red-500':
+                  user.password &&
+                  confirmPassword &&
+                  confirmPassword != user.password,
+              }"
+            />
+            <small
+              v-show="
+                user.password &&
+                confirmPassword &&
+                confirmPassword != user.password
+              "
+              class="text-red-500"
+              >Passwords don't match</small
+            >
           </div>
 
           <div class="flex justify-between text-xs mb-10">
@@ -70,12 +112,12 @@
                 />
               </label>
               <label for="remember-me-checkbox" class="cursor-pointer"
-                >Remember me</label
+                >Accept
+                <nuxt-link to="#" class="text-paperdazgreen-300"
+                  >terms and conditions</nuxt-link
+                ></label
               >
             </div>
-            <nuxt-link to="#" class="text-paperdazgreen-300"
-              >Forgot Password</nuxt-link
-            >
           </div>
           <div class="flex flex-col items-center">
             <button
@@ -88,13 +130,13 @@
                 bg-paperdazgreen-300
               "
             >
-              Login
+              Register
             </button>
 
             <span class="text-xs inline-block mt-6"
-              >Not a member yet?
-              <nuxt-link to="/register" class="text-paperdazgreen-300"
-                >Join Now</nuxt-link
+              >Already have an account?
+              <nuxt-link to="/login" class="text-paperdazgreen-300"
+                >Login</nuxt-link
               ></span
             >
           </div>
@@ -111,13 +153,16 @@ import SvgIcon from '~/components/svg-icons/SvgIcon.vue'
 import InputField from '~/components/widgets/InputField.vue'
 import PasswordField from '~/components/widgets/PasswordField.vue'
 export default Vue.extend({
-  name: 'LoginPage',
+  name: 'RegisterPage',
   auth: 'guest',
   components: { SocialAuth, InputField, PasswordField, SvgIcon },
   layout: 'landing',
   data() {
     return {
+      confirmPassword: undefined,
       user: {
+        firstName: undefined,
+        lastName: undefined,
         email: undefined,
         password: undefined,
       },
@@ -125,15 +170,21 @@ export default Vue.extend({
     }
   },
   methods: {
-    login() {
+    submit() {
       event?.preventDefault()
+
+      if (this.user.password && this.user.password !== this.confirmPassword)
+        return
 
       if (this.isLoading) return
 
       this.isLoading = true
-      this.$auth
-        .loginWith('local', { data: this.user })
-        .then(() => {
+      this.$axios
+        .$post('/api/auth/signup', this.user)
+        .then(async () => {
+          await this.$auth.loginWith('local', {
+            data: { email: this.user.email, password: this.user.password },
+          })
           this.$router.push('/dashboard')
         })
         .finally(() => {

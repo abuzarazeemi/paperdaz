@@ -1,7 +1,7 @@
 <template>
   <div
     class="input-field flex items-center"
-    :class="[focus ? 'border-paperdazgray-500' : 'border-paperdazgray-300']"
+    :class="[focus ? 'border-paperdazgray-500' : 'border-paperdazgray-200']"
   >
     <input
       ref="inputField"
@@ -9,6 +9,7 @@
       :type="showPassword ? 'text' : 'password'"
       :placeholder="placeholder"
       class="outline-none focus:outline-none border-none flex-1 h-full"
+      :required="required"
       @focus="focus = true"
       @focusout="focus = false"
     />
@@ -32,6 +33,10 @@ export default Vue.extend({
     placeholder: {
       type: String,
       default: '',
+    },
+    required: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

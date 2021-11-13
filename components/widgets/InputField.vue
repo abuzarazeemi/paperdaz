@@ -19,7 +19,7 @@ export default Vue.extend({
   @apply w-full
                 rounded-xl
                 px-2
-                border border-paperdazgray-300
+                border border-paperdazgray-200
                 bg-white
                 h-10
                 focus:outline-none focus:border-paperdazgray-500;

@@ -66,7 +66,7 @@
             >Signin</nuxt-link
           >
           <nuxt-link
-            to="#"
+            to="/register"
             class="
               bg-paperdazgreen-300
               text-white
@@ -89,7 +89,7 @@
         </span>
         <nuxt-link to="/login" class="text-paperdazgreen-300">Signin</nuxt-link>
         <nuxt-link
-          to="#"
+          to="/register"
           class="
             bg-paperdazgreen-300
             text-white
