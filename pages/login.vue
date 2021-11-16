@@ -143,9 +143,9 @@ export default Vue.extend({
             error.response.data &&
             error.response.data.message
           ) {
-            this.$toast.error(error.response.data.message)
+            this.$toast.error(error.response.data.message).goAway(1500)
           } else {
-            this.$toast.error('Server not reachable')
+            this.$toast.error('Server not reachable').goAway(1500)
           }
         })
         .finally(() => {
