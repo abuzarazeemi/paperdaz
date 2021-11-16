@@ -13,7 +13,9 @@
           py-10
         "
       >
-        <h4 class="text-lg font-medium mb-8 text-center">Signin to Paperdaz</h4>
+        <h4 class="text-lg font-medium mb-8 text-center">
+          Sign in to Paperdaz
+        </h4>
         <social-auth class="mb-10" />
         <div class="h-px bg-paperdazgray-100 w-full relative mb-10">
           <span
@@ -88,7 +90,7 @@
                 bg-paperdazgreen-300
               "
             >
-              Login
+              Log in
             </button>
 
             <span class="text-xs inline-block mt-6"
