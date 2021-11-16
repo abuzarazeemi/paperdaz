@@ -6,25 +6,20 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
+      { name: 'format-detection', content: 'telephone=no' },
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
   router: {
-    middleware: ['auth']
+    middleware: ['auth'],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-    "~assets/styles.scss"
-  ],
+  css: ['~assets/styles.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-  ],
+  plugins: [],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -45,6 +40,7 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/auth-next',
     '@nuxtjs/firebase',
+    '@nuxtjs/toast',
   ],
   axios: {
     baseURL: 'https://dev-api.paperdaz.com',
@@ -54,7 +50,7 @@ export default {
       login: '/login',
       logout: '/',
       callback: '/login',
-      home: '/dashboard'
+      home: '/dashboard',
     },
     strategies: {
       local: {
@@ -89,19 +85,17 @@ export default {
       measurementId: 'G-NDNJE6P9HN',
     },
     services: {
-      auth: true
+      auth: true,
     },
   },
-
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
-      lang: 'en'
-    }
+      lang: 'en',
+    },
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
-  }
+  build: {},
 }

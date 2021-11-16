@@ -93,7 +93,13 @@ export default Vue.extend({
         const user = response.data[0]
         this.setUser(user)
       } catch (error: any) {
-        console.log(error.response.data.message)
+        if (
+          error &&
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        )
+          this.$toast.error(error.response.data.message)
       }
     },
     async setUser(user: any) {

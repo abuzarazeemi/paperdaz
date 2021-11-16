@@ -136,6 +136,15 @@ export default Vue.extend({
         .then(() => {
           this.$router.push('/dashboard')
         })
+        .catch((err) => {
+          if (
+            err &&
+            err.response &&
+            err.response.data &&
+            err.response.data.message
+          )
+            this.$toast.error(err.response.data.message)
+        })
         .finally(() => {
           this.isLoading = false
         })

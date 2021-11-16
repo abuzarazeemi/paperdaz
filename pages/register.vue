@@ -191,6 +191,13 @@ export default Vue.extend({
         })
         .catch((err) => {
           console.log(err.response.data)
+          if (
+            err &&
+            err.response &&
+            err.response.data &&
+            err.response.data.message
+          )
+            this.$toast.error(err.response.data.message)
         })
         .finally(() => {
           this.isLoading = false
