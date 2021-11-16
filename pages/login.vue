@@ -13,7 +13,7 @@
           py-10
         "
       >
-        <h4 class="text-lg font-medium mb-8 text-center">Signin to paperdaz</h4>
+        <h4 class="text-lg font-medium mb-8 text-center">Signin to Paperdaz</h4>
         <social-auth class="mb-10" />
         <div class="h-px bg-paperdazgray-100 w-full relative mb-10">
           <span

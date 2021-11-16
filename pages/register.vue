@@ -14,7 +14,7 @@
         "
       >
         <h4 class="text-lg font-medium mb-8 text-center">
-          Sign up to paperdaz
+          Sign up to Paperdaz
         </h4>
         <social-auth class="mb-10" />
         <div class="h-px bg-paperdazgray-100 w-full relative mb-10">
