@@ -14,7 +14,7 @@
           <hamburger-icon />
         </span>
         <nuxt-link to="/">
-          <logo-with-text class="mr-2 h-8 sm:h-10 w-auto" />
+          <logo-with-text class="mr-2 h-5 xs:h-6 sm:h-7 w-auto" />
         </nuxt-link>
       </div>
       <div
