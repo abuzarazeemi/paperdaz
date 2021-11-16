@@ -14,7 +14,7 @@
           <hamburger-icon />
         </span>
         <nuxt-link to="/">
-          <logo-with-text class="mr-2 h-4 xxs:h-6 xs:h-8 sm:h-10 w-auto" />
+          <logo-with-text class="mr-2 h-5 xs:h-6 sm:h-7 w-auto" />
         </nuxt-link>
       </div>
       <div
@@ -57,17 +57,19 @@
             <logo-with-text class="mb-4 h-7" />
           </nuxt-link>
         </div>
-        <nuxt-link to="#" class="">Why Paperdaz? </nuxt-link>
-        <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
         <nuxt-link to="#" class="">Features </nuxt-link>
         <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
         <nuxt-link to="#" class="">Upload File </nuxt-link>
         <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
         <nuxt-link to="#" class="">Packages </nuxt-link>
         <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
+        <nuxt-link to="#" class="">About </nuxt-link>
+        <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
+        <nuxt-link to="#" class="">Contact Us </nuxt-link>
+        <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
         <div class="flex flex-col items-center gap-4 lg:hidden">
           <nuxt-link to="/login" class="text-paperdazgreen-300 mt-5"
-            >Signin</nuxt-link
+            >Sign in</nuxt-link
           >
           <nuxt-link
             to="/register"
@@ -83,7 +85,7 @@
               justify-center
               whitespace-nowrap
             "
-            >Getting Started</nuxt-link
+            >Get Started</nuxt-link
           >
         </div>
       </div>
@@ -94,16 +96,18 @@
           gap-1.5
           xs:gap-3
           sm:gap-5
-          text-xxs
-          xs:text-xs
-          sm:text-sm
-          md:text-base
+          text-xs
+          xs:text-sm
+          sm:text-base
+          md:text-ls
         "
       >
         <span>
           <search-icon width="15" />
         </span>
-        <nuxt-link to="/login" class="text-paperdazgreen-300">Signin</nuxt-link>
+        <nuxt-link to="/login" class="text-paperdazgreen-300"
+          >Sign in</nuxt-link
+        >
         <nuxt-link
           to="/register"
           class="
@@ -120,7 +124,7 @@
             justify-center
             whitespace-nowrap
           "
-          >Getting Started</nuxt-link
+          >Get Started</nuxt-link
         >
       </div>
     </nav>
