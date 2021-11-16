@@ -136,14 +136,17 @@ export default Vue.extend({
         .then(() => {
           this.$router.push('/dashboard')
         })
-        .catch((err) => {
+        .catch((error) => {
           if (
-            err &&
-            err.response &&
-            err.response.data &&
-            err.response.data.message
-          )
-            this.$toast.error(err.response.data.message)
+            error &&
+            error.response &&
+            error.response.data &&
+            error.response.data.message
+          ) {
+            this.$toast.error(error.response.data.message)
+          } else {
+            this.$toast.error('Server not reachable')
+          }
         })
         .finally(() => {
           this.isLoading = false

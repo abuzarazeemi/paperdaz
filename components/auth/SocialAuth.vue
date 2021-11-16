@@ -98,8 +98,11 @@ export default Vue.extend({
           error.response &&
           error.response.data &&
           error.response.data.message
-        )
+        ) {
           this.$toast.error(error.response.data.message)
+        } else {
+          this.$toast.error('Server not reachable')
+        }
       }
     },
     async setUser(user: any) {
