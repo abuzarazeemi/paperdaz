@@ -1,134 +1,148 @@
 <template>
-  <section class="bg-white py-16 sm:py-20">
-    <div class="container py-6">
-      <h1 class="font-bold text-4xl text-center mb-2">
-        Click to upload files to create a Paperlink
-      </h1>
-      <p
-        class="
-          font-semibold
-          text-center text-sm text-paperdazgray-300
-          mx-auto
-          max-w-md
-          mb-6
-        "
-      >
-        Complete a file here then share our mission on one social media
-        platform!
-      </p>
-      <div class="shadow-lg rounded-2xl bg-white p-4">
-        <div
+  <section
+    class="
+      bg-gradient-to-t
+      from-[rgba(119,195,96,0.1)]
+      to-[rgba(119,195,96,0.2)]
+    "
+  >
+    <div class="bg-white">
+      <div class="container py-14">
+        <h1 class="font-bold text-4xl text-center mb-2">
+          Click to upload files to create a Paperlink
+        </h1>
+        <p
           class="
-            mt-2
-            mb-14
+            font-semibold
+            text-center text-sm text-paperdazgray-300
             mx-auto
-            px-4
-            py-8
-            flex flex-col
-            items-center
-            border-2 border-paperdazgreen-300 border-dashed
-            rounded-2xl
-            max-w-3xl
+            max-w-md
+            mb-6
           "
         >
-          <span class="circle circle-46 bg-paperdazgreen-300 text-white mb-20">
-            <cloud-icon width="47" height="47" />
-          </span>
-          <div class="flex flex-wrap items-center gap-4">
-            <span
-              class="
-                circle circle-20
-                cursor-pointer
-                bg-paperdazgreen-300
-                text-white
-              "
-            >
-              <facebook-icon height="20" />
-            </span>
-            <span
-              class="
-                circle circle-20
-                cursor-pointer
-                bg-paperdazgreen-300
-                text-white
-              "
-            >
-              <linked-in-icon height="20" />
-            </span>
-            <span class="circle circle-20 cursor-pointer text-white">
-              <redit-icon :background="'#77C360'" height="50" width="50" />
-            </span>
-            <span
-              class="
-                circle circle-20
-                cursor-pointer
-                bg-paperdazgreen-300
-                text-white
-              "
-            >
-              <envelope-icon height="20" />
-            </span>
-            <span
-              class="
-                circle circle-20
-                cursor-pointer
-                bg-paperdazgreen-300
-                text-white
-              "
-            >
-              <twitter-icon height="20" />
-            </span>
-            <span
-              class="
-                circle circle-20
-                cursor-pointer
-                bg-paperdazgreen-300
-                text-white
-              "
-            >
-              <whatsapp-icon height="20" />
-            </span>
-          </div>
-        </div>
-        <!-- Start:: not allowed icon container -->
-        <div
-          class="grid max-w-3xl mx-auto gap-4"
-          style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))"
-        >
+          Complete a file here then share our mission on one social media
+          platform!
+        </p>
+      </div>
+    </div>
+    <div class="py-20">
+      <div class="container">
+        <div class="shadow-lg rounded-2xl bg-white px-4 py-16">
           <div
-            v-for="(field, i) in notAllowedFields"
-            :key="i"
-            class="flex items-center gap-3 sm:gap-5"
+            class="
+              mt-2
+              mb-14
+              mx-auto
+              px-4
+              py-8
+              flex flex-col
+              items-center
+              border-2 border-paperdazgreen-300 border-dashed
+              rounded-2xl
+              max-w-3xl
+            "
+          >
+            <span
+              class="circle circle-46 bg-paperdazgreen-300 text-white mb-20"
+            >
+              <cloud-icon width="47" height="47" />
+            </span>
+            <div class="flex flex-wrap items-center gap-2">
+              <span
+                class="
+                  circle circle-20
+                  cursor-pointer
+                  bg-paperdazgreen-300
+                  text-white
+                "
+              >
+                <facebook-icon height="20" />
+              </span>
+              <span
+                class="
+                  circle circle-20
+                  cursor-pointer
+                  bg-paperdazgreen-300
+                  text-white
+                "
+              >
+                <linked-in-icon height="20" />
+              </span>
+              <span class="circle circle-20 cursor-pointer text-white">
+                <redit-icon :background="'#77C360'" height="50" width="50" />
+              </span>
+              <span
+                class="
+                  circle circle-20
+                  cursor-pointer
+                  bg-paperdazgreen-300
+                  text-white
+                "
+              >
+                <envelope-icon height="20" />
+              </span>
+              <span
+                class="
+                  circle circle-20
+                  cursor-pointer
+                  bg-paperdazgreen-300
+                  text-white
+                "
+              >
+                <twitter-icon height="20" />
+              </span>
+              <span
+                class="
+                  circle circle-20
+                  cursor-pointer
+                  bg-paperdazgreen-300
+                  text-white
+                "
+              >
+                <whatsapp-icon height="20" />
+              </span>
+            </div>
+          </div>
+          <!-- Start:: not allowed icon container -->
+          <div
+            class="grid max-w-3xl mx-auto gap-4"
+            style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))"
           >
             <div
-              class="
-                h-16
-                w-16
-                rounded-lg
-                bg-white
-                border border-paperdazgray-200
-                flex
-                items-center
-                justify-center
-                relative
-                text-paperdazgreen-300
-              "
+              v-for="(field, i) in notAllowedFields"
+              :key="i"
+              class="flex items-center gap-3 sm:gap-5"
             >
-              <component :is="field.icon" />
-              <not-allowed-traffic-icon
+              <div
                 class="
-                  absolute
-                  left-1/2
-                  top-1/2
-                  transform
-                  -translate-x-1/2 -translate-y-1/2
+                  h-16
+                  w-16
+                  rounded-lg
+                  bg-white
+                  border border-paperdazgray-200
+                  flex
+                  items-center
+                  justify-center
+                  relative
+                  text-paperdazgreen-300
                 "
-              />
+              >
+                <component :is="field.icon" />
+                <not-allowed-traffic-icon
+                  class="
+                    absolute
+                    left-1/2
+                    top-1/2
+                    transform
+                    -translate-x-1/2 -translate-y-1/2
+                  "
+                />
+              </div>
+              <span>{{ field.text }}</span>
             </div>
-            <span>{{ field.text }}</span>
           </div>
+          <!-- End:: not allowed icon container -->
         </div>
-        <!-- End:: not allowed icon container -->
       </div>
     </div>
   </section>

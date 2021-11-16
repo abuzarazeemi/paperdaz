@@ -26,7 +26,9 @@
         "
       >
         <nuxt-link to="#">Features</nuxt-link>
+        <nuxt-link to="#">Packages</nuxt-link>
         <nuxt-link to="#">Upload File</nuxt-link>
+        <nuxt-link to="#">About</nuxt-link>
         <nuxt-link to="#">FAQ </nuxt-link>
         <nuxt-link to="#">Contact</nuxt-link>
       </div>
@@ -36,56 +38,56 @@
         <div class="flex flex-wrap items-center gap-2">
           <span
             class="
-              circle circle-12
+              circle circle-10
               cursor-pointer
               bg-paperdazgreen-300
               text-white
             "
           >
-            <facebook-icon height="11" />
+            <facebook-icon height="9" />
           </span>
           <span
             class="
-              circle circle-12
+              circle circle-10
               cursor-pointer
               bg-paperdazgreen-300
               text-white
             "
           >
-            <linked-in-icon height="11" />
+            <linked-in-icon height="9" />
           </span>
           <span class="circle circle-12 cursor-pointer text-white">
             <redit-icon :background="'#77C360'" height="50" width="50" />
           </span>
           <span
             class="
-              circle circle-12
+              circle circle-10
               cursor-pointer
               bg-paperdazgreen-300
               text-white
             "
           >
-            <envelope-icon height="11" />
+            <envelope-icon height="9" />
           </span>
           <span
             class="
-              circle circle-12
+              circle circle-10
               cursor-pointer
               bg-paperdazgreen-300
               text-white
             "
           >
-            <twitter-icon height="11" />
+            <twitter-icon height="9" />
           </span>
           <span
             class="
-              circle circle-12
+              circle circle-10
               cursor-pointer
               bg-paperdazgreen-300
               text-white
             "
           >
-            <whatsapp-icon height="11" />
+            <whatsapp-icon height="9" />
           </span>
         </div>
       </div>

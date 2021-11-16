@@ -1,7 +1,7 @@
 <template>
   <div
     id="landing-layout"
-    class="relative bg-[rgba(119,195,96,0.1)] flex flex-col min-h-screen"
+    class="relative bg-[#E2FFD0] flex flex-col min-h-screen"
   >
     <app-bar />
     <main class="flex-1 flex flex-col"><Nuxt class="flex-1" /></main>

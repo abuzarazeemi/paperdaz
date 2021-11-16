@@ -57,17 +57,19 @@
             <logo-with-text class="mb-4 h-7" />
           </nuxt-link>
         </div>
-        <nuxt-link to="#" class="">Why Paperdaz? </nuxt-link>
-        <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
         <nuxt-link to="#" class="">Features </nuxt-link>
         <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
         <nuxt-link to="#" class="">Upload File </nuxt-link>
         <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
         <nuxt-link to="#" class="">Packages </nuxt-link>
         <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
+        <nuxt-link to="#" class="">About </nuxt-link>
+        <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
+        <nuxt-link to="#" class="">Contact Us </nuxt-link>
+        <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
         <div class="flex flex-col items-center gap-4 lg:hidden">
           <nuxt-link to="/login" class="text-paperdazgreen-300 mt-5"
-            >Signin</nuxt-link
+            >Sign in</nuxt-link
           >
           <nuxt-link
             to="/register"
@@ -83,7 +85,7 @@
               justify-center
               whitespace-nowrap
             "
-            >Getting Started</nuxt-link
+            >Get Started</nuxt-link
           >
         </div>
       </div>
