@@ -90,7 +90,7 @@
                 bg-paperdazgreen-300
               "
             >
-              Log in
+              Sign in
             </button>
 
             <span class="text-xs inline-block mt-6"
