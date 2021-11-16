@@ -14,7 +14,7 @@
           <hamburger-icon />
         </span>
         <nuxt-link to="/">
-          <logo-with-text class="mr-2 h-4 xxs:h-6 xs:h-8 sm:h-10 w-auto" />
+          <logo-with-text class="mr-2 h-8 sm:h-10 w-auto" />
         </nuxt-link>
       </div>
       <div
@@ -94,16 +94,18 @@
           gap-1.5
           xs:gap-3
           sm:gap-5
-          text-xxs
-          xs:text-xs
-          sm:text-sm
-          md:text-base
+          text-xs
+          xs:text-sm
+          sm:text-base
+          md:text-ls
         "
       >
         <span>
           <search-icon width="15" />
         </span>
-        <nuxt-link to="/login" class="text-paperdazgreen-300">Signin</nuxt-link>
+        <nuxt-link to="/login" class="text-paperdazgreen-300"
+          >Sign in</nuxt-link
+        >
         <nuxt-link
           to="/register"
           class="
@@ -120,7 +122,7 @@
             justify-center
             whitespace-nowrap
           "
-          >Getting Started</nuxt-link
+          >Get Started</nuxt-link
         >
       </div>
     </nav>
