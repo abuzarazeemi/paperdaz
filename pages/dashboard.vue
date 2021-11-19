@@ -1,199 +1,28 @@
 <template>
-  <div>
-    <button
-      class="bg-paperdazgreen-300 h-10 text-white rounded shadow-2xl px-4"
-      @click="$auth.logout()"
-    >
-      Logout
-    </button>
+  <div class="pt-9 min-h-full flex flex-col">
+    <top-details-card-container class="mb-5" />
+    <leaves-details-container class="mb-9" />
+    <file-ledger class="flex-1" />
 
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea fugiat atque
-      voluptas perferendis explicabo debitis iste cumque dolores non tempore
-      temporibus veniam quibusdam unde natus illo a perspiciatis, ab minima!
-    </p>
+    <floating-action-button />
   </div>
 </template>
+
 <script lang="ts">
 import Vue from 'vue'
+
+import FileLedger from '~/components/dashboard/FileLedger.vue'
+import LeavesDetailsContainer from '~/components/dashboard/LeavesDetailsContainer.vue'
+import TopDetailsCardContainer from '~/components/dashboard/TopDetailsCardContainer.vue'
+import FloatingActionButton from '~/components/widgets/FloatingActionButton.vue'
 export default Vue.extend({
-  name: 'DashboardPage',
-  auth: false,
+  components: {
+    TopDetailsCardContainer,
+    LeavesDetailsContainer,
+    FileLedger,
+    FloatingActionButton,
+  },
   layout: 'dashboard',
+  auth: false,
 })
 </script>

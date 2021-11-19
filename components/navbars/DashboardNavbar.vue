@@ -10,10 +10,11 @@
       items-center
       justify-between
       h-16
-      min-h-[60px]
+      min-h-[70px]
+      shadow
     "
   >
-    <span class="text-black text-xl">Profile</span>
+    <span class="text-black text-xl capitalize">{{ routeName }}</span>
     <div class="h-full self-stretch flex items-center">
       <span class="text-[#BBBBBB]"><search-icon width="18" height="18" /></span>
       <div class="self-stretch h-full w-px mx-6 bg-[#E1E1E1]"></div>
@@ -44,5 +45,11 @@ import SearchIcon from '../svg-icons/SearchIcon.vue'
 export default Vue.extend({
   name: 'DashboardNavbar',
   components: { SearchIcon, BellIcon, GearIcon, ArrowDownIcon },
+  computed: {
+    routeName(): string {
+      return (this.$nuxt.$route.name || '').replace(/-/g, ' ')
+    },
+  },
+  methods: {},
 })
 </script>

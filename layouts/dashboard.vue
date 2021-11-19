@@ -47,7 +47,7 @@ export default Vue.extend({
 
   /* Handle */
   &::-webkit-scrollbar-thumb {
-    background: rgba(183, 239, 148, 0.5);
+    background: rgba(119, 129, 113, 0.5);
     border-radius: 2px;
   }
 

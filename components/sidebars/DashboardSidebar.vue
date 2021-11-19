@@ -11,8 +11,21 @@
             :key="i"
             :to="link.link"
             class="nav-item"
+            :class="{
+              active:
+                $nuxt.$route.fullPath == '/'
+                  ? $nuxt.$route.path == '/'
+                  : $nuxt.$route.fullPath.startsWith(link.link),
+            }"
           >
-            <svg-icon class="w-5 h-5" :value="link.icon" />
+            <div class="w-5 h-5">
+              <svg-icon
+                class="h-full w-full"
+                height="100%"
+                width="100%"
+                :value="link.icon"
+              />
+            </div>
             <span>{{ link.label }}</span>
           </nuxt-link>
         </li>
@@ -109,6 +122,7 @@ export default Vue.extend({
     return {
       links: [
         { label: 'Dashboard', icon: 'DashboardIcon', link: '/dashboard' },
+        { label: 'Profile', icon: 'UserProfileIcon', link: '/profile' },
         { label: 'My Files', icon: 'FileIcon', link: '/my-files' },
         { label: 'Home', icon: 'HomeIcon', link: '/home' },
         { label: 'Packages', icon: 'NewsPaperIcon', link: '/packages' },
@@ -123,5 +137,7 @@ export default Vue.extend({
 <style lang="postcss" scoped>
 .nav-item {
   @apply flex items-center whitespace-nowrap gap-4 text-paperdazgray-300 text-sm py-4;
+  &.active {
+  }
 }
 </style>
