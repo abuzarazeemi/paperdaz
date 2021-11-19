@@ -33,4 +33,27 @@ export default Vue.extend({
   grid-template-columns: max-content 1fr;
   gap: 16px;
 }
+
+#main-container {
+  /* width */
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: rgba(183, 239, 148, 0.5);
+    border-radius: 2px;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(183, 239, 148, 1);
+  }
+}
 </style>

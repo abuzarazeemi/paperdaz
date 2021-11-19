@@ -16,12 +16,13 @@ import LeavesDetailsContainer from '~/components/dashboard/LeavesDetailsContaine
 import TopDetailsCardContainer from '~/components/dashboard/TopDetailsCardContainer.vue'
 import FloatingActionButton from '~/components/widgets/FloatingActionButton.vue'
 export default Vue.extend({
-  auth: false,
   components: {
     TopDetailsCardContainer,
     LeavesDetailsContainer,
     FileLedger,
     FloatingActionButton,
   },
+  layout: 'dashboard',
+  auth: false,
 })
 </script>
