@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="max-w-7xl">
     <profile-tab v-model="currentTab" class="mt-10 ml-10 mb-10" />
     <keep-alive>
       <component :is="currrentTabComponent" />
