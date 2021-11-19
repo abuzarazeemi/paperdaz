@@ -5,9 +5,9 @@
     </div>
     <div
       id="main-container"
-      class="h-full overflow-y-auto relative flex flex-col gap-4"
+      class="h-full overflow-y-auto relative flex flex-col"
     >
-      <dashboard-navbar class="sticky top-0" />
+      <dashboard-navbar class="sticky top-0 mb-4 justify-self-stretch" />
       <Nuxt class="flex-1" />
     </div>
   </div>
