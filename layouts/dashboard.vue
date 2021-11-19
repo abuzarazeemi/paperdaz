@@ -5,9 +5,9 @@
     </div>
     <div
       id="main-container"
-      class="h-full overflow-y-auto relative flex flex-col gap-4"
+      class="h-full overflow-y-auto relative flex flex-col"
     >
-      <dashboard-navbar class="sticky top-0" />
+      <dashboard-navbar class="sticky top-0 mb-4 justify-self-stretch" />
       <Nuxt class="flex-1" />
     </div>
   </div>
@@ -32,5 +32,28 @@ export default Vue.extend({
   display: grid;
   grid-template-columns: max-content 1fr;
   gap: 16px;
+}
+
+#main-container {
+  /* width */
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: rgba(119, 129, 113, 0.5);
+    border-radius: 2px;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(183, 239, 148, 1);
+  }
 }
 </style>
