@@ -1,3 +1,4 @@
+import redirectSSL from 'redirect-ssl'
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -98,4 +99,7 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+  serverMiddleware: [
+    redirectSSL.create({ enabled: process.env.NODE_ENV === 'production' }),
+  ],
 }
