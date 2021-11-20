@@ -72,3 +72,16 @@ body {
 .spinner {
   animation: spinner 1s linear infinite;
 }
+
+.action-button {
+  @apply rounded-md px-5 h-10 font-medium text-base;
+
+  &.primary {
+    @apply bg-paperdazgreen-300 text-white;
+  }
+
+  &.danger {
+    @apply text-white;
+    background: #EB3A34;
+  }
+}

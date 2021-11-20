@@ -23,7 +23,7 @@ export default Vue.extend({
   layout: 'dashboard',
   data() {
     return {
-      currentTab: 'change-password',
+      currentTab: 'account',
     }
   },
   computed: {

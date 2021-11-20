@@ -20,7 +20,8 @@
     "firebase": "^9.4.1",
     "nuxt": "^2.15.7",
     "nuxt-property-decorator": "^2.9.1",
-    "redirect-ssl": "^3.0.0"
+    "redirect-ssl": "^3.0.0",
+    "signature_pad": "^3.0.0-beta.4"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.14.7",
