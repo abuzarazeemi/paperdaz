@@ -85,7 +85,7 @@ export default Vue.extend({
             oauth_token_secret: secretToken,
           })
         })
-        .catch((err) => {
+        .catch((err: any) => {
           console.log(err)
         })
     },
