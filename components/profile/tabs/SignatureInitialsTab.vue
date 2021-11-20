@@ -3,7 +3,7 @@
     <!-- Start:: Signature section -->
     <section class="mb-12">
       <div class="flex justify-between items-center mb-4">
-        <h3 class="text-black font-medium text-2xl flex items-center gap-3">
+        <h3 class="text-[#524D5B] font-medium text-2xl flex items-center gap-3">
           Signature <exclamation-icon class="text-paperdazgreen-300 w-4 h-4" />
         </h3>
         <div class="flex">
@@ -20,7 +20,7 @@
     <!-- Start:: Initials section -->
     <section>
       <div class="flex justify-between items-center mb-4">
-        <h3 class="text-black font-medium text-2xl flex items-center gap-3">
+        <h3 class="text-[#524D5B] font-medium text-2xl flex items-center gap-3">
           Initials <exclamation-icon class="text-paperdazgreen-300 w-4 h-4" />
         </h3>
         <div class="flex">

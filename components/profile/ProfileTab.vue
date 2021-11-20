@@ -36,15 +36,17 @@ export default Vue.extend({
       type: String,
       default: '',
     },
-  },
-  data() {
-    return {
-      tabs: [
+    tabs: {
+      type: Array,
+      default: () => [
         { label: 'Account', value: 'account' },
         { label: 'Change Password', value: 'change-password' },
         { label: 'Signature/Initials', value: 'signature-initials' },
       ],
-    }
+    },
+  },
+  data() {
+    return {}
   },
 })
 </script>

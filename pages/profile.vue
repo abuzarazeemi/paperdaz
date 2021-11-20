@@ -1,6 +1,6 @@
 <template>
   <div class="max-w-7xl">
-    <profile-tab v-model="currentTab" class="mt-10 ml-10 mb-10" />
+    <profile-tab v-model="currentTab" :tabs="tabs" class="mt-10 ml-10 mb-10" />
     <keep-alive>
       <component :is="currrentTabComponent" />
     </keep-alive>
@@ -14,13 +14,21 @@ import AccountTab from '~/components/profile/tabs/AccountTab.vue'
 import ChangePasswordTab from '~/components/profile/tabs/ChangePasswordTab.vue'
 import SignatureInitialsTab from '~/components/profile/tabs/SignatureInitialsTab.vue'
 
+const BillingTab = () => import('~/components/profile/tabs/BillingTab.vue')
+
 export default Vue.extend({
   name: 'ProfilePage',
   components: { ProfileTab },
   layout: 'dashboard',
   data() {
     return {
-      currentTab: 'account',
+      currentTab: 'billing',
+      tabs: [
+        { label: 'Account', value: 'account' },
+        { label: 'Change Password', value: 'change-password' },
+        { label: 'Signature/Initials', value: 'signature-initials' },
+        { label: 'Billing', value: 'billing' },
+      ],
     }
   },
   computed: {
@@ -32,6 +40,8 @@ export default Vue.extend({
           return ChangePasswordTab
         case 'signature-initials':
           return SignatureInitialsTab
+        case 'billing':
+          return BillingTab
         default:
           return {
             render(h: any) {
