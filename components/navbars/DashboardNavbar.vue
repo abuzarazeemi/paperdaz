@@ -21,8 +21,8 @@
       <div class="text-[#909090] mr-4"><bell-icon /></div>
       <div class="text-[#909090] mr-4"><gear-icon /></div>
       <div class="flex flex-col mr-3 text-sm">
-        <span class="text-black">AxayDev</span>
-        <span class="text-[#524D5B]">Axay Devikar</span>
+        <span class="text-black">{{ user.username }}</span>
+        <span class="text-[#524D5B]">{{ user.fullName }}</span>
       </div>
       <div class="circle circle-26 border border-paperdazgreen-300 mr-2">
         <img
@@ -48,6 +48,9 @@ export default Vue.extend({
   computed: {
     routeName(): string {
       return (this.$nuxt.$route.name || '').replace(/-/g, ' ')
+    },
+    user(): any {
+      return this.$auth.user
     },
   },
   methods: {},

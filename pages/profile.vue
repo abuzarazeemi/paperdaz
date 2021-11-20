@@ -10,6 +10,13 @@
 <script lang="ts">
 import Vue from 'vue'
 import ProfileTab from '~/components/profile/ProfileTab.vue'
+
+const AccountTab = () => import('~/components/profile/tabs/AccountTab.vue')
+const ChangePasswordTab = () =>
+  import('~/components/profile/tabs/ChangePasswordTab.vue')
+const SignatureInitialsTab = () =>
+  import('~/components/profile/tabs/SignatureInitialsTab.vue')
+
 export default Vue.extend({
   name: 'ProfilePage',
   components: { ProfileTab },
@@ -23,16 +30,15 @@ export default Vue.extend({
     currrentTabComponent(): any {
       switch (this.currentTab) {
         case 'account':
-          return () => import('~/components/profile/tabs/AccountTab.vue')
+          return AccountTab
         case 'change-password':
-          return () => import('~/components/profile/tabs/ChangePasswordTab.vue')
+          return ChangePasswordTab
         case 'signature-initials':
-          return () =>
-            import('~/components/profile/tabs/SignatureInitialsTab.vue')
+          return SignatureInitialsTab
         default:
           return {
-            render(createElement: any) {
-              return createElement('h1', 'Tab not available')
+            render(h: any) {
+              return h('h1', 'Tab not available')
             },
           }
       }

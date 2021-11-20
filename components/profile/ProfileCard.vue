@@ -24,7 +24,7 @@
           />
         </div>
       </div>
-      <p class="text-lg font-semibold mb-2">My Star 20</p>
+      <p class="text-lg font-semibold mb-2">{{ user.username }}</p>
       <div
         class="
           border border-paperdazgray-100
@@ -49,5 +49,10 @@ import SingleLeafNoStalk from '../svg-icons/SingleLeafNoStalk.vue'
 export default Vue.extend({
   name: 'ProfileCard',
   components: { SingleLeafNoStalk },
+  computed: {
+    user(): any {
+      return this.$auth.user
+    },
+  },
 })
 </script>

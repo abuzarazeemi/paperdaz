@@ -8,7 +8,7 @@
       class="h-full overflow-y-auto relative flex flex-col"
     >
       <dashboard-navbar class="sticky top-0 mb-4 justify-self-stretch" />
-      <Nuxt class="flex-1" />
+      <Nuxt class="flex-1 flex flex-col" />
     </div>
   </div>
 </template>
