@@ -55,8 +55,8 @@ export default Vue.extend({
         this.signIn('facebook', {
           access_token: accessToken,
         })
-      } catch (err) {
-        return err
+      } catch (err: any) {
+        this.$toast.error(err.message).goAway(5000)
       }
     },
     async signInWithGoogle() {
@@ -67,8 +67,8 @@ export default Vue.extend({
         this.signIn('google', {
           access_token: accessToken,
         })
-      } catch (err) {
-        return err
+      } catch (err: any) {
+        this.$toast.error(err.message).goAway(5000)
       }
     },
     signInWithTwitter() {
@@ -76,24 +76,20 @@ export default Vue.extend({
       this.$fire.auth
         .signInWithPopup(provider)
         .then((authData: any) => {
-          console.log(authData)
           const accessToken = authData.credential.accessToken
           const secretToken = authData.credential.secret
-          console.log(accessToken, secretToken)
           this.signIn('twitter', {
             oauth_token: accessToken,
             oauth_token_secret: secretToken,
           })
         })
         .catch((err: any) => {
-          console.log(err)
+          this.$toast.error(err.message).goAway(5000)
         })
     },
     async signIn(social: string, payload: any) {
       try {
-        console.log(payload)
         const response = await this.$axios.$post('/api/auth/' + social, payload)
-        console.log(response)
         const user = response.data[0]
         this.setUser(user)
       } catch (error: any) {
@@ -103,9 +99,9 @@ export default Vue.extend({
           error.response.data &&
           error.response.data.message
         ) {
-          this.$toast.error(error.response.data.message).goAway(1500)
+          this.$toast.error(error.response.data.message).goAway(5000)
         } else {
-          this.$toast.error('Server not reachable').goAway(1500)
+          this.$toast.error('Server not reachable').goAway(5000)
         }
       }
     },
