@@ -71,21 +71,23 @@ export default Vue.extend({
         return err
       }
     },
-    async signInWithTwitter() {
-      try {
-        const provider = new this.$fireModule.auth.TwitterAuthProvider()
-        const authData = await this.$fire.auth.signInWithPopup(provider)
-        console.log(authData)
-        const accessToken = authData.credential.accessToken
-        const secretToken = authData.credential.secret
-        console.log(accessToken, secretToken)
-        this.signIn('twitter', {
-          oauth_token: accessToken,
-          oauth_token_secret: secretToken,
+    signInWithTwitter() {
+      const provider = new this.$fireModule.auth.TwitterAuthProvider()
+      this.$fire.auth
+        .signInWithPopup(provider)
+        .then((authData: any) => {
+          console.log(authData)
+          const accessToken = authData.credential.accessToken
+          const secretToken = authData.credential.secret
+          console.log(accessToken, secretToken)
+          this.signIn('twitter', {
+            oauth_token: accessToken,
+            oauth_token_secret: secretToken,
+          })
         })
-      } catch (err) {
-        return err
-      }
+        .catch((err) => {
+          console.log(err)
+        })
     },
     async signIn(social: string, payload: any) {
       try {
