@@ -15,6 +15,8 @@ import ChangePasswordTab from '~/components/profile/tabs/ChangePasswordTab.vue'
 import SignatureInitialsTab from '~/components/profile/tabs/SignatureInitialsTab.vue'
 
 const BillingTab = () => import('~/components/profile/tabs/BillingTab.vue')
+const YourProductsTab = () =>
+  import('~/components/profile/tabs/YourProductsTab.vue')
 
 export default Vue.extend({
   name: 'ProfilePage',
@@ -22,12 +24,13 @@ export default Vue.extend({
   layout: 'dashboard',
   data() {
     return {
-      currentTab: 'account',
+      currentTab: 'your-products',
       tabs: [
         { label: 'Account', value: 'account' },
         { label: 'Change Password', value: 'change-password' },
         { label: 'Signature/Initials', value: 'signature-initials' },
         { label: 'Billing', value: 'billing' },
+        { label: 'Your Proucts', value: 'your-products' },
       ],
     }
   },
@@ -42,6 +45,8 @@ export default Vue.extend({
           return SignatureInitialsTab
         case 'billing':
           return BillingTab
+        case 'your-products':
+          return YourProductsTab
         default:
           return {
             render(h: any) {
