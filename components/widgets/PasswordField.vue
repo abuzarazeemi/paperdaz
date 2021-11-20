@@ -18,17 +18,19 @@
       :class="{ 'text-paperdazgray-300': !showPassword }"
       @click="showPassword = !showPassword"
     >
-      <svg-icon :value="showPassword ? 'EyeIcon' : 'EyeSlashedIcon'" />
+      <eye-icon v-if="showPassword" />
+      <eye-slashed-icon v-else />
     </span>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import SvgIcon from '../svg-icons/SvgIcon.vue'
+import EyeIcon from '../svg-icons/EyeIcon.vue'
+import EyeSlashedIcon from '../svg-icons/EyeSlashedIcon.vue'
 export default Vue.extend({
   name: 'PasswordField',
-  components: { SvgIcon },
+  components: { EyeIcon, EyeSlashedIcon },
   props: {
     placeholder: {
       type: String,

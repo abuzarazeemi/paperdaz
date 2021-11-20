@@ -10,12 +10,9 @@
 <script lang="ts">
 import Vue from 'vue'
 import ProfileTab from '~/components/profile/ProfileTab.vue'
-
-const AccountTab = () => import('~/components/profile/tabs/AccountTab.vue')
-const ChangePasswordTab = () =>
-  import('~/components/profile/tabs/ChangePasswordTab.vue')
-const SignatureInitialsTab = () =>
-  import('~/components/profile/tabs/SignatureInitialsTab.vue')
+import AccountTab from '~/components/profile/tabs/AccountTab.vue'
+import ChangePasswordTab from '~/components/profile/tabs/ChangePasswordTab.vue'
+import SignatureInitialsTab from '~/components/profile/tabs/SignatureInitialsTab.vue'
 
 export default Vue.extend({
   name: 'ProfilePage',
