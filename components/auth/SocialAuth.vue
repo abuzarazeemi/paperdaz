@@ -89,7 +89,9 @@ export default Vue.extend({
     },
     async signIn(social: string, payload: any) {
       try {
+        console.log(payload)
         const response = await this.$axios.$post('/api/auth/' + social, payload)
+        console.log(response)
         const user = response.data[0]
         this.setUser(user)
       } catch (error: any) {
