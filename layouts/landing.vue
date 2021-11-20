@@ -13,7 +13,6 @@ import Vue from 'vue'
 import AppBar from '~/components/widgets/AppBar.vue'
 import AppFooter from '~/components/widgets/AppFooter.vue'
 export default Vue.extend({
-  auth: false,
   components: { AppBar, AppFooter },
 })
 </script>

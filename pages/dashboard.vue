@@ -23,6 +23,5 @@ export default Vue.extend({
     FloatingActionButton,
   },
   layout: 'dashboard',
-  auth: false,
 })
 </script>

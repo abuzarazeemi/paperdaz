@@ -13,7 +13,6 @@ import ProfileTab from '~/components/profile/ProfileTab.vue'
 export default Vue.extend({
   name: 'ProfilePage',
   components: { ProfileTab },
-  auth: false,
   layout: 'dashboard',
   data() {
     return {
