@@ -24,7 +24,7 @@ export default Vue.extend({
   layout: 'dashboard',
   data() {
     return {
-      currentTab: 'your-products',
+      currentTab: 'account',
       tabs: [
         { label: 'Account', value: 'account' },
         { label: 'Change Password', value: 'change-password' },
