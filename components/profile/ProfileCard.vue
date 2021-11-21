@@ -8,10 +8,8 @@ import Vue from 'vue'
 import FreeProfileCard from '~/components/profile/FreeProfileCard.vue'
 import PaidProfileCard from '~/components/profile/PaidProfileCard.vue'
 
-enum UserTypeEnum {
-  FREE,
-  PAID,
-}
+import UserTypeEnum from '~/models/UserTypeEnum'
+
 export default Vue.extend({
   name: 'ProfileCard',
   components: { FreeProfileCard },

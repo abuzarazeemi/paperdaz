@@ -15,6 +15,7 @@ import FileLedger from '~/components/dashboard/FileLedger.vue'
 import LeavesDetailsContainer from '~/components/dashboard/LeavesDetailsContainer.vue'
 import TopDetailsCardContainer from '~/components/dashboard/TopDetailsCardContainer.vue'
 import FloatingActionButton from '~/components/widgets/FloatingActionButton.vue'
+
 export default Vue.extend({
   components: {
     TopDetailsCardContainer,

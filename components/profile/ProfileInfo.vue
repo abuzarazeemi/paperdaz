@@ -13,45 +13,10 @@
         pb-1
       "
     >
-      <span>Personal Profile</span>
+      <span>{{ headerText }}</span>
       <pen-icon />
     </h3>
-    <form action="" class="profile-info-form mt-4 grid grid-cols-1 gap-5">
-      <div
-        class="grid gap-5"
-        style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))"
-      >
-        <div>
-          <label for="">First Name</label>
-          <input-field placeholder="Enter first name..." value="Axay" />
-        </div>
-        <div>
-          <label for="">Last Name</label>
-          <input-field placeholder="Enter last name..." value="Devikar" />
-        </div>
-      </div>
-      <div>
-        <label for="">Email</label>
-        <input-field
-          placeholder="Enter email..."
-          value="maiblue@gmail.com"
-          type="email"
-        />
-      </div>
-      <div
-        class="grid gap-5"
-        style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))"
-      >
-        <div>
-          <label for="">Phone Number</label>
-          <input-field placeholder="Enter phone number..." value="1234561213" />
-        </div>
-        <div>
-          <label for="">Timezone</label>
-          <input-field placeholder="Enter timezone..." value="Timezone" />
-        </div>
-      </div>
-    </form>
+    <component :is="formComponent" class="mt-4" />
   </div>
 </template>
 
@@ -59,15 +24,46 @@
 import Vue from 'vue'
 import PenIcon from '../svg-icons/PenIcon.vue'
 import InputField from '../widgets/InputField.vue'
+import UserTypeEnum from '~/models/UserTypeEnum'
+import UserForm from '~/components/profile/forms/UserForm.vue'
+import CompanyForm from '~/components/profile/forms/CompanyForm.vue'
+
 export default Vue.extend({
   name: 'ProfileInfo',
   components: { PenIcon, InputField },
+  data() {
+    return {
+      userType: UserTypeEnum.PAID,
+    }
+  },
+  computed: {
+    headerText(): string {
+      switch (this.userType) {
+        case UserTypeEnum.FREE:
+          return 'Personal Profile'
+        case UserTypeEnum.PAID:
+          return 'Company Profile'
+        default:
+          return ''
+      }
+    },
+    formComponent(): any {
+      switch (this.userType) {
+        case UserTypeEnum.FREE:
+          return UserForm
+        case UserTypeEnum.PAID:
+          return CompanyForm
+        default:
+          return {
+            render(createElement: any) {
+              return createElement(
+                'h1',
+                'Form not developed for this user type'
+              )
+            },
+          }
+      }
+    },
+  },
 })
 </script>
-
-<style lang="postcss" scoped>
-.profile-info-form label {
-  @apply block font-medium mb-0.5;
-  color: #282533;
-}
-</style>
