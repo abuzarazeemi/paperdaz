@@ -76,7 +76,7 @@ export default Vue.extend({
   components: { TickIcon },
   data() {
     return {
-      isMonthly: false,
+      isMonthly: true,
     }
   },
 })

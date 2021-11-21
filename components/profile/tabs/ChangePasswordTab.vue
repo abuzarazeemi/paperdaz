@@ -11,7 +11,16 @@
     "
   >
     <form class="w-full max-w-2xl mx-auto">
-      <legend class="text-4xl text-[#17282F] font-medium mb-12 text-center">
+      <legend
+        class="
+          text-2xl
+          lg:text-4xl
+          text-[#17282F]
+          font-medium
+          mb-12
+          lg:text-center
+        "
+      >
         Change Your Password
       </legend>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center">
+  <div class="flex items-center overflow-x-auto overflow-y-hidden">
     <div
       v-for="(tab, i) in tabs"
       :key="i"
