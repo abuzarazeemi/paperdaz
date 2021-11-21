@@ -1,6 +1,6 @@
 <template>
-  <div class="grid grid-cols-[max-content,1fr] gap-6">
-    <profile-card class="w-[262px] max-w-full" />
+  <div class="grid grid-cols-1 lg:grid-cols-[max-content,1fr] gap-6">
+    <profile-card class="lg:w-[262px] max-w-full" />
     <profile-info />
   </div>
 </template>

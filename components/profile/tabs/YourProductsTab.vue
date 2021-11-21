@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-1 grid grid-cols-[1fr,min-content] gap-4">
+  <div class="flex-1 grid grid-cols-1 lg:grid-cols-[1fr,min-content] gap-4">
     <section class="bg-white rounded-2xl py-6 px-8">
       <h3 class="text-[#524D5B] font-medium text-2xl mb-10">Business</h3>
       <ul class="product-list">
