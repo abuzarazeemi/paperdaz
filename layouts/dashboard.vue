@@ -1,6 +1,6 @@
 <template>
   <div id="dashboard-layout" class="p-4 bg-[#F6F5FA]">
-    <div id="sidebar-container" class="w-60">
+    <div id="sidebar-container" class="w-60 h-full overflow-hidden">
       <dashboard-sidebar />
     </div>
     <div
@@ -31,6 +31,7 @@ export default Vue.extend({
   overflow: hidden;
   display: grid;
   grid-template-columns: max-content 1fr;
+  // grid-template-rows: 1fr;
   gap: 16px;
 }
 

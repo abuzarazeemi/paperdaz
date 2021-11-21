@@ -1,36 +1,34 @@
 <template>
   <nav class="flex flex-col bg-white h-full w-full rounded-2xl p-8">
-    <div class="flex-1">
-      <div class="flex items-center justify-center mb-14">
-        <logo-with-text class="h-8 w-auto" />
-      </div>
-      <ul>
-        <li>
-          <nuxt-link
-            v-for="(link, i) in links"
-            :key="i"
-            :to="link.link"
-            class="nav-item"
-            :class="{
-              active:
-                $nuxt.$route.fullPath == '/'
-                  ? $nuxt.$route.path == '/'
-                  : $nuxt.$route.fullPath.startsWith(link.link),
-            }"
-          >
-            <div class="w-5 h-5">
-              <svg-icon
-                class="h-full w-full"
-                height="100%"
-                width="100%"
-                :value="link.icon"
-              />
-            </div>
-            <span>{{ link.label }}</span>
-          </nuxt-link>
-        </li>
-      </ul>
+    <div class="flex items-center justify-center mb-14">
+      <logo-with-text class="h-8 w-auto" />
     </div>
+    <ul class="overflow-y-auto overflow-x-hidden flex-1">
+      <li>
+        <nuxt-link
+          v-for="(link, i) in links"
+          :key="i"
+          :to="link.link"
+          class="nav-item"
+          :class="{
+            active:
+              $nuxt.$route.fullPath == '/'
+                ? $nuxt.$route.path == '/'
+                : $nuxt.$route.fullPath.startsWith(link.link),
+          }"
+        >
+          <div class="w-5 h-5">
+            <svg-icon
+              class="h-full w-full"
+              height="100%"
+              width="100%"
+              :value="link.icon"
+            />
+          </div>
+          <span>{{ link.label }}</span>
+        </nuxt-link>
+      </li>
+    </ul>
     <div>
       <p class="text-center text-[#909090] mb-6 font-medium">Share</p>
       <div class="flex flex-wrap items-center gap-2">
