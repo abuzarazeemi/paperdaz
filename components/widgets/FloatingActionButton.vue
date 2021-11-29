@@ -1,5 +1,5 @@
 <template>
-  <button class="fab-button">
+  <button class="fab-button" :class="[relativeToParent ? 'absolute' : 'fixed']">
     <plus-icon class="h-8 w-8 sm:h-12 sm:w-12" />
   </button>
 </template>
@@ -8,6 +8,12 @@
 import PlusIcon from '../svg-icons/PlusIcon.vue'
 export default {
   components: { PlusIcon },
+  props: {
+    relativeToParent: {
+      type: Boolean,
+      default: false,
+    },
+  },
 }
 </script>
 
@@ -15,8 +21,7 @@ export default {
 .fab-button {
   @apply bg-paperdazgreen-250 text-white
       inline-flex
-      fixed
-      bottom-12
+      bottom-20
       right-5
       h-16
       w-16

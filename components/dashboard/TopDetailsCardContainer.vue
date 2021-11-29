@@ -53,8 +53,12 @@ export default {
 </script>
 <style lang="postcss" scoped>
 .small-details-card-container {
-  @apply gap-4;
+  @apply gap-3 lg:gap-4;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(174px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+
+  @media screen and (min-width: 425px) {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
 }
 </style>

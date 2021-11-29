@@ -1,8 +1,9 @@
 <template>
-  <div id="dashboard-layout" class="p-4 bg-[#F6F5FA]">
+  <!-- Note responsive sidebar breakpoint is lg: 1024px -->
+  <div id="dashboard-layout" class="lg:p-4 bg-[#F6F5FA]">
     <div
       id="sidebar-container"
-      class="h-full overflow-hidden"
+      class="h-full overflow-hidden relative"
       :class="{ active: collapseSidebar }"
     >
       <div class="overlay" @click="collapseSidebar = false"></div>
@@ -10,24 +11,30 @@
     </div>
     <div
       id="main-container"
-      class="h-full overflow-y-auto overflow-x-hidden relative flex flex-col"
+      class="
+        h-full
+        lg:overflow-y-auto lg:overflow-x-hidden lg:relative
+        flex flex-col
+      "
     >
       <dashboard-navbar
         class="sticky top-0 mb-4 justify-self-stretch"
         @open-sidebar="collapseSidebar = true"
       />
-      <Nuxt class="flex-1 flex flex-col" />
+      <Nuxt class="flex-1 flex flex-col px-2 sm:px-4 lg:px-0 lg:pb-10" />
     </div>
+    <bottom-nav class="sticky left-0 right-0 h-12 bottom-0 mt-3 lg:hidden" />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import BottomNav from '~/components/navbars/BottomNav.vue'
 import DashboardNavbar from '~/components/navbars/DashboardNavbar.vue'
 import DashboardSidebar from '~/components/sidebars/DashboardSidebar.vue'
 export default Vue.extend({
   name: 'DashboardLayout',
-  components: { DashboardSidebar, DashboardNavbar },
+  components: { DashboardSidebar, DashboardNavbar, BottomNav },
   data() {
     return {
       collapseSidebar: false,
@@ -56,15 +63,15 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 #dashboard-layout {
-  height: var(--viewport-height, 100vh);
-  min-height: var(--viewport-height, 100vh);
-  max-height: var(--viewport-height, 100vh);
-  overflow: hidden;
-  display: grid;
-  grid-template-columns: 1fr;
-  // grid-template-rows: 1fr;
-  gap: 16px;
   @media only screen and (min-width: 1024px) {
+    height: var(--viewport-height, 100vh);
+    min-height: var(--viewport-height, 100vh);
+    max-height: var(--viewport-height, 100vh);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr;
+    // grid-template-rows: 1fr;
+    gap: 16px;
     grid-template-columns: max-content 1fr;
   }
 }
