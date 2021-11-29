@@ -4,7 +4,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+:root {
+  --viewport-height: 100vh;
+}
 html {
   @apply text-paperdazgray-600;
   font-family: 'Poppins', sans-serif;

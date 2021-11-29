@@ -1,5 +1,13 @@
 <template>
   <nav class="flex flex-col bg-white h-full w-full rounded-2xl py-8">
+    <div class="flex justify-end px-8">
+      <span
+        class="py-2 mb-3 cursor-pointer inline-block lg:hidden"
+        @click="$emit('close')"
+      >
+        <times-icon width="12" height="12" />
+      </span>
+    </div>
     <div class="flex items-center justify-center mb-14 px-8">
       <logo-with-text class="h-8 w-auto" />
     </div>
@@ -102,6 +110,7 @@ import FacebookIcon from '../svg-icons/FacebookIcon.vue'
 import LinkedInIcon from '../svg-icons/LinkedInIcon.vue'
 import ReditIcon from '../svg-icons/ReditIcon.vue'
 import SvgIcon from '../svg-icons/SvgIcon.vue'
+import TimesIcon from '../svg-icons/TimesIcon.vue'
 import TwitterIcon from '../svg-icons/TwitterIcon.vue'
 import WhatsappIcon from '../svg-icons/WhatsappIcon.vue'
 export default Vue.extend({
@@ -115,6 +124,7 @@ export default Vue.extend({
     TwitterIcon,
     WhatsappIcon,
     ReditIcon,
+    TimesIcon,
   },
   data() {
     return {

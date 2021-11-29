@@ -5,15 +5,17 @@
       class="h-full overflow-hidden"
       :class="{ active: collapseSidebar }"
     >
-      <div class="overlay"></div>
-      <dashboard-sidebar />
+      <div class="overlay" @click="collapseSidebar = false"></div>
+      <dashboard-sidebar class="relative" @close="collapseSidebar = false" />
     </div>
     <div
       id="main-container"
       class="h-full overflow-y-auto overflow-x-hidden relative flex flex-col"
-      @click="collapseSidebar = !collapseSidebar"
     >
-      <dashboard-navbar class="sticky top-0 mb-4 justify-self-stretch" />
+      <dashboard-navbar
+        class="sticky top-0 mb-4 justify-self-stretch"
+        @open-sidebar="collapseSidebar = true"
+      />
       <Nuxt class="flex-1 flex flex-col" />
     </div>
   </div>
@@ -30,6 +32,24 @@ export default Vue.extend({
     return {
       collapseSidebar: false,
     }
+  },
+  watch: {
+    $route() {
+      this.collapseSidebar = false
+    },
+  },
+  mounted() {
+    this.resizeEventListener()
+    window.addEventListener('resize', this.resizeEventListener)
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.resizeEventListener)
+  },
+  methods: {
+    resizeEventListener() {
+      const root = document.querySelector(':root') as HTMLElement
+      root.style.setProperty('--viewport-height', `${window.innerHeight}px`)
+    },
   },
 })
 </script>
@@ -53,6 +73,7 @@ export default Vue.extend({
   /* width */
   &::-webkit-scrollbar {
     width: 5px;
+    width: 0;
   }
 
   /* Track */
@@ -78,8 +99,9 @@ export default Vue.extend({
   z-index: 20;
   top: 0;
   bottom: 0;
-  left: 0;
+  left: calc(-1 * var(--sidebar-container-width));
   box-shadow: 2px 0px 13px 2px rgb(151 151 151 / 31%);
+  transition: all ease-in-out 200ms;
   & .overlay {
     position: fixed;
     top: 0;
@@ -94,9 +116,12 @@ export default Vue.extend({
     transition: all ease-in-out 200ms;
   }
 
-  &.active .overlay {
-    opacity: 1;
-    pointer-events: all;
+  &.active {
+    left: 0;
+    .overlay {
+      opacity: 1;
+      pointer-events: all;
+    }
   }
 
   @media only screen and (min-width: 1024px) {

@@ -14,7 +14,13 @@
       shadow
     "
   >
-    <span class="text-black text-xl capitalize">{{ routeName }}</span>
+    <p class="text-black text-xl capitalize">
+      <span
+        class="inline-block lg:hidden mr-4 cursor-pointer"
+        @click="$emit('open-sidebar')"
+        ><hamburger-icon /></span
+      >{{ routeName }}
+    </p>
     <div class="h-full self-stretch flex items-center">
       <span class="text-[#BBBBBB]"><search-icon width="18" height="18" /></span>
       <div class="self-stretch h-full w-px mx-6 bg-[#E1E1E1]"></div>
@@ -41,10 +47,11 @@ import Vue from 'vue'
 import ArrowDownIcon from '../svg-icons/ArrowDownIcon.vue'
 import BellIcon from '../svg-icons/BellIcon.vue'
 import GearIcon from '../svg-icons/GearIcon.vue'
+import HamburgerIcon from '../svg-icons/HamburgerIcon.vue'
 import SearchIcon from '../svg-icons/SearchIcon.vue'
 export default Vue.extend({
   name: 'DashboardNavbar',
-  components: { SearchIcon, BellIcon, GearIcon, ArrowDownIcon },
+  components: { SearchIcon, BellIcon, GearIcon, ArrowDownIcon, HamburgerIcon },
   computed: {
     routeName(): string {
       return (this.$nuxt.$route.name || '').replace(/-/g, ' ')

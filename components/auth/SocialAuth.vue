@@ -127,6 +127,7 @@ export default Vue.extend({
             shadow
             px-3
             py-3
+            min-w-[120px]
             gap-2 hover:text-paperdazgray-500;
 }
 </style>
