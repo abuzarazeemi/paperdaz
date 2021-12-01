@@ -1,6 +1,6 @@
 <template>
-  <div class="max-w-7xl py-10">
-    <profile-tab v-model="currentTab" :tabs="tabs" class="ml-10 mb-10" />
+  <div class="max-w-7xl py-4 lg:py-10">
+    <profile-tab v-model="currentTab" :tabs="tabs" class="mb-10" />
     <keep-alive>
       <component :is="currrentTabComponent" />
     </keep-alive>
