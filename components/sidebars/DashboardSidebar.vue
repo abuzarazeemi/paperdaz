@@ -146,14 +146,14 @@ export default Vue.extend({
 .nav-item {
   @apply flex items-center whitespace-nowrap gap-4 text-paperdazgray-300 text-sm py-4 px-4 rounded-xl transition ease-in-out overflow-hidden;
   background: transparent;
+  & > * {
+    position: relative;
+    z-index: 1;
+  }
   &.active {
     @apply text-white bg-paperdazgreen-300;
     box-shadow: 0px 5px 7px 2px rgba(95, 201, 63, 0.25);
     position: relative;
-    & > * {
-      position: relative;
-      z-index: 1;
-    }
     &::before {
       content: '';
       position: absolute;
