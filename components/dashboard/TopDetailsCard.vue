@@ -16,10 +16,10 @@
         mt-2
       "
     >
-      <span class="font-bold text-xl">
+      <span class="font-bold text-2xl">
         <slot name="count">800</slot>
       </span>
-      <span class="font-medium text-paperdazgray-400 text-xxs"
+      <span class="font-medium text-paperdazgray-400 text-xs"
         ><slot name="name">Ledger</slot></span
       >
     </div>
