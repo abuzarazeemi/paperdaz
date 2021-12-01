@@ -52,10 +52,6 @@ export default Vue.extend({
       @apply text-white;
     }
   }
-
-  &:hover {
-    @apply bg-opacity-70;
-  }
 }
 
 .icon-container {
