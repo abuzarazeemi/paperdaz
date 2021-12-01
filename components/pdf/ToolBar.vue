@@ -1,10 +1,25 @@
 <template>
   <div class="tool-bar">
     <div class="tool-item" @click="setSelectedType(TOOL_TYPE.text)">
-      TEXT
+      <img src="./assets/text_tool.svg" alt="">
+    </div>
+    <div class="tool-item" @click="setSelectedType(TOOL_TYPE.tick)">
+      <img src="./assets/tick_tool.svg" alt="">
+    </div>
+    <div class="tool-item" @click="setSelectedType(TOOL_TYPE.cross)">
+      <img src="./assets/cross_tool.svg" alt="">
     </div>
     <div class="tool-item" @click="setSelectedType(TOOL_TYPE.dot)">
-      DOT
+      <img src="./assets/dot_tool.svg" alt="">
+    </div>
+    <div class="tool-item" @click="setSelectedType(TOOL_TYPE.circle)">
+      <img src="./assets/circle_tool.svg" alt="">
+    </div>
+    <div class="tool-item" @click="setSelectedType(TOOL_TYPE.line)">
+      <img src="./assets/line_tool.svg" alt="">
+    </div>
+    <div class="tool-item" @click="setSelectedType(TOOL_TYPE.draw)">
+      <img src="./assets/draw_tool.svg" alt="">
     </div>
   </div>
 </template>
@@ -28,4 +43,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.tool-bar{
+  display: flex;
+  align-items: center;
+}
 </style>
