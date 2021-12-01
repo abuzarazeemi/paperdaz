@@ -1,5 +1,5 @@
 <template>
-  <div class="leaves-details-container text-xs sm:text-base">
+  <div class="leaves-details-container text-xs sm:text-sm">
     <div>
       <div class="inline-flex gap-2 whitespace-nowrap sm:gap-4 items-center">
         <single-leaf-icon />
