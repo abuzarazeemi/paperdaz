@@ -106,7 +106,7 @@ export default Vue.extend({
   z-index: 20;
   top: 0;
   bottom: 0;
-  left: calc(-1 * var(--sidebar-container-width));
+  left: calc(0 - var(--sidebar-container-width));
   box-shadow: 2px 0px 13px 2px rgb(151 151 151 / 31%);
   transition: all ease-in-out 200ms;
   & .overlay {
