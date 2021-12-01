@@ -104,8 +104,8 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
   serverMiddleware: [
-    // redirectSSL.create({
-    //   enabled: process.env.NODE_ENV === 'production',
-    // }),
+    redirectSSL.create({
+      enabled: process.env.NODE_ENV === 'production',
+    }),
   ],
 }
