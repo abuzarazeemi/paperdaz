@@ -1,21 +1,34 @@
 <template>
-  <div class="flex items-center overflow-x-auto overflow-y-hidden">
+  <div
+    class="
+      flex
+      items-center
+      overflow-x-auto overflow-y-hidden
+      sm:border-b
+      border-gray-200
+      custom-scrollbar
+    "
+  >
     <div
       v-for="(tab, i) in tabs"
       :key="i"
       class="
-        h-10
+        h-8
+        sm:h-9
+        lg:h-10
         border-b-2
         cursor-pointer
         font-semibold
-        text-lg
+        text-sm
+        sm:text-base
+        lg:text-lg
         whitespace-nowrap
       "
       :class="[
         currentTab == tab.value
           ? 'border-paperdazgreen-300 text-paperdazgreen-300'
           : 'border-transparent',
-        i !== tabs.length - 1 ? 'mr-8' : '',
+        i !== tabs.length - 1 ? 'mr-6 sm:mr-8' : '',
       ]"
       @click="$emit(`update-tab`, tab.value)"
     >

@@ -11,7 +11,7 @@
     <div class="flex items-center justify-center mb-14 px-8">
       <logo-with-text class="h-8 w-auto" />
     </div>
-    <ul class="overflow-y-auto overflow-x-hidden flex-1 px-4">
+    <ul class="overflow-y-auto overflow-x-hidden flex-1 px-4 custom-scrollbar">
       <li>
         <nuxt-link
           v-for="(link, i) in links"
