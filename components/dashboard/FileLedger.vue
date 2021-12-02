@@ -47,7 +47,7 @@
       :class="[
         (files || []).length <= 0
           ? 'p-5 flexitems-center justify-center'
-          : ' overflow-x-auto custom-scrollbar',
+          : 'pb-4 overflow-x-auto custom-scrollbar',
       ]"
     >
       <!-- Start:: empty file ledger -->
