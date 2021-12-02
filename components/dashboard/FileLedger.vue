@@ -5,7 +5,7 @@
         text-paperdazgray-700
         font-semibold
         text-xl
-        mb-4
+        mb-5
         sm:mb-7
         flex flex-col
         gap-3
@@ -18,7 +18,7 @@
 
       <form
         action=""
-        class="w-full max-w-[280px] text-xs font-medium flex items-center"
+        class="w-full xs:max-w-[280px] text-xs font-medium flex items-center"
       >
         <input
           type="text"
@@ -268,6 +268,11 @@ export default Vue.extend({
   },
   methods: {
     tableScrollObserver() {
+      if (this.scrollObserver) {
+        try {
+          this.scrollObserver.disconnect()
+        } catch (e) {}
+      }
       const options = {
         rootMargin: '0px',
         threshold: 1.0,
