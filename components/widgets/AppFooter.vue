@@ -38,56 +38,56 @@
         <div class="flex flex-wrap items-center gap-2">
           <span
             class="
-              circle circle-10
+              circle circle-15
               cursor-pointer
               bg-paperdazgreen-300
               text-white
             "
           >
-            <facebook-icon height="9" />
+            <facebook-icon height="18" />
           </span>
           <span
             class="
-              circle circle-10
+              circle circle-15
               cursor-pointer
               bg-paperdazgreen-300
               text-white
             "
           >
-            <linked-in-icon height="9" />
+            <linked-in-icon height="17" />
           </span>
-          <span class="circle circle-12 cursor-pointer text-white">
+          <span class="circle circle-15 cursor-pointer text-white">
             <redit-icon :background="'#77C360'" height="50" width="50" />
           </span>
           <span
             class="
-              circle circle-10
+              circle circle-15
               cursor-pointer
               bg-paperdazgreen-300
               text-white
             "
           >
-            <envelope-icon height="9" />
+            <envelope-icon height="16" />
           </span>
           <span
             class="
-              circle circle-10
+              circle circle-15
               cursor-pointer
               bg-paperdazgreen-300
               text-white
             "
           >
-            <twitter-icon height="9" />
+            <twitter-icon height="16" />
           </span>
           <span
             class="
-              circle circle-10
+              circle circle-15
               cursor-pointer
               bg-paperdazgreen-300
               text-white
             "
           >
-            <whatsapp-icon height="9" />
+            <whatsapp-icon height="18" />
           </span>
         </div>
       </div>
