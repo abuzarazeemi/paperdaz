@@ -1,11 +1,10 @@
 <template>
   <div class="tool-wrapper" :style="wrpStyle" ref="Wrp">
-    <div class="tool-menu">
-      <div class="drag" v-hammer:pan="handleDrag">DR</div>
+    <div class="tool-menu flex">
+      <div class="drag" v-hammer:pan="handleDrag">DR</div> - 
+      <div class="delete" @click="$emit('delete-tool', tool)">DeLeTe</div>
     </div>
-      <component :is="`${tool.type}-tool`" :tool="tool" :x1="x1" :y1="y1" :x2="x2" :y2="y2" :points="points" />
-    <!-- <div class="tool-inner">
-    </div> -->
+    <component :is="`${tool.type}-tool`" :tool="tool" :top="top" :left="left" :x1="x1" :y1="y1" :x2="x2" :y2="y2" :points="points" />
   </div>
 </template>
 
@@ -17,6 +16,7 @@ import DotTool from './tools/Dot'
 import CircleTool from './tools/Circle'
 import LineTool from './tools/Line'
 import DrawTool from './tools/Draw'
+import HighlightTool from './tools/Highlight'
 export default {
   props: {
     tool: Object,
@@ -26,7 +26,7 @@ export default {
     y2: Number,
     points: Array,
   },
-  components: { TextTool, TickTool, CrossTool, DotTool, CircleTool, LineTool, DrawTool, },
+  components: { TextTool, TickTool, CrossTool, DotTool, CircleTool, LineTool, DrawTool, HighlightTool, },
   data: () => ({
     lastPosX: 0,
     lastPosY: 0,
@@ -36,14 +36,32 @@ export default {
   }),
   created(){
     this.checkAndSetPosition()
+    this.clcPos()
+  },
+  watch: {
+    x1(){ this.clcPos() },
+    y1(){ this.clcPos() },
+    x2(){ this.clcPos() },
+    y2(){ this.clcPos() },
+    points(){ this.clcPos() },
   },
   computed: {
     wrpStyle(){
       let top = this.top
       let left = this.left
+      return {
+        top: `${top}px`,
+        left: `${left}px`,
+      }
+    },
+  },
+  methods: {
+    clcPos(){
+      let top = this.top
+      let left = this.left
       if(this.points){
-        top = Math.min(this.points.filter((v, i) => i % 2 == 1))
-        left = Math.min(this.points.filter((v, i) => i % 2 == 0))
+        top = Math.min(...this.points.filter((v, i) => i % 2 == 1))
+        left = Math.min(...this.points.filter((v, i) => i % 2 == 0))
       }else{
         if(this.y1 != null && this.y1 != null){
           if(this.y2 < this.y1) top = this.y2
@@ -54,13 +72,9 @@ export default {
           else left = this.x1
         }
       }
-      return {
-        top: `${top}px`,
-        left: `${left}px`,
-      }
+      this.top = top
+      this.left = left
     },
-  },
-  methods: {
     checkAndSetPosition(){
       if(this.tool.top) this.top = this.tool.top
       if(this.tool.left) this.left = this.tool.left

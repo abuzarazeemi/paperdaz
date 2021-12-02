@@ -6,4 +6,5 @@ export default {
   circle: 'circle',
   line: 'line',
   draw: 'draw',
+  highlight: 'highlight',
 }

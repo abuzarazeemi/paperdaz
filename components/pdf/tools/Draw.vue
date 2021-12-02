@@ -1,6 +1,6 @@
 <template>
-  <svg class="pdf-exclude-fs" preserveAspectRatio="none" :viewBox="viewBox" :style="style">
-    <path class="mouseFocusClassName elementHover-Content" :d="d" stroke-linecap="round" style="stroke: rgb(0, 0, 0); stroke-width: 3;"></path>
+  <svg preserveAspectRatio="none" :viewBox="viewBox" :style="style">
+    <path :d="d" style="stroke: #000000" fill="none"></path>
   </svg>
 </template>
 
@@ -8,22 +8,32 @@
 export default {
   props: {
     tool: Object,
-    x1: Number,
-    y1: Number,
-    x2: Number,
-    y2: Number,
     points: Array,
+    top: Number,
+    left: Number,
   },
   computed: {
     d(){
       let l = (this.points.map((p, i) => i %2 == 0 ? `L${p},` : `${p}`)).join('')
-      return `M${x1},${y1}${l}`
+      return `M${this.points[0]},${this.points[1]}${l}`
     },
     style(){
       return {
         width: `${this.width}px`,
         position: 'absolute'
       }
+    },
+    x1(){
+      return Math.min(...this.points.filter((v, i) => i % 2 == 0))
+    },
+    y1(){
+      return Math.min(...this.points.filter((v, i) => i % 2 == 1))
+    },
+    x2(){
+      return Math.max(...this.points.filter((v, i) => i % 2 == 0))
+    },
+    y2(){
+      return Math.max(...this.points.filter((v, i) => i % 2 == 1))
     },
     viewBox(){
       let x1 = Math.min(this.x1, this.x2)

@@ -1,6 +1,6 @@
 <template>
   <svg preserveAspectRatio="none" :viewBox="viewBox" :style="style">
-    <path :d="`M${x1},${y1}L${x2},${y2}`" stroke-linecap="round" style="stroke: rgb(0, 0, 0); stroke-width: 3;"></path>
+    <path :d="d" stroke-linecap="round" style="fill: rgba(254,207,38, 0.4); stroke-width: 0;"></path>
   </svg>
 </template>
 
@@ -14,6 +14,9 @@ export default {
     y2: Number,
   },
   computed: {
+    d(){
+      return `M${this.x1},${this.y1}L${this.x2},${this.y1}L${this.x2},${this.y2}L${this.x1},${this.y2}`
+    },
     style(){
       return {
         width: `${this.width}px`,

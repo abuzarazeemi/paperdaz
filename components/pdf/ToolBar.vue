@@ -18,6 +18,9 @@
     <div class="tool-item" @click="setSelectedType(TOOL_TYPE.line)">
       <img src="./assets/line_tool.svg" alt="">
     </div>
+    <div class="tool-item" @click="setSelectedType(TOOL_TYPE.highlight)">
+      <img src="./assets/highlight_tool.svg" alt="">
+    </div>
     <div class="tool-item" @click="setSelectedType(TOOL_TYPE.draw)">
       <img src="./assets/draw_tool.svg" alt="">
     </div>
@@ -35,7 +38,8 @@ export default {
   },
   methods: {
     setSelectedType(type){
-      this.selectedType = type
+      if(this.selectedType == type) this.selectedType = null
+      else this.selectedType = type
       this.$emit('tool-change', this.selectedType)
     },
   },

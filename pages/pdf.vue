@@ -1,10 +1,10 @@
 <template>
   <div class="pdf-editor-view">
     <tool-bar @tool-change="onToolChange" />
-    {{tools}}
+    <!-- {{tools}} -->
     <div v-if="pdf" class="pdf-pages-wrapper flex flex-col items-center">
       <div class="pdf-pages-outer pb-6" ref="PagesOuter">
-        <tool-wrapper v-for="(tool, tI) in tools" :key="`tool-${tI}`" :tool="tool" :x1="tool.x1" :y1="tool.y1" :x2="tool.x2" :y2="tool.y2" :points="tool.points" />
+        <tool-wrapper v-for="(tool, tI) in tools" :key="`tool-${tI}`" :tool="tool" :top="tool.top" :left="tool.left" :x1="tool.x1" :y1="tool.y1" :x2="tool.x2" :y2="tool.y2" :points="tool.points" @delete-tool="deleteTool" />
         <component :is="`${selectedToolType}-identifier`" v-if="selectedToolType && showToolIdentifier" :position="toolIdentifierPosition" />
         <div class="pdf-single-pages-outer" ref="pdf-single-pages-outer" v-hammer:pan="handlePanning" @click="onCLickSinglePageOuter" @mousemove="onMouseMoveOnPages" @mouseenter="onMouseEnterOnPages" @mouseleave="onMouseLeaveFromPages">
           <div class="pdf-single-page-outer mt-6" v-for="(page, pI) in pdf.numPages" :key="pI">
@@ -35,11 +35,12 @@ import DotIdentifier from '@/components/pdf/tools_identifiers/Dot'
 import CircleIdentifier from '@/components/pdf/tools_identifiers/Circle'
 import LineIdentifier from '@/components/pdf/tools_identifiers/Line'
 import DrawIdentifier from '@/components/pdf/tools_identifiers/Draw'
+import HighlightIdentifier from '@/components/pdf/tools_identifiers/Highlight'
 
 export default {
   components: { 
     PdfPage, ToolWrapper, ToolBar,
-    TextIdentifier, TickIdentifier, CrossIdentifier, DotIdentifier, CircleIdentifier, LineIdentifier,
+    TextIdentifier, TickIdentifier, CrossIdentifier, DotIdentifier, CircleIdentifier, LineIdentifier, HighlightIdentifier, 
     DrawIdentifier,
   },
   created(){
@@ -68,6 +69,7 @@ export default {
         [TOOL_TYPE.dot]: { identifier: { top: 20, left: 0 }, tool: { top: 40, left: 0 } },
         [TOOL_TYPE.circle]: { identifier: { top: 20, left: 0 }, tool: { top: 40, left: 0 } },
         [TOOL_TYPE.line]: { identifier: { top: 20, left: 0 }, tool: { top: 40, left: 0 } },
+        [TOOL_TYPE.highlight]: { identifier: { top: 20, left: 0 }, tool: { top: 20, left: 0 } },
         [TOOL_TYPE.draw]: { identifier: { top: 20, left: 0 }, tool: { top: 40, left: 0 } },
       }
     },
@@ -76,6 +78,9 @@ export default {
     },
   },
   methods: {
+    deleteTool(tool){
+      this.tools.splice(this.tools.indexOf(tool), 1)
+    },
     handlePanning(event){
       var elem = this.$refs['pdf-single-pages-outer']
       
@@ -84,6 +89,10 @@ export default {
         this.lastPosX = elem.offsetLeft
         this.lastPosY = elem.offsetTop
         if(this.selectedToolType == this.TOOL_TYPE.line){
+          this.placeTool(event.srcEvent, null)
+          this.selectedToolIndex = this.tools.length - 1
+        }
+        else if(this.selectedToolType == this.TOOL_TYPE.highlight){
           this.placeTool(event.srcEvent, null)
           this.selectedToolIndex = this.tools.length - 1
         }
@@ -100,6 +109,12 @@ export default {
         let { x, y } = this.pointerPos(event.srcEvent, this.$refs.PagesOuter)
         this.tools[this.selectedToolIndex].x2 = x - this.TOOL_THRESHOLD[this.selectedToolType].tool.left
         this.tools[this.selectedToolIndex].y2 = y - this.TOOL_THRESHOLD[this.selectedToolType].tool.top
+        this.$forceUpdate()
+      }
+      else if(this.selectedToolType == this.TOOL_TYPE.highlight){
+        let { x, y } = this.pointerPos(event.srcEvent, this.$refs.PagesOuter)
+        this.tools[this.selectedToolIndex].x2 = x - this.TOOL_THRESHOLD[this.selectedToolType].tool.left
+        this.tools[this.selectedToolIndex].y2 = this.tools[this.selectedToolIndex].y1 + 15
         this.$forceUpdate()
       }
       else if(this.selectedToolType == this.TOOL_TYPE.draw){
@@ -167,6 +182,7 @@ export default {
       if(
         !this.selectedToolType
         || this.selectedToolType == this.TOOL_TYPE.line
+        || this.selectedToolType == this.TOOL_TYPE.highlight
         || this.selectedToolType == this.TOOL_TYPE.draw
       ) return
       this.placeTool(event, this.$refs.PagesOuter)
@@ -179,6 +195,12 @@ export default {
         left: x - this.TOOL_THRESHOLD[this.selectedToolType].tool.left,
       }
       if(this.selectedToolType == this.TOOL_TYPE.line){
+        obj.x1 = obj.left
+        obj.y1 = obj.top
+        delete obj.left
+        delete obj.top
+      }
+      else if(this.selectedToolType == this.TOOL_TYPE.highlight){
         obj.x1 = obj.left
         obj.y1 = obj.top
         delete obj.left
