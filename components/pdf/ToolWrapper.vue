@@ -1,10 +1,11 @@
 <template>
   <div class="tool-wrapper" :style="wrpStyle" ref="Wrp">
-    <div class="tool-menu flex">
+    <div class="tool-menu flex" v-if="isActive">
       <div class="drag" v-hammer:pan="handleDrag">DR</div> - 
-      <div class="delete" @click="$emit('delete-tool', tool)">DeLeTe</div>
+      <div class="delete" @click="$emit('delete-tool', tool)">DeLeTe</div> - 
+      <div class="delete" @click="onOutsideClick">OK</div>
     </div>
-    <component :is="`${tool.type}-tool`" :tool="tool" :top="top" :left="left" :x1="x1" :y1="y1" :x2="x2" :y2="y2" :points="points" />
+    <component @click="onClick" :is="`${tool.type}-tool`" :tool="tool" :top="top" :left="left" :x1="x1" :y1="y1" :x2="x2" :y2="y2" :points="points" :isActive="isActive" />
   </div>
 </template>
 
@@ -33,6 +34,7 @@ export default {
     isDragging: false,
     top: 100,
     left: 0,
+    isActive: true,
   }),
   created(){
     this.checkAndSetPosition()
@@ -56,6 +58,12 @@ export default {
     },
   },
   methods: {
+    onClick(){
+      this.isActive = true
+    },
+    onOutsideClick(){
+      this.isActive = false
+    },
     clcPos(){
       let top = this.top
       let left = this.left
@@ -108,5 +116,7 @@ export default {
   height: 24px;
   min-width: 100px;
   width: max-content;
+  position: absolute;
+  top: -24px;
 }
 </style>

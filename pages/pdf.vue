@@ -22,6 +22,8 @@ import * as pdfJs from "pdfjs-dist/build/pdf"
 import * as worker from "pdfjs-dist/build/pdf.worker.entry"
 pdfJs.GlobalWorkerOptions.workerSrc = worker
 
+import jsPDF from 'jspdf'
+
 import PdfPage from '@/components/pdf/PdfPage'
 import ToolWrapper from '@/components/pdf/ToolWrapper'
 import ToolBar from '@/components/pdf/ToolBar'
@@ -45,6 +47,10 @@ export default {
   },
   created(){
     this.fetchPdf()
+    this.$BUS.$on('download-pdf', this.downloadPdf)
+  },
+  beforeDestroy(){
+    this.$BUS.$off('download-pdf')
   },
   data: () => ({
     pdf: null,
@@ -63,14 +69,14 @@ export default {
     TOOL_TYPE(){ return TOOL_TYPE },
     TOOL_THRESHOLD(){
       return {
-        [TOOL_TYPE.text]: { identifier: { top: 20, left: 0 }, tool: { top: 40, left: 0 } },
-        [TOOL_TYPE.tick]: { identifier: { top: 20, left: 0 }, tool: { top: 40, left: 0 } },
-        [TOOL_TYPE.cross]: { identifier: { top: 20, left: 0 }, tool: { top: 40, left: 0 } },
-        [TOOL_TYPE.dot]: { identifier: { top: 20, left: 0 }, tool: { top: 40, left: 0 } },
-        [TOOL_TYPE.circle]: { identifier: { top: 20, left: 0 }, tool: { top: 40, left: 0 } },
-        [TOOL_TYPE.line]: { identifier: { top: 20, left: 0 }, tool: { top: 40, left: 0 } },
-        [TOOL_TYPE.highlight]: { identifier: { top: 20, left: 0 }, tool: { top: 20, left: 0 } },
-        [TOOL_TYPE.draw]: { identifier: { top: 20, left: 0 }, tool: { top: 40, left: 0 } },
+        [TOOL_TYPE.text]: { identifier: { top: 20, left: 0 }, tool: { top: 0, left: 0 } },
+        [TOOL_TYPE.tick]: { identifier: { top: 20, left: 0 }, tool: { top: 0, left: 0 } },
+        [TOOL_TYPE.cross]: { identifier: { top: 20, left: 0 }, tool: { top: 0, left: 0 } },
+        [TOOL_TYPE.dot]: { identifier: { top: 20, left: 0 }, tool: { top: 0, left: 0 } },
+        [TOOL_TYPE.circle]: { identifier: { top: 20, left: 0 }, tool: { top: 0, left: 0 } },
+        [TOOL_TYPE.line]: { identifier: { top: 20, left: 0 }, tool: { top: 0, left: 0 } },
+        [TOOL_TYPE.highlight]: { identifier: { top: 20, left: 0 }, tool: { top: 0, left: 0 } },
+        [TOOL_TYPE.draw]: { identifier: { top: 20, left: 0 }, tool: { top: 0, left: 0 } },
       }
     },
     selectedTool(){
@@ -78,6 +84,23 @@ export default {
     },
   },
   methods: {
+    downloadPdf(){
+      console.log('d')
+      let firstPage = document.querySelector('.pdf-page')
+      var doc = new jsPDF('p', 'pt', [firstPage.clientWidth, firstPage.clientHeight]);
+
+      // console.log([document.querySelector('.pdf-page')])
+      doc.html(this.$refs.PagesOuter, {
+        callback: function (doc) {
+          doc.save();
+        },
+        x: 10,
+        y: 10,
+        // width: 170,
+        // image:        { type: 'jpeg', quality: 1 },
+        // html2canvas:  { dpi: 300, letterRendering: true, width: 1080, height: 1920},
+      })
+    },
     deleteTool(tool){
       this.tools.splice(this.tools.indexOf(tool), 1)
     },

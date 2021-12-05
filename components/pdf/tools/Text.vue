@@ -1,11 +1,19 @@
 <template>
   <div class="text-field tool">
-    <input type="text">
+    <input type="text" v-model="text" v-if="isActive">
+    <p v-else>{{text || 'Click to type'}}</p>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  props: {
+    isActive: Boolean
+  },
+  data: () => ({
+    text: null,
+  }),
+}
 </script>
 
 <style lang="scss" scoped>

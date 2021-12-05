@@ -24,6 +24,10 @@
     <div class="tool-item" @click="setSelectedType(TOOL_TYPE.draw)">
       <img src="./assets/draw_tool.svg" alt="">
     </div>
+
+    <p @click="signaturePad=!signaturePad">Signature Pad</p>
+
+    <button @click="downloadPdf">Download</button>
   </div>
 </template>
 
@@ -32,6 +36,7 @@ import TOOL_TYPE from './data/toolType'
 export default {
   data: () => ({
     selectedType: null,
+    signaturePad: false
   }),
   computed: {
     TOOL_TYPE(){ return TOOL_TYPE },
@@ -41,6 +46,9 @@ export default {
       if(this.selectedType == type) this.selectedType = null
       else this.selectedType = type
       this.$emit('tool-change', this.selectedType)
+    },
+    downloadPdf(){
+      this.$BUS.$emit('download-pdf')
     },
   },
 }
