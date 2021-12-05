@@ -38,12 +38,15 @@ import CircleIdentifier from '@/components/pdf/tools_identifiers/Circle'
 import LineIdentifier from '@/components/pdf/tools_identifiers/Line'
 import DrawIdentifier from '@/components/pdf/tools_identifiers/Draw'
 import HighlightIdentifier from '@/components/pdf/tools_identifiers/Highlight'
+import DateIdentifier from '@/components/pdf/tools_identifiers/Date'
+import NameIdentifier from '@/components/pdf/tools_identifiers/Name'
+import InitialIdentifier from '@/components/pdf/tools_identifiers/Initial'
 
 export default {
   components: { 
     PdfPage, ToolWrapper, ToolBar,
     TextIdentifier, TickIdentifier, CrossIdentifier, DotIdentifier, CircleIdentifier, LineIdentifier, HighlightIdentifier, 
-    DrawIdentifier,
+    DrawIdentifier, DateIdentifier, NameIdentifier, InitialIdentifier,
   },
   created(){
     this.fetchPdf()
@@ -77,6 +80,9 @@ export default {
         [TOOL_TYPE.line]: { identifier: { top: 20, left: 0 }, tool: { top: 0, left: 0 } },
         [TOOL_TYPE.highlight]: { identifier: { top: 20, left: 0 }, tool: { top: 0, left: 0 } },
         [TOOL_TYPE.draw]: { identifier: { top: 20, left: 0 }, tool: { top: 0, left: 0 } },
+        [TOOL_TYPE.date]: { identifier: { top: 20, left: 0 }, tool: { top: 0, left: 0 } },
+        [TOOL_TYPE.name]: { identifier: { top: 20, left: 0 }, tool: { top: 0, left: 0 } },
+        [TOOL_TYPE.initial]: { identifier: { top: 20, left: 0 }, tool: { top: 0, left: 0 } },
       }
     },
     selectedTool(){

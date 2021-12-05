@@ -24,6 +24,15 @@
     <div class="tool-item" @click="setSelectedType(TOOL_TYPE.draw)">
       <img src="./assets/draw_tool.svg" alt="">
     </div>
+    <div class="tool-item" @click="setSelectedType(TOOL_TYPE.date)">
+      <img src="./assets/date_tool.svg" alt="">
+    </div>
+    <div class="tool-item" @click="setSelectedType(TOOL_TYPE.name)">
+      <img src="./assets/name_tool.svg" alt="">
+    </div>
+    <div class="tool-item" @click="setSelectedType(TOOL_TYPE.initial)">
+      INITIAL
+    </div>
 
     <p @click="signaturePad=!signaturePad">Signature Pad</p>
 

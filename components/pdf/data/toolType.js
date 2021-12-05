@@ -7,4 +7,7 @@ export default {
   line: 'line',
   draw: 'draw',
   highlight: 'highlight',
+  date: 'date',
+  name: 'name',
+  initial: 'initial',
 }

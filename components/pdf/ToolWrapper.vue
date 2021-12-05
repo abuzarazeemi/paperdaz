@@ -18,6 +18,9 @@ import CircleTool from './tools/Circle'
 import LineTool from './tools/Line'
 import DrawTool from './tools/Draw'
 import HighlightTool from './tools/Highlight'
+import DateTool from './tools/Date'
+import NameTool from './tools/Name'
+import InitialTool from './tools/Initial'
 export default {
   props: {
     tool: Object,
@@ -27,7 +30,7 @@ export default {
     y2: Number,
     points: Array,
   },
-  components: { TextTool, TickTool, CrossTool, DotTool, CircleTool, LineTool, DrawTool, HighlightTool, },
+  components: { TextTool, TickTool, CrossTool, DotTool, CircleTool, LineTool, DrawTool, HighlightTool, DateTool, NameTool, InitialTool, },
   data: () => ({
     lastPosX: 0,
     lastPosY: 0,
