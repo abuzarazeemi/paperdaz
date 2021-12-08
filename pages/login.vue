@@ -49,13 +49,13 @@
             type="success"
             class="mb-8"
             :isLoading="true"
-          >
-          </message-alert-widget>
+          />
           <div class="mb-6">
             <label for="" class="mb-2 block">Email</label>
             <input-field
-              :showAsError="!!errorMessage"
               v-model="user.email"
+              :showAsError="!!errorMessage"
+              :disabled="isLoading || isRedirecting"
               type="email"
               placeholder="example@email.com"
               required
@@ -66,6 +66,7 @@
             <password-field
               :showAsError="!!errorMessage"
               v-model="user.password"
+              :disabled="isLoading || isRedirecting"
               required
               placeholder="xxxxxxxxxxxxxxxxxxxx"
             />
@@ -180,7 +181,7 @@ export default Vue.extend({
 
       this.$auth
         .loginWith('local', { data: this.user })
-        .then((response) => {
+        .then(() => {
           this.isRedirecting = true
           setTimeout(() => {
             this.$nuxt.$router.push('/dashboard')

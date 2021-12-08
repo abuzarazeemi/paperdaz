@@ -37,11 +37,35 @@
         </div>
 
         <form action="" class="text-sm" @submit.prevent="submit">
+          <message-alert-widget
+            :message="errorMessage"
+            v-show="errorMessage"
+            type="error"
+            class="mb-8"
+          />
+          <message-alert-widget
+            v-show="isRedirecting"
+            type="success"
+            class="mb-8"
+          >
+            <div class="w-full flex justify-between gap-3 items-center">
+              <div class="flex-1">
+                <p class="text-base">Registration Successful!</p>
+                <p class="font-normal">Please wait, signing in user.</p>
+              </div>
+              <div>
+                <span class="animate-spin inline-block">
+                  <spinner-dotted-icon height="22" width="22" />
+                </span>
+              </div>
+            </div>
+          </message-alert-widget>
           <div class="mb-6">
             <label for="" class="mb-2 block">First Name</label>
             <input-field
               v-model="user.firstName"
               required
+              :disabled="isLoading || isRedirecting"
               type="text"
               placeholder="Jane"
             />
@@ -50,6 +74,7 @@
             <label for="" class="mb-2 block">Last Name</label>
             <input-field
               v-model="user.lastName"
+              :disabled="isLoading || isRedirecting"
               required
               type="text"
               placeholder="Doe"
@@ -59,6 +84,7 @@
             <label for="" class="mb-2 block">Email</label>
             <input-field
               v-model="user.email"
+              :disabled="isLoading || isRedirecting"
               required
               type="email"
               placeholder="example@email.com"
@@ -68,6 +94,7 @@
             <label for="" class="mb-2 block">Password</label>
             <password-field
               v-model="user.password"
+              :disabled="isLoading || isRedirecting"
               required
               placeholder="xxxxxxxxxxxxxxxxxxxx"
             />
@@ -76,6 +103,7 @@
             <label for="" class="mb-2 block">Confirm Password</label>
             <password-field
               v-model="confirmPassword"
+              :disabled="isLoading || isRedirecting"
               placeholder="xxxxxxxxxxxxxxxxxxxx"
               :class="{
                 'border-red-500':
@@ -105,10 +133,11 @@
                 class="cursor-pointer circle circle-8 text-white relative"
               >
                 <div class="overlay circle circle-18"></div>
-                <svg-icon
-                  value="CheckIcon"
+                <check-icon
                   class="relative"
                   style="z-index: 1"
+                  height="8"
+                  width="8"
                 />
               </label>
               <label for="remember-me-checkbox" class="cursor-pointer"
@@ -128,9 +157,19 @@
                 px-5
                 text-white text-sm
                 bg-paperdazgreen-300
+                disabled:bg-opacity-70
               "
+              :class="[isLoading ? 'cursor-progress' : '']"
+              :disabled="isLoading"
             >
-              Register
+              <span class="inline-flex items-center gap-3">
+                <span>Register</span>
+                <transition name="fade" :duration="100">
+                  <span v-show="isLoading" class="animate-spin">
+                    <spinner-dotted-icon height="22" width="22" />
+                  </span>
+                </transition>
+              </span>
             </button>
 
             <span class="text-xs inline-block mt-6"
@@ -149,13 +188,24 @@
 <script lang="ts">
 import Vue from 'vue'
 import SocialAuth from '~/components/auth/SocialAuth.vue'
+import CheckIcon from '~/components/svg-icons/CheckIcon.vue'
+import SpinnerDottedIcon from '~/components/svg-icons/SpinnerDottedIcon.vue'
 import SvgIcon from '~/components/svg-icons/SvgIcon.vue'
 import InputField from '~/components/widgets/InputField.vue'
+import MessageAlertWidget from '~/components/widgets/MessageAlertWidget.vue'
 import PasswordField from '~/components/widgets/PasswordField.vue'
 export default Vue.extend({
   name: 'RegisterPage',
   auth: 'guest',
-  components: { SocialAuth, InputField, PasswordField, SvgIcon },
+  components: {
+    SocialAuth,
+    InputField,
+    PasswordField,
+    SvgIcon,
+    CheckIcon,
+    MessageAlertWidget,
+    SpinnerDottedIcon,
+  },
   layout: 'landing',
   data() {
     return {
@@ -167,6 +217,8 @@ export default Vue.extend({
         password: undefined,
       },
       isLoading: false,
+      errorMessage: '',
+      isRedirecting: false,
     }
   },
   methods: {
@@ -176,31 +228,49 @@ export default Vue.extend({
       if (this.user.password && this.user.password !== this.confirmPassword)
         return
 
-      if (this.isLoading) return
+      if (this.isLoading || this.isRedirecting) return
 
       this.isLoading = true
+      this.errorMessage = ''
+      this.isRedirecting = false
 
-      console.log(this.user)
+      const data = {
+        first_name: this.user.firstName,
+        last_name: this.user.lastName,
+        email: this.user.email,
+        password: this.user.password,
+      }
+
       this.$axios
-        .$post('/api/auth/signup', this.user)
+        .$post('/auth/register', data)
         .then(async () => {
-          await this.$auth.loginWith('local', {
-            data: { email: this.user.email, password: this.user.password },
-          })
-          this.$router.push('/dashboard')
+          this.isRedirecting = true
+          await this.$nextTick()
+
+          // if registration is successful, login
+          await this.$auth
+            .loginWith('local', {
+              data: { email: this.user.email, password: this.user.password },
+            })
+            .then(() => {
+              this.$nuxt.$router.push('/dashboard')
+            })
         })
         .catch((error) => {
-          console.log(error.response.data)
+          let message = ''
           if (
             error &&
             error.response &&
             error.response.data &&
             error.response.data.message
           ) {
-            this.$toast.error(error.response.data.message).goAway(1500)
+            message = error.response.data.message
           } else {
-            this.$toast.error('Server not reachable').goAway(1500)
+            message = 'Server not reachable'
           }
+          this.$toast.error(message).goAway(5000)
+          this.errorMessage = message
+          this.isRedirecting = false
         })
         .finally(() => {
           this.isLoading = false

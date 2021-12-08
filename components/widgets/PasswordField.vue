@@ -11,8 +11,16 @@
       v-model="value"
       :type="showPassword ? 'text' : 'password'"
       :placeholder="placeholder"
-      class="outline-none focus:outline-none border-none flex-1 h-full"
+      class="
+        outline-none
+        focus:outline-none
+        border-none
+        flex-1
+        h-full
+        disabled:cursor-not-allowed
+      "
       :required="required"
+      :disabled="disabled"
       @focus="focus = true"
       @focusout="focus = false"
     />
@@ -40,6 +48,10 @@ export default Vue.extend({
       default: '',
     },
     required: {
+      type: Boolean,
+      default: false,
+    },
+    disabled: {
       type: Boolean,
       default: false,
     },

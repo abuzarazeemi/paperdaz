@@ -23,7 +23,7 @@ export default Vue.extend({
 
 <style lang="postcss" scoped>
 .input-field {
-  @apply w-full
+  @apply w-full disabled:cursor-not-allowed
                 rounded-xl
                 px-2
                 border border-paperdazgray-200
