@@ -103,7 +103,7 @@
       />
       <!-- End:: empty file ledger -->
 
-      <table class="file-ledger-table">
+      <table ref="fileLedgerTable" class="file-ledger-table">
         <thead>
           <tr class="text-left">
             <th class="text-center fixed-col left">No</th>
@@ -266,14 +266,21 @@ export default Vue.extend({
     this.handleShowingLedger()
     this.tableScrollObserver()
   },
+  updated() {
+    this.tableScrollObserver()
+  },
   methods: {
-    tableScrollObserver() {
+    async tableScrollObserver() {
+      await this.$nextTick()
       if (this.scrollObserver) {
         try {
           this.scrollObserver.disconnect()
+          this.scrollObserver = undefined
         } catch (e) {}
       }
       const options = {
+        // root: this.$refs.ledgerContainer as Element,
+        root: document,
         rootMargin: '0px',
         threshold: 1.0,
       }
@@ -298,6 +305,7 @@ export default Vue.extend({
       const fixedCols = document.querySelectorAll('.fixed-col')
 
       fixedCols.forEach((el) => {
+        console.log(el)
         observer.observe(el)
       })
 
@@ -346,7 +354,6 @@ export default Vue.extend({
   @apply text-sm w-full whitespace-nowrap;
   border-collapse: separate;
   border-spacing: 0px 0px;
-
   & tr {
     @apply border-b border-gray-100;
   }

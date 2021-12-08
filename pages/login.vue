@@ -37,9 +37,24 @@
         </div>
 
         <form action="" class="text-sm" @submit.prevent="login">
+          <message-alert-widget
+            :message="errorMessage"
+            v-show="errorMessage"
+            type="error"
+            class="mb-8"
+          />
+          <message-alert-widget
+            :message="'Please wait, redirecting'"
+            v-show="isRedirecting"
+            type="success"
+            class="mb-8"
+            :isLoading="true"
+          >
+          </message-alert-widget>
           <div class="mb-6">
             <label for="" class="mb-2 block">Email</label>
             <input-field
+              :showAsError="!!errorMessage"
               v-model="user.email"
               type="email"
               placeholder="example@email.com"
@@ -49,6 +64,7 @@
           <div class="mb-10">
             <label for="" class="mb-2 block">Password</label>
             <password-field
+              :showAsError="!!errorMessage"
               v-model="user.password"
               required
               placeholder="xxxxxxxxxxxxxxxxxxxx"
@@ -65,10 +81,11 @@
                 class="cursor-pointer circle circle-8 text-white relative"
               >
                 <div class="overlay circle circle-18"></div>
-                <svg-icon
-                  value="CheckIcon"
+                <check-icon
                   class="relative"
                   style="z-index: 1"
+                  height="8"
+                  width="8"
                 />
               </label>
               <label for="remember-me-checkbox" class="cursor-pointer"
@@ -88,9 +105,19 @@
                 px-5
                 text-white text-sm
                 bg-paperdazgreen-300
+                disabled:bg-opacity-70
               "
+              :class="[isLoading ? 'cursor-progress' : '']"
+              :disabled="isLoading"
             >
-              Sign in
+              <span class="inline-flex items-center gap-3">
+                <span>Sign in</span>
+                <transition name="fade" :duration="100">
+                  <span v-show="isLoading" class="animate-spin">
+                    <spinner-dotted-icon height="22" width="22" />
+                  </span>
+                </transition>
+              </span>
             </button>
 
             <span class="text-xs inline-block mt-6"
@@ -109,13 +136,26 @@
 <script lang="ts">
 import Vue from 'vue'
 import SocialAuth from '~/components/auth/SocialAuth.vue'
+import CheckIcon from '~/components/svg-icons/CheckIcon.vue'
+import ExclamationIcon from '~/components/svg-icons/ExclamationIcon.vue'
+import SpinnerDottedIcon from '~/components/svg-icons/SpinnerDottedIcon.vue'
 import SvgIcon from '~/components/svg-icons/SvgIcon.vue'
 import InputField from '~/components/widgets/InputField.vue'
+import MessageAlertWidget from '~/components/widgets/MessageAlertWidget.vue'
 import PasswordField from '~/components/widgets/PasswordField.vue'
 export default Vue.extend({
   name: 'LoginPage',
   auth: 'guest',
-  components: { SocialAuth, InputField, PasswordField, SvgIcon },
+  components: {
+    SocialAuth,
+    InputField,
+    PasswordField,
+    SvgIcon,
+    SpinnerDottedIcon,
+    ExclamationIcon,
+    MessageAlertWidget,
+    CheckIcon,
+  },
   layout: 'landing',
   data() {
     return {
@@ -124,31 +164,42 @@ export default Vue.extend({
         password: undefined,
       },
       isLoading: false,
+      errorMessage: '',
+      isRedirecting: false,
     }
   },
   methods: {
     login() {
       event?.preventDefault()
 
-      if (this.isLoading) return
+      if (this.isLoading || this.isRedirecting) return
 
       this.isLoading = true
+      this.errorMessage = ''
+      this.isRedirecting = false
+
       this.$auth
         .loginWith('local', { data: this.user })
-        .then(() => {
-          this.$router.push('/dashboard')
+        .then((response) => {
+          this.isRedirecting = true
+          setTimeout(() => {
+            this.$nuxt.$router.push('/dashboard')
+          }, 2000)
         })
         .catch((error) => {
+          let message = ''
           if (
             error &&
             error.response &&
             error.response.data &&
             error.response.data.message
           ) {
-            this.$toast.error(error.response.data.message).goAway(1500)
+            message = error.response.data.message
           } else {
-            this.$toast.error('Server not reachable').goAway(1500)
+            message = 'Server not reachable'
           }
+          this.$toast.error(message).goAway(5000)
+          this.errorMessage = message
         })
         .finally(() => {
           this.isLoading = false

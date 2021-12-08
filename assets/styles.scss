@@ -56,7 +56,7 @@ body {
 }
 
 .circle {
-  @apply inline-flex items-center justify-center;
+  @apply flex items-center justify-center;
   border-radius: 50%;
 }
 

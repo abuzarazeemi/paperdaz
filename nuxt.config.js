@@ -4,6 +4,9 @@ export default {
     host: '0.0.0.0',
     // port: 3000,
   },
+  env: {
+    API_URL: process.env.API_URL,
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'Paperdaz',
@@ -41,16 +44,17 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
-    '@nuxtjs/auth-next',
     '@nuxtjs/firebase',
     '@nuxtjs/toast',
   ],
   axios: {
-    baseURL: 'https://dev-api.paperdaz.com',
+    baseURL: process.env.API_URL,
   },
   auth: {
+    watchLoggedIn: false,
     redirect: {
       login: '/login',
       logout: '/',
@@ -60,7 +64,7 @@ export default {
     strategies: {
       local: {
         token: {
-          property: 'data.0.token',
+          property: 'token',
           global: true,
           // required: true,
           // type: 'Bearer'
@@ -71,10 +75,10 @@ export default {
         },
         endpoints: {
           login: {
-            url: '/api/auth/signin',
+            url: '/auth/login',
             method: 'post',
           },
-          user: { url: '/api/self', method: 'get' },
+          user: { url: '/user', method: 'get' },
         },
       },
     },
