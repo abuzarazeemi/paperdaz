@@ -43,50 +43,13 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import Passport from 'passport'
 
 export default Vue.extend({
   methods: {
-    async signInWithFacebook() {
-      try {
-        const provider = new this.$fireModule.auth.FacebookAuthProvider()
-        provider.setCustomParameters({ auth_type: 'reauthenticate' })
-        const authData = await this.$fire.auth.signInWithPopup(provider)
-        const accessToken = authData.credential.accessToken
-        this.signIn('facebook', {
-          access_token: accessToken,
-        })
-      } catch (err: any) {
-        this.$toast.error(err.message).goAway(5000)
-      }
-    },
-    async signInWithGoogle() {
-      try {
-        const provider = new this.$fireModule.auth.GoogleAuthProvider()
-        const authData = await this.$fire.auth.signInWithPopup(provider)
-        const accessToken = authData.credential.accessToken
-        this.signIn('google', {
-          access_token: accessToken,
-        })
-      } catch (err: any) {
-        this.$toast.error(err.message).goAway(5000)
-      }
-    },
-    signInWithTwitter() {
-      const provider = new this.$fireModule.auth.TwitterAuthProvider()
-      this.$fire.auth
-        .signInWithPopup(provider)
-        .then((authData: any) => {
-          const accessToken = authData.credential.accessToken
-          const secretToken = authData.credential.secret
-          this.signIn('twitter', {
-            oauth_token: accessToken,
-            oauth_token_secret: secretToken,
-          })
-        })
-        .catch((err: any) => {
-          this.$toast.error(err.message).goAway(5000)
-        })
-    },
+    signInWithFacebook() {},
+    signInWithGoogle() {},
+    signInWithTwitter() {},
     async signIn(social: string, payload: any) {
       try {
         const response = await this.$axios.$post('/api/auth/' + social, payload)
@@ -112,13 +75,12 @@ export default Vue.extend({
       await this.$auth.fetchUser()
       // this.$auth.strategy.token.set(token)
       this.$router.push('/dashboard')
-      await this.$fire.auth.signOut()
     },
   },
 })
 </script>
 
-<style lang="postcss" scoped>
+<style lang="scss" scoped>
 .social-card {
   @apply flex justify-center
             items-center

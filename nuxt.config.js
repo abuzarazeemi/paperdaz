@@ -37,7 +37,8 @@ export default {
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/tailwindcss
-    '@nuxtjs/tailwindcss',
+    // '@nuxtjs/tailwindcss',
+    '@nuxt/postcss8',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -47,7 +48,7 @@ export default {
     '@nuxtjs/auth-next',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
-    '@nuxtjs/firebase',
+    // '@nuxtjs/firebase',
     '@nuxtjs/toast',
   ],
   axios: {
@@ -83,20 +84,20 @@ export default {
       },
     },
   },
-  firebase: {
-    config: {
-      apiKey: 'AIzaSyDtoyL38ZWagdtu2w-_mZIZrE2JQALfiss',
-      authDomain: 'paperdaz-52bcb.firebaseapp.com',
-      projectId: 'paperdaz-52bcb',
-      storageBucket: 'paperdaz-52bcb.appspot.com',
-      messagingSenderId: '568264793203',
-      appId: '1:568264793203:web:2034e66185390567fede06',
-      measurementId: 'G-NDNJE6P9HN',
-    },
-    services: {
-      auth: true,
-    },
-  },
+  // firebase: {
+  //   config: {
+  //     apiKey: 'AIzaSyDtoyL38ZWagdtu2w-_mZIZrE2JQALfiss',
+  //     authDomain: 'paperdaz-52bcb.firebaseapp.com',
+  //     projectId: 'paperdaz-52bcb',
+  //     storageBucket: 'paperdaz-52bcb.appspot.com',
+  //     messagingSenderId: '568264793203',
+  //     appId: '1:568264793203:web:2034e66185390567fede06',
+  //     measurementId: 'G-NDNJE6P9HN',
+  //   },
+  //   services: {
+  //     auth: true,
+  //   },
+  // },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
@@ -106,7 +107,16 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    postcss: {
+      plugins: {
+        'postcss-import': {},
+        'tailwindcss/nesting': {},
+        tailwindcss: {},
+        autoprefixer: {},
+      },
+    },
+  },
   serverMiddleware: [
     redirectSSL.create({
       enabled: process.env.NODE_ENV === 'production',

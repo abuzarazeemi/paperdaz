@@ -61,7 +61,7 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="postcss" scoped>
 #dashboard-layout {
   @media only screen and (min-width: 1024px) {
     height: var(--viewport-height, 100vh);
@@ -70,7 +70,7 @@ export default Vue.extend({
     overflow: hidden;
     display: grid;
     grid-template-columns: 1fr;
-    // grid-template-rows: 1fr;
+    /* // grid-template-rows: 1fr; */
     gap: 16px;
     grid-template-columns: max-content 1fr;
   }
@@ -107,7 +107,7 @@ export default Vue.extend({
   top: 0;
   bottom: 0;
   left: calc(0px - var(--sidebar-container-width));
-  // left: calc(-1 * var(--sidebar-container-width));
+  /* // left: calc(-1 * var(--sidebar-container-width)); */
   box-shadow: 2px 0px 13px 2px rgb(151 151 151 / 31%);
   transition: all ease-in-out 200ms;
   & .overlay {
@@ -126,7 +126,7 @@ export default Vue.extend({
 
   &.active {
     left: 0;
-    .overlay {
+    & .overlay {
       opacity: 1;
       pointer-events: all;
     }

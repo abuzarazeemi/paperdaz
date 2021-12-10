@@ -27,7 +27,6 @@
       "@nuxt/types",
       "@nuxtjs/axios",
       "@nuxtjs/auth-next",
-      "@nuxtjs/firebase",
       "@nuxtjs/toast",
       "@types/node",
     ]
