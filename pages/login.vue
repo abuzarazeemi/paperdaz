@@ -196,6 +196,14 @@ export default Vue.extend({
     if (token) {
       try {
         socialUser = jwt.verify(token, encryptionKey) as PassportUserProfile
+        if (
+          (!socialUser.name.givenName || !socialUser.name.familyName) &&
+          socialUser.displayName
+        ) {
+          const names = socialUser.displayName.split(/\s+/)
+          socialUser.name.givenName = names[0]
+          socialUser.name.familyName = names[names.length - 1]
+        }
       } catch (err: any) {
         errorMessage = err.message || 'Invalid token'
       }
@@ -220,17 +228,18 @@ export default Vue.extend({
       // this.isLoading = false
 
       const provider = this.socialUser.provider
+      console.log(this.socialUser)
 
       const data = {
         social_id: this.socialUser.id,
         first_name: this.socialUser.name.givenName,
         last_name: this.socialUser.name.familyName,
         email:
-          this.socialUser.emails.length > 0
+          (this.socialUser.emails || []).length > 0
             ? this.socialUser.emails[0].value
             : '',
         profile_picture:
-          this.socialUser.photos.length > 0
+          (this.socialUser.photos || []).length > 0
             ? this.socialUser.photos[0].value
             : '',
       }
@@ -239,13 +248,16 @@ export default Vue.extend({
       this.$axios
         .$post(`/auth/${provider}`, data)
         .then(async (response) => {
+          debugger
           this.isRedirecting = true
           const token = response.data.token
           await this.$auth.setUserToken(token)
           await this.$auth.fetchUser()
+          this.$nuxt.$router.push('/dashboard')
           this.isRedirecting = false
         })
         .catch((err) => {
+          debugger
           this.errorMessage = 'An error occured'
           this.$toast.error('An error occured').goAway(5000)
         })

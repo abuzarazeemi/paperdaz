@@ -70,7 +70,9 @@ export default Vue.extend({
         )
       )
     },
-    signInWithFacebook() {},
+    signInWithFacebook() {
+      location.href = '/auth/facebook'
+    },
     signInWithGoogle() {
       location.href = '/auth/google'
     },
