@@ -5,9 +5,9 @@ const GoogleStrategy = require('passport-google-oauth2').Strategy
 // const GoogleStrategy = require('passport-google-oauth').OAuthStrategy
 const cookieSession = require('cookie-session')
 const jwt = require('jsonwebtoken')
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
-}
+// if (process.env.NODE_ENV !== 'production') {
+require('dotenv').config()
+// }
 
 const app = express()
 app.use(express.json())
