@@ -209,7 +209,7 @@ export default Vue.extend({
           socialUser.name.familyName = names[names.length - 1]
         }
       } catch (err: any) {
-        errorMessage = err.message || 'Invalid token'
+        errorMessage = err.message || 'Invalid token.'
       }
     }
 
