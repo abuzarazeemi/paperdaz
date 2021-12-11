@@ -62,9 +62,12 @@ passport.use(
 
 app.get(
   '/google',
-  passport.authenticate('google', {
-    scope: ['profile', 'email'],
-  })
+  // passport.authenticate('google', {
+  //   scope: ['profile', 'email'],
+  // })
+  (req, res) => {
+    res.send(appUrl)
+  }
 )
 
 app.get(
