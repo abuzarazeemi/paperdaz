@@ -24,6 +24,7 @@ export default {
     { src: '~/plugins/nuxt-hammer.js', ssr: false, },
     { src: '~/plugins/bus.js', },
     { src: '~/plugins/outside-click.js', },
+    { src: '~/plugins/html2pdf.js', ssr: false, }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

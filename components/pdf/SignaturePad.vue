@@ -5,15 +5,15 @@
 </template>
 
 <script>
-import SignaturePad from "signature_pad"
+// import SignaturePad from "signature_pad"
 export default {
   methods: {
-    initializeSignaturePad() {
-      const canvasSig = this.$refs['signature-pad-canvas']
-      this.signaturePad = new SignaturePad(canvasSig, {
-        backgroundColor: "rgb(255, 255, 255, 0)",
-      });
-    }
+    // initializeSignaturePad() {
+    //   const canvasSig = this.$refs['signature-pad-canvas']
+    //   this.signaturePad = new SignaturePad(canvasSig, {
+    //     backgroundColor: "rgb(255, 255, 255, 0)",
+    //   });
+    // }
   },
 }
 </script>

@@ -7,7 +7,8 @@
         <tool-wrapper v-for="(tool, tI) in tools" :key="`tool-${tI}`" :tool="tool" :top="tool.top" :left="tool.left" :x1="tool.x1" :y1="tool.y1" :x2="tool.x2" :y2="tool.y2" :points="tool.points" @delete-tool="deleteTool" />
         <component :is="`${selectedToolType}-identifier`" v-if="selectedToolType && showToolIdentifier" :position="toolIdentifierPosition" />
         <div class="pdf-single-pages-outer" ref="pdf-single-pages-outer" v-hammer:pan="handlePanning" @click="onCLickSinglePageOuter" @mousemove="onMouseMoveOnPages" @mouseenter="onMouseEnterOnPages" @mouseleave="onMouseLeaveFromPages">
-          <div class="pdf-single-page-outer mt-6" v-for="(page, pI) in pdf.numPages" :key="pI">
+          <div class="pdf-single-page-outer" v-for="(page, pI) in pdf.numPages" :key="pI">
+            <div class="mt-6 page-break"></div>
             <pdf-page :page-number="pI + 1" :pdf="pdf" />
           </div>
         </div>
@@ -92,20 +93,27 @@ export default {
   methods: {
     downloadPdf(){
       console.log('d')
-      let firstPage = document.querySelector('.pdf-page')
-      var doc = new jsPDF('p', 'pt', [firstPage.clientWidth, firstPage.clientHeight]);
+      let pdf = new jsPDF()
+      // let els = [...document.querySelectorAll('.pdf-page')]
+      // for(let i = 0; i < els.length; i++){
+      //   let htmlEl = els[i]
+      //   html2canvas(htmlEl).then(canvas => {
+      //     const contentDataURL = canvas.toDataURL("image/jpeg")
+      //     const imgWidth = 200
+      //     const imgHeight = (canvas.height * imgWidth) / canvas.width
+      //     if (i > 0) pdf.addPage()
+      //     pdf.setPage(i + 1)
+      //     pdf.addImage(contentDataURL, "JPEG", 5, 5, imgWidth, imgHeight)
 
-      // console.log([document.querySelector('.pdf-page')])
-      doc.html(this.$refs.PagesOuter, {
-        callback: function (doc) {
-          doc.save();
-        },
-        x: 10,
-        y: 10,
-        // width: 170,
-        // image:        { type: 'jpeg', quality: 1 },
-        // html2canvas:  { dpi: 300, letterRendering: true, width: 1080, height: 1920},
-      })
+      //     if(i == els.length - 1){
+      //       pdf.save()
+      //     }
+      //   })
+      // }
+      let options = {
+        pagebreak: { avoid: '.page-break', before: '.pdf-single-page-outer' },
+      }
+      html2pdf().set(options).from(this.$refs.PagesOuter).save()
     },
     deleteTool(tool){
       this.tools.splice(this.tools.indexOf(tool), 1)
@@ -171,10 +179,10 @@ export default {
     },
     onMouseMoveOnPages(event){
       if(window.innerWidth < 800) return
-      if(!this.selectedToolType) return
-      let { x, y } = this.pointerPos(event, this.$refs.PagesOuter)
-      this.toolIdentifierPosition.top = y - this.TOOL_THRESHOLD[this.selectedToolType].identifier.top
-      this.toolIdentifierPosition.left = x - this.TOOL_THRESHOLD[this.selectedToolType].identifier.left
+      // if(!this.selectedToolType) return
+      // let { x, y } = this.pointerPos(event, this.$refs.PagesOuter)
+      // this.toolIdentifierPosition.top = y - this.TOOL_THRESHOLD[this.selectedToolType].identifier.top
+      // this.toolIdentifierPosition.left = x - this.TOOL_THRESHOLD[this.selectedToolType].identifier.left
     },
     onToolChange(type){
       this.selectedToolType = type
