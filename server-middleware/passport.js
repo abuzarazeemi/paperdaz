@@ -32,6 +32,7 @@ passport.deserializeUser(function (user, done) {
 })
 
 const appUrl = (process.env.APP_URL || '').replace(/\/+$/, '')
+
 passport.use(
   new GoogleStrategy(
     {
@@ -46,6 +47,7 @@ passport.use(
       clientSecret: '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',
       // callbackURL: 'https://cbda-105-112-150-193.ngrok.io/auth/google/callback',
       callbackURL: `${appUrl}/auth/google/callback`,
+      // callbackURL: `http://localhost:3000/auth/google/callback`,
       passReqToCallback: true,
     },
     (request, token, tokenSecret, profile, done) => {
@@ -65,7 +67,7 @@ app.get(
 )
 
 app.get(
-  '/google/callback',
+  '/:provider/callback',
   passport.authenticate('google', {
     failureRedirect: '/login?error=Login%20Failed',
   }),
