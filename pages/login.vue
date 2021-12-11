@@ -196,6 +196,10 @@ export default Vue.extend({
     if (token) {
       try {
         socialUser = jwt.verify(token, encryptionKey) as PassportUserProfile
+        if (!socialUser.name) {
+          socialUser.name = { givenName: '', familyName: '', middleName: '' }
+        }
+
         if (
           (!socialUser.name.givenName || !socialUser.name.familyName) &&
           socialUser.displayName

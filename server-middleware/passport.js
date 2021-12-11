@@ -3,6 +3,7 @@ const passport = require('passport')
 const cookieParser = require('cookie-parser')
 const GoogleStrategy = require('passport-google-oauth2').Strategy
 const FacebookStrategy = require('passport-facebook').Strategy
+const TwitterStrategy = require('passport-twitter').Strategy
 // const GoogleStrategy = require('passport-google-oauth').OAuthStrategy
 const cookieSession = require('cookie-session')
 const jwt = require('jsonwebtoken')
@@ -45,9 +46,9 @@ passport.use(
         '146368006291-l4elgu53dhcntn04iv69rntdjea0u09n.apps.googleusercontent.com',
       clientSecret: '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',
       // callbackURL: 'https://cbda-105-112-150-193.ngrok.io/auth/google/callback',
-      // callbackURL: `${appUrl}/auth/google/callback`,
+      callbackURL: `${appUrl}/auth/google/callback`,
       // callbackURL: 'https://paperdaz-dev.herokuapp.com/auth/google/callback',
-      callbackURL: `http://localhost:3000/auth/google/callback`,
+      // callbackURL: `http://localhost:3000/auth/google/callback`,
       passReqToCallback: true,
     },
     (request, token, tokenSecret, profile, done) => {
@@ -66,7 +67,8 @@ passport.use(
       // clientSecret: env.FACEBOOK_APP_SECRET,
       clientID: '1336136903262227',
       clientSecret: '889a3f0ea3ac171aa5ceca1b04d3d8d5',
-      callbackURL: 'https://996f-41-190-3-24.ngrok.io/auth/facebook/callback',
+      callbackURL: `${appUrl}/auth/facebook/callback`,
+      // callbackURL: 'https://996f-41-190-3-24.ngrok.io/auth/facebook/callback',
       profileFields: [
         'id',
         'displayName',
@@ -84,6 +86,22 @@ passport.use(
   )
 )
 
+passport.use(
+  new TwitterStrategy(
+    {
+      consumerKey: 'B5IwWw9HlHTPAssRGFXbbOhA3',
+      consumerSecret: 'DEaQLnW95AoSkcgxLe34OqHM3SJp6KoPyKnSY983DZ9oLQGgsU',
+      // callbackURL: 'http://localhost:3000/auth/twitter/callback',
+      callbackURL: `${appUrl}/auth/twitter/callback`,
+      includeEmail: true,
+    },
+    (token, tokenSecret, profile, done) => {
+      console.log('profile ', profile)
+      return done(null, profile)
+    }
+  )
+)
+
 app.get(
   '/google',
   passport.authenticate('google', {
@@ -94,6 +112,8 @@ app.get(
   '/facebook',
   passport.authenticate('facebook', { scope: ['public_profile', 'email'] })
 )
+
+app.get('/twitter', passport.authenticate('twitter'))
 
 app.get(
   '/google/callback',
@@ -113,6 +133,21 @@ app.get(
 app.get(
   '/facebook/callback',
   passport.authenticate('facebook', {
+    failureRedirect: '/login?error=Login%20Failed',
+  }),
+  (req, res) => {
+    console.log('Requst user', req.user)
+    const user = req.user
+    const token = jwt.sign(user, env.ENCRYPTION_KEY)
+    console.log('Token ', token)
+    req.logOut()
+    res.redirect(`/login?token=${token}`)
+  }
+)
+
+app.get(
+  '/twitter/callback',
+  passport.authenticate('twitter', {
     failureRedirect: '/login?error=Login%20Failed',
   }),
   (req, res) => {

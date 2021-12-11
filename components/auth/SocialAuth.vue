@@ -76,7 +76,9 @@ export default Vue.extend({
     signInWithGoogle() {
       location.href = '/auth/google'
     },
-    signInWithTwitter() {},
+    signInWithTwitter() {
+      location.href = '/auth/twitter'
+    },
     async signIn(social: string, payload: any) {
       try {
         const response = await this.$axios.$post('/api/auth/' + social, payload)
