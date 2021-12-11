@@ -144,6 +144,16 @@ import SvgIcon from '~/components/svg-icons/SvgIcon.vue'
 import InputField from '~/components/widgets/InputField.vue'
 import MessageAlertWidget from '~/components/widgets/MessageAlertWidget.vue'
 import PasswordField from '~/components/widgets/PasswordField.vue'
+import jwt, { decode, JsonWebTokenError } from 'jsonwebtoken'
+
+interface PassportUserProfile {
+  provider: string
+  id: string
+  displayName: string
+  name: { familyName: string; givenName: string; middleName: string }
+  emails: Array<{ value: string; type: string }>
+  photos: Array<{ value: string }>
+}
 export default Vue.extend({
   name: 'LoginPage',
   auth: 'guest',
@@ -167,9 +177,82 @@ export default Vue.extend({
       isLoading: false,
       errorMessage: '',
       isRedirecting: false,
+      socialUser: undefined as PassportUserProfile | undefined,
     }
   },
+  asyncData({ query, $config }) {
+    console.log($config)
+    console.log('Encryption key', $config.ENCRYPTION_KEY)
+    const encryptionKey = $config.ENCRYPTION_KEY as string
+    const token = query.token as string
+    let socialUser = undefined as PassportUserProfile | undefined
+
+    let errorMessage = ''
+
+    if (query.error) {
+      errorMessage = decodeURI((query.error as string) || '')
+    }
+
+    if (token) {
+      try {
+        socialUser = jwt.verify(token, encryptionKey) as PassportUserProfile
+      } catch (err: any) {
+        errorMessage = err.message || 'Invalid token'
+      }
+    }
+
+    let isLoading = !!socialUser
+
+    if (errorMessage) {
+      isLoading = false
+    }
+
+    return { socialUser, isLoading, errorMessage }
+  },
+  mounted() {
+    this.socialLogin()
+  },
   methods: {
+    socialLogin() {
+      if (!(this.socialUser && this.socialUser.provider)) return
+
+      // this.isRedirecting = true
+      // this.isLoading = false
+
+      const provider = this.socialUser.provider
+
+      const data = {
+        social_id: this.socialUser.id,
+        first_name: this.socialUser.name.givenName,
+        last_name: this.socialUser.name.familyName,
+        email:
+          this.socialUser.emails.length > 0
+            ? this.socialUser.emails[0].value
+            : '',
+        profile_picture:
+          this.socialUser.photos.length > 0
+            ? this.socialUser.photos[0].value
+            : '',
+      }
+
+      this.isLoading = true
+      this.$axios
+        .$post(`/auth/${provider}`, data)
+        .then(async (response) => {
+          this.isRedirecting = true
+          const token = response.data.token
+          await this.$auth.setUserToken(token)
+          await this.$auth.fetchUser()
+          this.isRedirecting = false
+        })
+        .catch((err) => {
+          this.errorMessage = 'An error occured'
+          this.$toast.error('An error occured').goAway(5000)
+        })
+        .finally(() => {
+          this.isLoading = false
+        })
+    },
     login() {
       event?.preventDefault()
 

@@ -4,8 +4,15 @@ export default {
     host: '0.0.0.0',
     // port: 3000,
   },
+  privateRuntimeConfig: {
+    ENCRYPTION_KEY: process.env.ENCRYPTION_KEY || 'some_encryption_key',
+  },
+  publicRuntimeConfig: {
+    APP_URL: process.env.APP_URL,
+  },
   env: {
     API_URL: process.env.API_URL,
+    APP_URL: process.env.APP_URL,
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -118,6 +125,7 @@ export default {
     },
   },
   serverMiddleware: [
+    { path: '/auth', handler: '~/server-middleware/passport.js' },
     redirectSSL.create({
       enabled: process.env.NODE_ENV === 'production',
     }),

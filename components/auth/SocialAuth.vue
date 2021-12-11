@@ -44,11 +44,36 @@
 <script lang="ts">
 import Vue from 'vue'
 import Passport from 'passport'
+import {
+  IOAuthStrategyOption,
+  OAuthStrategy as GoogleStrategy,
+} from 'passport-google-oauth'
 
 export default Vue.extend({
+  created() {
+    this.setupPassport()
+  },
   methods: {
+    setupPassport() {
+      Passport.use(
+        new GoogleStrategy(
+          {
+            consumerKey:
+              '568264793203-bt6todb2a2iraaogv4vl03u6v58u7cb3.apps.googleusercontent.com',
+            consumerSecret: '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',
+          } as IOAuthStrategyOption,
+          (token, tokenSecret, profile, done) => {
+            console.log('token ', token)
+            console.log('tokenSecret ', tokenSecret)
+            console.log('profile ', profile)
+          }
+        )
+      )
+    },
     signInWithFacebook() {},
-    signInWithGoogle() {},
+    signInWithGoogle() {
+      location.href = '/auth/google'
+    },
     signInWithTwitter() {},
     async signIn(social: string, payload: any) {
       try {
@@ -80,7 +105,7 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="postcss" scoped>
 .social-card {
   @apply flex justify-center
             items-center
