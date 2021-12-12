@@ -52,10 +52,8 @@ const appUrl = (env.APP_URL || '').replace(/\/+$/, '')
 passport.use(
   new FacebookStrategy(
     {
-      // clientID: env.FACEBOOK_APP_ID,
-      // clientSecret: env.FACEBOOK_APP_SECRET,
-      clientID: '1336136903262227',
-      clientSecret: '889a3f0ea3ac171aa5ceca1b04d3d8d5',
+      clientID: env.FACEBOOK_APP_ID,
+      clientSecret: env.FACEBOOK_APP_SECRET,
       callbackURL: `${appUrl}/auth/facebook/callback`,
       // callbackURL: 'https://996f-41-190-3-24.ngrok.io/auth/facebook/callback',
       profileFields: [
@@ -74,7 +72,6 @@ passport.use(
       profile: any,
       done: (arg0: null, arg1: any) => any
     ) => {
-      console.log('profile ', profile)
       return done(null, profile)
     }
   )
@@ -83,12 +80,8 @@ passport.use(
 passport.use(
   new GoogleStrategy(
     {
-      // consumerKey:
-      //   '146368006291-l4elgu53dhcntn04iv69rntdjea0u09n.apps.googleusercontent.com',
-      // consumerSecret: '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',
-      clientID:
-        '146368006291-l4elgu53dhcntn04iv69rntdjea0u09n.apps.googleusercontent.com',
-      clientSecret: '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',
+      clientID: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
       callbackURL: `${appUrl}/auth/google/callback`,
       // passReqToCallback: true,
       scope: ['profile', 'email'],
@@ -99,9 +92,6 @@ passport.use(
       profile: any,
       cb: (arg0: null, arg1: any) => any
     ) {
-      console.log('accessToken ', accessToken)
-      console.log('refreshToken ', refreshToken)
-      console.log('profile ', profile)
       return cb(null, profile)
     }
   )
@@ -110,8 +100,8 @@ passport.use(
 passport.use(
   new TwitterStrategy(
     {
-      consumerKey: 'B5IwWw9HlHTPAssRGFXbbOhA3',
-      consumerSecret: 'DEaQLnW95AoSkcgxLe34OqHM3SJp6KoPyKnSY983DZ9oLQGgsU',
+      consumerKey: env.TWITTER_CONSUMER_KEY,
+      consumerSecret: env.TWITTER_CONSUMER_SECRET,
       // callbackURL: 'http://localhost:3000/auth/twitter/callback',
       callbackURL: `${appUrl}/auth/twitter/callback`,
       includeEmail: true,
@@ -122,7 +112,6 @@ passport.use(
       profile: any,
       done: (arg0: null, arg1: any) => any
     ) => {
-      console.log('profile ', profile)
       return done(null, profile)
     }
   )
@@ -147,10 +136,8 @@ app.get(
     failureRedirect: '/login?error=Login%20Failed',
   }),
   (req: any, res: any) => {
-    console.log('Requst user', req.user)
     const user = req.user
     const token = jwt.sign(user, env.ENCRYPTION_KEY)
-    console.log('Token ', token)
     req.logOut()
     res.redirect(`/login?token=${token}`)
   }
@@ -162,10 +149,8 @@ app.get(
     failureRedirect: '/login?error=Login%20Failed',
   }),
   (req: any, res: any) => {
-    console.log('Requst user', req.user)
     const user = req.user
     const token = jwt.sign(user, env.ENCRYPTION_KEY)
-    console.log('Token ', token)
     req.logOut()
     res.redirect(`/login?token=${token}`)
   }
@@ -177,10 +162,8 @@ app.get(
     failureRedirect: '/login?error=Login%20Failed',
   }),
   (req: any, res: any) => {
-    console.log('Requst user', req.user)
     const user = req.user
     const token = jwt.sign(user, env.ENCRYPTION_KEY)
-    console.log('Token ', token)
     req.logOut()
     res.redirect(`/login?token=${token}`)
   }

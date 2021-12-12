@@ -181,8 +181,6 @@ export default Vue.extend({
     }
   },
   asyncData({ query, $config }) {
-    console.log($config)
-    console.log('Encryption key', $config.ENCRYPTION_KEY)
     const encryptionKey = $config.ENCRYPTION_KEY as string
     const token = query.token as string
     let socialUser = undefined as PassportUserProfile | undefined
@@ -228,11 +226,7 @@ export default Vue.extend({
     socialLogin() {
       if (!(this.socialUser && this.socialUser.provider)) return
 
-      // this.isRedirecting = true
-      // this.isLoading = false
-
       const provider = this.socialUser.provider
-      console.log(this.socialUser)
 
       const data = {
         social_id: this.socialUser.id,
@@ -252,7 +246,6 @@ export default Vue.extend({
       this.$axios
         .$post(`/auth/${provider}`, data)
         .then(async (response) => {
-          debugger
           this.isRedirecting = true
           const token = response.data.token
           await this.$auth.setUserToken(token)
@@ -261,7 +254,6 @@ export default Vue.extend({
           this.isRedirecting = false
         })
         .catch((err) => {
-          debugger
           this.errorMessage = 'An error occured'
           this.$toast.error('An error occured').goAway(5000)
         })
