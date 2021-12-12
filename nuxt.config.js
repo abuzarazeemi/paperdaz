@@ -125,7 +125,7 @@ export default {
     },
   },
   serverMiddleware: [
-    { path: '/auth', handler: '~/server-middleware/passport.js' },
+    { path: '/auth', handler: '~/server-middleware/passport.ts' },
     redirectSSL.create({
       enabled: process.env.NODE_ENV === 'production',
     }),
