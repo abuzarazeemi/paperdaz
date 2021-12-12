@@ -1,7 +1,7 @@
 const express = require('express')
 const passport = require('passport')
 const cookieParser = require('cookie-parser')
-const GoogleStrategy = require('passport-google-oauth2').Strategy
+const GoogleStrategy = require('passport-google-oauth20').Strategy
 const FacebookStrategy = require('passport-facebook').Strategy
 const TwitterStrategy = require('passport-twitter').Strategy
 // const GoogleStrategy = require('passport-google-oauth').OAuthStrategy
@@ -36,22 +36,13 @@ const appUrl = (env.APP_URL || '').replace(/\/+$/, '')
 passport.use(
   new GoogleStrategy(
     {
-      // consumerKey:
-      //   '568264793203-bt6todb2a2iraaogv4vl03u6v58u7cb3.apps.googleusercontent.com',
-      // consumerSecret: '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',
-      // consumerKey:
-      //   '146368006291-l4elgu53dhcntn04iv69rntdjea0u09n.apps.googleusercontent.com',
-      // consumerSecret: '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',
       clientID:
         '146368006291-l4elgu53dhcntn04iv69rntdjea0u09n.apps.googleusercontent.com',
       clientSecret: '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',
-      // callbackURL: 'https://cbda-105-112-150-193.ngrok.io/auth/google/callback',
       callbackURL: `${appUrl}/auth/google/callback`,
-      // callbackURL: 'https://paperdaz-dev.herokuapp.com/auth/google/callback',
-      // callbackURL: `http://localhost:3000/auth/google/callback`,
-      passReqToCallback: true,
+      // passReqToCallback: true,
     },
-    (request, token, tokenSecret, profile, done) => {
+    (token, tokenSecret, profile, done) => {
       console.log('token ', token)
       console.log('tokenSecret ', tokenSecret)
       console.log('profile ', profile)

@@ -30,6 +30,7 @@
     "passport-facebook": "^3.0.0",
     "passport-google-oauth": "^2.0.0",
     "passport-google-oauth2": "^0.2.0",
+    "passport-google-oauth20": "^2.0.0",
     "passport-twitter": "^1.0.4",
     "redirect-ssl": "^3.0.0",
     "signature_pad": "^3.0.0-beta.4",
