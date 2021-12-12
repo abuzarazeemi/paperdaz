@@ -32,11 +32,12 @@ export default Vue.extend({
   name: 'ProfileInfo',
   components: { PenIcon, InputField },
   data() {
-    return {
-      userType: UserTypeEnum.PAID,
-    }
+    return {}
   },
   computed: {
+    userType(): UserTypeEnum {
+      return this.$store.getters.userType
+    },
     headerText(): string {
       switch (this.userType) {
         case UserTypeEnum.FREE:

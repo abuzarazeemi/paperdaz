@@ -17,13 +17,11 @@
           Paid Account
         </h3>
         <div class="h-40 w-40 rounded-2xl border-2 border-[#B7EF94] p-1 mb-3">
-          <img
-            src="http://greginhollywood.com/wordpress/wp-content/uploads/ee92ba015561f1657763d72c60b87013.jpg"
-            class="rounded-xl w-full h-full"
-            alt=""
-          />
+          <img :src="profilePhoto" class="rounded-xl w-full h-full" alt="" />
         </div>
-        <p class="text-lg font-semibold mb-2">Apple Dental</p>
+        <p class="text-lg font-semibold mb-2 capitalize">
+          {{ `${user.first_name} ${user.last_name}` }}
+        </p>
       </div>
     </div>
     <div class="grid grid-cols-3 gap-2 mt-4 text-[#6C6777]">
@@ -51,5 +49,13 @@ import ShareIcon from '../svg-icons/ShareIcon.vue'
 export default Vue.extend({
   name: 'PaidProfileCard',
   components: { BarcodeIcon, ShareIcon, BuildingIcon },
+  computed: {
+    profilePhoto(): string {
+      return this.$store.getters.profilePhoto
+    },
+    user(): any {
+      return this.$auth.user
+    },
+  },
 })
 </script>

@@ -16,15 +16,11 @@
       <div
         class="circle circle-75 border-4 border-[#B7EF94] mx-auto p-0.5 mb-2"
       >
-        <div class="circle w-full h-full border-2 border-[#B7EF94] p-1.5">
-          <img
-            src="http://greginhollywood.com/wordpress/wp-content/uploads/ee92ba015561f1657763d72c60b87013.jpg"
-            class="circle w-full h-full"
-            alt=""
-          />
+        <div class="circle w-full h-full border-2 border-[#B7EF94] p-1">
+          <img :src="profilePhoto" class="circle w-full h-full" alt="" />
         </div>
       </div>
-      <p class="text-lg font-semibold mb-2">{{ user.username }}</p>
+      <p class="text-lg font-semibold mb-2 capitalize">{{ user.first_name }}</p>
       <div
         class="
           border border-paperdazgray-100
@@ -53,6 +49,9 @@ export default Vue.extend({
   computed: {
     user(): any {
       return this.$auth.user
+    },
+    profilePhoto(): string {
+      return this.$store.getters.profilePhoto
     },
   },
 })

@@ -14,11 +14,12 @@ export default Vue.extend({
   name: 'ProfileCard',
   components: { FreeProfileCard },
   data() {
-    return {
-      userType: UserTypeEnum.PAID,
-    }
+    return {}
   },
   computed: {
+    userType(): UserTypeEnum {
+      return this.$store.getters.userType
+    },
     profileCardComponent(): any {
       switch (this.userType) {
         case UserTypeEnum.FREE:

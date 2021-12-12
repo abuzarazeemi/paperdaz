@@ -50,11 +50,7 @@
       <div
         class="circle profile-circle border border-paperdazgreen-300 mr-2 p-0.5"
       >
-        <img
-          src="http://greginhollywood.com/wordpress/wp-content/uploads/ee92ba015561f1657763d72c60b87013.jpg"
-          class="circle"
-          alt=""
-        />
+        <img :src="profilePhoto" class="circle" alt="" />
       </div>
       <span class="text-black"
         ><arrow-down-icon class="h-2 w-3 sm:h-2.5 sm:w-4"
@@ -79,6 +75,9 @@ export default Vue.extend({
     },
     user(): any {
       return this.$auth.user
+    },
+    profilePhoto() {
+      return this.$store.getters.profilePhoto
     },
   },
   methods: {},

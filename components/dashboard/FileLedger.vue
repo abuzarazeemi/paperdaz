@@ -305,7 +305,6 @@ export default Vue.extend({
       const fixedCols = document.querySelectorAll('.fixed-col')
 
       fixedCols.forEach((el) => {
-        console.log(el)
         observer.observe(el)
       })
 

@@ -43,33 +43,9 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import Passport from 'passport'
-import {
-  IOAuthStrategyOption,
-  OAuthStrategy as GoogleStrategy,
-} from 'passport-google-oauth'
-
 export default Vue.extend({
-  created() {
-    this.setupPassport()
-  },
+  created() {},
   methods: {
-    setupPassport() {
-      Passport.use(
-        new GoogleStrategy(
-          {
-            consumerKey:
-              '568264793203-bt6todb2a2iraaogv4vl03u6v58u7cb3.apps.googleusercontent.com',
-            consumerSecret: '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',
-          } as IOAuthStrategyOption,
-          (token, tokenSecret, profile, done) => {
-            console.log('token ', token)
-            console.log('tokenSecret ', tokenSecret)
-            console.log('profile ', profile)
-          }
-        )
-      )
-    },
     signInWithFacebook() {
       location.href = '/auth/facebook'
     },
@@ -78,32 +54,6 @@ export default Vue.extend({
     },
     signInWithTwitter() {
       location.href = '/auth/twitter'
-    },
-    async signIn(social: string, payload: any) {
-      try {
-        const response = await this.$axios.$post('/api/auth/' + social, payload)
-        const user = response.data[0]
-        this.setUser(user)
-      } catch (error: any) {
-        if (
-          error &&
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          this.$toast.error(error.response.data.message).goAway(5000)
-        } else {
-          this.$toast.error('Server not reachable').goAway(5000)
-        }
-      }
-    },
-    async setUser(user: any) {
-      const token = user.token
-      // @ts-ignore
-      await this.$auth.strategies.local.setUserToken(token)
-      await this.$auth.fetchUser()
-      // this.$auth.strategy.token.set(token)
-      this.$router.push('/dashboard')
     },
   },
 })
