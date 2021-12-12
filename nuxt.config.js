@@ -34,7 +34,7 @@ export default {
   css: ['~assets/styles.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: ['~/plugins/element.ts'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -87,6 +87,7 @@ export default {
             method: 'post',
           },
           user: { url: '/user', method: 'get' },
+          logout: false,
         },
       },
     },

@@ -47,28 +47,75 @@
         <span class="text-black">{{ user.username }}</span>
         <span class="text-[#524D5B]">{{ user.fullName }}</span>
       </div>
-      <div
-        class="circle profile-circle border border-paperdazgreen-300 mr-2 p-0.5"
-      >
-        <img :src="profilePhoto" class="circle" alt="" />
-      </div>
-      <span class="text-black"
-        ><arrow-down-icon class="h-2 w-3 sm:h-2.5 sm:w-4"
-      /></span>
+
+      <el-dropdown trigger="click" @command="handleCommand">
+        <span class="flex items-center el-dropdown-link">
+          <span
+            class="
+              circle
+              profile-circle
+              border border-paperdazgreen-300
+              mr-2
+              p-0.5
+            "
+          >
+            <img :src="profilePhoto" class="circle" alt="" />
+          </span>
+          <span class="text-black"
+            ><arrow-down-icon class="h-2 w-3 sm:h-2.5 sm:w-4"
+          /></span>
+        </span>
+
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="profile">
+            <span class="inline-flex gap-2 items-center">
+              <user-profile-solid-icon height="14" width="14" />
+              Profile</span
+            >
+          </el-dropdown-item>
+          <el-dropdown-item command="settings">
+            <span class="inline-flex gap-2 items-center">
+              <gear-icon height="14" width="14" />
+              Settings</span
+            >
+          </el-dropdown-item>
+          <el-dropdown-item divided command="logout">
+            <span class="text-red-600 inline-flex gap-2 items-center">
+              <sign-out-icon height="14" width="14" />
+              Logout</span
+            >
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
   </nav>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import mixins from 'vue-typed-mixins'
+import GlobalMixin from '~/mixins/GlobalMixin'
 import ArrowDownIcon from '../svg-icons/ArrowDownIcon.vue'
 import BellIcon from '../svg-icons/BellIcon.vue'
 import GearIcon from '../svg-icons/GearIcon.vue'
 import HamburgerIcon from '../svg-icons/HamburgerIcon.vue'
 import SearchIcon from '../svg-icons/SearchIcon.vue'
-export default Vue.extend({
+import SignOutIcon from '../svg-icons/SignOutIcon.vue'
+import UserProfileIcon from '../svg-icons/UserProfileIcon.vue'
+import UserProfileSolidIcon from '../svg-icons/UserProfileSolidIcon.vue'
+
+export default mixins(GlobalMixin).extend({
   name: 'DashboardNavbar',
-  components: { SearchIcon, BellIcon, GearIcon, ArrowDownIcon, HamburgerIcon },
+  components: {
+    SearchIcon,
+    BellIcon,
+    GearIcon,
+    ArrowDownIcon,
+    HamburgerIcon,
+    SignOutIcon,
+    UserProfileIcon,
+    UserProfileSolidIcon,
+  },
   computed: {
     routeName(): string {
       return (this.$nuxt.$route.name || '').replace(/-/g, ' ')
@@ -80,7 +127,15 @@ export default Vue.extend({
       return this.$store.getters.profilePhoto
     },
   },
-  methods: {},
+  methods: {
+    handleCommand(command: string) {
+      switch (command) {
+        case 'logout':
+          this.logout()
+          break
+      }
+    },
+  },
 })
 </script>
 
@@ -92,7 +147,7 @@ export default Vue.extend({
   min-height: calc(2px * var(--circle-size));
   min-width: calc(2px * var(--circle-size));
   @media screen and (min-width: 640px) {
-    --circle-size: 26;
+    --circle-size: 22;
   }
 }
 </style>
