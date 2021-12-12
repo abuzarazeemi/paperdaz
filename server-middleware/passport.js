@@ -1,8 +1,8 @@
 const express = require('express')
 const passport = require('passport')
 const cookieParser = require('cookie-parser')
-// const GoogleStrategy = require('passport-google-oauth').OAuthStrategy
-const GoogleStrategy = require('passport-google-oauth20').Strategy
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
+// const GoogleStrategy = require('passport-google-oauth20').Strategy
 const FacebookStrategy = require('passport-facebook').Strategy
 const TwitterStrategy = require('passport-twitter').Strategy
 const cookieSession = require('cookie-session')
@@ -16,7 +16,7 @@ app.use(cookieParser())
 
 app.use(
   cookieSession({
-    name: 'google-auth-session',
+    name: 'auth-session',
     keys: ['key1', 'key2'],
   })
 )
