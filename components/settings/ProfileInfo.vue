@@ -25,8 +25,8 @@ import Vue from 'vue'
 import PenIcon from '../svg-icons/PenIcon.vue'
 import InputField from '../widgets/InputField.vue'
 import UserTypeEnum from '~/models/UserTypeEnum'
-import UserForm from '~/components/profile/forms/UserForm.vue'
-import CompanyForm from '~/components/profile/forms/CompanyForm.vue'
+import UserForm from '~/components/settings/forms/UserForm.vue'
+import CompanyForm from '~/components/settings/forms/CompanyForm.vue'
 
 export default Vue.extend({
   name: 'ProfileInfo',

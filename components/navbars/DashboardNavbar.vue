@@ -133,6 +133,12 @@ export default mixins(GlobalMixin).extend({
         case 'logout':
           this.logout()
           break
+        case 'profile':
+          this.$nuxt.$router.push('/profile')
+          break
+        case 'settings':
+          this.$nuxt.$router.push('/settings')
+          break
       }
     },
   },
