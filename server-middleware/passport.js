@@ -1,10 +1,10 @@
 const express = require('express')
 const passport = require('passport')
 const cookieParser = require('cookie-parser')
-const GoogleStrategy = require('passport-google-oauth20').Strategy
+const GoogleStrategy = require('passport-google-oauth').OAuthStrategy
+// const GoogleStrategy = require('passport-google-oauth20').Strategy
 const FacebookStrategy = require('passport-facebook').Strategy
 const TwitterStrategy = require('passport-twitter').Strategy
-// const GoogleStrategy = require('passport-google-oauth').OAuthStrategy
 const cookieSession = require('cookie-session')
 const jwt = require('jsonwebtoken')
 const env = require('../config')
@@ -36,9 +36,12 @@ const appUrl = (env.APP_URL || '').replace(/\/+$/, '')
 passport.use(
   new GoogleStrategy(
     {
-      clientID:
+      consumerKey:
         '146368006291-l4elgu53dhcntn04iv69rntdjea0u09n.apps.googleusercontent.com',
-      clientSecret: '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',
+      consumerSecret: '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',
+      // clientID:
+      //   '146368006291-l4elgu53dhcntn04iv69rntdjea0u09n.apps.googleusercontent.com',
+      // clientSecret: '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',
       callbackURL: `${appUrl}/auth/google/callback`,
       // passReqToCallback: true,
     },
