@@ -50,33 +50,6 @@ passport.deserializeUser(function (
 const appUrl = (env.APP_URL || '').replace(/\/+$/, '')
 
 passport.use(
-  new GoogleStrategy(
-    {
-      // consumerKey:
-      //   '146368006291-l4elgu53dhcntn04iv69rntdjea0u09n.apps.googleusercontent.com',
-      // consumerSecret: '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',
-      clientID:
-        '146368006291-l4elgu53dhcntn04iv69rntdjea0u09n.apps.googleusercontent.com',
-      clientSecret: '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',
-      callbackURL: `${appUrl}/auth/google/callback`,
-      // passReqToCallback: true,
-      scope: ['profile', 'email'],
-    },
-    function (
-      accessToken: any,
-      refreshToken: any,
-      profile: any,
-      cb: (arg0: null, arg1: any) => any
-    ) {
-      console.log('accessToken ', accessToken)
-      console.log('refreshToken ', refreshToken)
-      console.log('profile ', profile)
-      return cb(null, profile)
-    }
-  )
-)
-
-passport.use(
   new FacebookStrategy(
     {
       // clientID: env.FACEBOOK_APP_ID,
@@ -103,6 +76,33 @@ passport.use(
     ) => {
       console.log('profile ', profile)
       return done(null, profile)
+    }
+  )
+)
+
+passport.use(
+  new GoogleStrategy(
+    {
+      // consumerKey:
+      //   '146368006291-l4elgu53dhcntn04iv69rntdjea0u09n.apps.googleusercontent.com',
+      // consumerSecret: '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',
+      clientID:
+        '146368006291-l4elgu53dhcntn04iv69rntdjea0u09n.apps.googleusercontent.com',
+      clientSecret: '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',
+      callbackURL: `${appUrl}/auth/google/callback`,
+      // passReqToCallback: true,
+      scope: ['profile', 'email'],
+    },
+    function (
+      accessToken: any,
+      refreshToken: any,
+      profile: any,
+      cb: (arg0: null, arg1: any) => any
+    ) {
+      console.log('accessToken ', accessToken)
+      console.log('refreshToken ', refreshToken)
+      console.log('profile ', profile)
+      return cb(null, profile)
     }
   )
 )
