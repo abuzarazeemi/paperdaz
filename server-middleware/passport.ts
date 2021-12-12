@@ -86,12 +86,12 @@ passport.use(
       // passReqToCallback: true,
       scope: ['profile', 'email'],
     },
-    function (
+    (
       accessToken: any,
       refreshToken: any,
       profile: any,
       cb: (arg0: null, arg1: any) => any
-    ) {
+    ) => {
       return cb(null, profile)
     }
   )
