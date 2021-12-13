@@ -4,11 +4,11 @@
     <!-- {{tools}} -->
     <div v-if="pdf" class="pdf-pages-wrapper flex flex-col items-center">
       <div class="pdf-pages-outer pb-6" ref="PagesOuter">
-        <tool-wrapper v-for="(tool, tI) in tools" :key="`tool-${tI}`" :tool="tool" :top="tool.top" :left="tool.left" :x1="tool.x1" :y1="tool.y1" :x2="tool.x2" :y2="tool.y2" :points="tool.points" @delete-tool="deleteTool" />
+        <tool-wrapper v-for="(tool, tI) in tools" :key="`tool-${tI}`" :dragHandler="handlePanning" :index="tI" :tool="tool" :type="tool.type" :top="tool.top" :left="tool.left" :x1="tool.x1" :y1="tool.y1" :x2="tool.x2" :y2="tool.y2" :points="tool.points" @delete-tool="deleteTool" />
         <!-- <component :is="`${selectedToolType}-identifier`" v-if="selectedToolType && showToolIdentifier" :position="toolIdentifierPosition" /> -->
         <div 
           class="pdf-single-pages-outer" ref="pdf-single-pages-outer" 
-          v-hammer:pan="handlePanning" @click="onCLickSinglePageOuter" 
+          v-hammer:pan="(ev) => handlePanning(ev)" @click="onCLickSinglePageOuter" 
           @mousemove="onMouseMoveOnPages" @mouseleave="onMouseLeaveFromPages"
         >
           <div class="pdf-single-page-outer" v-for="(page, pI) in pdf.numPages" :key="pI">
@@ -34,6 +34,7 @@ import ToolWrapper from '@/components/pdf/ToolWrapper'
 import ToolBar from '@/components/pdf/ToolBar'
 
 import TOOL_TYPE from '@/components/pdf/data/toolType'
+import TOOL_DIRECTION from '@/components/pdf/data/toolDragDirection'
 
 import TextIdentifier from '@/components/pdf/tools_identifiers/Text'
 import TickIdentifier from '@/components/pdf/tools_identifiers/Tick'
@@ -75,6 +76,7 @@ export default {
   }),
   computed: {
     TOOL_TYPE(){ return TOOL_TYPE },
+    TOOL_DIRECTION(){ return TOOL_DIRECTION },
     TOOL_THRESHOLD(){
       return {
         [TOOL_TYPE.text]: { identifier: { top: 20, left: 0 }, tool: { top: 0, left: 0 } },
@@ -105,10 +107,10 @@ export default {
     deleteTool(tool){
       this.tools.splice(this.tools.indexOf(tool), 1)
     },
-    handlePanning(event){
+    handlePanning(event, index = undefined, direction = undefined){
       var elem = this.$refs['pdf-single-pages-outer']
       
-      if ( ! this.isPanning ) {
+      if ( ! this.isPanning && index == undefined ) {
         this.isPanning = true
         this.lastPosX = elem.offsetLeft
         this.lastPosY = elem.offsetTop
@@ -124,6 +126,8 @@ export default {
           this.placeTool(event.srcEvent, null)
           this.selectedToolIndex = this.tools.length - 1
         }
+      }else if(index != undefined && this.selectedToolIndex != index) {
+        this.selectedToolIndex = index
       }
 
       var posX = event.deltaX + this.lastPosX
@@ -131,13 +135,23 @@ export default {
 
       if(this.selectedToolType == this.TOOL_TYPE.line){
         let { x, y } = this.pointerPos(event.srcEvent, this.$refs.PagesOuter)
-        this.tools[this.selectedToolIndex].x2 = x - this.TOOL_THRESHOLD[this.selectedToolType].tool.left
-        this.tools[this.selectedToolIndex].y2 = y - this.TOOL_THRESHOLD[this.selectedToolType].tool.top
+        if(direction && direction == this.TOOL_DIRECTION.left){
+          this.tools[this.selectedToolIndex].x1 = x - this.TOOL_THRESHOLD[this.selectedToolType].tool.left
+          this.tools[this.selectedToolIndex].y1 = y - this.TOOL_THRESHOLD[this.selectedToolType].tool.top
+        }
+        else{
+          this.tools[this.selectedToolIndex].x2 = x - this.TOOL_THRESHOLD[this.selectedToolType].tool.left
+          this.tools[this.selectedToolIndex].y2 = y - this.TOOL_THRESHOLD[this.selectedToolType].tool.top
+        }
         this.$forceUpdate()
       }
       else if(this.selectedToolType == this.TOOL_TYPE.highlight){
         let { x, y } = this.pointerPos(event.srcEvent, this.$refs.PagesOuter)
-        this.tools[this.selectedToolIndex].x2 = x - this.TOOL_THRESHOLD[this.selectedToolType].tool.left
+        if(direction && direction == this.TOOL_DIRECTION.left){
+          this.tools[this.selectedToolIndex].x1 = x - this.TOOL_THRESHOLD[this.selectedToolType].tool.left
+        }else{
+          this.tools[this.selectedToolIndex].x2 = x - this.TOOL_THRESHOLD[this.selectedToolType].tool.left
+        }
         this.tools[this.selectedToolIndex].y2 = this.tools[this.selectedToolIndex].y1 + 15
         this.$forceUpdate()
       }

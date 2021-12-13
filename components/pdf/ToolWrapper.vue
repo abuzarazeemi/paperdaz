@@ -5,8 +5,10 @@
       <div class="delete" @click="$emit('delete-tool', tool)">DeLeTe</div> - 
       <div class="delete" @click="onOutsideClick">OK</div>
     </div>
-    <div @click="onClick">
+    <div @click="onClick" class="tool-holder">
       <component :is="`${tool.type}-tool`" :tool="tool" :top="top" :left="left" :x1="x1" :y1="y1" :x2="x2" :y2="y2" :points="points" :isActive="isActive" />
+      <div class="dr__right" ref="drRight" v-hammer:pan="ev => handleToolDrag(ev)" v-if="isAvailableDrRight"></div>
+      <div class="dr__left" v-hammer:pan="ev => handleToolDrag(ev, TOOL_DIRECTION.left)" v-if="isAvailableDrLeft"></div>
     </div>
   </div>
 </template>
@@ -23,6 +25,8 @@ import HighlightTool from './tools/Highlight'
 import DateTool from './tools/Date'
 import NameTool from './tools/Name'
 import InitialTool from './tools/Initial'
+import TOOL_DIRECTION from '@/components/pdf/data/toolDragDirection'
+import TOOL_TYPE from '@/components/pdf/data/toolType'
 export default {
   props: {
     tool: Object,
@@ -31,6 +35,9 @@ export default {
     x2: Number,
     y2: Number,
     points: Array,
+    dragHandler: Function,
+    index: Number,
+    type: String,
   },
   components: { TextTool, TickTool, CrossTool, DotTool, CircleTool, LineTool, DrawTool, HighlightTool, DateTool, NameTool, InitialTool, },
   data: () => ({
@@ -39,7 +46,7 @@ export default {
     isDragging: false,
     top: 100,
     left: 0,
-    isActive: true,
+    isActive: false,
   }),
   created(){
     this.checkAndSetPosition()
@@ -61,8 +68,25 @@ export default {
         left: `${left}px`,
       }
     },
+    TOOL_TYPE(){ return TOOL_TYPE },
+    TOOL_DIRECTION(){ return TOOL_DIRECTION },
+    isAvailableDrRight(){
+      return this.isActive && (
+        this.type == this.TOOL_TYPE.line
+        || this.type == this.TOOL_TYPE.highlight
+      )
+    },
+    isAvailableDrLeft(){
+      return this.isActive && (
+        this.type == this.TOOL_TYPE.line
+        || this.type == this.TOOL_TYPE.highlight
+      )
+    },
   },
   methods: {
+    handleToolDrag(event, direction){
+      this.dragHandler(event, this.index, direction)
+    },
     onClick(){
       this.isActive = true
     },
@@ -87,6 +111,12 @@ export default {
       }
       this.top = top
       this.left = left
+
+      // if(this.isActive && this.type == this.TOOL_TYPE.line){
+      //   if(this.$refs.drRight){
+      //     this.$refs.drRight.style.top = `${this.y2}px`
+      //   }
+      // }
     },
     checkAndSetPosition(){
       if(this.tool.top) this.top = this.tool.top
@@ -123,5 +153,25 @@ export default {
   width: max-content;
   position: absolute;
   top: -24px;
+}
+.tool-holder{
+  position: relative;
+  .dr{
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    &__right{
+      @extend .dr;
+      right: -5px;
+      top: calc( 50% - 5px );
+    }
+    &__left{
+      @extend .dr;
+      left: -5px;
+      top: calc( 50% - 5px );
+    }
+  }
 }
 </style>

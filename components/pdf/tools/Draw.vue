@@ -20,7 +20,6 @@ export default {
     style(){
       return {
         width: `${this.width}px`,
-        position: 'absolute'
       }
     },
     x1(){

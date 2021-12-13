@@ -17,7 +17,6 @@ export default {
     style(){
       return {
         width: `${this.width + 10}px`,
-        position: 'absolute'
       }
     },
     viewBox(){
