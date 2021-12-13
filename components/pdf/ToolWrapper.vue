@@ -5,7 +5,9 @@
       <div class="delete" @click="$emit('delete-tool', tool)">DeLeTe</div> - 
       <div class="delete" @click="onOutsideClick">OK</div>
     </div>
-    <component @click="onClick" :is="`${tool.type}-tool`" :tool="tool" :top="top" :left="left" :x1="x1" :y1="y1" :x2="x2" :y2="y2" :points="points" :isActive="isActive" />
+    <div @click="onClick">
+      <component :is="`${tool.type}-tool`" :tool="tool" :top="top" :left="left" :x1="x1" :y1="y1" :x2="x2" :y2="y2" :points="points" :isActive="isActive" />
+    </div>
   </div>
 </template>
 
