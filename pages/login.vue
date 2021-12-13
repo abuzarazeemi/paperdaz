@@ -181,7 +181,8 @@ export default Vue.extend({
     }
   },
   asyncData({ query, $config }) {
-    const encryptionKey = $config.ENCRYPTION_KEY as string
+    // const encryptionKey = $config.ENCRYPTION_KEY as string
+    const encryptionKey = 'dssdsdsd'
     const token = query.token as string
     let socialUser = undefined as PassportUserProfile | undefined
 
@@ -253,9 +254,27 @@ export default Vue.extend({
           this.$nuxt.$router.push('/dashboard')
           this.isRedirecting = false
         })
-        .catch((err) => {
-          this.errorMessage = 'An error occured'
-          this.$toast.error('An error occured').goAway(5000)
+        .catch((error) => {
+          try {
+            console.log(error.toJSON())
+          } catch (e) {
+            console.log('Error logging error')
+          }
+          let message = ''
+          if (
+            error &&
+            error.response &&
+            error.response.data &&
+            error.response.data.message
+          ) {
+            message = error.response.data.message
+          } else {
+            message =
+              error && error.message ? error.message : 'An error occured'
+          }
+          this.errorMessage = message
+          this.$toast.error(message).goAway(5000)
+          throw error
         })
         .finally(() => {
           this.isLoading = false
