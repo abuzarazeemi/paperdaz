@@ -4,47 +4,118 @@
       px-5
       py-4
       bg-white
-      rounded-lg
+      lg:rounded-lg
       w-full
       flex
       items-center
       justify-between
       h-16
-      min-h-[70px]
+      min-h-[60px]
+      sm:min-h-[70px]
       shadow
     "
   >
-    <span class="text-black text-xl capitalize">{{ routeName }}</span>
+    <p class="text-base sm:text-xl capitalize inline-flex items-center">
+      <span
+        class="inline-block lg:hidden mr-3 sm:mr-4 cursor-pointer"
+        @click="$emit('open-sidebar')"
+        ><hamburger-icon /></span
+      >{{ routeName }}
+    </p>
     <div class="h-full self-stretch flex items-center">
-      <span class="text-[#BBBBBB]"><search-icon width="18" height="18" /></span>
-      <div class="self-stretch h-full w-px mx-6 bg-[#E1E1E1]"></div>
-      <div class="text-[#909090] mr-4"><bell-icon /></div>
-      <div class="text-[#909090] mr-4"><gear-icon /></div>
-      <div class="flex flex-col mr-3 text-sm">
+      <span class="hidden lg:inline-block text-[#BBBBBB]"
+        ><search-icon width="18" height="18"
+      /></span>
+      <div
+        class="
+          hidden
+          lg:inline-block
+          self-stretch
+          h-full
+          w-px
+          mx-6
+          bg-[#E1E1E1]
+        "
+      ></div>
+      <div class="hidden lg:inline-block text-[#909090] mr-4">
+        <bell-icon />
+      </div>
+      <div class="hidden lg:inline-block text-[#909090] mr-4">
+        <gear-icon />
+      </div>
+      <div class="hidden lg:flex flex-col mr-3 text-sm">
         <span class="text-black">{{ user.username }}</span>
         <span class="text-[#524D5B]">{{ user.fullName }}</span>
       </div>
-      <div class="circle circle-26 border border-paperdazgreen-300 mr-2">
-        <img
-          src="http://greginhollywood.com/wordpress/wp-content/uploads/ee92ba015561f1657763d72c60b87013.jpg"
-          class="circle circle-22"
-          alt=""
-        />
-      </div>
-      <span class="text-black"><arrow-down-icon width="16" height="10" /></span>
+
+      <el-dropdown trigger="click" @command="handleCommand">
+        <span class="flex items-center el-dropdown-link">
+          <span
+            class="
+              circle
+              profile-circle
+              border border-paperdazgreen-300
+              mr-2
+              p-0.5
+            "
+          >
+            <img :src="profilePhoto" class="circle" alt="" />
+          </span>
+          <span class="text-black"
+            ><arrow-down-icon class="h-2 w-3 sm:h-2.5 sm:w-4"
+          /></span>
+        </span>
+
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="profile">
+            <span class="inline-flex gap-2 items-center">
+              <user-profile-solid-icon height="14" width="14" />
+              Profile</span
+            >
+          </el-dropdown-item>
+          <el-dropdown-item command="settings">
+            <span class="inline-flex gap-2 items-center">
+              <gear-icon height="14" width="14" />
+              Settings</span
+            >
+          </el-dropdown-item>
+          <el-dropdown-item divided command="logout">
+            <span class="text-red-600 inline-flex gap-2 items-center">
+              <sign-out-icon height="14" width="14" />
+              Logout</span
+            >
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
   </nav>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import mixins from 'vue-typed-mixins'
+import GlobalMixin from '~/mixins/GlobalMixin'
 import ArrowDownIcon from '../svg-icons/ArrowDownIcon.vue'
 import BellIcon from '../svg-icons/BellIcon.vue'
 import GearIcon from '../svg-icons/GearIcon.vue'
+import HamburgerIcon from '../svg-icons/HamburgerIcon.vue'
 import SearchIcon from '../svg-icons/SearchIcon.vue'
-export default Vue.extend({
+import SignOutIcon from '../svg-icons/SignOutIcon.vue'
+import UserProfileIcon from '../svg-icons/UserProfileIcon.vue'
+import UserProfileSolidIcon from '../svg-icons/UserProfileSolidIcon.vue'
+
+export default mixins(GlobalMixin).extend({
   name: 'DashboardNavbar',
-  components: { SearchIcon, BellIcon, GearIcon, ArrowDownIcon },
+  components: {
+    SearchIcon,
+    BellIcon,
+    GearIcon,
+    ArrowDownIcon,
+    HamburgerIcon,
+    SignOutIcon,
+    UserProfileIcon,
+    UserProfileSolidIcon,
+  },
   computed: {
     routeName(): string {
       return (this.$nuxt.$route.name || '').replace(/-/g, ' ')
@@ -52,7 +123,37 @@ export default Vue.extend({
     user(): any {
       return this.$auth.user
     },
+    profilePhoto() {
+      return this.$store.getters.profilePhoto
+    },
   },
-  methods: {},
+  methods: {
+    handleCommand(command: string) {
+      switch (command) {
+        case 'logout':
+          this.logout()
+          break
+        case 'profile':
+          this.$nuxt.$router.push('/profile')
+          break
+        case 'settings':
+          this.$nuxt.$router.push('/settings')
+          break
+      }
+    },
+  },
 })
 </script>
+
+<style scoped lang="scss">
+.profile-circle {
+  --circle-size: 20;
+  height: calc(2px * var(--circle-size));
+  width: calc(2px * var(--circle-size));
+  min-height: calc(2px * var(--circle-size));
+  min-width: calc(2px * var(--circle-size));
+  @media screen and (min-width: 640px) {
+    --circle-size: 22;
+  }
+}
+</style>

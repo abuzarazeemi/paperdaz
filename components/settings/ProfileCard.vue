@@ -5,8 +5,8 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import FreeProfileCard from '~/components/profile/FreeProfileCard.vue'
-import PaidProfileCard from '~/components/profile/PaidProfileCard.vue'
+import FreeProfileCard from '~/components/settings/FreeProfileCard.vue'
+import PaidProfileCard from '~/components/settings/PaidProfileCard.vue'
 
 import UserTypeEnum from '~/models/UserTypeEnum'
 
@@ -14,11 +14,12 @@ export default Vue.extend({
   name: 'ProfileCard',
   components: { FreeProfileCard },
   data() {
-    return {
-      userType: UserTypeEnum.PAID,
-    }
+    return {}
   },
   computed: {
+    userType(): UserTypeEnum {
+      return this.$store.getters.userType
+    },
     profileCardComponent(): any {
       switch (this.userType) {
         case UserTypeEnum.FREE:

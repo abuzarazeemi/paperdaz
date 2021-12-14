@@ -1,15 +1,26 @@
 <template>
   <div
     class="input-field flex items-center"
-    :class="[focus ? 'border-paperdazgray-500' : 'border-paperdazgray-200']"
+    :class="[
+      focus ? 'border-paperdazgray-500' : 'border-paperdazgray-200',
+      showAsError ? 'error' : '',
+    ]"
   >
     <input
       ref="inputField"
       v-model="value"
       :type="showPassword ? 'text' : 'password'"
       :placeholder="placeholder"
-      class="outline-none focus:outline-none border-none flex-1 h-full"
+      class="
+        outline-none
+        focus:outline-none
+        border-none
+        flex-1
+        h-full
+        disabled:cursor-not-allowed
+      "
       :required="required"
+      :disabled="disabled"
       @focus="focus = true"
       @focusout="focus = false"
     />
@@ -40,6 +51,14 @@ export default Vue.extend({
       type: Boolean,
       default: false,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    showAsError: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -65,5 +84,12 @@ export default Vue.extend({
                 bg-white
                 h-10
                 focus:outline-none;
+  &.error {
+    @apply border-red-300 focus:border-red-600 focus:border-opacity-70 text-red-600 placeholder-red-300;
+
+    & > input {
+      @apply placeholder-red-300;
+    }
+  }
 }
 </style>

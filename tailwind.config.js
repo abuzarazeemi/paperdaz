@@ -1,19 +1,17 @@
 module.exports = {
-  mode: 'jit',
-  purge: [
+  // mode: 'jit',
+  content: [
     './components/**/*.{vue,js}',
     './layouts/**/*.vue',
     './pages/**/*.vue',
     './plugins/**/*.{js,ts}',
     './nuxt.config.{js,ts}',
   ],
-  darkMode: false, // or 'media' or 'class'
   theme: {
-
     extend: {
       screens: {
         xxs: '375px',
-        xs: '425px'
+        xs: '425px',
       },
       colors: {
         paperdazgreen: {
@@ -34,11 +32,11 @@ module.exports = {
           500: '#414142',
           600: '#373737',
           700: '#272727',
-        }
+        },
       },
       fontSize: {
-        'xxs': '.625rem',
-      }
+        xxs: '.625rem',
+      },
     },
   },
   variants: {

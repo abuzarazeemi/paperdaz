@@ -1,43 +1,86 @@
 <template>
-  <div id="dashboard-layout" class="p-4 bg-[#F6F5FA]">
-    <div id="sidebar-container" class="w-60">
-      <dashboard-sidebar />
+  <!-- Note responsive sidebar breakpoint is lg: 1024px -->
+  <div id="dashboard-layout" class="lg:p-4 bg-[#F6F5FA]">
+    <div
+      id="sidebar-container"
+      class="h-full overflow-hidden relative"
+      :class="{ active: collapseSidebar }"
+    >
+      <div class="overlay" @click="collapseSidebar = false"></div>
+      <dashboard-sidebar class="relative" @close="collapseSidebar = false" />
     </div>
     <div
       id="main-container"
-      class="h-full overflow-y-auto overflow-x-hidden relative flex flex-col"
+      class="
+        h-full
+        lg:overflow-y-auto lg:overflow-x-hidden lg:relative
+        flex flex-col
+      "
     >
-      <dashboard-navbar class="sticky top-0 mb-4 justify-self-stretch" />
-      <Nuxt class="flex-1 flex flex-col" />
+      <dashboard-navbar
+        class="sticky top-0 mb-4 justify-self-stretch"
+        @open-sidebar="collapseSidebar = true"
+      />
+      <Nuxt class="flex-1 flex flex-col px-2 sm:px-4 lg:px-0 lg:pb-10" />
     </div>
+    <bottom-nav class="sticky left-0 right-0 h-12 bottom-0 mt-3 lg:hidden" />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import BottomNav from '~/components/navbars/BottomNav.vue'
 import DashboardNavbar from '~/components/navbars/DashboardNavbar.vue'
 import DashboardSidebar from '~/components/sidebars/DashboardSidebar.vue'
 export default Vue.extend({
   name: 'DashboardLayout',
-  components: { DashboardSidebar, DashboardNavbar },
+  components: { DashboardSidebar, DashboardNavbar, BottomNav },
+  data() {
+    return {
+      collapseSidebar: false,
+    }
+  },
+  watch: {
+    $route() {
+      this.collapseSidebar = false
+    },
+  },
+  mounted() {
+    this.resizeEventListener()
+    window.addEventListener('resize', this.resizeEventListener)
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.resizeEventListener)
+  },
+  methods: {
+    resizeEventListener() {
+      const root = document.querySelector(':root') as HTMLElement
+      root.style.setProperty('--viewport-height', `${window.innerHeight}px`)
+    },
+  },
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="postcss" scoped>
 #dashboard-layout {
-  height: var(--viewport-height, 100vh);
-  min-height: var(--viewport-height, 100vh);
-  max-height: var(--viewport-height, 100vh);
-  overflow: hidden;
-  display: grid;
-  grid-template-columns: max-content 1fr;
-  gap: 16px;
+  @media only screen and (min-width: 1024px) {
+    height: var(--viewport-height, 100vh);
+    min-height: var(--viewport-height, 100vh);
+    max-height: var(--viewport-height, 100vh);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr;
+    /* // grid-template-rows: 1fr; */
+    gap: 16px;
+    grid-template-columns: max-content 1fr;
+  }
 }
 
 #main-container {
   /* width */
   &::-webkit-scrollbar {
     width: 5px;
+    width: 0;
   }
 
   /* Track */
@@ -47,13 +90,57 @@ export default Vue.extend({
 
   /* Handle */
   &::-webkit-scrollbar-thumb {
-    background: rgba(119, 129, 113, 0.5);
+    background: rgba(119, 129, 113, 0.2);
     border-radius: 2px;
   }
 
   /* Handle on hover */
   &::-webkit-scrollbar-thumb:hover {
     background: rgba(183, 239, 148, 1);
+  }
+}
+
+#sidebar-container {
+  --sidebar-container-width: 240px;
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  bottom: 0;
+  left: calc(0px - var(--sidebar-container-width));
+  /* // left: calc(-1 * var(--sidebar-container-width)); */
+  box-shadow: 2px 0px 13px 2px rgb(151 151 151 / 31%);
+  transition: all ease-in-out 200ms;
+  & .overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    pointer-events: none;
+    transition: all ease-in-out 200ms;
+  }
+
+  &.active {
+    left: 0;
+    & .overlay {
+      opacity: 1;
+      pointer-events: all;
+    }
+  }
+
+  @media only screen and (min-width: 1024px) {
+    --sidebar-container-width: 260px;
+    position: unset;
+    z-index: 10;
+    width: var(--sidebar-container-width);
+    box-shadow: none;
+    & .overlay {
+      display: none;
+    }
   }
 }
 </style>

@@ -43,76 +43,17 @@
 
 <script lang="ts">
 import Vue from 'vue'
-
 export default Vue.extend({
+  created() {},
   methods: {
-    async signInWithFacebook() {
-      try {
-        const provider = new this.$fireModule.auth.FacebookAuthProvider()
-        provider.setCustomParameters({ auth_type: 'reauthenticate' })
-        const authData = await this.$fire.auth.signInWithPopup(provider)
-        const accessToken = authData.credential.accessToken
-        this.signIn('facebook', {
-          access_token: accessToken,
-        })
-      } catch (err: any) {
-        this.$toast.error(err.message).goAway(5000)
-      }
+    signInWithFacebook() {
+      location.href = '/auth/facebook'
     },
-    async signInWithGoogle() {
-      try {
-        const provider = new this.$fireModule.auth.GoogleAuthProvider()
-        const authData = await this.$fire.auth.signInWithPopup(provider)
-        const accessToken = authData.credential.accessToken
-        this.signIn('google', {
-          access_token: accessToken,
-        })
-      } catch (err: any) {
-        this.$toast.error(err.message).goAway(5000)
-      }
+    signInWithGoogle() {
+      location.href = '/auth/google'
     },
     signInWithTwitter() {
-      const provider = new this.$fireModule.auth.TwitterAuthProvider()
-      this.$fire.auth
-        .signInWithPopup(provider)
-        .then((authData: any) => {
-          const accessToken = authData.credential.accessToken
-          const secretToken = authData.credential.secret
-          this.signIn('twitter', {
-            oauth_token: accessToken,
-            oauth_token_secret: secretToken,
-          })
-        })
-        .catch((err: any) => {
-          this.$toast.error(err.message).goAway(5000)
-        })
-    },
-    async signIn(social: string, payload: any) {
-      try {
-        const response = await this.$axios.$post('/api/auth/' + social, payload)
-        const user = response.data[0]
-        this.setUser(user)
-      } catch (error: any) {
-        if (
-          error &&
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          this.$toast.error(error.response.data.message).goAway(5000)
-        } else {
-          this.$toast.error('Server not reachable').goAway(5000)
-        }
-      }
-    },
-    async setUser(user: any) {
-      const token = user.token
-      // @ts-ignore
-      await this.$auth.strategies.local.setUserToken(token)
-      await this.$auth.fetchUser()
-      // this.$auth.strategy.token.set(token)
-      this.$router.push('/dashboard')
-      await this.$fire.auth.signOut()
+      location.href = '/auth/twitter'
     },
   },
 })
@@ -127,6 +68,7 @@ export default Vue.extend({
             shadow
             px-3
             py-3
+            min-w-[120px]
             gap-2 hover:text-paperdazgray-500;
 }
 </style>

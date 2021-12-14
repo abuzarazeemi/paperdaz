@@ -1,5 +1,19 @@
 import redirectSSL from 'redirect-ssl'
 export default {
+  server: {
+    host: '0.0.0.0',
+    // port: 3000,
+  },
+  privateRuntimeConfig: {
+    ENCRYPTION_KEY: process.env.ENCRYPTION_KEY || 'some_encryption_key',
+  },
+  publicRuntimeConfig: {
+    APP_URL: process.env.APP_URL,
+  },
+  env: {
+    API_URL: process.env.API_URL,
+    APP_URL: process.env.APP_URL,
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'Paperdaz',
@@ -21,6 +35,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '~/plugins/element.ts',
     { src: '~/plugins/nuxt-hammer.js', ssr: false, },
     { src: '~/plugins/bus.js', },
     { src: '~/plugins/outside-click.js', },
@@ -35,23 +50,25 @@ export default {
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/tailwindcss
-    '@nuxtjs/tailwindcss',
+    // '@nuxtjs/tailwindcss',
+    '@nuxt/postcss8',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
-    '@nuxtjs/auth-next',
-    '@nuxtjs/firebase',
+    // '@nuxtjs/firebase',
     '@nuxtjs/toast',
   ],
   axios: {
-    baseURL: 'https://dev-api.paperdaz.com',
+    baseURL: process.env.API_URL,
   },
   auth: {
+    watchLoggedIn: false,
     redirect: {
       login: '/login',
       logout: '/',
@@ -61,7 +78,7 @@ export default {
     strategies: {
       local: {
         token: {
-          property: 'data.0.token',
+          property: 'token',
           global: true,
           // required: true,
           // type: 'Bearer'
@@ -72,28 +89,29 @@ export default {
         },
         endpoints: {
           login: {
-            url: '/api/auth/signin',
+            url: '/auth/login',
             method: 'post',
           },
-          user: { url: '/api/self', method: 'get' },
+          user: { url: '/user', method: 'get' },
+          logout: false,
         },
       },
     },
   },
-  firebase: {
-    config: {
-      apiKey: 'AIzaSyDtoyL38ZWagdtu2w-_mZIZrE2JQALfiss',
-      authDomain: 'paperdaz-52bcb.firebaseapp.com',
-      projectId: 'paperdaz-52bcb',
-      storageBucket: 'paperdaz-52bcb.appspot.com',
-      messagingSenderId: '568264793203',
-      appId: '1:568264793203:web:2034e66185390567fede06',
-      measurementId: 'G-NDNJE6P9HN',
-    },
-    services: {
-      auth: true,
-    },
-  },
+  // firebase: {
+  //   config: {
+  //     apiKey: 'AIzaSyDtoyL38ZWagdtu2w-_mZIZrE2JQALfiss',
+  //     authDomain: 'paperdaz-52bcb.firebaseapp.com',
+  //     projectId: 'paperdaz-52bcb',
+  //     storageBucket: 'paperdaz-52bcb.appspot.com',
+  //     messagingSenderId: '568264793203',
+  //     appId: '1:568264793203:web:2034e66185390567fede06',
+  //     measurementId: 'G-NDNJE6P9HN',
+  //   },
+  //   services: {
+  //     auth: true,
+  //   },
+  // },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
@@ -113,10 +131,20 @@ export default {
             name: 'assets/pdf/[name].[hash:8].[ext]'
           },
         },
-      )
+      )},
+    postcss: {
+      plugins: {
+        'postcss-import': {},
+        'tailwindcss/nesting': {},
+        tailwindcss: {},
+        autoprefixer: {},
+      },
     },
   },
   serverMiddleware: [
-    redirectSSL.create({ enabled: process.env.NODE_ENV === 'production' }),
+    { path: '/auth', handler: '~/server-middleware/passport.ts' },
+    redirectSSL.create({
+      enabled: process.env.NODE_ENV === 'production',
+    }),
   ],
 }
