@@ -181,8 +181,8 @@ export default Vue.extend({
     }
   },
   asyncData({ query, $config }) {
-    // const encryptionKey = $config.ENCRYPTION_KEY as string
-    const encryptionKey = 'dssdsdsd'
+    const encryptionKey = $config.ENCRYPTION_KEY as string
+    // const encryptionKey = 'dssdsdsd'
     const token = query.token as string
     let socialUser = undefined as PassportUserProfile | undefined
 
