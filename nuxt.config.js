@@ -34,7 +34,13 @@ export default {
   css: ['~assets/styles.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/element.ts'],
+  plugins: [
+    '~/plugins/element.ts',
+    { src: '~/plugins/nuxt-hammer.js', ssr: false, },
+    { src: '~/plugins/bus.js', },
+    { src: '~/plugins/outside-click.js', },
+    { src: '~/plugins/html2pdf.js', ssr: false, }
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -116,6 +122,16 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    extend(config) {
+      config.module.rules.push(
+        {
+          test: /\.(pdf)(\?.*)?$/,
+          loader: 'file-loader',
+          options: {
+            name: 'assets/pdf/[name].[hash:8].[ext]'
+          },
+        },
+      )},
     postcss: {
       plugins: {
         'postcss-import': {},
