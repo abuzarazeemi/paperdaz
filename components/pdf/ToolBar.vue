@@ -83,7 +83,7 @@
       </div>
 
       <button
-        @click="signaturePad = !signaturePad"
+        @click="showSignatureModal = true"
         class="
           inline-flex
           items-center
@@ -165,15 +165,23 @@
 
       <button @click="downloadPdf">Download</button>
     </div>
+
+    <pdf-signature-modal
+      v-model="showSignatureModal"
+      v-if="showSignatureModal"
+    />
   </section>
 </template>
 
 <script>
+import PdfSignatureModal from '../modals/PdfSignatureModal.vue'
 import TOOL_TYPE from './data/toolType'
 export default {
+  components: { PdfSignatureModal },
   data: () => ({
     selectedType: null,
     signaturePad: false,
+    showSignatureModal: false,
   }),
   computed: {
     TOOL_TYPE() {
@@ -193,7 +201,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.tool-bar {
-}
-</style>
+<style lang="scss" scoped></style>
