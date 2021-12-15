@@ -1,7 +1,7 @@
 <template>
   <div id="pdf-layout" class="relative bg-[#E0E0E0] min-h-screen">
-    <dashboard-navbar class="fixed top-0 justify-self-stretch z-50" />
-    <Nuxt class="overflow-y-auto pt-[60px] sm:pt-[70px]" />
+    <dashboard-navbar class="sticky top-0 justify-self-stretch z-50" />
+    <Nuxt class="overflow-y-auto" />
   </div>
 </template>
 
@@ -22,8 +22,8 @@ export default Vue.extend({
   overflow: hidden;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
+  // grid-template-rows: 1fr;
   /* // grid-template-rows: 1fr; */
-  // grid-template-rows: max-content 1fr;
+  grid-template-rows: max-content 1fr;
 }
 </style>
