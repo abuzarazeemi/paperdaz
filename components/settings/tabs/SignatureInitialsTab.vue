@@ -38,7 +38,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import SignarurePad from 'signature_pad'
+import SignaturePad from 'signature_pad'
 import ExclamationIcon from '~/components/svg-icons/ExclamationIcon.vue'
 
 export default Vue.extend({
@@ -68,7 +68,9 @@ export default Vue.extend({
 
         if (!canvas) return
 
-        this.functionalCanvases[index] = new SignarurePad(canvas)
+        let currentSignaturePad = this.functionalCanvases[index]
+
+        currentSignaturePad = new SignaturePad(canvas)
       })
 
       window.addEventListener('resize', this.resizeCanvas)
