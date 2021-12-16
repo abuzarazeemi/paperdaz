@@ -3,18 +3,19 @@
     <h3
       class="
         flex
-        justify-between
+        justify-center
         text-paperdazgreen-300
         border-b-2 border-paperdazgreen-300
-        uppercase
         font-semibold
-        text-xl
+        text-2xl
         gap-2
         pb-1
+        relative
+        mb-7
       "
     >
       <span>{{ headerText }}</span>
-      <pen-icon />
+      <pen-icon class="absolute right-0 top-1/2 transform -translate-y-1/2" />
     </h3>
     <component :is="formComponent" class="mt-4" />
   </div>
