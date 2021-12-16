@@ -20,7 +20,9 @@
           <img :src="profilePhoto" class="circle w-full h-full" alt="" />
         </div>
       </div>
-      <p class="text-lg font-semibold mb-2 capitalize">{{ user.first_name }}</p>
+      <p class="text-lg font-semibold mb-2 capitalize">
+        {{ `${user.first_name} ${user.last_name}` }}
+      </p>
       <div
         class="
           border border-paperdazgray-100

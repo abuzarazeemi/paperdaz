@@ -13,7 +13,7 @@ import ProfileTab from '~/components/settings/ProfileTab.vue'
 import AccountTab from '~/components/settings/tabs/AccountTab.vue'
 import ChangePasswordTab from '~/components/settings/tabs/ChangePasswordTab.vue'
 import SignatureInitialsTab from '~/components/settings/tabs/SignatureInitialsTab.vue'
-
+import NotificationsTab from '~/components/settings/tabs/NotificationsTab.vue'
 const BillingTab = () => import('~/components/settings/tabs/BillingTab.vue')
 const YourProductsTab = () =>
   import('~/components/settings/tabs/YourProductsTab.vue')
@@ -24,35 +24,40 @@ export default Vue.extend({
   layout: 'dashboard',
   data() {
     return {
-      currentTab: 'account',
+      currentTab: 'signature-initials',
       tabs: [
-        { label: 'Account', value: 'account' },
-        { label: 'Change Password', value: 'change-password' },
-        { label: 'Signature/Initials', value: 'signature-initials' },
-        { label: 'Billing', value: 'billing' },
-        { label: 'Your Proucts', value: 'your-products' },
+        { label: 'Account', value: 'account', component: AccountTab },
+        { label: 'Security', value: 'security', component: ChangePasswordTab },
+        {
+          label: 'Signature/Initials',
+          value: 'signature-initials',
+          component: SignatureInitialsTab,
+        },
+        { label: 'Billing', value: 'billing', component: BillingTab },
+        {
+          label: 'Your Proucts',
+          value: 'your-products',
+          component: YourProductsTab,
+        },
+        {
+          label: 'Notifications',
+          value: 'notifications',
+          component: NotificationsTab,
+        },
       ],
     }
   },
   computed: {
     currrentTabComponent(): any {
-      switch (this.currentTab) {
-        case 'account':
-          return AccountTab
-        case 'change-password':
-          return ChangePasswordTab
-        case 'signature-initials':
-          return SignatureInitialsTab
-        case 'billing':
-          return BillingTab
-        case 'your-products':
-          return YourProductsTab
-        default:
-          return {
-            render(h: any) {
-              return h('h1', 'Tab not available')
-            },
-          }
+      const tab = this.tabs.find((el) => el.value === this.currentTab)
+      if (tab && tab.component) {
+        return tab.component
+      } else {
+        return {
+          render(h: any) {
+            return h('h1', 'Tab not available')
+          },
+        }
       }
     },
   },

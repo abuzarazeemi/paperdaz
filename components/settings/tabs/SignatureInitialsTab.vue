@@ -2,15 +2,50 @@
   <div class="flex-1 rounded-3xl bg-white py-6 px-8">
     <!-- Start:: Signature section -->
     <section class="mb-12">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-[#524D5B] font-medium text-2xl flex items-center gap-3">
+      <!-- <div class="flex justify-between items-center mb-4"> -->
+      <!-- <h3 class="text-[#524D5B] font-medium text-2xl flex items-center gap-3">
           Signature <exclamation-icon class="text-paperdazgreen-300 w-4 h-4" />
-        </h3>
-        <div class="flex">
+        </h3> -->
+      <!-- <div class="flex">
           <button class="action-button primary mr-3">Save</button>
           <button class="action-button danger">Cancel</button>
-        </div>
-      </div>
+        </div> -->
+      <!-- </div> -->
+      <h3
+        class="
+          flex
+          justify-center
+          text-paperdazgreen-300
+          border-b-2 border-paperdazgreen-300
+          font-semibold
+          text-2xl
+          gap-2
+          pb-2
+          relative
+          mb-7
+        "
+      >
+        <span class="flex items-center gap-3"
+          >Signature <exclamation-icon class="text-paperdazgreen-300 w-4 h-4"
+        /></span>
+        <!-- <pen-icon
+            class="absolute right-0 top-1/2 transform -translate-y-1/2"
+          /> -->
+        <button
+          class="
+            action-button action-button-sm
+            primary
+            mr-3
+            absolute
+            right-0
+            top-1/2
+            transform
+            -translate-y-1/2
+          "
+        >
+          Edit
+        </button>
+      </h3>
       <div class="canvas-container">
         <canvas class="border h-56 border-[#C4C4C4] w-full rounded"></canvas>
       </div>
@@ -19,7 +54,7 @@
 
     <!-- Start:: Initials section -->
     <section>
-      <div class="flex justify-between items-center mb-4">
+      <!-- <div class="flex justify-between items-center mb-4">
         <h3 class="text-[#524D5B] font-medium text-2xl flex items-center gap-3">
           Initials <exclamation-icon class="text-paperdazgreen-300 w-4 h-4" />
         </h3>
@@ -27,7 +62,42 @@
           <button class="action-button primary mr-3">Save</button>
           <button class="action-button danger">Cancel</button>
         </div>
-      </div>
+      </div> -->
+      <h3
+        class="
+          flex
+          justify-center
+          text-paperdazgreen-300
+          border-b-2 border-paperdazgreen-300
+          font-semibold
+          text-2xl
+          gap-2
+          pb-2
+          relative
+          mb-7
+        "
+      >
+        <span class="flex items-center gap-3"
+          >Initials <exclamation-icon class="text-paperdazgreen-300 w-4 h-4"
+        /></span>
+        <!-- <pen-icon
+            class="absolute right-0 top-1/2 transform -translate-y-1/2"
+          /> -->
+        <button
+          class="
+            action-button action-button-sm
+            primary
+            mr-3
+            absolute
+            right-0
+            top-1/2
+            transform
+            -translate-y-1/2
+          "
+        >
+          Edit
+        </button>
+      </h3>
       <div class="canvas-container">
         <canvas class="border h-56 border-[#C4C4C4] w-full rounded"></canvas>
       </div>
