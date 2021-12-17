@@ -246,6 +246,8 @@ export default Vue.extend({
           )
 
           this.states = states
+
+          if (this.states.length === 0) this.formData.state = ''
         })
     },
     onSubmit() {
@@ -290,6 +292,7 @@ export default Vue.extend({
   },
   watch: {
     'formData.country': function () {
+      this.formData.state = ''
       this.fetchStates()
     },
   },
