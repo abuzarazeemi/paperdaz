@@ -255,11 +255,6 @@ export default Vue.extend({
           this.isRedirecting = false
         })
         .catch((error) => {
-          try {
-            console.log(error.toJSON())
-          } catch (e) {
-            console.log('Error logging error')
-          }
           let message = ''
           if (
             error &&
@@ -274,7 +269,6 @@ export default Vue.extend({
           }
           this.errorMessage = message
           this.$toast.error(message).goAway(5000)
-          throw error
         })
         .finally(() => {
           this.isLoading = false
