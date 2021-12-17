@@ -17,7 +17,6 @@
       <span>{{ headerText }}</span>
       <button
         @click="editingDetails = !editingDetails"
-        :disabled="editingDetails"
         class="absolute right-0 top-1/2 transform -translate-y-1/2 px-2 py-1"
       >
         <pen-icon v-show="!editingDetails" />
