@@ -9,6 +9,7 @@ export default {
   },
   publicRuntimeConfig: {
     APP_URL: process.env.APP_URL,
+    countryApiKey: process.env.COUNTRY_STATE_CITY_API_KEY,
   },
   env: {
     API_URL: process.env.API_URL,

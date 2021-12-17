@@ -24,7 +24,7 @@ export default Vue.extend({
   layout: 'dashboard',
   data() {
     return {
-      currentTab: 'signature-initials',
+      currentTab: 'account',
       tabs: [
         { label: 'Account', value: 'account', component: AccountTab },
         { label: 'Security', value: 'security', component: ChangePasswordTab },
