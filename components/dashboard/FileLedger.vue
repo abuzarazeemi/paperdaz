@@ -279,8 +279,8 @@ export default Vue.extend({
         } catch (e) {}
       }
       const options = {
-        // root: this.$refs.ledgerContainer as Element,
-        root: document,
+        root: this.$refs.ledgerContainer as Element,
+        // root: document,
         rootMargin: '0px',
         threshold: 1.0,
       }
