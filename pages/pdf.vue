@@ -1,9 +1,12 @@
 <template>
-  <div class="pdf-editor-view">
-    <tool-bar @tool-change="onToolChange" />
+  <div class="pdf-editor-view relative">
+    <tool-bar
+      @tool-change="onToolChange"
+      class="sticky top-0 left-0 right-0 z-20"
+    />
     <!-- {{tools}} -->
-    <div v-if="pdf" class="pdf-pages-wrapper flex flex-col items-center">
-      <div class="pdf-pages-outer pb-6" ref="PagesOuter">
+    <div v-if="pdf" class="pdf-pages-wrapper flex flex-col items-center" ref="pdfPagesWrapper">
+      <div class="pdf-pages-outer pb-6 relative" ref="PagesOuter">
         <tool-wrapper 
           v-for="(tool, tI) in tools" :key="`tool-${tI}`" 
           :dragHandler="handlePanning" 
@@ -18,12 +21,19 @@
           :scale="tool.scale"
         />
         <!-- <component :is="`${selectedToolType}-identifier`" v-if="selectedToolType && showToolIdentifier" :position="toolIdentifierPosition" /> -->
-        <div 
-          class="pdf-single-pages-outer" ref="pdf-single-pages-outer" 
-          v-hammer:pan="(ev) => handlePanning(ev)" @click="onCLickSinglePageOuter" 
-          @mousemove="onMouseMoveOnPages" @mouseleave="onMouseLeaveFromPages"
+        <div
+          class="pdf-single-pages-outer"
+          ref="pdf-single-pages-outer"
+          v-hammer:pan="(ev) => handlePanning(ev)"
+          @click="onCLickSinglePageOuter"
+          @mousemove="onMouseMoveOnPages"
+          @mouseleave="onMouseLeaveFromPages"
         >
-          <div class="pdf-single-page-outer" v-for="(page, pI) in pdf.numPages" :key="pI">
+          <div
+            class="pdf-single-page-outer"
+            v-for="(page, pI) in pdf.numPages"
+            :key="pI"
+          >
             <div class="mt-6 page-break" v-if="pI > 0"></div>
             <pdf-page :page-number="pI + 1" :pdf="pdf" />
           </div>
@@ -35,8 +45,8 @@
 
 <script>
 import demoPdf from '@/assets/pdf/sample.pdf'
-import * as pdfJs from "pdfjs-dist/build/pdf"
-import * as worker from "pdfjs-dist/build/pdf.worker.entry"
+import * as pdfJs from 'pdfjs-dist/build/pdf'
+import * as worker from 'pdfjs-dist/build/pdf.worker.entry'
 pdfJs.GlobalWorkerOptions.workerSrc = worker
 
 import jsPDF from 'jspdf'
@@ -61,16 +71,28 @@ import NameIdentifier from '@/components/pdf/tools_identifiers/Name'
 import InitialIdentifier from '@/components/pdf/tools_identifiers/Initial'
 
 export default {
-  components: { 
-    PdfPage, ToolWrapper, ToolBar,
-    TextIdentifier, TickIdentifier, CrossIdentifier, DotIdentifier, CircleIdentifier, LineIdentifier, HighlightIdentifier, 
-    DrawIdentifier, DateIdentifier, NameIdentifier, InitialIdentifier,
+  layout: 'pdf',
+  components: {
+    PdfPage,
+    ToolWrapper,
+    ToolBar,
+    TextIdentifier,
+    TickIdentifier,
+    CrossIdentifier,
+    DotIdentifier,
+    CircleIdentifier,
+    LineIdentifier,
+    HighlightIdentifier,
+    DrawIdentifier,
+    DateIdentifier,
+    NameIdentifier,
+    InitialIdentifier,
   },
-  created(){
+  created() {
     this.fetchPdf()
     this.$BUS.$on('download-pdf', this.downloadPdf)
   },
-  beforeDestroy(){
+  beforeDestroy() {
     this.$BUS.$off('download-pdf')
   },
   data: () => ({
@@ -87,9 +109,13 @@ export default {
     selectedToolIndex: -1,
   }),
   computed: {
-    TOOL_TYPE(){ return TOOL_TYPE },
-    TOOL_DIRECTION(){ return TOOL_DIRECTION },
-    TOOL_THRESHOLD(){
+    TOOL_TYPE() {
+      return TOOL_TYPE
+    },
+    TOOL_DIRECTION() {
+      return TOOL_DIRECTION
+    },
+    TOOL_THRESHOLD() {
       return {
         [TOOL_TYPE.text]: { identifier: { top: 20, left: 0 }, tool: { top: 12, left: 0 } },
         [TOOL_TYPE.tick]: { identifier: { top: 20, left: 0 }, tool: { top: 20, left: 0 } },
@@ -104,7 +130,7 @@ export default {
         [TOOL_TYPE.initial]: { identifier: { top: 20, left: 0 }, tool: { top: 12, left: 0 } },
       }
     },
-    selectedTool(){
+    selectedTool() {
       this.selectedToolIndex < 0 ? null : this.tools[this.selectedToolIndex]
     },
   },
@@ -164,78 +190,82 @@ export default {
       this.tools.splice(index, 1)
       this.$forceUpdate()
     },
-    handlePanning(event, index = undefined, direction = undefined){
+    handlePanning(event, index = undefined, direction = undefined) {
       var elem = this.$refs['pdf-single-pages-outer']
-      
-      if ( ! this.isPanning && index == undefined ) {
+
+      if (!this.isPanning && index == undefined) {
         this.isPanning = true
         this.lastPosX = elem.offsetLeft
         this.lastPosY = elem.offsetTop
-        if(this.selectedToolType == this.TOOL_TYPE.line){
+        if (this.selectedToolType == this.TOOL_TYPE.line) {
+          this.placeTool(event.srcEvent, null)
+          this.selectedToolIndex = this.tools.length - 1
+        } else if (this.selectedToolType == this.TOOL_TYPE.highlight) {
+          this.placeTool(event.srcEvent, null)
+          this.selectedToolIndex = this.tools.length - 1
+        } else if (this.selectedToolType == this.TOOL_TYPE.draw) {
           this.placeTool(event.srcEvent, null)
           this.selectedToolIndex = this.tools.length - 1
         }
-        else if(this.selectedToolType == this.TOOL_TYPE.highlight){
-          this.placeTool(event.srcEvent, null)
-          this.selectedToolIndex = this.tools.length - 1
-        }
-        else if(this.selectedToolType == this.TOOL_TYPE.draw){
-          this.placeTool(event.srcEvent, null)
-          this.selectedToolIndex = this.tools.length - 1
-        }
-      }else if(index != undefined && this.selectedToolIndex != index) {
+      } else if (index != undefined && this.selectedToolIndex != index) {
         this.selectedToolIndex = index
       }
 
       var posX = event.deltaX + this.lastPosX
       var posY = event.deltaY + this.lastPosY
 
-      if(this.selectedToolType == this.TOOL_TYPE.line){
+      if (this.selectedToolType == this.TOOL_TYPE.line) {
         let { x, y } = this.pointerPos(event.srcEvent, this.$refs.PagesOuter)
-        if(direction && direction == this.TOOL_DIRECTION.left){
-          this.tools[this.selectedToolIndex].x1 = x - this.TOOL_THRESHOLD[this.selectedToolType].tool.left
-          this.tools[this.selectedToolIndex].y1 = y - this.TOOL_THRESHOLD[this.selectedToolType].tool.top
-        }
-        else{
-          this.tools[this.selectedToolIndex].x2 = x - this.TOOL_THRESHOLD[this.selectedToolType].tool.left
-          this.tools[this.selectedToolIndex].y2 = y - this.TOOL_THRESHOLD[this.selectedToolType].tool.top
+        if (direction && direction == this.TOOL_DIRECTION.left) {
+          this.tools[this.selectedToolIndex].x1 =
+            x - this.TOOL_THRESHOLD[this.selectedToolType].tool.left
+          this.tools[this.selectedToolIndex].y1 =
+            y - this.TOOL_THRESHOLD[this.selectedToolType].tool.top
+        } else {
+          this.tools[this.selectedToolIndex].x2 =
+            x - this.TOOL_THRESHOLD[this.selectedToolType].tool.left
+          this.tools[this.selectedToolIndex].y2 =
+            y - this.TOOL_THRESHOLD[this.selectedToolType].tool.top
         }
         this.$forceUpdate()
-      }
-      else if(this.selectedToolType == this.TOOL_TYPE.highlight){
+      } else if (this.selectedToolType == this.TOOL_TYPE.highlight) {
         let { x, y } = this.pointerPos(event.srcEvent, this.$refs.PagesOuter)
-        if(direction && direction == this.TOOL_DIRECTION.left){
-          this.tools[this.selectedToolIndex].x1 = x - this.TOOL_THRESHOLD[this.selectedToolType].tool.left
-        }else{
-          this.tools[this.selectedToolIndex].x2 = x - this.TOOL_THRESHOLD[this.selectedToolType].tool.left
+        if (direction && direction == this.TOOL_DIRECTION.left) {
+          this.tools[this.selectedToolIndex].x1 =
+            x - this.TOOL_THRESHOLD[this.selectedToolType].tool.left
+        } else {
+          this.tools[this.selectedToolIndex].x2 =
+            x - this.TOOL_THRESHOLD[this.selectedToolType].tool.left
         }
-        this.tools[this.selectedToolIndex].y2 = this.tools[this.selectedToolIndex].y1 + 15
+        this.tools[this.selectedToolIndex].y2 =
+          this.tools[this.selectedToolIndex].y1 + 15
         this.$forceUpdate()
-      }
-      else if(this.selectedToolType == this.TOOL_TYPE.draw){
+      } else if (this.selectedToolType == this.TOOL_TYPE.draw) {
         let { x, y } = this.pointerPos(event.srcEvent, this.$refs.PagesOuter)
-        this.tools[this.selectedToolIndex].points = this.tools[this.selectedToolIndex].points.concat([
+        this.tools[this.selectedToolIndex].points = this.tools[
+          this.selectedToolIndex
+        ].points.concat([
           x - this.TOOL_THRESHOLD[this.selectedToolType].tool.left,
-          y - this.TOOL_THRESHOLD[this.selectedToolType].tool.top
+          y - this.TOOL_THRESHOLD[this.selectedToolType].tool.top,
         ])
         this.$forceUpdate()
       }
-      
+
       if (event.isFinal) {
         this.isPanning = false
         this.lastPosX = 0
         this.lastPosY = 0
       }
     },
-    onMouseEnterOnPages(){
-      if(window.innerWidth < 800) return
+    onMouseEnterOnPages() {
+      if (window.innerWidth < 800) return
       this.showToolIdentifier = true
     },
-    onMouseLeaveFromPages(){
-      if(window.innerWidth < 800) return
+    onMouseLeaveFromPages() {
+      if (window.innerWidth < 800) return
       this.showToolIdentifier = false
     },
-    onMouseMoveOnPages(event){
+    onMouseMoveOnPages(event) {
       // if(window.innerWidth < 800) return
       // if(!this.selectedToolType) return
       // if(!this.showToolIdentifier) this.showToolIdentifier = true
@@ -243,10 +273,10 @@ export default {
       // this.toolIdentifierPosition.top = y - this.TOOL_THRESHOLD[this.selectedToolType].identifier.top
       // this.toolIdentifierPosition.left = x - this.TOOL_THRESHOLD[this.selectedToolType].identifier.left
     },
-    onToolChange(type){
+    onToolChange(type) {
       this.selectedToolType = type
     },
-    pointerPos(event, parent){
+    pointerPos(event, parent) {
       let eventDoc, doc, body
       event = event || window.event
       let x = 0
@@ -256,92 +286,93 @@ export default {
         doc = eventDoc.documentElement
         body = eventDoc.body
 
-        event.pageX = event.clientX +
-          (doc && doc.scrollLeft || body && body.scrollLeft || 0) -
-          (doc && doc.clientLeft || body && body.clientLeft || 0)
-        event.pageY = event.clientY +
-          (doc && doc.scrollTop  || body && body.scrollTop  || 0) -
-          (doc && doc.clientTop  || body && body.clientTop  || 0 )
+        event.pageX =
+          event.clientX +
+          ((doc && doc.scrollLeft) || (body && body.scrollLeft) || 0) -
+          ((doc && doc.clientLeft) || (body && body.clientLeft) || 0)
+        event.pageY =
+          event.clientY +
+          ((doc && doc.scrollTop) || (body && body.scrollTop) || 0) -
+          ((doc && doc.clientTop) || (body && body.clientTop) || 0)
       }
 
       x = event.pageX
       y = event.pageY
 
-      if(parent){
+      if (parent) {
         x = x - parent.offsetLeft
         y = y - parent.offsetTop
       }
 
       return { x, y }
     },
-    onCLickSinglePageOuter(event){
-      if(
-        !this.selectedToolType
-        || this.selectedToolType == this.TOOL_TYPE.line
-        || this.selectedToolType == this.TOOL_TYPE.highlight
-        || this.selectedToolType == this.TOOL_TYPE.draw
-      ) return
+    onCLickSinglePageOuter(event) {
+      if (
+        !this.selectedToolType ||
+        this.selectedToolType == this.TOOL_TYPE.line ||
+        this.selectedToolType == this.TOOL_TYPE.highlight ||
+        this.selectedToolType == this.TOOL_TYPE.draw
+      )
+        return
       this.placeTool(event, this.$refs.PagesOuter)
     },
-    placeTool(e, parent){
+    placeTool(e, parent) {
       let { x, y } = this.pointerPos(e, parent || this.$refs.PagesOuter)
       let obj = {
         type: this.TOOL_TYPE[this.selectedToolType],
         top: y - this.TOOL_THRESHOLD[this.selectedToolType].tool.top,
         left: x - this.TOOL_THRESHOLD[this.selectedToolType].tool.left,
       }
-      if(this.selectedToolType == this.TOOL_TYPE.line){
+      if (this.selectedToolType == this.TOOL_TYPE.line) {
         obj.x1 = obj.left
         obj.y1 = obj.top
         delete obj.left
         delete obj.top
-      }
-      else if(this.selectedToolType == this.TOOL_TYPE.highlight){
+      } else if (this.selectedToolType == this.TOOL_TYPE.highlight) {
         obj.x1 = obj.left
         obj.y1 = obj.top
         delete obj.left
         delete obj.top
-      }
-      else if(this.selectedToolType == this.TOOL_TYPE.draw){
-        obj.points = [ obj.left, obj.top ]
+      } else if (this.selectedToolType == this.TOOL_TYPE.draw) {
+        obj.points = [obj.left, obj.top]
       }
       this.tools.push(obj)
     },
-    async fetchPdf(){
+    async fetchPdf() {
       let res = await fetch(demoPdf)
       let blob = await res.blob()
-      let pdfAsDataUri = await (new Promise((resolve, reject)=>{
+      let pdfAsDataUri = await new Promise((resolve, reject) => {
         const reader = new FileReader()
         reader.readAsDataURL(blob)
         reader.onload = () => resolve(reader.result)
-        reader.onerror = error => reject(error)
-      }))
-      
+        reader.onerror = (error) => reject(error)
+      })
+
       let pdfAsArray = this.convertDataURIToBinary(pdfAsDataUri)
       let doc = pdfJs.getDocument(pdfAsArray)
       this.pdf = await doc.promise
     },
     convertDataURIToBinary(dataURI) {
       let BASE64_MARKER = ';base64,'
-      var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
-      var base64 = dataURI.substring(base64Index);
-      var raw = window.atob(base64);
-      var rawLength = raw.length;
-      var array = new Uint8Array(new ArrayBuffer(rawLength));
+      var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length
+      var base64 = dataURI.substring(base64Index)
+      var raw = window.atob(base64)
+      var rawLength = raw.length
+      var array = new Uint8Array(new ArrayBuffer(rawLength))
 
-      for(var i = 0; i < rawLength; i++) {
-        array[i] = raw.charCodeAt(i);
+      for (var i = 0; i < rawLength; i++) {
+        array[i] = raw.charCodeAt(i)
       }
-      return array;
-    }
+      return array
+    },
   },
 }
 </script>
 
 <style lang="scss" scoped>
-.pdf-editor-view{
-  background-color: #E9E9E9;
-  .pdf-pages-outer{
+.pdf-editor-view {
+  background-color: #e9e9e9;
+  .pdf-pages-outer {
     max-width: 700px;
     position: relative;
   }

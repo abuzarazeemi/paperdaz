@@ -5,6 +5,10 @@ import {
   Button,
   Dropdown,
   Notification,
+  Dialog,
+  Input,
+  Select,
+  Option,
 } from 'element-ui'
 // import lang from 'element-ui/lib/locale/lang/en'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -48,6 +52,10 @@ const myPlugin: Plugin = (context, inject) => {
   Vue.use(DropdownItem)
   Vue.use(DropdownMenu)
   Vue.use(Button)
+  Vue.use(Dialog)
+  Vue.use(Input)
+  Vue.use(Select)
+  Vue.use(Option)
   inject('notify', Notification)
 }
 
