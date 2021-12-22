@@ -9,8 +9,7 @@
     </div>
     <div @click="onClick" class="tool-holder">
       <component 
-        :is="`${tool.type}-tool`" 
-        :tool="tool" 
+        :is="`${type}-tool`" 
         :x1="x1" :y1="y1" :x2="x2" :y2="y2" 
         :points="points" :isActive="isActive" 
         :fontSize="fontSize"

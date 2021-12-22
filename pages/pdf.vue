@@ -131,7 +131,7 @@ export default {
         [TOOL_TYPE.circle]: { identifier: { top: 20, left: 0 }, tool: { top: 20, left: 0 } },
         [TOOL_TYPE.line]: { identifier: { top: 20, left: 0 }, tool: { top: 0, left: 10 } },
         [TOOL_TYPE.highlight]: { identifier: { top: 20, left: 0 }, tool: { top: 5, left: 10 } },
-        [TOOL_TYPE.draw]: { identifier: { top: 20, left: 0 }, tool: { top: 0, left: 0 } },
+        [TOOL_TYPE.draw]: { identifier: { top: 20, left: 0 }, tool: { top: 0, left: 10 } },
         [TOOL_TYPE.date]: { identifier: { top: 20, left: 0 }, tool: { top: 12, left: 0 } },
         [TOOL_TYPE.name]: { identifier: { top: 20, left: 0 }, tool: { top: 12, left: 0 } },
         [TOOL_TYPE.initial]: { identifier: { top: 20, left: 0 }, tool: { top: 12, left: 0 } },
@@ -197,6 +197,7 @@ export default {
       html2pdf().set(options).from(this.$refs.PagesOuter).save()
     },
     deleteTool(index){
+      this.selectedToolIndex = -1
       this.tools.splice(index, 1)
       this.$forceUpdate()
     },
