@@ -2,11 +2,20 @@
   <div class="tool-wrapper" :style="wrpStyle" ref="Wrp">
     <div class="tool-menu flex" v-if="isActive">
       <div class="drag" v-hammer:pan="handleDrag">DR</div> - 
-      <div class="delete" @click="$emit('delete-tool', tool)">DeLeTe</div> - 
+      <div class="delete" @click="deleteTool(index)">DeLeTe</div> - 
+      <div class="increase" @click="handleIncrease(index)" v-if="isMenuVisible('increase')">Increase</div> - 
+      <div class="decrease" @click="handleDecrease(index)" v-if="isMenuVisible('increase')">Decrease</div> - 
       <div class="delete" @click="onOutsideClick">OK</div>
     </div>
     <div @click="onClick" class="tool-holder">
-      <component :is="`${tool.type}-tool`" :tool="tool" :top="top" :left="left" :x1="x1" :y1="y1" :x2="x2" :y2="y2" :points="points" :isActive="isActive" />
+      <component 
+        :is="`${tool.type}-tool`" 
+        :tool="tool" 
+        :x1="x1" :y1="y1" :x2="x2" :y2="y2" 
+        :points="points" :isActive="isActive" 
+        :fontSize="fontSize"
+        :scale="scale"
+      />
       <div class="dr__right" ref="drRight" v-hammer:pan="ev => handleToolDrag(ev)" v-if="isAvailableDrRight"></div>
       <div class="dr__left" v-hammer:pan="ev => handleToolDrag(ev, TOOL_DIRECTION.left)" v-if="isAvailableDrLeft"></div>
     </div>
@@ -34,10 +43,15 @@ export default {
     y1: Number,
     x2: Number,
     y2: Number,
+    deleteTool: Function,
     points: Array,
     dragHandler: Function,
     index: Number,
     type: String,
+    handleIncrease: Function,
+    handleDecrease: Function,
+    fontSize: Number,
+    scale: Number,
   },
   components: { TextTool, TickTool, CrossTool, DotTool, CircleTool, LineTool, DrawTool, HighlightTool, DateTool, NameTool, InitialTool, },
   data: () => ({
@@ -84,6 +98,19 @@ export default {
     },
   },
   methods: {
+    isMenuVisible(type){
+      if(
+        ( type == 'increase' || type == 'decrease' )
+        && (
+          [
+            this.TOOL_TYPE.line,
+            this.TOOL_TYPE.highlight,
+            this.TOOL_TYPE.draw,
+          ].includes(this.type)
+        )
+      ) return false
+      return true
+    },
     handleToolDrag(event, direction){
       this.dragHandler(event, this.index, direction)
     },

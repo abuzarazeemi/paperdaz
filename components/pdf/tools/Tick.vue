@@ -1,11 +1,23 @@
 <template>
   <div class="text-field tool">
-    <img src="../assets/tick_tool.svg" alt="">
+    <img src="../assets/tick_tool.svg" alt="" :style="style">
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  props: {
+    scale: Number,
+  },
+  computed: {
+    style(){
+      return {
+        width: `${(this.scale || 1) * 36}px`,
+        height: `${(this.scale || 1) * 35}px`,
+      }
+    },
+  },
+}
 </script>
 
 <style lang="scss" scoped>
