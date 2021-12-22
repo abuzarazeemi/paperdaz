@@ -12,8 +12,8 @@ export default {
   computed: {
     style(){
       return {
-        width: `${(this.scale || 1) * 29}px`,
-        height: `${(this.scale || 1) * 17}px`,
+        width: `${(this.scale || 1) * 24}px`,
+        height: `${(this.scale || 1) * 24}px`,
       }
     },
   },

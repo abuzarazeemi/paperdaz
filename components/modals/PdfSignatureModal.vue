@@ -217,6 +217,8 @@ export default Vue.extend({
 
       console.log(pngImage)
 
+      this.$BUS.$emit('signature-update', pngImage)
+
       alert("Check console and method 'getImageFromSignaturePad'")
     },
   },

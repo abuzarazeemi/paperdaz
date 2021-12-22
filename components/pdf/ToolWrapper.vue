@@ -15,6 +15,7 @@
         :points="points" :isActive="isActive" 
         :fontSize="fontSize"
         :scale="scale"
+        :signature="signature"
       />
       <div class="dr__right" ref="drRight" v-hammer:pan="ev => handleToolDrag(ev)" v-if="isAvailableDrRight"></div>
       <div class="dr__left" v-hammer:pan="ev => handleToolDrag(ev, TOOL_DIRECTION.left)" v-if="isAvailableDrLeft"></div>
@@ -34,6 +35,7 @@ import HighlightTool from './tools/Highlight'
 import DateTool from './tools/Date'
 import NameTool from './tools/Name'
 import InitialTool from './tools/Initial'
+import SignatureTool from './tools/Signature'
 import TOOL_DIRECTION from '@/components/pdf/data/toolDragDirection'
 import TOOL_TYPE from '@/components/pdf/data/toolType'
 export default {
@@ -52,8 +54,9 @@ export default {
     handleDecrease: Function,
     fontSize: Number,
     scale: Number,
+    signature: String,
   },
-  components: { TextTool, TickTool, CrossTool, DotTool, CircleTool, LineTool, DrawTool, HighlightTool, DateTool, NameTool, InitialTool, },
+  components: { TextTool, TickTool, CrossTool, DotTool, CircleTool, LineTool, DrawTool, HighlightTool, DateTool, NameTool, InitialTool, SignatureTool, },
   data: () => ({
     lastPosX: 0,
     lastPosY: 0,
