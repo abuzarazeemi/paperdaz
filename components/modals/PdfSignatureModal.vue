@@ -180,7 +180,6 @@ export default Vue.extend({
     this.showModal = this.visible
     this.setupCanvases()
   },
-  computed: {},
   methods: {
     closeModal() {
       this.$emit('updateVisibility', false)
@@ -216,7 +215,7 @@ export default Vue.extend({
       const pngImage = this.signaturePad?.toDataURL()
 
       console.log(pngImage)
-
+      // @ts-ignore
       this.$BUS.$emit('signature-update', pngImage)
 
       alert("Check console and method 'getImageFromSignaturePad'")
