@@ -83,7 +83,7 @@
       </div>
 
       <button
-        @click="showSignatureModal = true"
+        @click="onSignClick"
         class="
           inline-flex
           items-center
@@ -196,6 +196,10 @@ export default {
     },
     downloadPdf() {
       this.$BUS.$emit('download-pdf')
+    },
+    onSignClick(){
+      this.showSignatureModal = true
+      this.setSelectedType(this.TOOL_TYPE.signature)
     },
   },
 }

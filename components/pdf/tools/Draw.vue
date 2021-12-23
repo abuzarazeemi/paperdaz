@@ -9,8 +9,6 @@ export default {
   props: {
     tool: Object,
     points: Array,
-    top: Number,
-    left: Number,
   },
   computed: {
     d(){

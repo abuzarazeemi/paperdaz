@@ -7,7 +7,6 @@
 <script>
 export default {
   props: {
-    tool: Object,
     x1: Number,
     y1: Number,
     x2: Number,
