@@ -40,9 +40,12 @@
       <div class="hidden lg:inline-block text-[#909090] mr-4">
         <bell-icon />
       </div>
-      <div class="hidden lg:inline-block text-[#909090] mr-4">
+      <nuxt-link
+        to="/settings"
+        class="hidden lg:inline-block text-[#909090] mr-4"
+      >
         <gear-icon />
-      </div>
+      </nuxt-link>
       <div class="hidden lg:flex flex-col mr-3 text-sm">
         <span class="text-black">{{ user.username }}</span>
         <span class="text-[#524D5B]">{{ user.fullName }}</span>
@@ -92,7 +95,6 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
 import mixins from 'vue-typed-mixins'
 import GlobalMixin from '~/mixins/GlobalMixin'
 import ArrowDownIcon from '../svg-icons/ArrowDownIcon.vue'
