@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-white">
-    <div class="bg-gradient-to-t from-white to-[#E2FFD0]">
+  <div class="">
+    <div class="">
       <hero-page />
     </div>
     <landing-page-info />

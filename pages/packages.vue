@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-gradient-to-t from-white to-[#E2FFD0]">
-    <section class="container py-12">
+  <div class="" style="">
+    <section class="container pt-14 pb-24">
       <!-- Start:: tab indicator -->
       <div
         class="tab-indicator-container"
@@ -29,13 +29,20 @@
           <mail-icon height="20" width="20" />
         </div>
       </div>
-      <!-- End:: tab indicator -->This is the package landing page
+      <!-- End:: tab indicator -->
+
+      <div>
+        <keep-alive>
+          <component :is="currentTabComponent" />
+        </keep-alive>
+      </div>
     </section>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import SelectPackgeTabVue from '~/components/packages/tabs/SelectPackgeTab.vue'
 import MailIcon from '~/components/svg-icons/MailIcon.vue'
 import UserProfileSolidIcon from '~/components/svg-icons/UserProfileSolidIcon.vue'
 export default Vue.extend({
@@ -48,12 +55,27 @@ export default Vue.extend({
       tabLevel: 1,
     }
   },
+
+  computed: {
+    currentTabComponent(): any {
+      switch (this.tabLevel) {
+        case 1:
+          return SelectPackgeTabVue
+        default:
+          return {
+            render(createElement: any) {
+              return createElement('h1', 'Unknown tab')
+            },
+          }
+      }
+    },
+  },
 })
 </script>
 
 <style lang="scss" scoped>
 .tab-indicator-container {
-  @apply relative flex items-center justify-between mb-10;
+  @apply mx-auto relative flex items-center justify-between mb-20 w-full max-w-[600px];
 
   --circle-size: 60px;
 
