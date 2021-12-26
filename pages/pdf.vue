@@ -5,23 +5,21 @@
       class="sticky top-0 left-0 right-0 z-20"
     />
     <!-- {{tools}} -->
-    <div v-if="pdf" class="pdf-pages-wrapper flex flex-col items-center">
-      <div class="pdf-pages-outer pb-6" ref="PagesOuter">
-        <tool-wrapper
-          v-for="(tool, tI) in tools"
-          :key="`tool-${tI}`"
-          :dragHandler="handlePanning"
-          :index="tI"
-          :tool="tool"
-          :type="tool.type"
-          :top="tool.top"
-          :left="tool.left"
-          :x1="tool.x1"
-          :y1="tool.y1"
-          :x2="tool.x2"
-          :y2="tool.y2"
-          :points="tool.points"
-          @delete-tool="deleteTool"
+    <div v-if="pdf" class="pdf-pages-wrapper flex flex-col items-center" ref="pdfPagesWrapper">
+      <div class="pdf-pages-outer pb-6 relative" ref="PagesOuter">
+        <tool-wrapper 
+          v-for="(tool, tI) in tools" :key="`tool-${tI}`" 
+          :dragHandler="handlePanning" 
+          :index="tI" :tool="tool" :type="tool.type" 
+          :top="tool.top" :left="tool.left"
+          :x1="tool.x1" :y1="tool.y1" :x2="tool.x2" :y2="tool.y2" 
+          :points="tool.points" 
+          :deleteTool="deleteTool"
+          :handleIncrease="handleIncrease"
+          :handleDecrease="handleDecrease"
+          :fontSize="tool.fontSize"
+          :scale="tool.scale"
+          :signature="signature"
         />
         <!-- <component :is="`${selectedToolType}-identifier`" v-if="selectedToolType && showToolIdentifier" :position="toolIdentifierPosition" /> -->
         <div
@@ -72,6 +70,7 @@ import HighlightIdentifier from '@/components/pdf/tools_identifiers/Highlight'
 import DateIdentifier from '@/components/pdf/tools_identifiers/Date'
 import NameIdentifier from '@/components/pdf/tools_identifiers/Name'
 import InitialIdentifier from '@/components/pdf/tools_identifiers/Initial'
+import SignatureIdentifier from '@/components/pdf/tools_identifiers/Signature'
 
 export default {
   layout: 'pdf',
@@ -90,13 +89,16 @@ export default {
     DateIdentifier,
     NameIdentifier,
     InitialIdentifier,
+    SignatureIdentifier,
   },
   created() {
     this.fetchPdf()
     this.$BUS.$on('download-pdf', this.downloadPdf)
+    this.$BUS.$on('signature-update', v => this.signature = v)
   },
   beforeDestroy() {
     this.$BUS.$off('download-pdf')
+    this.$BUS.$off('signature-update')
   },
   data: () => ({
     pdf: null,
@@ -110,6 +112,8 @@ export default {
     isPanning: false,
 
     selectedToolIndex: -1,
+    
+    signature: null,
   }),
   computed: {
     TOOL_TYPE() {
@@ -120,50 +124,18 @@ export default {
     },
     TOOL_THRESHOLD() {
       return {
-        [TOOL_TYPE.text]: {
-          identifier: { top: 20, left: 0 },
-          tool: { top: 0, left: 0 },
-        },
-        [TOOL_TYPE.tick]: {
-          identifier: { top: 20, left: 0 },
-          tool: { top: 0, left: 0 },
-        },
-        [TOOL_TYPE.cross]: {
-          identifier: { top: 20, left: 0 },
-          tool: { top: 0, left: 0 },
-        },
-        [TOOL_TYPE.dot]: {
-          identifier: { top: 20, left: 0 },
-          tool: { top: 0, left: 0 },
-        },
-        [TOOL_TYPE.circle]: {
-          identifier: { top: 20, left: 0 },
-          tool: { top: 0, left: 0 },
-        },
-        [TOOL_TYPE.line]: {
-          identifier: { top: 20, left: 0 },
-          tool: { top: 0, left: 0 },
-        },
-        [TOOL_TYPE.highlight]: {
-          identifier: { top: 20, left: 0 },
-          tool: { top: 5, left: 0 },
-        },
-        [TOOL_TYPE.draw]: {
-          identifier: { top: 20, left: 0 },
-          tool: { top: 0, left: 0 },
-        },
-        [TOOL_TYPE.date]: {
-          identifier: { top: 20, left: 0 },
-          tool: { top: 0, left: 0 },
-        },
-        [TOOL_TYPE.name]: {
-          identifier: { top: 20, left: 0 },
-          tool: { top: 0, left: 0 },
-        },
-        [TOOL_TYPE.initial]: {
-          identifier: { top: 20, left: 0 },
-          tool: { top: 0, left: 0 },
-        },
+        [TOOL_TYPE.text]: { identifier: { top: 20, left: 0 }, tool: { top: 12, left: 0 } },
+        [TOOL_TYPE.tick]: { identifier: { top: 20, left: 0 }, tool: { top: 20, left: 0 } },
+        [TOOL_TYPE.cross]: { identifier: { top: 20, left: 0 }, tool: { top: 20, left: 0 } },
+        [TOOL_TYPE.dot]: { identifier: { top: 20, left: 0 }, tool: { top: 10, left: 0 } },
+        [TOOL_TYPE.circle]: { identifier: { top: 20, left: 0 }, tool: { top: 20, left: 0 } },
+        [TOOL_TYPE.line]: { identifier: { top: 20, left: 0 }, tool: { top: 0, left: 10 } },
+        [TOOL_TYPE.highlight]: { identifier: { top: 20, left: 0 }, tool: { top: 5, left: 10 } },
+        [TOOL_TYPE.draw]: { identifier: { top: 20, left: 0 }, tool: { top: 0, left: 10 } },
+        [TOOL_TYPE.date]: { identifier: { top: 20, left: 0 }, tool: { top: 12, left: 0 } },
+        [TOOL_TYPE.name]: { identifier: { top: 20, left: 0 }, tool: { top: 12, left: 0 } },
+        [TOOL_TYPE.initial]: { identifier: { top: 20, left: 0 }, tool: { top: 12, left: 0 } },
+        [TOOL_TYPE.signature]: { identifier: { top: 20, left: 0 }, tool: { top: 12, left: 0 } },
       }
     },
     selectedTool() {
@@ -171,15 +143,63 @@ export default {
     },
   },
   methods: {
-    downloadPdf() {
+    handleIncrease(index){
+      let tool = this.tools[index]
+      if(
+        tool.type == this.TOOL_TYPE.text
+        || tool.type == this.TOOL_TYPE.date
+        || tool.type == this.TOOL_TYPE.name
+        || tool.type == this.TOOL_TYPE.initial
+      ){
+        let fontSize = tool.fontSize || 12
+        this.tools[index].fontSize = ++fontSize
+      }else if(
+        tool.type == this.TOOL_TYPE.tick
+        || tool.type == this.TOOL_TYPE.cross
+        || tool.type == this.TOOL_TYPE.dot
+        || tool.type == this.TOOL_TYPE.circle
+        || tool.type == this.TOOL_TYPE.signature
+      ){
+        let scale = tool.scale || 1
+        scale += 0.1
+        this.tools[index].scale = scale
+      }
+      this.$forceUpdate()
+    },
+    handleDecrease(index){
+      let tool = this.tools[index]
+      if(
+        tool.type == this.TOOL_TYPE.text
+        || tool.type == this.TOOL_TYPE.date
+        || tool.type == this.TOOL_TYPE.name
+        || tool.type == this.TOOL_TYPE.initial
+      ){
+        let fontSize = tool.fontSize || 12
+        this.tools[index].fontSize = --fontSize
+      }else if(
+        tool.type == this.TOOL_TYPE.tick
+        || tool.type == this.TOOL_TYPE.cross
+        || tool.type == this.TOOL_TYPE.dot
+        || tool.type == this.TOOL_TYPE.circle
+        || tool.type == this.TOOL_TYPE.signature
+      ){
+        let scale = tool.scale || 1
+        scale -= 0.1
+        this.tools[index].scale = scale
+      }
+      this.$forceUpdate()
+    },
+    downloadPdf(){
       console.log('d')
       let options = {
         pagebreak: { avoid: '.page-break', after: '.page-break' },
       }
       html2pdf().set(options).from(this.$refs.PagesOuter).save()
     },
-    deleteTool(tool) {
-      this.tools.splice(this.tools.indexOf(tool), 1)
+    deleteTool(index){
+      this.selectedToolIndex = -1
+      this.tools.splice(index, 1)
+      this.$forceUpdate()
     },
     handlePanning(event, index = undefined, direction = undefined) {
       var elem = this.$refs['pdf-single-pages-outer']
@@ -288,11 +308,20 @@ export default {
       }
 
       x = event.pageX
-      y = event.pageY
+      y = event.pageY - 70
+
+      console.log(event, event.target.pageY, [event.target])
 
       if (parent) {
         x = x - parent.offsetLeft
         y = y - parent.offsetTop
+      }
+
+      let pdfEditorView = document.querySelector('.pdf-editor-view')
+
+      if(pdfEditorView){
+        x += pdfEditorView.scrollLeft
+        y += pdfEditorView.scrollTop
       }
 
       return { x, y }

@@ -1,18 +1,26 @@
 <template>
   <div class="text-field tool">
-    <input type="text" v-model="text" v-if="isActive">
-    <p v-else>{{text || 'Click to type'}}</p>
+    <input type="text" v-model="text" v-if="isActive" :style="style">
+    <p v-else :style="style">{{text || 'Click to type'}}</p>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    isActive: Boolean
+    isActive: Boolean,
+    fontSize: Number
   },
   data: () => ({
     text: null,
   }),
+  computed: {
+    style(){
+      return {
+        fontSize: `${this.fontSize || 12}px`
+      }
+    },
+  },
 }
 </script>
 

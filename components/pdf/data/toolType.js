@@ -10,4 +10,5 @@ export default {
   date: 'date',
   name: 'name',
   initial: 'initial',
+  signature: 'signature',
 }
