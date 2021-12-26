@@ -4,15 +4,8 @@
   >
     <h4 class="text-lg px-5 py-4 text-center">Business</h4>
     <div
-      class="
-        flex
-        items-center
-        justify-center
-        text-white
-        bg-paperdazgreen-300
-        px-5
-        py-4
-      "
+      class="flex items-center justify-center text-white px-5 py-4"
+      :class="[promoted ? 'bg-[#FEBA0A]' : 'bg-paperdazgreen-400']"
     >
       <span>$ <span class="text-5xl font-medium">29</span> /mo</span>
     </div>
@@ -48,19 +41,19 @@
       </div>
       <ul class="package-list">
         <li class="">
-          <span><tick-icon width="30" height="30" /></span>
+          <span><tick-icon width="20" height="20" /></span>
           <span>60 Paperlink files</span>
         </li>
         <li>
-          <span><tick-icon width="30" height="30" /></span>
+          <span><tick-icon width="20" height="20" /></span>
           <span>5 Team members </span>
         </li>
         <li>
-          <span><tick-icon width="30" height="30" /></span>
+          <span><tick-icon width="20" height="20" /></span>
           <span>Public Profile </span>
         </li>
         <li>
-          <span><tick-icon width="30" height="30" /></span>
+          <span><tick-icon width="20" height="20" /></span>
           <span>PDF copy of all files </span>
         </li>
       </ul>
@@ -74,6 +67,12 @@ import TickIcon from '../svg-icons/TickIcon.vue'
 export default Vue.extend({
   name: 'PackageCard',
   components: { TickIcon },
+  props: {
+    promoted: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       isMonthly: true,
@@ -87,10 +86,14 @@ export default Vue.extend({
   width: min-content;
   @apply mx-auto;
   & li {
-    @apply inline-grid  gap-3 whitespace-nowrap;
+    @apply inline-grid  gap-3 whitespace-nowrap mb-3 text-sm;
     grid-template-columns: min-content 1fr;
     & > *:nth-child(2) {
       color: #606060;
+    }
+
+    &:last-child {
+      @apply mb-0;
     }
   }
 }

@@ -43,6 +43,7 @@
         <el-input
           placeholder="*******************************"
           show-password
+          :disabled="!editingDetails"
         ></el-input>
       </div>
       <div class="mb-7">
@@ -52,6 +53,7 @@
         <el-input
           placeholder="*******************************"
           show-password
+          :disabled="!editingDetails"
         ></el-input>
       </div>
       <div class="mb-10">
@@ -61,6 +63,7 @@
         <el-input
           placeholder="*******************************"
           show-password
+          :disabled="!editingDetails"
         ></el-input>
       </div>
       <div class="flex justify-center">
@@ -68,12 +71,13 @@
           class="
             bg-paperdazgreen-300
             text-white
-            rounded-3xl
+            rounded-xl
             h-12
             px-5
             font-medium
-            text-xl
+            text-lg
           "
+          v-show="editingDetails"
         >
           Update Password
         </button>

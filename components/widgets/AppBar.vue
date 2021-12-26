@@ -61,7 +61,7 @@
         <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
         <nuxt-link to="#" class="">Upload File </nuxt-link>
         <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
-        <nuxt-link to="#" class="">Packages </nuxt-link>
+        <nuxt-link to="/packages" class="">Packages </nuxt-link>
         <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
         <nuxt-link to="#" class="">About </nuxt-link>
         <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
