@@ -240,7 +240,7 @@
       <form
         class=""
         v-else-if="displayingForm == 'confirm'"
-        @submit.prevent="updateUserRecords"
+        @submit="updateUserRecords"
       >
         <legend class="block text-center font-semibold mb-6">
           Confirm details on Paperdaz
@@ -293,14 +293,14 @@
               w-[100px]
             "
             type="button"
-            v-if="!edittingConfirmed"
+            v-show="!edittingConfirmed"
             @click.prevent="edittingConfirmed = true"
           >
             Edit
           </button>
 
           <button
-            v-else
+            v-show="edittingConfirmed"
             class="
               rounded-lg
               bg-gray-400
@@ -336,6 +336,7 @@
               px-6
               disabled:cursor-not-allowed disabled:bg-opacity-50
             "
+            @click.prevent="verifyConfirmForm"
             :disabled="edittingConfirmed"
           >
             Next
@@ -406,6 +407,16 @@ export default Vue.extend({
       for (const key of Object.keys(this.confirmFormData)) {
         this.confirmFormData[key] = (this.$auth.user || {})[key]
       }
+    },
+    verifyConfirmForm() {
+      for (const key of Object.keys(this.confirmFormData)) {
+        if (!this.confirmFormData[key]) {
+          this.errorMessage = 'All fields are required.'
+          return
+        }
+      }
+
+      this.$emit('next-tab')
     },
     updateUserRecords() {
       event?.preventDefault()

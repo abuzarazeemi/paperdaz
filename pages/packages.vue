@@ -53,7 +53,7 @@ export default Vue.extend({
   auth: false,
   data() {
     return {
-      tabLevel: 2,
+      tabLevel: 1,
     }
   },
 
