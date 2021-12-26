@@ -42,6 +42,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import PackageBasicInfoTabVue from '~/components/packages/tabs/PackageBasicInfoTab.vue'
 import SelectPackgeTabVue from '~/components/packages/tabs/SelectPackgeTab.vue'
 import MailIcon from '~/components/svg-icons/MailIcon.vue'
 import UserProfileSolidIcon from '~/components/svg-icons/UserProfileSolidIcon.vue'
@@ -52,7 +53,7 @@ export default Vue.extend({
   auth: false,
   data() {
     return {
-      tabLevel: 1,
+      tabLevel: 2,
     }
   },
 
@@ -61,6 +62,8 @@ export default Vue.extend({
       switch (this.tabLevel) {
         case 1:
           return SelectPackgeTabVue
+        case 2:
+          return PackageBasicInfoTabVue
         default:
           return {
             render(createElement: any) {

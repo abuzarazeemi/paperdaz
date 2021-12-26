@@ -268,7 +268,6 @@ export default Vue.extend({
           } else {
             message = 'Server not reachable'
           }
-          this.$toast.error(message).goAway(5000)
           this.errorMessage = message
           this.isRedirecting = false
         })
@@ -279,34 +278,3 @@ export default Vue.extend({
   },
 })
 </script>
-
-<style lang="postcss" scoped>
-#remember-me-checkbox {
-  &:not(:checked) + label {
-    @apply bg-paperdazgray-400;
-    & .overlay {
-      @apply bg-paperdazgray-400 bg-opacity-20;
-    }
-  }
-  &:checked + label {
-    @apply bg-paperdazgreen-300;
-    & .overlay {
-      opacity: 1;
-      @apply bg-paperdazgreen-300 bg-opacity-20;
-    }
-  }
-
-  & + label {
-    z-index: 2;
-    & .overlay {
-      z-index: -1;
-      opacity: 0;
-      @apply transition ease-in-out  absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2;
-    }
-
-    &:hover .overlay {
-      opacity: 1;
-    }
-  }
-}
-</style>
