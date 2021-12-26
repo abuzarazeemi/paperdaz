@@ -1,7 +1,15 @@
 <template>
   <div
-    class="border-2 border-paperdazgreen-300 w-full rounded-2xl overflow-hidden"
+    class="
+      border-2 border-paperdazgreen-300
+      w-full
+      rounded-2xl
+      overflow-hidden
+      relative
+      pb-5
+    "
   >
+    <div class="promoted-banner" v-if="promoted">Popular</div>
     <h4 class="text-lg px-5 py-4 text-center">Business</h4>
     <div
       class="flex items-center justify-center text-white px-5 py-4"
@@ -58,6 +66,22 @@
         </li>
       </ul>
     </div>
+
+    <div class="grid place-items-center" v-if="showBottomButton">
+      <button
+        @click="$emit('bottom-button-clicked')"
+        class="
+          text-sm text-white
+          bg-paperdazgreen-400
+          rounded-lg
+          shadow
+          h-9
+          px-5
+        "
+      >
+        Start Now
+      </button>
+    </div>
   </div>
 </template>
 
@@ -69,6 +93,10 @@ export default Vue.extend({
   components: { TickIcon },
   props: {
     promoted: {
+      type: Boolean,
+      default: false,
+    },
+    showBottomButton: {
       type: Boolean,
       default: false,
     },
@@ -96,5 +124,16 @@ export default Vue.extend({
       @apply mb-0;
     }
   }
+}
+
+.promoted-banner {
+  @apply absolute
+        right-0
+        inline-block
+        bg-paperdazgreen-400
+        text-white text-xxs
+        pt-6 pb-1 px-32;
+  transform: translateX(50%) rotate(45deg);
+  transform-origin: 50% 0%;
 }
 </style>

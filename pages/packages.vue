@@ -33,7 +33,7 @@
 
       <div>
         <keep-alive>
-          <component :is="currentTabComponent" />
+          <component :is="currentTabComponent" @next-tab="nextTab($event)" />
         </keep-alive>
       </div>
     </section>
@@ -68,6 +68,11 @@ export default Vue.extend({
             },
           }
       }
+    },
+  },
+  methods: {
+    nextTab(_val: any) {
+      this.tabLevel++
     },
   },
 })

@@ -18,9 +18,20 @@
     </div>
 
     <div class="flex gap-12 flex-col sm:flex-row mb-24">
-      <package-card />
-      <package-card promoted class="scale-110 transform" />
-      <package-card />
+      <package-card
+        show-bottom-button
+        @bottom-button-clicked="$emit('next-tab')"
+      />
+      <package-card
+        show-bottom-button
+        promoted
+        class="scale-110 transform"
+        @bottom-button-clicked="$emit('next-tab')"
+      />
+      <package-card
+        show-bottom-button
+        @bottom-button-clicked="$emit('next-tab')"
+      />
     </div>
     <p class="font-medium text-lg text-center">
       Need a custom packge for your business?
