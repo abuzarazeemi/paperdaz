@@ -2,29 +2,76 @@
   <div>
     <transition name="fade" mode="out-in">
       <!-- Start:: registration form -->
-      <form class="" v-if="displayingForm == 'register'">
+      <form
+        class=""
+        v-if="displayingForm == 'register'"
+        @submit.prevent="register"
+      >
         <legend class="block text-center font-semibold mb-6">
           Signup to Paperdaz
         </legend>
+        <message-alert-widget
+          class="mb-7"
+          :message="errorMessage"
+          v-if="errorMessage"
+          :type="'error'"
+        />
         <div class="form-group">
           <label class="input-label" for="">First Name</label>
-          <el-input placeholder="First Name" required />
+          <el-input
+            :disabled="loading"
+            required
+            v-model="formData.first_name"
+            placeholder="First Name"
+          />
         </div>
         <div class="form-group">
           <label class="input-label" for="">Last Name</label>
-          <el-input placeholder="Last Name" required />
+          <el-input
+            :disabled="loading"
+            placeholder="Last Name"
+            required
+            v-model="formData.last_name"
+          />
         </div>
         <div class="form-group">
           <label class="input-label" for="">Email</label>
-          <el-input type="email" placeholder="Email" required />
+          <el-input
+            type="email"
+            :disabled="loading"
+            placeholder="Email"
+            required
+            v-model="formData.email"
+          />
         </div>
         <div class="form-group">
           <label class="input-label" for="">Password</label>
-          <el-input placeholder="Password" required show-password />
+          <el-input
+            placeholder="Password"
+            :disabled="loading"
+            required
+            show-password
+            v-model="formData.password"
+          />
         </div>
         <div class="form-group">
           <label class="input-label" for="">Confirm Password</label>
-          <el-input placeholder="Confirm Password" required show-password />
+          <el-input
+            placeholder="Confirm Password"
+            required
+            :disabled="loading"
+            show-password
+            v-model="confirmPassword"
+          />
+          <small
+            v-show="
+              formData.password &&
+              confirmPassword &&
+              confirmPassword != formData.password
+            "
+            class="text-red-500"
+            >Passwords don't match</small
+          >
         </div>
         <div class="flex justify-between text-xs mb-10">
           <div
@@ -62,18 +109,28 @@
               text-sm
               h-10
               px-6
+              disabled:bg-opacity-50
             "
+            :disabled="loading"
           >
-            Sign up
+            <span class="inline-flex items-center gap-3">
+              <span>Sign up</span>
+              <transition name="fade" :duration="100">
+                <span v-show="loading" class="animate-spin">
+                  <spinner-dotted-icon height="22" width="22" />
+                </span>
+              </transition>
+            </span>
           </button>
         </div>
 
         <p class="text-sm mt-5 text-center">
           Already have an account?
           <button
-            class="text-paperdazgreen-400"
+            class="text-paperdazgreen-400 disabled:cursor-not-allowed"
             @click="currentForm = 'login'"
             type="button"
+            :disabled="loading"
           >
             Login
           </button>
@@ -168,9 +225,10 @@
         <p class="text-sm mt-5 text-center">
           Don't have an account?
           <button
-            class="text-paperdazgreen-400"
+            class="text-paperdazgreen-400 disabled:cursor-not-allowed"
             @click="currentForm = 'register'"
             type="button"
+            :disabled="loading"
           >
             Register
           </button>
@@ -187,6 +245,12 @@
         <legend class="block text-center font-semibold mb-6">
           Confirm details on Paperdaz
         </legend>
+        <message-alert-widget
+          class="mb-7"
+          :message="errorMessage"
+          v-if="errorMessage"
+          :type="'error'"
+        />
         <div class="form-group">
           <label class="input-label" for="">First Name</label>
           <el-input
@@ -246,10 +310,18 @@
               h-10
               px-6
               w-[100px]
+              disabled:bg-opacity-50 disabled:cursor-progress
             "
-            :disabled="!edittingConfirmed"
+            :disabled="loading"
           >
-            Save
+            <span class="inline-flex items-center gap-3">
+              <span>Save</span>
+              <transition name="fade" :duration="100">
+                <span v-show="loading" class="animate-spin">
+                  <spinner-dotted-icon height="22" width="22" />
+                </span>
+              </transition>
+            </span>
           </button>
 
           <button
@@ -272,7 +344,12 @@
 
         <p class="text-sm mt-5 text-center">
           Use another account?
-          <button class="text-red-700" type="button" @click="logout">
+          <button
+            class="text-red-700 disabled:cursor-not-allowed"
+            :disabled="loading"
+            type="button"
+            @click="logout"
+          >
             Logout
           </button>
         </p>
@@ -299,7 +376,10 @@ export default Vue.extend({
       formData: {
         email: '',
         password: '',
+        first_name: '',
+        last_name: '',
       },
+      confirmPassword: '',
       edittingConfirmed: false,
       confirmFormData: {
         first_name: '',
@@ -329,9 +409,43 @@ export default Vue.extend({
     },
     updateUserRecords() {
       event?.preventDefault()
+
+      if (this.loading) return
+
+      this.loading = true
+      this.errorMessage = ''
+      this.$axios
+        .$patch('/user/update', this.confirmFormData)
+        .then(async () => {
+          await this.$auth.fetchUser()
+          this.edittingConfirmed = false
+          this.$notify.success({
+            title: 'Data write',
+            message: 'Data updated successfully!',
+          })
+        })
+        .catch((error) => {
+          let message = ''
+          if (
+            error &&
+            error.response &&
+            error.response.data &&
+            error.response.data.message
+          ) {
+            message = error.response.data.message
+          } else {
+            message =
+              error && error.message ? error.message : 'An error occured'
+          }
+          this.errorMessage = message
+        })
+        .finally(() => {
+          this.loading = false
+        })
     },
     login() {
       event?.preventDefault()
+      // debugger
 
       if (this.loading) return
 
@@ -378,10 +492,68 @@ export default Vue.extend({
         type: 'success',
       })
     },
+    register() {
+      event?.preventDefault()
+
+      if (
+        this.formData.password &&
+        this.formData.password !== this.confirmPassword
+      )
+        return
+
+      if (this.loading) return
+
+      this.loading = true
+      this.errorMessage = ''
+
+      const data = {
+        first_name: this.formData.first_name,
+        last_name: this.formData.last_name,
+        email: this.formData.email,
+        password: this.formData.password,
+      }
+
+      this.$axios
+        .$post('/auth/register', data)
+        .then(() => {
+          this.loading = false
+          this.login()
+        })
+        .catch((error) => {
+          let message = ''
+          if (
+            error &&
+            error.response &&
+            error.response.data &&
+            error.response.data.message
+          ) {
+            message = error.response.data.message
+          } else {
+            message = 'Server not reachable'
+          }
+          this.errorMessage = error.message || message
+        })
+        .finally(() => {
+          this.loading = false
+        })
+    },
   },
   watch: {
     displayingForm() {
       this.errorMessage = ''
+      this.formData = {
+        email: '',
+        password: '',
+        first_name: '',
+        last_name: '',
+      }
+      this.confirmPassword = ''
+      this.edittingConfirmed = false
+      this.confirmFormData = {
+        first_name: '',
+        last_name: '',
+        email: '',
+      }
     },
   },
 })
