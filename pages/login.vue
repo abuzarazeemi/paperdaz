@@ -268,7 +268,6 @@ export default Vue.extend({
               error && error.message ? error.message : 'An error occured'
           }
           this.errorMessage = message
-          this.$toast.error(message).goAway(5000)
         })
         .finally(() => {
           this.isLoading = false
@@ -303,7 +302,6 @@ export default Vue.extend({
           } else {
             message = 'Server not reachable'
           }
-          this.$toast.error(message).goAway(5000)
           this.errorMessage = message
         })
         .finally(() => {
