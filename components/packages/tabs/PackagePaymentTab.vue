@@ -113,21 +113,21 @@ export default Vue.extend({
   },
   methods: {
     inputCardNumber(val: string) {
-      let temp = val.split('-').join('') || '' // Remove dash (-) if mistakenly entered.
-      temp = temp.replace(/[^0-9]+/g, '')
-      let finalVal = (temp.match(/.{1,4}/g) || []).join('-')
-      this.cardNumberWithDashes = finalVal
+      let temp = val.replace(/(-+)|([^0-9]+)/g, '')
+      this.cardNumberWithDashes = (temp.match(/.{1,4}/g) || []).join('-')
     },
     inputExpirationDate(val: string) {
-      let temp = val.split('/').join('') || '' // Remove dash (/) if mistakenly entered.
-      temp = temp.replace(/[^0-9]+/g, '')
-      console.log(temp)
+      let temp = val.replace(/\/+|[^0-9]+/g, '')
       if (temp.length > 4) return
 
       // Check if the month is greater than 12
       if (temp.length === 2) {
         if (Number(temp) > 12) temp = '0' + temp
         if (Number(temp) == 0) temp = '01'
+      }
+
+      if (temp.length == 4 && Number(temp.substring(2, 4)) == 0) {
+        temp = temp.substring(0, 2) + '01'
       }
 
       let finalVal = (temp.match(/.{1,2}/g) || []).join('/')

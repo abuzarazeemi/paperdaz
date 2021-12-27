@@ -33,7 +33,12 @@
 
       <div>
         <keep-alive>
-          <component :is="currentTabComponent" @next-tab="nextTab($event)" />
+          <component
+            :is="currentTabComponent"
+            @next-tab="nextTab($event)"
+            :staging-package="stagingPackage"
+            :packages="packages"
+          />
         </keep-alive>
       </div>
     </section>
@@ -55,8 +60,26 @@ export default Vue.extend({
   auth: false,
   data() {
     return {
-      tabLevel: 3,
+      tabLevel: 1,
+      stagingPackage: undefined,
+      packages: [],
     }
+  },
+  async asyncData({ $axios, error }) {
+    const packages = await $axios
+      .$get('/package')
+      .then((response) => {
+        console.log(response.data)
+        return response.data
+      })
+      .catch((err) => {
+        error({
+          statusCode: 404,
+          message: err.message || 'Unable to fetch the data',
+        })
+      })
+
+    return { packages }
   },
 
   computed: {
