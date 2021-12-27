@@ -10,12 +10,20 @@
     "
   >
     <div class="promoted-banner" v-if="promoted">Popular</div>
-    <h4 class="text-lg px-5 py-4 text-center">Business</h4>
+    <h4 class="text-lg px-5 py-4 text-center uppercase font-semibold">
+      {{ stagingPackage.name }}
+    </h4>
     <div
       class="flex items-center justify-center text-white px-5 py-4"
       :class="[promoted ? 'bg-[#FEBA0A]' : 'bg-paperdazgreen-400']"
     >
-      <span>$ <span class="text-5xl font-medium">29</span> /mo</span>
+      <span
+        >$
+        <span class="text-5xl font-medium">{{
+          isMonthly ? stagingPackage.monthly_price : stagingPackage.yearly_price
+        }}</span>
+        /{{ isMonthly ? 'mo' : 'yr' }}</span
+      >
     </div>
     <div class="px-5 py-4">
       <div class="flex justify-center mb-10">
@@ -50,11 +58,11 @@
       <ul class="package-list">
         <li class="">
           <span><tick-icon width="20" height="20" /></span>
-          <span>60 Paperlink files</span>
+          <span>{{ stagingPackage.paperlink }} Paperlink files</span>
         </li>
         <li>
           <span><tick-icon width="20" height="20" /></span>
-          <span>5 Team members </span>
+          <span>{{ stagingPackage.team_members }} Team members </span>
         </li>
         <li>
           <span><tick-icon width="20" height="20" /></span>
@@ -69,7 +77,7 @@
 
     <div class="grid place-items-center" v-if="showBottomButton">
       <button
-        @click="$emit('bottom-button-clicked')"
+        @click="$emit('bottom-button-clicked', { stagingPackage, isMonthly })"
         class="
           text-sm text-white
           bg-paperdazgreen-400
@@ -91,6 +99,7 @@ import TickIcon from '../svg-icons/TickIcon.vue'
 export default Vue.extend({
   name: 'PackageCard',
   components: { TickIcon },
+
   props: {
     promoted: {
       type: Boolean,
@@ -99,6 +108,10 @@ export default Vue.extend({
     showBottomButton: {
       type: Boolean,
       default: false,
+    },
+    stagingPackage: {
+      type: Object,
+      required: true,
     },
   },
   data() {

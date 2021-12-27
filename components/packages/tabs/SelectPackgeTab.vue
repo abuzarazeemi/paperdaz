@@ -19,10 +19,15 @@
 
     <div class="flex gap-12 sm:gap-8 md:gap-12 flex-col sm:flex-row mb-24">
       <package-card
+        v-for="(p, i) in orderedPackages"
+        :key="p.id"
+        :promoted="i == 1"
         show-bottom-button
-        @bottom-button-clicked="$emit('next-tab')"
+        :class="[i == 1 ? 'scale-110 transform' : '']"
+        @bottom-button-clicked="$emit('next-tab', $event)"
+        :stagingPackage="p"
       />
-      <package-card
+      <!-- <package-card
         show-bottom-button
         promoted
         class="scale-110 transform"
@@ -31,7 +36,7 @@
       <package-card
         show-bottom-button
         @bottom-button-clicked="$emit('next-tab')"
-      />
+      /> -->
     </div>
     <p class="font-medium text-lg text-center">
       Need a custom packge for your business?
@@ -43,9 +48,12 @@
 <script lang="ts">
 import Vue from 'vue'
 import PackageCard from '~/components/settings/PackageCard.vue'
+import _ from 'lodash'
+
 export default Vue.extend({
   components: { PackageCard },
   name: 'SelectPackage',
+
   data() {
     return {
       // p: {
@@ -65,6 +73,14 @@ export default Vue.extend({
       // },
       promotionCode: undefined,
     }
+  },
+
+  computed: {
+    orderedPackages(): Array<any> {
+      let temp = _.cloneDeep(this.packages)
+
+      return temp.sort((a: any, b: any) => a.monthly_price - b.monthly_price)
+    },
   },
 
   props: {

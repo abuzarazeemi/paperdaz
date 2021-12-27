@@ -97,6 +97,12 @@ export default Vue.extend({
       expirationDateWithSlashes: '',
     }
   },
+  props: {
+    stagingPackageInfo: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
   computed: {
     cardNumber(): string {
       return this.cardNumberWithDashes.replace(/-+/g, '')
@@ -133,6 +139,23 @@ export default Vue.extend({
       let finalVal = (temp.match(/.{1,2}/g) || []).join('/')
       this.expirationDateWithSlashes = finalVal
     },
+    updateCard(id: string, data: any) {
+      return this.$axios.$patch(`/card/${id}`, data).catch((error) => {
+        let message = ''
+        if (
+          error &&
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          message = error.response.data.message
+        } else {
+          message = 'Server not reachable'
+        }
+        this.errorMessage = message
+        this.loading = false
+      })
+    },
     async submit() {
       event?.preventDefault()
 
@@ -156,39 +179,58 @@ export default Vue.extend({
       this.loading = true
       this.errorMessage = ''
 
-      let card = {} as any
+      let proceedToPayment = false
 
-      try {
-        card = await this.$axios.$post('/card', data).then((response) => {
-          response.data
+      await this.$axios
+        .$post('/card', data)
+        .then(() => {
+          proceedToPayment = true
         })
-      } catch (error: any) {
-        let message = ''
-        if (
-          error &&
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          message = error.response.data.message
-        } else {
-          message = 'Server not reachable'
-        }
-        this.errorMessage = message
+        .catch(async (err) => {
+          await this.updateCard(err.response.data.users_card_id, data).then(
+            () => {
+              proceedToPayment = true
+            }
+          )
+        })
+
+      if (!proceedToPayment) {
         this.loading = false
+        return
       }
 
       this.$axios
         .$post('/package/subscribe', {
           user_id: userId,
-          package_id: '',
-          package_payment_type: 'monthly', //yearly
+          package_id: this.stagingPackageInfo.stagingPackage.id,
+          package_payment_type: this.stagingPackageInfo.isMonthly
+            ? 'monthly'
+            : 'yearly', //yearly
         })
-        .then((response) => {
-          debugger
+        .then(() => {
+          this.$notify.success({
+            title: 'Package Subscription',
+            message: 'You have successfully subscribed for this package',
+          })
+          this.$nuxt.$router.push('/dashboard')
         })
         .catch((error) => {
-          debugger
+          let message = ''
+          if (
+            error &&
+            error.response &&
+            error.response.data &&
+            error.response.data.message
+          ) {
+            message = error.response.data.message
+          } else {
+            message = 'Server not reachable'
+          }
+          this.errorMessage = error.message || message
+          this.loading = false
+        })
+        .finally(() => {
+          this.loading = false
         })
     },
   },

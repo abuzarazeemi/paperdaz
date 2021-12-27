@@ -36,7 +36,7 @@
           <component
             :is="currentTabComponent"
             @next-tab="nextTab($event)"
-            :staging-package="stagingPackage"
+            :staging-package-info="stagingPackageInfo"
             :packages="packages"
           />
         </keep-alive>
@@ -61,7 +61,7 @@ export default Vue.extend({
   data() {
     return {
       tabLevel: 1,
-      stagingPackage: undefined,
+      stagingPackageInfo: undefined,
       packages: [],
     }
   },
@@ -101,7 +101,10 @@ export default Vue.extend({
     },
   },
   methods: {
-    nextTab(_val: any) {
+    nextTab(val: any) {
+      if (this.tabLevel == 1) {
+        this.stagingPackageInfo = val
+      }
       this.tabLevel++
     },
   },
