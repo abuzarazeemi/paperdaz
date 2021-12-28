@@ -1,7 +1,7 @@
 <template>
   <div
     class="
-      border-2 border-paperdazgreen-300
+      border-2 border-paperdazgreen-400
       w-full
       rounded-2xl
       overflow-hidden
@@ -146,6 +146,7 @@ export default Vue.extend({
         bg-paperdazgreen-400
         text-white text-xxs
         pt-6 pb-1 px-32;
+  /* background: #77B550; */
   transform: translateX(50%) rotate(45deg);
   transform-origin: 50% 0%;
 }

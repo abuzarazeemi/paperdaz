@@ -9,8 +9,11 @@
     style="top: -0.1px"
   >
     <nav class="container h-full flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <span class="lg:hidden cursor-pointer" @click="collapsed = true">
+      <div class="flex items-center gap-1">
+        <span
+          class="lg:hidden cursor-pointer p-2 transform -translate-x-2"
+          @click="collapsed = true"
+        >
           <hamburger-icon />
         </span>
         <nuxt-link to="/">
@@ -66,8 +69,14 @@
         <nuxt-link to="#" class="">About </nuxt-link>
         <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
         <nuxt-link to="#" class="">Contact Us </nuxt-link>
-        <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
-        <div class="flex flex-col items-center gap-4 lg:hidden">
+        <div
+          class="h-px bg-paperdazgray-300 w-full lg:hidden"
+          v-if="!$auth.loggedIn"
+        ></div>
+        <div
+          class="flex flex-col items-center gap-4 lg:hidden"
+          v-if="!$auth.loggedIn"
+        >
           <nuxt-link to="/login" class="text-paperdazgreen-300 mt-5"
             >Sign in</nuxt-link
           >
@@ -88,6 +97,50 @@
             >Get Started</nuxt-link
           >
         </div>
+        <div class="grid w-full place-items-center lg:hidden">
+          <el-dropdown
+            trigger="click"
+            @command="handleCommand"
+            v-if="$auth.loggedIn"
+          >
+            <span class="flex items-center el-dropdown-link">
+              <span
+                class="
+                  circle circle-20
+                  border border-paperdazgreen-300
+                  mr-2
+                  p-0.5
+                "
+              >
+                <img :src="profilePhoto" class="circle" alt="" />
+              </span>
+              <span class="text-gray-500"
+                ><arrow-down-icon class="h-1 w-1.5 sm:h-2.5 sm:w-4"
+              /></span>
+            </span>
+
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="profile">
+                <span class="inline-flex gap-2 items-center">
+                  <user-profile-solid-icon height="14" width="14" />
+                  Profile</span
+                >
+              </el-dropdown-item>
+              <el-dropdown-item command="settings">
+                <span class="inline-flex gap-2 items-center">
+                  <gear-icon height="14" width="14" />
+                  Settings</span
+                >
+              </el-dropdown-item>
+              <el-dropdown-item divided command="logout">
+                <span class="text-red-600 inline-flex gap-2 items-center">
+                  <sign-out-icon height="14" width="14" />
+                  Logout</span
+                >
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
       </div>
       <div
         class="
@@ -105,10 +158,14 @@
         <span>
           <search-icon width="15" />
         </span>
-        <nuxt-link to="/login" class="text-paperdazgreen-300"
+        <nuxt-link
+          v-if="!$auth.loggedIn"
+          to="/login"
+          class="text-paperdazgreen-300"
           >Sign in</nuxt-link
         >
         <nuxt-link
+          v-if="!$auth.loggedIn"
           to="/register"
           class="
             bg-paperdazgreen-300
@@ -126,18 +183,73 @@
           "
           >Get Started</nuxt-link
         >
+        <el-dropdown
+          trigger="click"
+          @command="handleCommand"
+          v-if="$auth.loggedIn"
+        >
+          <span class="flex items-center el-dropdown-link">
+            <span
+              class="
+                circle circle-20
+                border border-paperdazgreen-300
+                mr-2
+                p-0.5
+              "
+            >
+              <img :src="profilePhoto" class="circle" alt="" />
+            </span>
+            <span class="text-gray-500"
+              ><arrow-down-icon class="h-1 w-1.5 sm:h-2.5 sm:w-4"
+            /></span>
+          </span>
+
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="profile">
+              <span class="inline-flex gap-2 items-center">
+                <user-profile-solid-icon height="14" width="14" />
+                Profile</span
+              >
+            </el-dropdown-item>
+            <el-dropdown-item command="settings">
+              <span class="inline-flex gap-2 items-center">
+                <gear-icon height="14" width="14" />
+                Settings</span
+              >
+            </el-dropdown-item>
+            <el-dropdown-item divided command="logout">
+              <span class="text-red-600 inline-flex gap-2 items-center">
+                <sign-out-icon height="14" width="14" />
+                Logout</span
+              >
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </div>
     </nav>
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
+import mixins from 'vue-typed-mixins'
+import GlobalMixin from '~/mixins/GlobalMixin'
 import LogoWithText from '../LogoWithText.vue'
+import ArrowDownIcon from '../svg-icons/ArrowDownIcon.vue'
+import GearIcon from '../svg-icons/GearIcon.vue'
 import HamburgerIcon from '../svg-icons/HamburgerIcon.vue'
 import SearchIcon from '../svg-icons/SearchIcon.vue'
-export default Vue.extend({
+import SignOutIcon from '../svg-icons/SignOutIcon.vue'
+import UserProfileSolidIcon from '../svg-icons/UserProfileSolidIcon.vue'
+export default mixins(GlobalMixin).extend({
   name: 'AppBar',
-  components: { LogoWithText, SearchIcon, HamburgerIcon },
+  components: {
+    LogoWithText,
+    SearchIcon,
+    HamburgerIcon,
+    ArrowDownIcon,
+    UserProfileSolidIcon,
+    GearIcon,
+    SignOutIcon,
+  },
   data() {
     return {
       scrolled: false,
@@ -151,6 +263,17 @@ export default Vue.extend({
       }
     },
   },
+  computed: {
+    routeName(): string {
+      return (this.$nuxt.$route.name || '').replace(/-/g, ' ')
+    },
+    user(): any {
+      return this.$auth.user
+    },
+    profilePhoto() {
+      return this.$store.getters.profilePhoto
+    },
+  },
   mounted() {
     const self = this
     this.scrollObserver()
@@ -159,6 +282,19 @@ export default Vue.extend({
     })
   },
   methods: {
+    handleCommand(command: string) {
+      switch (command) {
+        case 'logout':
+          this.logout(false)
+          break
+        case 'profile':
+          this.$nuxt.$router.push('/profile')
+          break
+        case 'settings':
+          this.$nuxt.$router.push('/settings')
+          break
+      }
+    },
     scrollObserver() {
       const options = {
         rootMargin: '0px',

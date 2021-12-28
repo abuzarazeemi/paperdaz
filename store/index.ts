@@ -23,7 +23,7 @@ export const getters: GetterTree<RootState, RootState> = {
     switch (user.role) {
       case 'free-user':
         return UserTypeEnum.FREE
-      case 'paid-user':
+      case 'paid_user':
         return UserTypeEnum.PAID
       default:
         return UserTypeEnum.FREE
