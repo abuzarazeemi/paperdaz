@@ -13,7 +13,7 @@
       </ul>
     </section>
     <section class="bg-white rounded-2xl py-6 px-8 min-w-[400px] flex flex-col">
-      <package-card class="flex-1" />
+      <!-- <package-card class="flex-1" /> -->
       <button
         class="
           text-white

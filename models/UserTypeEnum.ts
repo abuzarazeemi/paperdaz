@@ -1,6 +1,6 @@
 enum UserTypeEnum {
   FREE = 'free-user',
-  PAID = 'paid-user',
+  PAID = 'paid_user',
   ADMIN = 'admin',
   SUPER_ADMIN = 'super-admin',
 }

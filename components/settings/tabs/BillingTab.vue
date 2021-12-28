@@ -1,5 +1,5 @@
 <template>
-  <section class="flex-1 rounded-3xl bg-white py-6 px-8">
+  <!-- <section class="flex-1 rounded-3xl bg-white py-6 px-8">
     <h3 class="text-[#524D5B] font-medium text-2xl mb-10">Billing</h3>
     <table id="billing-table" class="w-full table-auto text-[#909090] text-sm">
       <tbody>
@@ -57,15 +57,42 @@
         </tr>
       </tbody>
     </table>
+  </section> -->
+
+  <section class="flex gap-4">
+    <div class="flex-1 max-w-[300px] rounded-3xl bg-white py-6 px-8">
+      <package-card :stagingPackage="stagingPackage" />
+    </div>
+    <div class="flex-1 rounded-3xl bg-white py-6 px-8"></div>
   </section>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import TrashCanIcon from '~/components/svg-icons/TrashCanIcon.vue'
+import PackageCard from '../PackageCard.vue'
 export default Vue.extend({
   name: 'BillingTab',
-  components: { TrashCanIcon },
+  components: { TrashCanIcon, PackageCard },
+  data() {
+    return {
+      stagingPackage: {
+        id: 265,
+        name: 'Standard Package',
+        description: 'this a test package',
+        monthly_price: '20',
+        yearly_price: '120',
+        stripe_monthly_product_id: 'prod_KqnN6De8yp6oBL',
+        stripe_yearly_product_id: 'prod_KqnN6De8yp6oBL',
+        stripe_monthly_price_id: 'price_1KB5n8C8d1ohbkjU44iE3qxw',
+        stripe_yearly_price_id: 'price_1KB5n9C8d1ohbkjUghPgovcY',
+        paperlink: 30,
+        team_members: 5,
+        carbon: 5,
+        visibility: true,
+      },
+    }
+  },
 })
 </script>
 
