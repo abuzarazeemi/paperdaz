@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 export default Vue.extend({
   methods: {
-    async logout() {
+    async logout(shouldRedirect: boolean = true) {
       // @ts-ignore
       await this.$auth.logout()
       this.$notify({
@@ -10,7 +10,7 @@ export default Vue.extend({
         message: 'Sucessfully logged out',
         type: 'success',
       })
-      this.$nuxt.$router.push('/login')
+      if (shouldRedirect) this.$nuxt.$router.push('/login')
     },
   },
 })

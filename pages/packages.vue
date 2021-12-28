@@ -69,7 +69,6 @@ export default Vue.extend({
     const packages = await $axios
       .$get('/package')
       .then((response) => {
-        console.log(response.data)
         return response.data
       })
       .catch((err) => {

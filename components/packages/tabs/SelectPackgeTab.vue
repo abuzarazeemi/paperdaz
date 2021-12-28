@@ -77,7 +77,8 @@ export default Vue.extend({
 
   computed: {
     orderedPackages(): Array<any> {
-      let temp = _.cloneDeep(this.packages)
+      // let temp = _.cloneDeep(this.packages)
+      let temp = (this.packages || []).filter((el: any) => el.visibility)
 
       return temp.sort((a: any, b: any) => a.monthly_price - b.monthly_price)
     },
