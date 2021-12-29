@@ -7,6 +7,7 @@ import {
   Notification,
   Dialog,
   Input,
+  InputNumber,
   Select,
   Option,
 } from 'element-ui'
@@ -54,6 +55,7 @@ const myPlugin: Plugin = (context, inject) => {
   Vue.use(Button)
   Vue.use(Dialog)
   Vue.use(Input)
+  Vue.use(InputNumber)
   Vue.use(Select)
   Vue.use(Option)
   inject('notify', Notification)
