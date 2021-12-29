@@ -17,12 +17,31 @@
       </button>
     </div>
 
-    <div class="flex gap-12 sm:gap-8 md:gap-12 flex-col sm:flex-row mb-24">
+    <div class="h-3 hidden sm:flex justify-between mb-5">
+      <button
+        @click="scrollPackages(true)"
+        style="box-shadow: -1px -1px 8px #c1c1c1"
+        class="circle circle-22 bg-white shadow transform rotate-90"
+      >
+        <arrow-down-icon />
+      </button>
+      <button
+        @click="scrollPackages(false)"
+        style="box-shadow: -1px -1px 8px #c1c1c1"
+        class="circle circle-22 bg-white shadow transform -rotate-90"
+      >
+        <arrow-down-icon />
+      </button>
+    </div>
+
+    <div class="packages-container" ref="packagesContainer">
       <package-card
         v-for="(p, i) in orderedPackages"
         :key="p.id"
         :promoted="i == 1"
         show-bottom-button
+        class="package-card-check-width"
+        :style="{ '--count': orderedPackages.length }"
         :class="[i == 1 ? 'scale-110 transform' : '']"
         @bottom-button-clicked="$emit('next-tab', $event)"
         :stagingPackage="p"
@@ -49,9 +68,10 @@
 import Vue from 'vue'
 import PackageCard from '~/components/settings/PackageCard.vue'
 import _ from 'lodash'
+import ArrowDownIcon from '~/components/svg-icons/ArrowDownIcon.vue'
 
 export default Vue.extend({
-  components: { PackageCard },
+  components: { PackageCard, ArrowDownIcon },
   name: 'SelectPackage',
 
   data() {
@@ -90,5 +110,48 @@ export default Vue.extend({
       default: () => [],
     },
   },
+  methods: {
+    scrollPackages(toLeft: boolean) {
+      const packagesContainer = this.$refs.packagesContainer as HTMLDivElement
+      if (!packagesContainer) return
+      packagesContainer.scrollBy({
+        top: 0,
+        left: toLeft ? -10 : 10,
+        behavior: 'smooth',
+      })
+    },
+  },
 })
 </script>
+
+<style lang="scss" scoped>
+.packages-container {
+  @apply flex
+        
+        custom-scrollbar
+        py-12
+        px-3
+        gap-12
+        sm:gap-8
+        md:gap-12
+        flex-col
+        sm:flex-row
+        mb-24;
+
+  @media only screen and (min-width: 640px) {
+    @apply overflow-x-auto;
+    scroll-snap-type: x mandatory;
+  }
+}
+.package-card-check-width {
+  /* min-width: calc(100% / var(--count, 1)); */
+  @media only screen and (min-width: 640px) {
+    min-width: calc(100% / 2 - 16px);
+    scroll-snap-align: start;
+  }
+
+  @media only screen and (min-width: 1024px) {
+    min-width: calc(100% / 3 - calc(12px * 4) / 1.5);
+  }
+}
+</style>
