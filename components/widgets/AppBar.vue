@@ -120,6 +120,12 @@
             </span>
 
             <el-dropdown-menu slot="dropdown">
+              <!-- <el-dropdown-item command="dashboard">
+                <span class="inline-flex gap-2 items-center">
+                  <dashboard-icon height="14" width="14" />
+                  Dashboard</span
+                >
+              </el-dropdown-item> -->
               <el-dropdown-item command="profile">
                 <span class="inline-flex gap-2 items-center">
                   <user-profile-solid-icon height="14" width="14" />
@@ -234,6 +240,7 @@ import mixins from 'vue-typed-mixins'
 import GlobalMixin from '~/mixins/GlobalMixin'
 import LogoWithText from '../LogoWithText.vue'
 import ArrowDownIcon from '../svg-icons/ArrowDownIcon.vue'
+import DashboardIcon from '../svg-icons/DashboardIcon.vue'
 import GearIcon from '../svg-icons/GearIcon.vue'
 import HamburgerIcon from '../svg-icons/HamburgerIcon.vue'
 import SearchIcon from '../svg-icons/SearchIcon.vue'
@@ -249,6 +256,7 @@ export default mixins(GlobalMixin).extend({
     UserProfileSolidIcon,
     GearIcon,
     SignOutIcon,
+    DashboardIcon,
   },
   data() {
     return {
@@ -289,6 +297,9 @@ export default mixins(GlobalMixin).extend({
           break
         case 'profile':
           this.$nuxt.$router.push('/profile')
+          break
+        case 'dashboard':
+          this.$nuxt.$router.push('/dashboard')
           break
         case 'settings':
           this.$nuxt.$router.push('/settings')
