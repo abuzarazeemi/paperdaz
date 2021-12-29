@@ -304,7 +304,7 @@ export default Vue.extend({
         public_profile: false,
         company_ledger: false,
       },
-      creatingCustomPackage: true,
+      creatingCustomPackage: false,
       promotionCode: undefined,
     }
   },
