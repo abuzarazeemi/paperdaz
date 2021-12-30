@@ -250,11 +250,17 @@ export default Vue.extend({
     @apply py-4 px-3;
     width: auto;
     &:first-child {
-      @apply text-paperdazgreen-300 font-medium;
+      @apply text-paperdazgreen-300 font-medium whitespace-nowrap;
+      // min-width: ;
     }
     &:last-child {
       width: 1%;
       white-space: nowrap;
+    }
+
+    &:nth-child(2) {
+      @apply whitespace-nowrap;
+      width: 100%;
     }
   }
 }
