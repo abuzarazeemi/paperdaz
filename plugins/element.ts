@@ -10,11 +10,14 @@ import {
   InputNumber,
   Select,
   Option,
+  DatePicker,
 } from 'element-ui'
-// import lang from 'element-ui/lib/locale/lang/en'
+// @ts-ignore
+import lang from 'element-ui/lib/locale/lang/en'
 import 'element-ui/lib/theme-chalk/index.css'
-// import locale from 'element-ui/lib/locale'
-//////////////////////
+// @ts-ignore
+import locale from 'element-ui/lib/locale'
+/// ///////////////////
 
 import { Plugin } from '@nuxt/types'
 import { ElNotification } from 'element-ui/types/notification'
@@ -46,7 +49,7 @@ declare module 'vuex/types/index' {
 
 const myPlugin: Plugin = (context, inject) => {
   // configure language
-  // locale.use(lang)
+  locale.use(lang)
 
   // import componentsdropdownSize
   Vue.use(Dropdown)
@@ -57,6 +60,7 @@ const myPlugin: Plugin = (context, inject) => {
   Vue.use(Input)
   Vue.use(InputNumber)
   Vue.use(Select)
+  Vue.use(DatePicker)
   Vue.use(Option)
   inject('notify', Notification)
 }
