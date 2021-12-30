@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- Start:: login form -->
     <form class="" @submit="submit">
       <message-alert-widget
         class="mb-7"
@@ -76,7 +75,6 @@
         </button>
       </div>
     </form>
-    <!-- End:: login form -->
   </div>
 </template>
 

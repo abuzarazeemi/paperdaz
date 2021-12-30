@@ -1,6 +1,6 @@
 <template>
   <section class="flex gap-4 flex-col lg:flex-row">
-    <div class="lg:max-w-[300px] rounded-3xl bg-white py-6 px-8">
+    <div class="lg:max-w-[300px] rounded-3xl bg-white py-6 px-8 lg:self-start">
       <package-card :stagingPackage="stagingPackage" />
     </div>
     <div class="flex-1 rounded-3xl bg-white py-6 px-8 overflow-hidden">
@@ -159,7 +159,12 @@
               <td>
                 <div class="grid place-items-center h-full w-full">
                   <p class="mb-2">
-                    <button class="billing-action-button">Update</button>
+                    <button
+                      class="billing-action-button"
+                      @click="showUpdateBillingInfoModal = true"
+                    >
+                      Update
+                    </button>
                   </p>
                   <p>
                     <button
@@ -181,6 +186,7 @@
     <delete-additional-features-modal v-model="showDeleteFeatureModal" />
     <cancel-package-subscription-modal v-model="showCancelSubscriptionModal" />
     <delete-billing-information-modal v-model="showDeleteBillingInfoModal" />
+    <update-billing-information-modal v-model="showUpdateBillingInfoModal" />
   </section>
 </template>
 
@@ -190,6 +196,7 @@ import AdditionalFeatureModal from '~/components/packages/modals/AdditionalFeatu
 import CancelPackageSubscriptionModal from '~/components/packages/modals/CancelPackageSubscriptionModal.vue'
 import DeleteAdditionalFeaturesModal from '~/components/packages/modals/DeleteAdditionalFeaturesModal.vue'
 import DeleteBillingInformationModal from '~/components/packages/modals/DeleteBillingInformationModal.vue'
+import UpdateBillingInformationModal from '~/components/packages/modals/UpdateBillingInformationModal.vue'
 import TrashCanIcon from '~/components/svg-icons/TrashCanIcon.vue'
 import PackageCard from '../PackageCard.vue'
 export default Vue.extend({
@@ -201,6 +208,7 @@ export default Vue.extend({
     DeleteAdditionalFeaturesModal,
     CancelPackageSubscriptionModal,
     DeleteBillingInformationModal,
+    UpdateBillingInformationModal,
   },
   data() {
     return {
@@ -208,6 +216,7 @@ export default Vue.extend({
       showDeleteFeatureModal: false,
       showCancelSubscriptionModal: false,
       showDeleteBillingInfoModal: false,
+      showUpdateBillingInfoModal: false,
       additionalFeature: {
         paperlinks: 0,
         team_members: 0,
@@ -259,7 +268,7 @@ export default Vue.extend({
     }
 
     &:nth-child(2) {
-      @apply whitespace-nowrap;
+      // @apply whitespace-nowrap;
       width: 100%;
     }
   }
