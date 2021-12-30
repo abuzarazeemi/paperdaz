@@ -70,7 +70,12 @@
               <td class="text-base font-bold">ADDITIONAL FEATURES</td>
               <td></td>
               <td>
-                <button class="billing-action-button">Add</button>
+                <button
+                  class="billing-action-button"
+                  @click="showAdditionalFeatureModal = true"
+                >
+                  Add
+                </button>
               </td>
             </tr>
             <tr>
@@ -100,18 +105,22 @@
         </table>
       </div>
     </div>
+
+    <additional-feature-modal v-model="showAdditionalFeatureModal" />
   </section>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import AdditionalFeatureModal from '~/components/packages/modals/AdditionalFeatureModal.vue'
 import TrashCanIcon from '~/components/svg-icons/TrashCanIcon.vue'
 import PackageCard from '../PackageCard.vue'
 export default Vue.extend({
   name: 'BillingTab',
-  components: { TrashCanIcon, PackageCard },
+  components: { TrashCanIcon, PackageCard, AdditionalFeatureModal },
   data() {
     return {
+      showAdditionalFeatureModal: false,
       stagingPackage: {
         id: 265,
         name: 'Standard Package',
@@ -152,11 +161,11 @@ export default Vue.extend({
 
 .billing-action-button {
   @apply rounded-full
-                h-7
+                h-8
                 text-white
                 bg-paperdazgreen-300
                 font-medium
-                px-6
+                px-1
                 text-xs w-28 whitespace-nowrap;
 
   &.cancel {
