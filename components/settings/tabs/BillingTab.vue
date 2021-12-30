@@ -66,16 +66,77 @@
               </td>
               <td style="padding-top: 0">13.02.2021</td>
             </tr>
-            <tr>
+            <tr
+              :style="[hasAdditionalFeatures ? { borderBottom: 'none' } : {}]"
+            >
               <td class="text-base font-bold">ADDITIONAL FEATURES</td>
               <td></td>
+              <td :rowspan="hasAdditionalFeatures ? 5 : 1">
+                <div class="grid place-items-center h-full w-full">
+                  <p :class="[hasAdditionalFeatures ? 'mb-2' : '']">
+                    <button
+                      class="billing-action-button"
+                      @click="showAdditionalFeatureModal = true"
+                    >
+                      {{
+                        additionalFeature &&
+                        Object.keys(additionalFeature).length > 0
+                          ? 'Update'
+                          : 'Save'
+                      }}
+                    </button>
+                  </p>
+                  <p v-if="hasAdditionalFeatures">
+                    <button
+                      class="billing-action-button cancel"
+                      @click="showDeleteFeatureModal = true"
+                    >
+                      Delete
+                    </button>
+                  </p>
+                </div>
+              </td>
+            </tr>
+            <tr style="border-bottom: none" v-if="hasAdditionalFeatures">
+              <td class="text-sm" style="padding-top: 2px; padding-bottom: 2px">
+                Paperlinks
+              </td>
+              <td style="padding-top: 2px; padding-bottom: 2px">
+                <div class="grid grid-cols-[min-content,1fr] gap-1">
+                  <span class="inline-block w-[4ch]">x2</span>
+                  <span>$2 USD</span>
+                </div>
+              </td>
+            </tr>
+            <tr style="border-bottom: none" v-if="hasAdditionalFeatures">
+              <td class="text-sm" style="padding-top: 2px; padding-bottom: 2px">
+                Team Members
+              </td>
+              <td style="padding-top: 2px; padding-bottom: 2px">
+                <div class="grid grid-cols-[min-content,1fr] gap-1">
+                  <span class="inline-block w-[4ch]">x2</span>
+                  <span>$2 USD</span>
+                </div>
+              </td>
+            </tr>
+            <tr style="border-bottom: none" v-if="hasAdditionalFeatures">
+              <td class="text-sm" style="padding-top: 2px; padding-bottom: 2px">
+                Carbon Copy (CC) Flow
+              </td>
+              <td style="padding-top: 2px; padding-bottom: 2px">
+                <div class="grid grid-cols-[min-content,1fr] gap-1">
+                  <span class="inline-block w-[4ch]">x2</span>
+                  <span>$2 USD</span>
+                </div>
+              </td>
+            </tr>
+            <tr v-if="hasAdditionalFeatures">
+              <td class="whitespace-nowrap text-lg">Total Cost:</td>
               <td>
-                <button
-                  class="billing-action-button"
-                  @click="showAdditionalFeatureModal = true"
-                >
-                  Add
-                </button>
+                <div class="grid grid-cols-[min-content,1fr] gap-1">
+                  <span class="inline-block w-[4ch]"></span>
+                  <span class="text-lg font-medium">$6 USD</span>
+                </div>
               </td>
             </tr>
             <tr>
@@ -107,20 +168,34 @@
     </div>
 
     <additional-feature-modal v-model="showAdditionalFeatureModal" />
+    <delete-additional-features-modal v-model="showDeleteFeatureModal" />
   </section>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import AdditionalFeatureModal from '~/components/packages/modals/AdditionalFeatureModal.vue'
+import DeleteAdditionalFeaturesModal from '~/components/packages/modals/DeleteAdditionalFeaturesModal.vue'
 import TrashCanIcon from '~/components/svg-icons/TrashCanIcon.vue'
 import PackageCard from '../PackageCard.vue'
 export default Vue.extend({
   name: 'BillingTab',
-  components: { TrashCanIcon, PackageCard, AdditionalFeatureModal },
+  components: {
+    TrashCanIcon,
+    PackageCard,
+    AdditionalFeatureModal,
+    DeleteAdditionalFeaturesModal,
+  },
   data() {
     return {
       showAdditionalFeatureModal: false,
+      showDeleteFeatureModal: false,
+      additionalFeature: {
+        paperlinks: 0,
+        team_members: 0,
+        carbon: 0,
+      },
+      // additionalFeatures: undefined,
       stagingPackage: {
         id: 265,
         name: 'Standard Package',
@@ -137,6 +212,13 @@ export default Vue.extend({
         visibility: true,
       },
     }
+  },
+  computed: {
+    hasAdditionalFeatures(): boolean {
+      return (
+        this.additionalFeature && Object.keys(this.additionalFeature).length > 0
+      )
+    },
   },
 })
 </script>
