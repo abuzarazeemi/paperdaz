@@ -39,7 +39,12 @@
                     <button class="billing-action-button">Change Plan</button>
                   </p>
                   <p>
-                    <button class="billing-action-button cancel">Cancel</button>
+                    <button
+                      class="billing-action-button cancel"
+                      @click="showCancelSubscriptionModal = true"
+                    >
+                      Cancel
+                    </button>
                   </p>
                 </div>
               </td>
@@ -169,12 +174,14 @@
 
     <additional-feature-modal v-model="showAdditionalFeatureModal" />
     <delete-additional-features-modal v-model="showDeleteFeatureModal" />
+    <cancel-package-subscription-modal v-model="showCancelSubscriptionModal" />
   </section>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import AdditionalFeatureModal from '~/components/packages/modals/AdditionalFeatureModal.vue'
+import CancelPackageSubscriptionModal from '~/components/packages/modals/CancelPackageSubscriptionModal.vue'
 import DeleteAdditionalFeaturesModal from '~/components/packages/modals/DeleteAdditionalFeaturesModal.vue'
 import TrashCanIcon from '~/components/svg-icons/TrashCanIcon.vue'
 import PackageCard from '../PackageCard.vue'
@@ -185,11 +192,13 @@ export default Vue.extend({
     PackageCard,
     AdditionalFeatureModal,
     DeleteAdditionalFeaturesModal,
+    CancelPackageSubscriptionModal,
   },
   data() {
     return {
       showAdditionalFeatureModal: false,
       showDeleteFeatureModal: false,
+      showCancelSubscriptionModal: false,
       additionalFeature: {
         paperlinks: 0,
         team_members: 0,
