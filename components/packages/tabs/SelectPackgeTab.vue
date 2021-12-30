@@ -21,36 +21,61 @@
     <transition name="fade" mode="out-in" :duration="200">
       <!-- Start:: already existing package -->
       <div v-if="!creatingCustomPackage" key="selecting">
-        <div class="h-3 hidden sm:flex justify-between mb-5">
+        <div class="relative">
           <button
             @click="scrollPackages(true)"
             style="box-shadow: -1px -1px 8px #c1c1c1"
-            class="circle circle-22 bg-white shadow transform rotate-90"
+            class="
+              circle circle-22
+              bg-white/30
+              backdrop-blur-sm
+              shadow
+              rotate-90
+              absolute
+              top-1/2
+              transform
+              -translate-y-1/2 -translate-x-1/2
+              z-10
+            "
           >
             <arrow-down-icon />
           </button>
           <button
             @click="scrollPackages(false)"
             style="box-shadow: -1px -1px 8px #c1c1c1"
-            class="circle circle-22 bg-white shadow transform -rotate-90"
+            class="
+              circle circle-22
+              bg-white/30
+              backdrop-blur-sm
+              shadow
+              -rotate-90
+              absolute
+              top-1/2
+              transform
+              -translate-y-1/2
+              translate-x-1/2
+              z-10
+              right-0
+            "
           >
             <arrow-down-icon />
           </button>
+
+          <div class="packages-container" ref="packagesContainer">
+            <package-card
+              v-for="(p, i) in orderedPackages"
+              :key="p.id"
+              :promoted="i == 1"
+              show-bottom-button
+              class="package-card-check-width"
+              :style="{ '--count': orderedPackages.length }"
+              :class="[i == 1 ? 'scale-110 transform' : '']"
+              @bottom-button-clicked="$emit('next-tab', $event)"
+              :stagingPackage="p"
+            />
+          </div>
         </div>
 
-        <div class="packages-container" ref="packagesContainer">
-          <package-card
-            v-for="(p, i) in orderedPackages"
-            :key="p.id"
-            :promoted="i == 1"
-            show-bottom-button
-            class="package-card-check-width"
-            :style="{ '--count': orderedPackages.length }"
-            :class="[i == 1 ? 'scale-110 transform' : '']"
-            @bottom-button-clicked="$emit('next-tab', $event)"
-            :stagingPackage="p"
-          />
-        </div>
         <p class="font-medium text-lg text-center">
           Need a custom packge for your business?
           <button
@@ -330,7 +355,7 @@ export default Vue.extend({
       if (!packagesContainer) return
       packagesContainer.scrollBy({
         top: 0,
-        left: toLeft ? -20 : 20,
+        left: toLeft ? -50 : 50,
         behavior: 'smooth',
       })
     },
