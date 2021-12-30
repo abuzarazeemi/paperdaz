@@ -214,11 +214,11 @@ export default Vue.extend({
       if (!this.signaturePad) return
       const pngImage = this.signaturePad?.toDataURL()
 
-      console.log(pngImage)
+      // console.log(pngImage)
       // @ts-ignore
       this.$BUS.$emit('signature-update', pngImage)
 
-      alert("Check console and method 'getImageFromSignaturePad'")
+      // alert("Check console and method 'getImageFromSignaturePad'")
     },
   },
 })
