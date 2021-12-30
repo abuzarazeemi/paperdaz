@@ -162,7 +162,12 @@
                     <button class="billing-action-button">Update</button>
                   </p>
                   <p>
-                    <button class="billing-action-button cancel">Delete</button>
+                    <button
+                      class="billing-action-button cancel"
+                      @click="showDeleteBillingInfoModal = true"
+                    >
+                      Delete
+                    </button>
                   </p>
                 </div>
               </td>
@@ -175,6 +180,7 @@
     <additional-feature-modal v-model="showAdditionalFeatureModal" />
     <delete-additional-features-modal v-model="showDeleteFeatureModal" />
     <cancel-package-subscription-modal v-model="showCancelSubscriptionModal" />
+    <delete-billing-information-modal v-model="showDeleteBillingInfoModal" />
   </section>
 </template>
 
@@ -183,6 +189,7 @@ import Vue from 'vue'
 import AdditionalFeatureModal from '~/components/packages/modals/AdditionalFeatureModal.vue'
 import CancelPackageSubscriptionModal from '~/components/packages/modals/CancelPackageSubscriptionModal.vue'
 import DeleteAdditionalFeaturesModal from '~/components/packages/modals/DeleteAdditionalFeaturesModal.vue'
+import DeleteBillingInformationModal from '~/components/packages/modals/DeleteBillingInformationModal.vue'
 import TrashCanIcon from '~/components/svg-icons/TrashCanIcon.vue'
 import PackageCard from '../PackageCard.vue'
 export default Vue.extend({
@@ -193,12 +200,14 @@ export default Vue.extend({
     AdditionalFeatureModal,
     DeleteAdditionalFeaturesModal,
     CancelPackageSubscriptionModal,
+    DeleteBillingInformationModal,
   },
   data() {
     return {
       showAdditionalFeatureModal: false,
       showDeleteFeatureModal: false,
       showCancelSubscriptionModal: false,
+      showDeleteBillingInfoModal: false,
       additionalFeature: {
         paperlinks: 0,
         team_members: 0,
