@@ -1,6 +1,14 @@
 <template>
   <div>
     <form class="" @submit="submit">
+      <div class="grid place-items-center mb-10">
+        <img
+          src="/img/payment-types.png"
+          alt="Payment types"
+          width="400"
+          class="max-w-full max-h-[50px] object-contain"
+        />
+      </div>
       <message-alert-widget
         class="mb-7"
         :message="errorMessage"
