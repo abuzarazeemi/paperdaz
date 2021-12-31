@@ -14,11 +14,15 @@ import Vue from 'vue'
 import FileLedger from '~/components/dashboard/FileLedger.vue'
 import LeavesDetailsContainer from '~/components/dashboard/LeavesDetailsContainer.vue'
 import TopDetailsCardContainer from '~/components/dashboard/TopDetailsCardContainer.vue'
+import CalendarIcon from '~/components/svg-icons/CalendarIcon.vue'
+import CheckCircleIcon from '~/components/svg-icons/CheckCircleIcon.vue'
 import DisketIconVue from '~/components/svg-icons/DisketIcon.vue'
+import MoveIcon from '~/components/svg-icons/MoveIcon.vue'
 import NoteAndPenIconVue from '~/components/svg-icons/NoteAndPenIcon.vue'
 import PageIconVue from '~/components/svg-icons/PageIcon.vue'
 import ShareIconVue from '~/components/svg-icons/ShareIcon.vue'
 import TickCircleIconVue from '~/components/svg-icons/TickCircleIcon.vue'
+import TrashXIcon from '~/components/svg-icons/TrashXIcon.vue'
 import FloatingActionButton from '~/components/widgets/FloatingActionButton.vue'
 
 export default Vue.extend({
@@ -27,6 +31,10 @@ export default Vue.extend({
     LeavesDetailsContainer,
     FileLedger,
     FloatingActionButton,
+    MoveIcon,
+    TrashXIcon,
+    CheckCircleIcon,
+    CalendarIcon,
   },
   layout: 'dashboard',
   data() {
@@ -73,5 +81,6 @@ export default Vue.extend({
       ],
     }
   },
+  methods: {},
 })
 </script>

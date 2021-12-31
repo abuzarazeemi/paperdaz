@@ -66,6 +66,10 @@
         </li>
         <li>
           <span><tick-icon width="20" height="20" /></span>
+          <span>{{ stagingPackage.carbon }} CC Flow </span>
+        </li>
+        <li>
+          <span><tick-icon width="20" height="20" /></span>
           <span>Public Profile </span>
         </li>
         <li>
