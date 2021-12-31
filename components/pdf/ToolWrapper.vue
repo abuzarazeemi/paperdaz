@@ -33,6 +33,8 @@
         items-center
         px-4
         gap-1.5
+        backdrop-blur-sm
+        bg-white/30
       "
       v-show="isActive"
     >
