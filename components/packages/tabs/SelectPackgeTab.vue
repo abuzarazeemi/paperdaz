@@ -387,13 +387,13 @@ export default Vue.extend({
         
         custom-scrollbar
         py-12
-        px-3
         gap-12
         sm:gap-8
         md:gap-12
         flex-col
         sm:flex-row
         mb-12;
+  @apply px-3;
 
   @media only screen and (min-width: 640px) {
     @apply overflow-x-auto;

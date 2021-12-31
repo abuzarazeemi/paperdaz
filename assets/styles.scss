@@ -20,7 +20,9 @@ body {
 .container {
   margin-right: auto;
   margin-left: auto;
-  @apply px-4 sm:px-6 lg:px-7 xl:px-8 2xl:px-9;
+  // @apply px-4 sm:px-6 lg:px-7 xl:px-8 2xl:px-9;
+  padding-right: 3%;
+  padding-left: 3%;
 
 
 }
