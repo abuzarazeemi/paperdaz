@@ -11,8 +11,8 @@
   >
     <pdf-page-aside />
     <main class="custom-scrollbar grid grid-rows-[max-content,1fr]">
-      <div class="bg-red-200 h-10"></div>
-      <div class="bg-green-100 overflow-y-auto">
+      <pdf-page-action-tray class="w-full" />
+      <div class="bg-green-100 overflow-y-auto custom-scrollbar">
         <p>
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
           ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
