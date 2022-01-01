@@ -1,16 +1,6 @@
 <template>
-  <div
-    class="
-      px-4
-      h-12
-      flex
-      items-center
-      border-b border-gray-400
-      text-black
-      gap-4
-    "
-  >
-    <div class="flex items-center gap-4 flex-1 justify-between max-w-4xl">
+  <div class="h-12 flex items-center text-black gap-4">
+    <div class="flex items-center gap-4 flex-1 justify-between max-w-4xl px-4">
       <el-dropdown trigger="click" class="font-medium">
         <span class="el-dropdown-link">
           Complete <i class="el-icon-arrow-down el-icon--right"></i>
@@ -86,7 +76,7 @@
       </div>
     </div>
 
-    <div class="flex items-center">
+    <div class="lg:flex items-center hidden">
       <button
         class="mr-2 text-xs text-white bg-paperdazgreen-400 rounded px-5 h-7"
       >

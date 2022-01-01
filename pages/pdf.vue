@@ -10,411 +10,73 @@
     id="pdf-page-vue"
   >
     <pdf-page-aside />
-    <main class="custom-scrollbar grid grid-rows-[max-content,1fr]">
+    <main
+      class="
+        custom-scrollbar
+        grid grid-rows-[max-content,max-content,1fr]
+        gap-2
+      "
+    >
       <pdf-page-action-tray class="w-full" />
-      <div class="bg-green-100 overflow-y-auto custom-scrollbar">
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
-          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
-          dignissimos voluptates praesentium in tempora fugiat atque harum,
-          accusamus nisi dolore error.
-        </p>
+      <tool-bar @tool-change="onToolChange" class="max-w-4xl" />
+      <!-- <div class="bg-white "></div> -->
+      <div
+        class="
+          pdf-editor-view
+          relative
+          overflow-y-auto
+          custom-scrollbar
+          max-w-4xl
+        "
+      >
+        <!-- {{tools}} -->
+        <div
+          v-if="pdf"
+          class="pdf-pages-wrapper flex flex-col items-center"
+          ref="pdfPagesWrapper"
+        >
+          <div class="pdf-pages-outer pb-6 relative" ref="PagesOuter">
+            <tool-wrapper
+              v-for="(tool, tI) in tools"
+              :key="`tool-${tI}`"
+              :dragHandler="handlePanning"
+              :index="tI"
+              :tool="tool"
+              :type="tool.type"
+              :top="tool.top"
+              :left="tool.left"
+              :x1="tool.x1"
+              :y1="tool.y1"
+              :x2="tool.x2"
+              :y2="tool.y2"
+              :points="tool.points"
+              :deleteTool="deleteTool"
+              :handleIncrease="handleIncrease"
+              :handleDecrease="handleDecrease"
+              :fontSize="tool.fontSize"
+              :scale="tool.scale"
+              :signature="signature"
+            />
+            <!-- <component :is="`${selectedToolType}-identifier`" v-if="selectedToolType && showToolIdentifier" :position="toolIdentifierPosition" /> -->
+            <div
+              class="pdf-single-pages-outer"
+              ref="pdf-single-pages-outer"
+              v-hammer:pan="(ev) => handlePanning(ev)"
+              @click="onCLickSinglePageOuter"
+              @mousemove="onMouseMoveOnPages"
+              @mouseleave="onMouseLeaveFromPages"
+            >
+              <div
+                class="pdf-single-page-outer"
+                v-for="(page, pI) in pdf.numPages"
+                :key="pI"
+              >
+                <div class="mt-6 page-break" v-if="pI > 0"></div>
+                <pdf-page :page-number="pI + 1" :pdf="pdf" />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   </div>
@@ -805,12 +467,24 @@ export default {
 .pdf-editor-view {
   background-color: #e9e9e9;
   .pdf-pages-outer {
-    max-width: 700px;
+    // max-width: 700px;
     position: relative;
   }
 }
 
 #pdf-page-vue {
   background: #e0e0e0;
+}
+
+.custom-scrollbar {
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    @apply bg-gray-500 bg-opacity-30;
+    border-radius: 3px;
+
+    &:hover {
+      @apply bg-gray-700 bg-opacity-100 cursor-pointer;
+    }
+  }
 }
 </style>

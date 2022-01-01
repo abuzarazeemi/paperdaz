@@ -6,9 +6,10 @@
         items-center
         justify-between
         bg-[#E8EAEC]
-        container
         py-2
-        gap-2
+        w-full
+        gap-1
+        px-4
       "
     >
       <div class="tool-item" @click="setSelectedType(TOOL_TYPE.text)">
@@ -197,7 +198,7 @@ export default {
     downloadPdf() {
       this.$BUS.$emit('download-pdf')
     },
-    onSignClick(){
+    onSignClick() {
       this.showSignatureModal = true
       this.setSelectedType(this.TOOL_TYPE.signature)
     },

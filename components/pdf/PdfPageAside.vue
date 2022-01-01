@@ -49,3 +49,17 @@ export default Vue.extend({
   name: 'PdfPageAside',
 })
 </script>
+
+<style lang="scss" scoped>
+.custom-scrollbar {
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    @apply bg-gray-500 bg-opacity-30;
+    border-radius: 3px;
+
+    &:hover {
+      @apply bg-gray-700 bg-opacity-100 cursor-pointer;
+    }
+  }
+}
+</style>
