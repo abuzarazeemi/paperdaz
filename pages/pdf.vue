@@ -10,13 +10,7 @@
     id="pdf-page-vue"
   >
     <pdf-page-aside />
-    <main
-      class="
-        custom-scrollbar
-        grid grid-rows-[max-content,max-content,1fr]
-        gap-2
-      "
-    >
+    <main class="grid grid-rows-[max-content,max-content,1fr] gap-2">
       <pdf-page-action-tray class="w-full" />
       <tool-bar @tool-change="onToolChange" class="max-w-4xl" />
       <!-- <div class="bg-white "></div> -->
@@ -28,52 +22,47 @@
           custom-scrollbar
           max-w-4xl
         "
+        v-if="pdf"
+        ref="scrollingElement"
       >
-        <!-- {{tools}} -->
-        <div
-          v-if="pdf"
-          class="pdf-pages-wrapper flex flex-col items-center"
-          ref="pdfPagesWrapper"
-        >
-          <div class="pdf-pages-outer pb-6 relative" ref="PagesOuter">
-            <tool-wrapper
-              v-for="(tool, tI) in tools"
-              :key="`tool-${tI}`"
-              :dragHandler="handlePanning"
-              :index="tI"
-              :tool="tool"
-              :type="tool.type"
-              :top="tool.top"
-              :left="tool.left"
-              :x1="tool.x1"
-              :y1="tool.y1"
-              :x2="tool.x2"
-              :y2="tool.y2"
-              :points="tool.points"
-              :deleteTool="deleteTool"
-              :handleIncrease="handleIncrease"
-              :handleDecrease="handleDecrease"
-              :fontSize="tool.fontSize"
-              :scale="tool.scale"
-              :signature="signature"
-            />
-            <!-- <component :is="`${selectedToolType}-identifier`" v-if="selectedToolType && showToolIdentifier" :position="toolIdentifierPosition" /> -->
+        <div class="pdf-pages-outer pb-6 relative" ref="PagesOuter">
+          <tool-wrapper
+            v-for="(tool, tI) in tools"
+            :key="`tool-${tI}`"
+            :dragHandler="handlePanning"
+            :index="tI"
+            :tool="tool"
+            :type="tool.type"
+            :top="tool.top"
+            :left="tool.left"
+            :x1="tool.x1"
+            :y1="tool.y1"
+            :x2="tool.x2"
+            :y2="tool.y2"
+            :points="tool.points"
+            :deleteTool="deleteTool"
+            :handleIncrease="handleIncrease"
+            :handleDecrease="handleDecrease"
+            :fontSize="tool.fontSize"
+            :scale="tool.scale"
+            :signature="signature"
+          />
+          <!-- <component :is="`${selectedToolType}-identifier`" v-if="selectedToolType && showToolIdentifier" :position="toolIdentifierPosition" /> -->
+          <div
+            class="pdf-single-pages-outer"
+            ref="pdf-single-pages-outer"
+            v-hammer:pan="(ev) => handlePanning(ev)"
+            @click="onCLickSinglePageOuter"
+            @mousemove="onMouseMoveOnPages"
+            @mouseleave="onMouseLeaveFromPages"
+          >
             <div
-              class="pdf-single-pages-outer"
-              ref="pdf-single-pages-outer"
-              v-hammer:pan="(ev) => handlePanning(ev)"
-              @click="onCLickSinglePageOuter"
-              @mousemove="onMouseMoveOnPages"
-              @mouseleave="onMouseLeaveFromPages"
+              class="pdf-single-page-outer"
+              v-for="(page, pI) in pdf.numPages"
+              :key="pI"
             >
-              <div
-                class="pdf-single-page-outer"
-                v-for="(page, pI) in pdf.numPages"
-                :key="pI"
-              >
-                <div class="mt-6 page-break" v-if="pI > 0"></div>
-                <pdf-page :page-number="pI + 1" :pdf="pdf" />
-              </div>
+              <div class="mt-6 page-break" v-if="pI > 0"></div>
+              <pdf-page :page-number="pI + 1" :pdf="pdf" />
             </div>
           </div>
         </div>
@@ -362,6 +351,37 @@ export default {
       this.selectedToolType = type
     },
     pointerPos(event, parent) {
+      const elParent =
+        parent ||
+        event.currentTarget.parentElement ||
+        this.$refs.scrollingElement
+      event = event || window.event
+
+      const scrollingElement =
+        this.$refs.scrollingElement ||
+        document.scrollingElement ||
+        document.body
+
+      const boundingRect = scrollingElement.getBoundingClientRect()
+
+      //if there is no clientX or there is no clientY on event
+      // return 0, 0
+      if (!(event.clientX && event.clientY)) return { x: 0, y: 0 }
+
+      // cursor relative to the scrollingElement
+      const mouseXRelativeToScrollingElement =
+        event.clientX - (boundingRect.left || 0)
+      const mouseYRelativeToScrollingElement =
+        event.clientY - (boundingRect.top || 0)
+
+      const x =
+        mouseXRelativeToScrollingElement + (scrollingElement.scrollLeft || 0)
+      const y =
+        mouseYRelativeToScrollingElement + (scrollingElement.scrollTop || 0)
+
+      return { x, y }
+    },
+    previousPointerPos(event, parent) {
       let eventDoc, doc, body
       event = event || window.event
       let x = 0
