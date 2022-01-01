@@ -1,46 +1,422 @@
 <template>
-  <div class="pdf-editor-view relative">
-    <tool-bar
-      @tool-change="onToolChange"
-      class="sticky top-0 left-0 right-0 z-20"
-    />
-    <!-- {{tools}} -->
-    <div v-if="pdf" class="pdf-pages-wrapper flex flex-col items-center" ref="pdfPagesWrapper">
-      <div class="pdf-pages-outer pb-6 relative" ref="PagesOuter">
-        <tool-wrapper 
-          v-for="(tool, tI) in tools" :key="`tool-${tI}`" 
-          :dragHandler="handlePanning" 
-          :index="tI" :tool="tool" :type="tool.type" 
-          :top="tool.top" :left="tool.left"
-          :x1="tool.x1" :y1="tool.y1" :x2="tool.x2" :y2="tool.y2" 
-          :points="tool.points" 
-          :deleteTool="deleteTool"
-          :handleIncrease="handleIncrease"
-          :handleDecrease="handleDecrease"
-          :fontSize="tool.fontSize"
-          :scale="tool.scale"
-          :signature="signature"
-        />
-        <!-- <component :is="`${selectedToolType}-identifier`" v-if="selectedToolType && showToolIdentifier" :position="toolIdentifierPosition" /> -->
-        <div
-          class="pdf-single-pages-outer"
-          ref="pdf-single-pages-outer"
-          v-hammer:pan="(ev) => handlePanning(ev)"
-          @click="onCLickSinglePageOuter"
-          @mousemove="onMouseMoveOnPages"
-          @mouseleave="onMouseLeaveFromPages"
-        >
-          <div
-            class="pdf-single-page-outer"
-            v-for="(page, pI) in pdf.numPages"
-            :key="pI"
-          >
-            <div class="mt-6 page-break" v-if="pI > 0"></div>
-            <pdf-page :page-number="pI + 1" :pdf="pdf" />
-          </div>
-        </div>
+  <div
+    class="
+      grid grid-cols-[max-content,1fr] grid-rows-1
+      h-full
+      max-h-full
+      overflow-hidden
+      gap-5
+    "
+    id="pdf-page-vue"
+  >
+    <pdf-page-aside />
+    <main class="custom-scrollbar grid grid-rows-[max-content,1fr]">
+      <div class="bg-red-200 h-10"></div>
+      <div class="bg-green-100 overflow-y-auto">
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque
+          ipsam adipisci accusantium illo ullam rerum! Repellat facere explicabo
+          dignissimos voluptates praesentium in tempora fugiat atque harum,
+          accusamus nisi dolore error.
+        </p>
       </div>
-    </div>
+    </main>
   </div>
 </template>
 
@@ -94,7 +470,7 @@ export default {
   created() {
     this.fetchPdf()
     this.$BUS.$on('download-pdf', this.downloadPdf)
-    this.$BUS.$on('signature-update', v => this.signature = v)
+    this.$BUS.$on('signature-update', (v) => (this.signature = v))
   },
   beforeDestroy() {
     this.$BUS.$off('download-pdf')
@@ -112,7 +488,7 @@ export default {
     isPanning: false,
 
     selectedToolIndex: -1,
-    
+
     signature: null,
   }),
   computed: {
@@ -124,18 +500,54 @@ export default {
     },
     TOOL_THRESHOLD() {
       return {
-        [TOOL_TYPE.text]: { identifier: { top: 20, left: 0 }, tool: { top: 12, left: 0 } },
-        [TOOL_TYPE.tick]: { identifier: { top: 20, left: 0 }, tool: { top: 20, left: 0 } },
-        [TOOL_TYPE.cross]: { identifier: { top: 20, left: 0 }, tool: { top: 20, left: 0 } },
-        [TOOL_TYPE.dot]: { identifier: { top: 20, left: 0 }, tool: { top: 10, left: 0 } },
-        [TOOL_TYPE.circle]: { identifier: { top: 20, left: 0 }, tool: { top: 20, left: 0 } },
-        [TOOL_TYPE.line]: { identifier: { top: 20, left: 0 }, tool: { top: 0, left: 10 } },
-        [TOOL_TYPE.highlight]: { identifier: { top: 20, left: 0 }, tool: { top: 5, left: 10 } },
-        [TOOL_TYPE.draw]: { identifier: { top: 20, left: 0 }, tool: { top: 0, left: 10 } },
-        [TOOL_TYPE.date]: { identifier: { top: 20, left: 0 }, tool: { top: 12, left: 0 } },
-        [TOOL_TYPE.name]: { identifier: { top: 20, left: 0 }, tool: { top: 12, left: 0 } },
-        [TOOL_TYPE.initial]: { identifier: { top: 20, left: 0 }, tool: { top: 12, left: 0 } },
-        [TOOL_TYPE.signature]: { identifier: { top: 20, left: 0 }, tool: { top: 12, left: 0 } },
+        [TOOL_TYPE.text]: {
+          identifier: { top: 20, left: 0 },
+          tool: { top: 12, left: 0 },
+        },
+        [TOOL_TYPE.tick]: {
+          identifier: { top: 20, left: 0 },
+          tool: { top: 20, left: 0 },
+        },
+        [TOOL_TYPE.cross]: {
+          identifier: { top: 20, left: 0 },
+          tool: { top: 20, left: 0 },
+        },
+        [TOOL_TYPE.dot]: {
+          identifier: { top: 20, left: 0 },
+          tool: { top: 10, left: 0 },
+        },
+        [TOOL_TYPE.circle]: {
+          identifier: { top: 20, left: 0 },
+          tool: { top: 20, left: 0 },
+        },
+        [TOOL_TYPE.line]: {
+          identifier: { top: 20, left: 0 },
+          tool: { top: 0, left: 10 },
+        },
+        [TOOL_TYPE.highlight]: {
+          identifier: { top: 20, left: 0 },
+          tool: { top: 5, left: 10 },
+        },
+        [TOOL_TYPE.draw]: {
+          identifier: { top: 20, left: 0 },
+          tool: { top: 0, left: 10 },
+        },
+        [TOOL_TYPE.date]: {
+          identifier: { top: 20, left: 0 },
+          tool: { top: 12, left: 0 },
+        },
+        [TOOL_TYPE.name]: {
+          identifier: { top: 20, left: 0 },
+          tool: { top: 12, left: 0 },
+        },
+        [TOOL_TYPE.initial]: {
+          identifier: { top: 20, left: 0 },
+          tool: { top: 12, left: 0 },
+        },
+        [TOOL_TYPE.signature]: {
+          identifier: { top: 20, left: 0 },
+          tool: { top: 12, left: 0 },
+        },
       }
     },
     selectedTool() {
@@ -143,60 +555,60 @@ export default {
     },
   },
   methods: {
-    handleIncrease(index){
+    handleIncrease(index) {
       let tool = this.tools[index]
-      if(
-        tool.type == this.TOOL_TYPE.text
-        || tool.type == this.TOOL_TYPE.date
-        || tool.type == this.TOOL_TYPE.name
-        || tool.type == this.TOOL_TYPE.initial
-      ){
+      if (
+        tool.type == this.TOOL_TYPE.text ||
+        tool.type == this.TOOL_TYPE.date ||
+        tool.type == this.TOOL_TYPE.name ||
+        tool.type == this.TOOL_TYPE.initial
+      ) {
         let fontSize = tool.fontSize || 12
         this.tools[index].fontSize = ++fontSize
-      }else if(
-        tool.type == this.TOOL_TYPE.tick
-        || tool.type == this.TOOL_TYPE.cross
-        || tool.type == this.TOOL_TYPE.dot
-        || tool.type == this.TOOL_TYPE.circle
-        || tool.type == this.TOOL_TYPE.signature
-      ){
+      } else if (
+        tool.type == this.TOOL_TYPE.tick ||
+        tool.type == this.TOOL_TYPE.cross ||
+        tool.type == this.TOOL_TYPE.dot ||
+        tool.type == this.TOOL_TYPE.circle ||
+        tool.type == this.TOOL_TYPE.signature
+      ) {
         let scale = tool.scale || 1
         scale += 0.1
         this.tools[index].scale = scale
       }
       this.$forceUpdate()
     },
-    handleDecrease(index){
+    handleDecrease(index) {
       let tool = this.tools[index]
-      if(
-        tool.type == this.TOOL_TYPE.text
-        || tool.type == this.TOOL_TYPE.date
-        || tool.type == this.TOOL_TYPE.name
-        || tool.type == this.TOOL_TYPE.initial
-      ){
+      if (
+        tool.type == this.TOOL_TYPE.text ||
+        tool.type == this.TOOL_TYPE.date ||
+        tool.type == this.TOOL_TYPE.name ||
+        tool.type == this.TOOL_TYPE.initial
+      ) {
         let fontSize = tool.fontSize || 12
         this.tools[index].fontSize = --fontSize
-      }else if(
-        tool.type == this.TOOL_TYPE.tick
-        || tool.type == this.TOOL_TYPE.cross
-        || tool.type == this.TOOL_TYPE.dot
-        || tool.type == this.TOOL_TYPE.circle
-        || tool.type == this.TOOL_TYPE.signature
-      ){
+      } else if (
+        tool.type == this.TOOL_TYPE.tick ||
+        tool.type == this.TOOL_TYPE.cross ||
+        tool.type == this.TOOL_TYPE.dot ||
+        tool.type == this.TOOL_TYPE.circle ||
+        tool.type == this.TOOL_TYPE.signature
+      ) {
         let scale = tool.scale || 1
         scale -= 0.1
         this.tools[index].scale = scale
       }
       this.$forceUpdate()
     },
-    downloadPdf(){
+    downloadPdf() {
       console.log('d')
       let options = {
         pagebreak: { avoid: '.page-break', after: '.page-break' },
       }
       html2pdf().set(options).from(this.$refs.PagesOuter).save()
     },
-    deleteTool(index){
+    deleteTool(index) {
       this.selectedToolIndex = -1
       this.tools.splice(index, 1)
       this.$forceUpdate()
@@ -319,7 +731,7 @@ export default {
 
       let pdfEditorView = document.querySelector('.pdf-editor-view')
 
-      if(pdfEditorView){
+      if (pdfEditorView) {
         x += pdfEditorView.scrollLeft
         y += pdfEditorView.scrollTop
       }
@@ -396,5 +808,9 @@ export default {
     max-width: 700px;
     position: relative;
   }
+}
+
+#pdf-page-vue {
+  background: #e0e0e0;
 }
 </style>
