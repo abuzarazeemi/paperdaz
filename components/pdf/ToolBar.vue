@@ -8,9 +8,10 @@
         bg-[#E8EAEC]
         py-2
         w-full
-        gap-1
+        gap-x-1 gap-y-2
         px-6
-        text-[#757575] text-2xl
+        text-[#757575] text-base
+        sm:text-2xl
       "
     >
       <button @click="setSelectedType(TOOL_TYPE.text)">
@@ -133,7 +134,7 @@
 
       <button
         @click="downloadPdf"
-        class="text-xs text-white bg-paperdazgreen-400 px-4 rounded h-8"
+        class="text-xs text-white bg-paperdazgreen-400 px-2 rounded h-8"
       >
         Download
       </button>

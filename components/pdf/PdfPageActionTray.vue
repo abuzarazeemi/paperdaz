@@ -1,5 +1,5 @@
 <template>
-  <div class="h-12 flex items-center text-black gap-4">
+  <div class="py-2 flex items-center text-black gap-4">
     <div class="flex items-center gap-4 flex-1 justify-between max-w-4xl px-4">
       <el-dropdown trigger="click" class="font-medium">
         <span class="el-dropdown-link">
@@ -29,15 +29,19 @@
       <div
         class="flex-1 flex items-center gap-5 justify-end text-xs font-medium"
       >
-        <span>Ajinomotojobapplication</span>
+        <span class="hidden md:inline">Ajinomotojobapplication</span>
 
-        <span class="circle circle-2 bg-[#757575]"></span>
+        <span class="hidden md:inline">
+          <span class="circle circle-2 bg-[#757575]"></span>
+        </span>
 
-        <span>Akay Devakr</span>
+        <span class="hidden md:inline">Akay Devakr</span>
 
-        <span class="circle circle-2 bg-[#757575]"></span>
+        <span class="hidden md:inline">
+          <span class="circle circle-2 bg-[#757575]"></span>
+        </span>
 
-        <span>05.08.2021 10:04 </span>
+        <span class="hidden md:inline">05.08.2021 10:04 </span>
 
         <el-dropdown trigger="click" class="font-medium">
           <span class="el-dropdown-link text-[#555454] px-1 flex items-center">
