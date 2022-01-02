@@ -1,16 +1,19 @@
 <template>
   <div
     class="
-      grid grid-cols-[max-content,1fr] grid-rows-1
+      grid grid-cols-1
+      md:grid-cols-[max-content,1fr]
+      grid-rows-1
       h-full
       max-h-full
       overflow-hidden
-      gap-5
+      md:gap-4
+      gap-3
     "
     id="pdf-page-vue"
   >
-    <pdf-page-aside />
-    <main class="grid grid-rows-[max-content,max-content,1fr] gap-2">
+    <pdf-page-aside class="hidden md:block" />
+    <main class="grid grid-rows-[max-content,max-content,1fr] gap-1">
       <pdf-page-action-tray class="w-full" />
       <tool-bar @tool-change="onToolChange" class="max-w-4xl" />
       <!-- <div class="bg-white "></div> -->

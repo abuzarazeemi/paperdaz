@@ -57,7 +57,7 @@
         A
       </button>
       <button
-        class="px-0.5 h-full flex items-center relative"
+        class="px-0.5 h-full flex items-center relative text-[15px]"
         @click="openCalendar"
       >
         <calendar-icon />
