@@ -1,7 +1,10 @@
 <template>
   <div id="pdf-layout" class="relative bg-[#E0E0E0] min-h-screen">
-    <dashboard-navbar class="sticky top-0 justify-self-stretch z-50" />
-    <Nuxt class="overflow-y-auto" />
+    <dashboard-navbar
+      class="sticky top-0 justify-self-stretch z-50"
+      :compact="true"
+    />
+    <Nuxt />
   </div>
 </template>
 

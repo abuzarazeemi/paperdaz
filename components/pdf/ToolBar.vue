@@ -2,86 +2,55 @@
   <section>
     <div
       class="
-        flex
+        flex flex-wrap
         items-center
         justify-between
         bg-[#E8EAEC]
-        container
         py-2
-        gap-2
+        w-full
+        gap-x-1 gap-y-2
+        px-6
+        text-[#757575] text-base
+        sm:text-2xl
       "
     >
-      <div class="tool-item" @click="setSelectedType(TOOL_TYPE.text)">
-        <img
-          src="./assets/text_tool.svg"
-          alt=""
-          class="h-6 object-contain cursor-pointer"
-        />
-      </div>
-      <div class="tool-item" @click="setSelectedType(TOOL_TYPE.tick)">
-        <img
-          src="./assets/tick_tool.svg"
-          alt=""
-          class="h-6 object-contain cursor-pointer"
-        />
-      </div>
-      <div class="tool-item" @click="setSelectedType(TOOL_TYPE.cross)">
-        <img
-          class="h-6 object-contain cursor-pointer"
-          src="./assets/cross_tool.svg"
-          alt=""
-        />
-      </div>
-      <div class="tool-item" @click="setSelectedType(TOOL_TYPE.dot)">
-        <img
-          class="h-6 object-contain cursor-pointer"
-          src="./assets/dot_tool.svg"
-          alt=""
-        />
-      </div>
-      <div class="tool-item" @click="setSelectedType(TOOL_TYPE.circle)">
-        <img
-          class="h-6 object-contain cursor-pointer"
-          src="./assets/circle_tool.svg"
-          alt=""
-        />
-      </div>
-      <div class="tool-item" @click="setSelectedType(TOOL_TYPE.line)">
-        <img
-          class="w-7 object-contain cursor-pointer"
-          src="./assets/line_tool.svg"
-          alt=""
-        />
-      </div>
-      <div class="tool-item" @click="setSelectedType(TOOL_TYPE.highlight)">
-        <img
-          class="h-6 object-contain cursor-pointer"
-          src="./assets/highlight_tool.svg"
-          alt=""
-        />
-      </div>
-      <div class="tool-item" @click="setSelectedType(TOOL_TYPE.draw)">
-        <img
-          class="h-6 object-contain cursor-pointer"
-          src="./assets/draw_tool.svg"
-          alt=""
-        />
-      </div>
-      <div class="tool-item" @click="setSelectedType(TOOL_TYPE.date)">
-        <img
-          class="h-6 object-contain cursor-pointer"
-          src="./assets/date_tool.svg"
-          alt=""
-        />
-      </div>
-      <div class="tool-item" @click="setSelectedType(TOOL_TYPE.name)">
-        <img
-          class="h-6 object-contain cursor-pointer"
-          src="./assets/name_tool.svg"
-          alt=""
-        />
-      </div>
+      <button @click="setSelectedType(TOOL_TYPE.text)">
+        <pdf-text-tool-icon />
+      </button>
+      <button @click="setSelectedType(TOOL_TYPE.tick)">
+        <pdf-tick-icon />
+      </button>
+      <button @click="setSelectedType(TOOL_TYPE.cross)">
+        <pdf-times-icon />
+      </button>
+      <button @click="setSelectedType(TOOL_TYPE.dot)" class="text-base">
+        <solid-circle-icon />
+      </button>
+      <button @click="setSelectedType(TOOL_TYPE.circle)">
+        <hollow-circle-icon />
+      </button>
+      <button @click="setSelectedType(TOOL_TYPE.line)">
+        <pdf-rectangle-tool-icon />
+      </button>
+      <button
+        @click="setSelectedType(TOOL_TYPE.highlight)"
+        class="text-[#FFCF27]"
+      >
+        <pdf-highlight-tool-icon />
+      </button>
+      <button @click="setSelectedType(TOOL_TYPE.draw)">
+        <pdf-pen-tool-icon />
+      </button>
+      <button @click="setSelectedType(TOOL_TYPE.date)">
+        <calendar-icon />
+      </button>
+      <button @click="setSelectedType(TOOL_TYPE.name)">
+        <user-profile-solid-icon />
+      </button>
 
+      <button class="text-[#5FA348]">
+        <star-icon />
+      </button>
       <button
         @click="onSignClick"
         class="
@@ -163,7 +132,12 @@
 
       <!-- <p @click="signaturePad = !signaturePad">Signature Pad</p> -->
 
-      <button @click="downloadPdf">Download</button>
+      <button
+        @click="downloadPdf"
+        class="text-xs text-white bg-paperdazgreen-400 px-2 rounded h-8"
+      >
+        Download
+      </button>
     </div>
 
     <pdf-signature-modal
@@ -175,11 +149,37 @@
 
 <script>
 import PdfSignatureModal from '../modals/PdfSignatureModal.vue'
+import CalendarIcon from '../svg-icons/CalendarIcon.vue'
+import HollowCircleIcon from '../svg-icons/HollowCircleIcon.vue'
+import PdfHighlightToolIcon from '../svg-icons/PdfHighlightToolIcon.vue'
+import PdfPenToolIcon from '../svg-icons/PdfPenToolIcon.vue'
+import PdfRectangleToolIcon from '../svg-icons/PdfRectangleToolIcon.vue'
+import PdfTextToolIcon from '../svg-icons/PdfTextToolIcon.vue'
+import PdfTickIcon from '../svg-icons/PdfTickIcon.vue'
+import PdfTimesIcon from '../svg-icons/PdfTimesIcon.vue'
+import SolidCircleIcon from '../svg-icons/SolidCircleIcon.vue'
+import StarIcon from '../svg-icons/StarIcon.vue'
+import UserProfileSolidIcon from '../svg-icons/UserProfileSolidIcon.vue'
 import TOOL_TYPE from './data/toolType'
 export default {
-  components: { PdfSignatureModal },
+  components: {
+    PdfSignatureModal,
+    PdfTextToolIcon,
+    PdfTickIcon,
+    PdfTimesIcon,
+    SolidCircleIcon,
+    HollowCircleIcon,
+    PdfRectangleToolIcon,
+    PdfHighlightToolIcon,
+    PdfPenToolIcon,
+    CalendarIcon,
+    UserProfileSolidIcon,
+    StarIcon,
+  },
   data: () => ({
     selectedType: null,
+
+    components: { PdfTextToolIcon },
     signaturePad: false,
     showSignatureModal: false,
   }),
@@ -197,7 +197,7 @@ export default {
     downloadPdf() {
       this.$BUS.$emit('download-pdf')
     },
-    onSignClick(){
+    onSignClick() {
       this.showSignatureModal = true
       this.setSelectedType(this.TOOL_TYPE.signature)
     },

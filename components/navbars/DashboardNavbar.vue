@@ -2,20 +2,20 @@
   <nav
     class="
       px-5
-      py-4
       bg-white
       lg:rounded-lg
       w-full
       flex
       items-center
       justify-between
-      h-16
-      min-h-[60px]
-      sm:min-h-[70px]
       shadow
     "
+    :class="[compact ? 'py-1 h-12' : 'min-h-[60px] sm:min-h-[70px] py-4 h-16']"
   >
-    <p class="text-base sm:text-xl capitalize inline-flex items-center">
+    <p
+      class="capitalize inline-flex items-center"
+      :class="[compact ? 'text-sm sm:text-base' : 'text-base sm:text-xl']"
+    >
       <span
         class="inline-block lg:hidden mr-3 sm:mr-4 cursor-pointer"
         @click="$emit('open-sidebar')"
@@ -54,13 +54,8 @@
       <el-dropdown trigger="click" @command="handleCommand">
         <span class="flex items-center el-dropdown-link">
           <span
-            class="
-              circle
-              profile-circle
-              border border-paperdazgreen-300
-              mr-2
-              p-0.5
-            "
+            class="circle border border-paperdazgreen-300 mr-2 p-0.5"
+            :class="[compact ? 'circle-15' : 'circle-20']"
           >
             <img :src="profilePhoto" class="circle" alt="" />
           </span>
@@ -117,6 +112,12 @@ export default mixins(GlobalMixin).extend({
     SignOutIcon,
     UserProfileIcon,
     UserProfileSolidIcon,
+  },
+  props: {
+    compact: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     routeName(): string {

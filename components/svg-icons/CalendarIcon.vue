@@ -1,7 +1,7 @@
 <template>
   <svg
-    width="14"
-    height="15"
+    :height="fontSize * hwRatio"
+    :width="fontSize / hwRatio"
     viewBox="0 0 14 15"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -14,8 +14,14 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-export default Vue.extend({
+import mixins from 'vue-typed-mixins'
+import IconSizeMixin from '~/mixins/IconSizeMixin'
+export default mixins(IconSizeMixin).extend({
   name: 'CalendarIcon',
+  data() {
+    return {
+      hwRatio: 15 / 14,
+    }
+  },
 })
 </script>

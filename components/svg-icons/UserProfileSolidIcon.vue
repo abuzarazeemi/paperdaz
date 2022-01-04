@@ -1,8 +1,8 @@
 <template>
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    height="16"
-    width="16"
+    :height="fontSize * hwRatio"
+    :width="fontSize / hwRatio"
     viewBox="0 0 448 512"
   >
     <path
@@ -13,8 +13,14 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-export default Vue.extend({
+import mixins from 'vue-typed-mixins'
+import IconSizeMixin from '~/mixins/IconSizeMixin'
+export default mixins(IconSizeMixin).extend({
   name: 'UserProfileSolidIcon',
+  data() {
+    return {
+      hwRatio: 1,
+    }
+  },
 })
 </script>
