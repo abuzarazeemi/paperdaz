@@ -1,6 +1,6 @@
 <template>
   <svg preserveAspectRatio="none" :viewBox="viewBox" :style="style">
-    <path :d="d" style="stroke: #000000" fill="none"></path>
+    <path :d="d" style="stroke: #000000; stroke-width: 2" fill="none"></path>
   </svg>
 </template>
 

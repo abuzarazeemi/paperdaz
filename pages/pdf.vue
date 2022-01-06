@@ -47,6 +47,7 @@
             :fontSize="tool.fontSize"
             :scale="tool.scale"
             :signature="signature"
+            @pos-change="onPosChange"
           />
           <!-- <component :is="`${selectedToolType}-identifier`" v-if="selectedToolType && showToolIdentifier" :position="toolIdentifierPosition" /> -->
           <div
@@ -207,6 +208,21 @@ export default {
     },
   },
   methods: {
+    onPosChange({ dx, dy, index }){
+      let type = this.tools[index].type
+      if(type == this.TOOL_TYPE.line){
+        this.tools[index].x1 -= dx
+        this.tools[index].x2 -= dx
+        this.tools[index].y1 -= dy
+        this.tools[index].y2 -= dy
+      }
+      else if(type == this.TOOL_TYPE.highlight){
+        this.tools[index].x1 -= dx
+        this.tools[index].x2 -= dx
+        this.tools[index].y1 -= dy
+        this.tools[index].y2 -= dy
+      }
+    },
     handleIncrease(index) {
       let tool = this.tools[index]
       if (
@@ -257,6 +273,7 @@ export default {
       console.log('d')
       let options = {
         pagebreak: { avoid: '.page-break', after: '.page-break' },
+        margin: [0,0,0,0],
       }
       html2pdf().set(options).from(this.$refs.PagesOuter).save()
     },
@@ -284,45 +301,48 @@ export default {
         }
       } else if (index != undefined && this.selectedToolIndex != index) {
         this.selectedToolIndex = index
+        this.selectedToolType = this.tools[index].type
       }
 
       var posX = event.deltaX + this.lastPosX
       var posY = event.deltaY + this.lastPosY
 
-      if (this.selectedToolType == this.TOOL_TYPE.line) {
+      const getPointPos = () => {
         let { x, y } = this.pointerPos(event.srcEvent, this.$refs.PagesOuter)
+        
+        if(y < 0) y = 0
+        if(y > elem.clientHeight) x = elem.clientHeight
+        if(x < 0) x = 0
+        if(x > elem.clientWidth) x = elem.clientWidth
+        
+        return { x , y }
+      }
+
+      if (this.selectedToolType == this.TOOL_TYPE.line) {
+        let { x, y } = getPointPos()
         if (direction && direction == this.TOOL_DIRECTION.left) {
-          this.tools[this.selectedToolIndex].x1 =
-            x - this.TOOL_THRESHOLD[this.selectedToolType].tool.left
-          this.tools[this.selectedToolIndex].y1 =
-            y - this.TOOL_THRESHOLD[this.selectedToolType].tool.top
+          this.tools[this.selectedToolIndex].x1 = x
+          this.tools[this.selectedToolIndex].y1 = y
         } else {
-          this.tools[this.selectedToolIndex].x2 =
-            x - this.TOOL_THRESHOLD[this.selectedToolType].tool.left
-          this.tools[this.selectedToolIndex].y2 =
-            y - this.TOOL_THRESHOLD[this.selectedToolType].tool.top
+          this.tools[this.selectedToolIndex].x2 = x
+          this.tools[this.selectedToolIndex].y2 = y
         }
         this.$forceUpdate()
       } else if (this.selectedToolType == this.TOOL_TYPE.highlight) {
-        let { x, y } = this.pointerPos(event.srcEvent, this.$refs.PagesOuter)
+        let { x, y } = getPointPos()
         if (direction && direction == this.TOOL_DIRECTION.left) {
-          this.tools[this.selectedToolIndex].x1 =
-            x - this.TOOL_THRESHOLD[this.selectedToolType].tool.left
+          this.tools[this.selectedToolIndex].x1 = x
         } else {
-          this.tools[this.selectedToolIndex].x2 =
-            x - this.TOOL_THRESHOLD[this.selectedToolType].tool.left
+          this.tools[this.selectedToolIndex].x2 = x
         }
         this.tools[this.selectedToolIndex].y2 =
           this.tools[this.selectedToolIndex].y1 + 15
         this.$forceUpdate()
       } else if (this.selectedToolType == this.TOOL_TYPE.draw) {
-        let { x, y } = this.pointerPos(event.srcEvent, this.$refs.PagesOuter)
+        let { x, y } = getPointPos()
         this.tools[this.selectedToolIndex].points = this.tools[
           this.selectedToolIndex
-        ].points.concat([
-          x - this.TOOL_THRESHOLD[this.selectedToolType].tool.left,
-          y - this.TOOL_THRESHOLD[this.selectedToolType].tool.top,
-        ])
+        ].points.concat([ x, y ])
         this.$forceUpdate()
       }
 
