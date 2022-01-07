@@ -47,14 +47,14 @@
 
       <button
         class="text-sm px-0.5 h-full"
-        @click="handleDecrease(index)"
+        @click="dec"
         v-show="isMenuVisible('increase')"
       >
         A
       </button>
       <button
         class="text-lg px-0.5 h-full"
-        @click="handleIncrease(index)"
+        @click="inc"
         v-show="isMenuVisible('increase')"
       >
         A
@@ -176,6 +176,9 @@ export default {
     isActive: false,
     calendarValue: undefined,
     altDirection: false,
+    incDecCount: 11,
+    incDecMax: 15,
+    incDecMin: 7,
   }),
   created() {
     this.checkAndSetPosition()
@@ -238,6 +241,16 @@ export default {
     },
   },
   methods: {
+    inc(){
+      if(this.incDecCount == this.incDecMax) return
+      ++this.incDecCount
+      this.handleIncrease(this.index)
+    },
+    dec(){
+      if(this.incDecCount == this.incDecMin) return
+      --this.incDecCount
+      this.handleDecrease(this.index)
+    },
     openCalendar() {
       this.$refs.datePicker.focus()
     },
@@ -358,11 +371,12 @@ export default {
 }
 .tool-holder {
   position: relative;
+  cursor: pointer;
   .dr {
     position: absolute;
     width: 7px;
     height: 7px;
-    background-color: red;
+    background-color: #77C360;
     border-radius: 50%;
     cursor: pointer;
     &__right {
