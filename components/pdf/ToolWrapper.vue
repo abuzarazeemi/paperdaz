@@ -35,8 +35,11 @@
         gap-1.5
         backdrop-blur-sm
         bg-white/30
+        absolute
+        tool-menu
       "
       v-show="isActive"
+      ref="toolMenu"
     >
       <button class="h-full cursor-move" v-hammer:pan="handleDrag">
         <move-icon />
@@ -44,14 +47,14 @@
 
       <button
         class="text-sm px-0.5 h-full"
-        @click="handleDecrease(index)"
+        @click="dec"
         v-show="isMenuVisible('increase')"
       >
         A
       </button>
       <button
         class="text-lg px-0.5 h-full"
-        @click="handleIncrease(index)"
+        @click="inc"
         v-show="isMenuVisible('increase')"
       >
         A
@@ -95,13 +98,13 @@
         :signature="signature"
       />
       <div
-        class="dr__right"
+        :class="['dr__right', { 'line': type == TOOL_TYPE.line }, { 'line-alt': (x1 < x2 && y1 < y2) || (x1 > x2 && y1 > y2) }]"
         ref="drRight"
-        v-hammer:pan="(ev) => handleToolDrag(ev)"
+        v-hammer:pan="(ev) => handleToolDrag(ev, TOOL_DIRECTION.right)"
         v-if="isAvailableDrRight"
       ></div>
       <div
-        class="dr__left"
+        :class="['dr__left', { 'line': type == TOOL_TYPE.line }, { 'line-alt': (x1 < x2 && y1 < y2) || (x1 > x2 && y1 > y2) }]"
         v-hammer:pan="(ev) => handleToolDrag(ev, TOOL_DIRECTION.left)"
         v-if="isAvailableDrLeft"
       ></div>
@@ -172,10 +175,20 @@ export default {
     left: 0,
     isActive: false,
     calendarValue: undefined,
+    altDirection: false,
+    incDecCount: 11,
+    incDecMax: 15,
+    incDecMin: 7,
   }),
   created() {
     this.checkAndSetPosition()
     this.clcPos()
+    this.$BUS.$on('tool-comp-click', v => {
+      if(v != this.index) this.isActive = false
+    })
+  },
+  beforeDestroy(){
+    this.$BUS.$off('tool-comp-click')
   },
   watch: {
     x1() {
@@ -192,6 +205,9 @@ export default {
     },
     points() {
       this.clcPos()
+    },
+    isActive(v){
+      if(v) this.toolMenuPosCalculation()
     },
   },
   computed: {
@@ -225,6 +241,16 @@ export default {
     },
   },
   methods: {
+    inc(){
+      if(this.incDecCount == this.incDecMax) return
+      ++this.incDecCount
+      this.handleIncrease(this.index)
+    },
+    dec(){
+      if(this.incDecCount == this.incDecMin) return
+      --this.incDecCount
+      this.handleDecrease(this.index)
+    },
     openCalendar() {
       this.$refs.datePicker.focus()
     },
@@ -241,10 +267,20 @@ export default {
       return true
     },
     handleToolDrag(event, direction) {
+      if(this.altDirection){
+        direction = direction == this.TOOL_DIRECTION.left ? this.TOOL_DIRECTION.right : this.TOOL_DIRECTION.left
+      }
       this.dragHandler(event, this.index, direction)
+      if(event.isFinal){
+        if(this.type == this.TOOL_TYPE.line || this.type == this.TOOL_TYPE.highlight){
+          if(this.x2 < this.x1) this.altDirection = true
+          else this.altDirection = false
+        }
+      }
     },
     onClick() {
       this.isActive = true
+      this.$BUS.$emit('tool-comp-click', this.index)
     },
     onOutsideClick() {
       this.isActive = false
@@ -267,12 +303,6 @@ export default {
       }
       this.top = top
       this.left = left
-
-      // if(this.isActive && this.type == this.TOOL_TYPE.line){
-      //   if(this.$refs.drRight){
-      //     this.$refs.drRight.style.top = `${this.y2}px`
-      //   }
-      // }
     },
     checkAndSetPosition() {
       if (this.tool.top) this.top = this.tool.top
@@ -290,11 +320,42 @@ export default {
       var posX = event.deltaX + this.lastPosX
       var posY = event.deltaY + this.lastPosY
 
-      this.left = posX
-      this.top = posY
+      // Set Boundary
+      if(posX > 0 && posX + elem.clientWidth < elem.parentElement.clientWidth) this.left = posX
+      if(posY > 0 && posY + elem.clientHeight < elem.parentElement.clientHeight) this.top = posY
 
       if (event.isFinal) {
         this.isDragging = false
+        
+        let dx = this.lastPosX - this.left
+        let dy = this.lastPosY - this.top
+        
+        this.$emit('pos-change', {
+          dx, dy,
+          index: this.index,
+        })
+
+        // Tool Menu Position Calculation
+        this.toolMenuPosCalculation()
+      }
+    },
+    async toolMenuPosCalculation(){
+      await this.$nextTick()
+      var elem = this.$refs.Wrp
+
+      let toolMenuHeight = this.$refs.toolMenu.clientHeight + 7
+      let toolMenuWidth = this.$refs.toolMenu.clientWidth
+      if(this.top < toolMenuHeight){
+        this.$refs.toolMenu.style.top = 'unset'
+        this.$refs.toolMenu.style.bottom = `-${toolMenuHeight}px`
+      }else {
+        this.$refs.toolMenu.style.top = `-${toolMenuHeight}px`
+        this.$refs.toolMenu.style.bottom = 'unset'
+      }
+      if(Math.abs(this.left - elem.parentElement.clientWidth) < toolMenuWidth){
+        this.$refs.toolMenu.style.left = `${elem.clientWidth - toolMenuWidth}px`
+      }else{
+        this.$refs.toolMenu.style.left = `0`
       }
     },
   },
@@ -304,29 +365,45 @@ export default {
 <style lang="scss" scoped>
 @import './scss/tools.scss';
 .tool-menu {
-  height: 24px;
-  min-width: 100px;
-  width: max-content;
+  height: 32px;
   position: absolute;
-  top: -24px;
+  top: -37px;
 }
 .tool-holder {
   position: relative;
+  cursor: pointer;
   .dr {
     position: absolute;
-    width: 10px;
-    height: 10px;
-    background-color: red;
+    width: 7px;
+    height: 7px;
+    background-color: #77C360;
     border-radius: 50%;
+    cursor: pointer;
     &__right {
       @extend .dr;
-      right: -5px;
-      top: calc(50% - 5px);
+      right: -10px;
+      top: calc(50% - 3.5px);
+      &.line{
+        top: 0;
+        right: -5px;
+        &.line-alt{
+          top: unset;
+          bottom: 0;
+        }
+      }
     }
     &__left {
       @extend .dr;
-      left: -5px;
-      top: calc(50% - 5px);
+      left: -10px;
+      top: calc(50% - 3.5px);
+      &.line{
+        top: unset;
+        bottom: 0;
+        &.line-alt{
+          bottom: unset;
+          top: 0;
+        }
+      }
     }
   }
 }
