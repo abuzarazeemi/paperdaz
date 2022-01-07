@@ -7,12 +7,20 @@
       h-full
       max-h-full
       overflow-hidden
-      gap-4
     "
     id="pdf-page-vue"
   >
+    <!-- pdf page aside has hidden md:grid -->
     <pdf-page-aside class="hidden md:block" />
-    <main class="grid grid-rows-[max-content,max-content,1fr] gap-1">
+    <main
+      class="
+        grid grid-rows-[max-content,max-content,1fr]
+        gap-1
+        max-w-max
+        mx-auto
+        px-[2%]
+      "
+    >
       <pdf-page-action-tray class="w-full" />
       <tool-bar @tool-change="onToolChange" class="max-w-4xl" />
       <div
@@ -208,15 +216,14 @@ export default {
     },
   },
   methods: {
-    onPosChange({ dx, dy, index }){
+    onPosChange({ dx, dy, index }) {
       let type = this.tools[index].type
-      if(type == this.TOOL_TYPE.line){
+      if (type == this.TOOL_TYPE.line) {
         this.tools[index].x1 -= dx
         this.tools[index].x2 -= dx
         this.tools[index].y1 -= dy
         this.tools[index].y2 -= dy
-      }
-      else if(type == this.TOOL_TYPE.highlight){
+      } else if (type == this.TOOL_TYPE.highlight) {
         this.tools[index].x1 -= dx
         this.tools[index].x2 -= dx
         this.tools[index].y1 -= dy
@@ -273,7 +280,7 @@ export default {
       console.log('d')
       let options = {
         pagebreak: { avoid: '.page-break', after: '.page-break' },
-        margin: [0,0,0,0],
+        margin: [0, 0, 0, 0],
       }
       html2pdf().set(options).from(this.$refs.PagesOuter).save()
     },
@@ -309,13 +316,13 @@ export default {
 
       const getPointPos = () => {
         let { x, y } = this.pointerPos(event.srcEvent, this.$refs.PagesOuter)
-        
-        if(y < 0) y = 0
-        if(y > elem.clientHeight) x = elem.clientHeight
-        if(x < 0) x = 0
-        if(x > elem.clientWidth) x = elem.clientWidth
-        
-        return { x , y }
+
+        if (y < 0) y = 0
+        if (y > elem.clientHeight) x = elem.clientHeight
+        if (x < 0) x = 0
+        if (x > elem.clientWidth) x = elem.clientWidth
+
+        return { x, y }
       }
 
       if (this.selectedToolType == this.TOOL_TYPE.line) {
@@ -342,7 +349,7 @@ export default {
         let { x, y } = getPointPos()
         this.tools[this.selectedToolIndex].points = this.tools[
           this.selectedToolIndex
-        ].points.concat([ x, y ])
+        ].points.concat([x, y])
         this.$forceUpdate()
       }
 

@@ -181,7 +181,7 @@ export default {
 
     components: { PdfTextToolIcon },
     signaturePad: false,
-    showSignatureModal: false,
+    showSignatureModal: true,
   }),
   computed: {
     TOOL_TYPE() {
