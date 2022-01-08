@@ -106,7 +106,7 @@ export default mixins(SignatureBodyMixin).extend({
                 family: `${family} (${getWeightName(weight)})`,
                 familyName: family,
                 fontWeight: weight,
-                file: item.files[weight],
+                file: item.files[weight].replace('http://', 'https://'),
                 key: `${family} ${getWeightName(weight)}`,
               })
             }
