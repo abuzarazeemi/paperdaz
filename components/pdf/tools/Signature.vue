@@ -17,7 +17,7 @@ export default {
     style() {
       return {
         // width: `${(this.scale || 1) * 287}px`,
-        height: `${(this.scale || 1) * 70}px`,
+        height: `${(this.scale || 1) * 60}px`,
         objectFit: 'contain',
       }
     },

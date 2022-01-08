@@ -59,8 +59,6 @@ export default mixins(SignatureBodyMixin).extend({
 
       const trimmedCanvas = this.trimCanvas(canvas)
 
-      console.log(trimmedCanvas.toDataURL())
-
       const pngImage = trimmedCanvas.toDataURL()
 
       this.$emit('export-image', pngImage)

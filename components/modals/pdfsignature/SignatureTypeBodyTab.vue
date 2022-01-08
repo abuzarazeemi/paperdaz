@@ -1,23 +1,16 @@
 <template>
   <div class="">
-    <div
-      class="bg-white border border-[#C4C4C4] cursor-text py-6 px-5"
-      @click="$refs.inputElement.focus()"
-    >
-      <div
-        type="text"
-        ref="inputElement"
-        class="inline-block rounded outline-none text-6xl leading-relaxed caret-paperdazgreen-400"
-        :style="{
-          color: activeColor,
-          background: 'transparent',
-          fontFamily: updatedFontFamily,
-        }"
-        contenteditable=""
-      >
-        {{ $auth.user.first_name }}
-      </div>
-    </div>
+    <input
+      type="text"
+      ref="inputElement"
+      v-model="textValue"
+      id="pdf-signature-type-input-box"
+      class="w-full bg-white border-b-2 border-paperdazgreen-400 cursor-text mt-2 py-3 px-5 rounded outline-none text-4xl sm:text-5xl caret-paperdazgreen-400 min-h-[110px]"
+      :style="{
+        color: activeColor,
+        fontFamily: updatedFontFamily,
+      }"
+    />
     <div class="mt-6 flex items-center gap-3">
       <select v-model="currentFont" class="w-52 max-w-full py-2 px-1 rounded">
         <option value="" disabled hidden selected>Select Font</option>
@@ -27,7 +20,9 @@
       </select>
 
       <transition name="fade" duration="50">
-        <span v-show="loadingFont" class="animate-spin text-paperdazgreen-400"
+        <span
+          v-show="loadingFont || $fetchState.pending"
+          class="animate-spin text-paperdazgreen-400"
           ><spinner-dotted-icon height="20" width="20"
         /></span>
       </transition>
@@ -38,8 +33,6 @@
 <script lang="ts">
 import mixins from 'vue-typed-mixins'
 import SignatureBodyMixin from '~/mixins/SignatureBodyMixin'
-import html2canvas from 'html2canvas'
-import domtoimage from 'dom-to-image'
 import _ from 'lodash'
 import SpinnerDottedIcon from '~/components/svg-icons/SpinnerDottedIcon.vue'
 
@@ -48,7 +41,7 @@ export default mixins(SignatureBodyMixin).extend({
   name: 'SignatureTypeBodyTab',
   data() {
     return {
-      textValue: 'Value',
+      textValue: '',
       activeColor: '#000',
       loading: false,
       loadingFont: false,
@@ -59,10 +52,15 @@ export default mixins(SignatureBodyMixin).extend({
   },
   async mounted() {
     await this.$nextTick()
-    ;(this.$refs.inputElement as HTMLDivElement).focus()
+    ;(this.$refs.inputElement as HTMLInputElement).focus()
 
-    this.getFonts()
     this.changeFont = _.debounce(this.changeFont, 300)
+  },
+
+  async fetch() {
+    const user = this.$auth.user as any
+    this.textValue = `${user.first_name} ${user.last_name}`
+    await this.getFonts()
   },
   computed: {
     currentFontObject(): any {
@@ -76,34 +74,30 @@ export default mixins(SignatureBodyMixin).extend({
   },
   methods: {
     getFonts() {
-      this.$axios
+      return this.$axios
         .$get(
           `https://www.googleapis.com/webfonts/v1/webfonts?key=${this.$config.googleFontsApiKey}`
         )
         .then((response: { items: Array<any> }) => {
-          console.log(response)
-
           const getWeightName = (weight: string) => {
-            switch (weight) {
-              case '100':
-                return 'thin'
-              case '200':
-                return 'extralight'
-              case '300':
-                return 'light'
-              case '500':
-                return 'medium'
-              case '600':
-                return 'semibold'
-              case '700':
-                return 'bold'
-              case '800':
-                return 'extrabold'
-              case '900':
-                return 'black'
-              default:
-                return weight
+            let rv = weight
+
+            const values = {
+              '100': 'thin',
+              '200': 'extralight',
+              '300': 'light',
+              '500': 'medium',
+              '600': 'semibold',
+              '700': 'bold',
+              '800': 'extrabold',
+              '900': 'black',
+            } as { [key: string]: string }
+
+            for (const val in values) {
+              rv = rv.replace(val, `${values[val]}-`)
             }
+
+            return rv.replace(/-+$/, '')
           }
           for (const item of response.items) {
             const family = item.family
@@ -117,35 +111,76 @@ export default mixins(SignatureBodyMixin).extend({
               })
             }
           }
+
+          let currentFont = 'Dancing Script semibold'
+          if (!this.fonts.some((el) => el.key == currentFont)) {
+            currentFont = this.fonts.length > 0 ? this.fonts[0].key : ''
+          }
+
+          if (currentFont) this.currentFont = currentFont
         })
     },
     clear() {
-      ;(this.$refs.inputElement as HTMLDivElement).innerText = ''
+      this.textValue = ''
     },
     exportImage() {
-      if (this.loading) return
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
+      const text = this.textValue
+      const fontSize = 100
+      const VERTICAL_EXTRA_SPACE = 5
+      const HORIZONTAL_EXTRA_SPACE = 2
+      const dpr = window.devicePixelRatio || 1
 
-      // html2canvas(this.$refs.inputElement as HTMLElement).then((canvas) => {
-      //   // document.body.appendChild(canvas)
-      //   console.log(canvas.toDataURL())
-      //   this.$emit('export-image', canvas.toDataURL())
-      // })
+      if (!ctx) return
+      ctx.font = `${fontSize}px "${this.updatedFontFamily}"`
 
-      domtoimage
-        .toPng(this.$refs.inputElement as HTMLElement)
-        .then((dataUrl: any) => {
-          // this.$emit('export-image', dataUrl)
-          console.log(dataUrl)
-        })
-        .finally(() => {
-          this.loading = false
-        })
+      const {
+        actualBoundingBoxLeft,
+        actualBoundingBoxRight,
+        actualBoundingBoxAscent,
+        actualBoundingBoxDescent,
+        fontBoundingBoxAscent,
+        fontBoundingBoxDescent,
+        width,
+      } = ctx.measureText(text)
+
+      const canvasHeight =
+        Math.max(
+          Math.abs(actualBoundingBoxAscent) +
+            Math.abs(actualBoundingBoxDescent),
+          (Math.abs(fontBoundingBoxAscent) || 0) +
+            (Math.abs(fontBoundingBoxDescent) || 0)
+        ) * VERTICAL_EXTRA_SPACE
+      canvas.height = canvasHeight
+
+      // Take the larger of the width and the horizontal bounding box
+      // dimensions to try to prevent cropping of the text.
+      const canvasWidth =
+        Math.max(
+          width,
+          Math.abs(actualBoundingBoxLeft) + actualBoundingBoxRight
+        ) * HORIZONTAL_EXTRA_SPACE
+      canvas.width = canvasWidth
+
+      // Set the font again, since otherwise, it's not correctly set when filling.
+      ctx.font = `${fontSize}px "${this.updatedFontFamily}"`
+      ctx.textBaseline = 'top'
+      ctx.font = `${fontSize * dpr}px "${this.updatedFontFamily}"`
+      ctx.fillStyle = this.activeColor
+
+      ctx.fillText(text, canvasWidth / 4, canvasHeight / 4)
+
+      const trimmedCanvas = this.trimCanvas(canvas)
+
+      this.$emit('export-image', trimmedCanvas.toDataURL())
     },
 
     changeFont() {
       this.loadingFont = true
       const currentFontObject = this.currentFontObject
       if (!currentFontObject) return
+      // @ts-ignore
       const dynFont = new FontFace(
         currentFontObject.key,
         `url(${currentFontObject.file})`
@@ -153,7 +188,7 @@ export default mixins(SignatureBodyMixin).extend({
 
       dynFont
         .load()
-        .then((loadedFont) => {
+        .then((loadedFont: any) => {
           // @ts-ignore
           document.fonts.add(loadedFont)
           this.updatedFontFamily = currentFontObject.key

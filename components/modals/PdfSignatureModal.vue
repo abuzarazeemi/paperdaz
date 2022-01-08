@@ -150,7 +150,7 @@ export default Vue.extend({
       this.$notify.success({
         title: 'Pdf Annotation',
         message: `${
-          this.activeTab === 'draw' ? 'Signature' : 'Initials'
+          this.activeTab === 'draw' ? 'Signature' : 'Signature'
         } updated`,
       })
       this.closeModal()
