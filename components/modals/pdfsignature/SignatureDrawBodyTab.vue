@@ -1,6 +1,6 @@
 <template>
   <div class="grid place-items-center">
-    <div class="inline-block mx-auto bg-white rounded">
+    <div class="w-full mx-auto bg-white rounded">
       <canvas
         ref="signatureCanvas"
         class="border h-56 border-[#C4C4C4] w-full rounded"
@@ -30,7 +30,10 @@ export default mixins(SignatureBodyMixin).extend({
 
       if (!canvas) return
 
-      this.signaturePad = new SignaturePad(canvas)
+      this.signaturePad = new SignaturePad(canvas, {
+        minWidth: 2,
+        maxWidth: 5,
+      })
 
       window.addEventListener('resize', this.resizeCanvas)
       this.resizeCanvas()
@@ -52,7 +55,13 @@ export default mixins(SignatureBodyMixin).extend({
     },
     exportImage() {
       if (!this.signaturePad) return
-      const pngImage = this.signaturePad?.toDataURL()
+      const canvas = this.$refs.signatureCanvas as HTMLCanvasElement
+
+      const trimmedCanvas = this.trimCanvas(canvas)
+
+      console.log(trimmedCanvas.toDataURL())
+
+      const pngImage = trimmedCanvas.toDataURL()
 
       this.$emit('export-image', pngImage)
     },

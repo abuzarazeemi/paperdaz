@@ -1,6 +1,6 @@
 <template>
   <div class="tool">
-    <img :src="signature" alt="" v-if="signature" :style="style">
+    <img :src="signature" alt="" v-if="signature" :style="style" />
     <div class="no-signature" v-else>
       <p>No Signature</p>
     </div>
@@ -14,16 +14,15 @@ export default {
     signature: String,
   },
   computed: {
-    style(){
+    style() {
       return {
-        width: `${(this.scale || 1) * 287}px`,
-        height: `${(this.scale || 1) * 176}px`,
+        // width: `${(this.scale || 1) * 287}px`,
+        height: `${(this.scale || 1) * 70}px`,
+        objectFit: 'contain',
       }
     },
   },
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

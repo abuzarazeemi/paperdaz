@@ -36,45 +36,20 @@
     <template #footer>
       <div class="flex items-center justify-between gap-4">
         <button
-          class="
-            h-9
-            rounded
-            border border-gray-100
-            text-xs
-            px-5
-            bg-black
-            text-white
-            hover:shadow
-          "
+          class="h-9 rounded border border-gray-100 text-xs px-5 bg-black text-white hover:shadow"
           @click="clear"
         >
           CLEAR
         </button>
         <div class="flex items-center justify-end gap-4">
           <button
-            class="
-              h-9
-              rounded
-              border border-gray-100
-              text-paperdazgreen-300 text-xs
-              px-3
-              bg-white
-              hover:shadow
-            "
+            class="h-9 rounded border border-gray-100 text-paperdazgreen-300 text-xs px-3 bg-white hover:shadow"
             @click="closeModal"
           >
             CANCEL
           </button>
           <button
-            class="
-              h-9
-              rounded
-              border border-gray-100
-              bg-paperdazgreen-300
-              text-xs text-white
-              px-4
-              hover:shadow
-            "
+            class="h-9 rounded border border-gray-100 bg-paperdazgreen-300 text-xs text-white px-4 hover:shadow"
             @click="exportImage"
           >
             SAVE
@@ -103,7 +78,7 @@ export default Vue.extend({
     return {
       showModal: false,
 
-      activeTab: 'type',
+      activeTab: 'draw',
       tabs: [
         {
           label: 'Draw',

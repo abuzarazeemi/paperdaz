@@ -7,7 +7,7 @@
       <div
         type="text"
         ref="inputElement"
-        class="inline-block rounded outline-none text-6xl caret-paperdazgreen-400"
+        class="inline-block rounded outline-none text-6xl leading-relaxed caret-paperdazgreen-400"
         :style="{
           color: activeColor,
           background: 'transparent',
@@ -38,7 +38,7 @@
 <script lang="ts">
 import mixins from 'vue-typed-mixins'
 import SignatureBodyMixin from '~/mixins/SignatureBodyMixin'
-// import html2canvas from 'html2canvas'
+import html2canvas from 'html2canvas'
 import domtoimage from 'dom-to-image'
 import _ from 'lodash'
 import SpinnerDottedIcon from '~/components/svg-icons/SpinnerDottedIcon.vue'
@@ -125,19 +125,21 @@ export default mixins(SignatureBodyMixin).extend({
     exportImage() {
       if (this.loading) return
 
-      html2canvas(document.body).then((canvas) => {
-        document.body.appendChild(canvas)
-      })
+      // html2canvas(this.$refs.inputElement as HTMLElement).then((canvas) => {
+      //   // document.body.appendChild(canvas)
+      //   console.log(canvas.toDataURL())
+      //   this.$emit('export-image', canvas.toDataURL())
+      // })
 
-      // domtoimage
-      //   .toPng(this.$refs.inputElement as HTMLElement)
-      //   .then((dataUrl: any) => {
-      //     this.$emit('export-image', dataUrl)
-      //     console.log(dataUrl)
-      //   })
-      //   .finally(() => {
-      //     this.loading = false
-      //   })
+      domtoimage
+        .toPng(this.$refs.inputElement as HTMLElement)
+        .then((dataUrl: any) => {
+          // this.$emit('export-image', dataUrl)
+          console.log(dataUrl)
+        })
+        .finally(() => {
+          this.loading = false
+        })
     },
 
     changeFont() {
