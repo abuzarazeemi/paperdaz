@@ -89,8 +89,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import SignatureBodyMixin from '~/mixins/SignatureBodyMixin'
-import SignatureBodyTabVue from './pdfsignature/SignatureBodyTab.vue'
+import SignatureDrawBodyTab from './pdfsignature/SignatureDrawBodyTab.vue'
+import SignatureTypeBodyTabVue from './pdfsignature/SignatureTypeBodyTab.vue'
 export default Vue.extend({
   name: 'PdfSignatureModal',
   model: {
@@ -103,16 +103,17 @@ export default Vue.extend({
     return {
       showModal: false,
 
-      activeTab: 'draw',
+      activeTab: 'type',
       tabs: [
         {
           label: 'Draw',
           value: 'draw',
-          component: SignatureBodyTabVue,
+          component: SignatureDrawBodyTab,
         },
         {
           label: 'Type',
           value: 'type',
+          component: SignatureTypeBodyTabVue,
         },
       ],
     }

@@ -14,7 +14,7 @@ import mixins from 'vue-typed-mixins'
 import SignatureBodyMixin from '~/mixins/SignatureBodyMixin'
 import SignaturePad from 'signature_pad'
 export default mixins(SignatureBodyMixin).extend({
-  name: 'SignatureBodyTab',
+  name: 'SignatureDrawBodyTab',
   data() {
     return {
       signaturePad: undefined as undefined | SignaturePad,
