@@ -1,18 +1,7 @@
 <template>
   <section>
     <div
-      class="
-        flex flex-wrap
-        items-center
-        justify-between
-        bg-[#E8EAEC]
-        py-2
-        w-full
-        gap-x-1 gap-y-2
-        px-6
-        text-[#757575] text-base
-        sm:text-2xl
-      "
+      class="flex flex-wrap items-center justify-between bg-[#E8EAEC] py-2 w-full gap-x-1 gap-y-2 px-6 text-[#757575] text-base sm:text-2xl"
     >
       <button @click="setSelectedType(TOOL_TYPE.text)">
         <pdf-text-tool-icon />
@@ -53,28 +42,11 @@
       </button>
       <button
         @click="onSignClick"
-        class="
-          inline-flex
-          items-center
-          gap-2
-          bg-paperdazgreen-300
-          py-1
-          pr-1
-          pl-2
-          text-white text-sm
-        "
+        class="inline-flex items-center gap-2 bg-paperdazgreen-300 py-1 pr-1 pl-2 text-white text-sm"
       >
         Sign
         <span
-          class="
-            inline-flex
-            items-center
-            justify-center
-            px-2
-            py-2
-            bg-[#EAEAEA]
-            text-paperdazgreen-300
-          "
+          class="inline-flex items-center justify-center px-2 py-2 bg-[#EAEAEA] text-paperdazgreen-300"
           ><svg
             width="12"
             height="12"
@@ -91,30 +63,12 @@
       </button>
 
       <button
-        class="
-          inline-flex
-          items-center
-          gap-2
-          bg-paperdazgreen-300
-          py-1
-          pr-1
-          pl-2
-          tool-item
-          text-white text-sm
-        "
+        class="inline-flex items-center gap-2 bg-paperdazgreen-300 py-1 pr-1 pl-2 tool-item text-white text-sm"
         @click="setSelectedType(TOOL_TYPE.initial)"
       >
         Initial
         <span
-          class="
-            inline-flex
-            items-center
-            justify-center
-            px-2
-            py-2
-            bg-[#EAEAEA]
-            text-paperdazgreen-300
-          "
+          class="inline-flex items-center justify-center px-2 py-2 bg-[#EAEAEA] text-paperdazgreen-300"
           ><svg
             width="12"
             height="12"
