@@ -2,7 +2,7 @@
   <div>
     <section class="relative">
       <h4
-        class="px-5 text-4xl text-black font-semibold absolute inline-block transform top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 whitespace-nowrap"
+        class="px-5 text-4xl lg:text-5xl text-black font-semibold absolute inline-block transform top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 whitespace-nowrap"
       >
         About <span class="text-paperdazgreen-400">Paperdaz</span>
       </h4>
