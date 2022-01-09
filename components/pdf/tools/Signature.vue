@@ -17,7 +17,9 @@ export default {
     style() {
       return {
         // width: `${(this.scale || 1) * 287}px`,
-        height: `${(this.scale || 1) * 60}px`,
+        // height: `${(this.scale || 1) * 60}px`,
+        height: `${(this.scale || 1) * 5}vw`,
+        maxHeight: `${(this.scale || 1) * 60}px`,
         objectFit: 'contain',
       }
     },
