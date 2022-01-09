@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="relative">
+    <section class="relative shadow">
       <h4
         class="px-5 text-4xl lg:text-5xl text-black font-semibold absolute inline-block transform top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 whitespace-nowrap"
       >
@@ -13,7 +13,7 @@
       />
     </section>
     <section
-      class="container block sm:grid grid-cols-[1fr,max-content] mt-12 gap-4"
+      class="container block sm:grid grid-cols-[1fr,max-content] mt-16 gap-4"
     >
       <div class="mb-12 sm:mb-0">
         <img
