@@ -1,36 +1,17 @@
 <template>
   <div
-    class="
-      grid grid-cols-1
-      md:grid-cols-[max-content,1fr]
-      grid-rows-1
-      h-full
-      max-h-full
-      overflow-hidden
-    "
+    class="grid grid-cols-1 md:grid-cols-[max-content,1fr] grid-rows-1 h-full max-h-full overflow-hidden"
     id="pdf-page-vue"
   >
     <!-- pdf page aside has hidden md:grid -->
     <pdf-page-aside class="hidden md:block" />
     <main
-      class="
-        grid grid-rows-[max-content,max-content,1fr]
-        gap-1
-        max-w-max
-        mx-auto
-        px-[2%]
-      "
+      class="grid grid-rows-[max-content,max-content,1fr] gap-1 max-w-max mx-auto px-[2%]"
     >
       <pdf-page-action-tray class="w-full" />
       <tool-bar @tool-change="onToolChange" class="max-w-4xl" />
       <div
-        class="
-          pdf-editor-view
-          relative
-          overflow-y-auto
-          custom-scrollbar
-          max-w-4xl
-        "
+        class="pdf-editor-view relative overflow-y-auto custom-scrollbar max-w-4xl"
         v-if="pdf"
         ref="scrollingElement"
       >
@@ -383,6 +364,7 @@ export default {
         parent ||
         event.currentTarget.parentElement ||
         this.$refs.scrollingElement
+
       event = event || window.event
 
       const scrollingElement =

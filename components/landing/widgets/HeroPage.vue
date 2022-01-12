@@ -1,13 +1,7 @@
 <template>
   <div class="container py-14 sm:py-20">
     <div
-      class="
-        grid grid-cols-1
-        sm:grid-cols-[1fr,max-content]
-        gap-2
-        sm:gap-8
-        md:gap-10
-      "
+      class="grid grid-cols-1 sm:grid-cols-[1fr,max-content] gap-2 sm:gap-8 md:gap-10"
     >
       <div class="text-center sm:text-left">
         <div class="max-w-[640px]">
@@ -22,18 +16,7 @@
           </p>
           <div>
             <button
-              class="
-                font-semibold
-                text-[13px] text-white
-                bg-paperdazgreen-300
-                shadow-md
-                h-10
-                rounded-md
-                px-5
-                w-full
-                mb-8
-                sm:mb-0 sm:w-[unset]
-              "
+              class="font-semibold text-[13px] text-white bg-paperdazgreen-300 shadow-md h-10 rounded-md px-5 w-full mb-8 sm:mb-0 sm:w-[unset]"
             >
               Try Paperdaz for free
             </button>
@@ -42,15 +25,7 @@
       </div>
       <div class="">
         <img
-          class="
-            w-screen
-            max-h-[600px]
-            sm:max-w-[300px]
-            md:max-w-[350px]
-            lg:max-w-[400px]
-            xl:max-w-[500px]
-            2xl:max-w-[600px]
-          "
+          class="w-screen max-h-[600px] sm:max-w-[300px] md:max-w-[350px] lg:max-w-[500px]"
           src="/img/hero.svg"
         />
       </div>
