@@ -58,10 +58,7 @@ body {
   }
 }
 
-.circle {
-  @apply flex items-center justify-center;
-  border-radius: 50%;
-}
+
 
 @mixin circle-content($size) {
   $t: calc(2px * #{$size});
@@ -71,7 +68,18 @@ body {
     min-width: $t;
 }
 
+@mixin circle-parent-content() {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius:50%;
+}
+
 $screens: 'xxs', 'xs', 'sm', 'md', 'lg', 'xl';
+
+.circle {
+  @include circle-parent-content();
+}
 
 @for $i from 1 through 100 {
   .circle-#{$i} {
@@ -79,6 +87,11 @@ $screens: 'xxs', 'xs', 'sm', 'md', 'lg', 'xl';
   }
 
     @each $screen in $screens {
+      .#{$screen}\:circle {
+        @media screen and (min-width: theme('screens.' + #{$screen})) {
+          @include circle-parent-content();
+        }
+      }
     .#{$screen}\:circle-#{$i} {
       @media screen and (min-width: theme('screens.' + #{$screen})) {
         @include circle-content($i);

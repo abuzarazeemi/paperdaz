@@ -3,15 +3,7 @@
     <div class="flex items-center gap-2 w-full max-w-[500px] mx-auto mb-12">
       <el-input placeholder="Enter promotional codes" v-model="promotionCode" />
       <button
-        class="
-          text-sm
-          h-6
-          sm:h-10
-          bg-paperdazgreen-400
-          text-white
-          rounded-lg
-          px-5
-        "
+        class="text-sm h-6 sm:h-10 bg-paperdazgreen-400 text-white rounded-lg px-5"
       >
         Update
       </button>
@@ -25,38 +17,14 @@
           <button
             @click="scrollPackages(true)"
             style="box-shadow: -1px -1px 8px #c1c1c1"
-            class="
-              circle circle-22
-              bg-white/30
-              backdrop-blur-sm
-              shadow
-              rotate-90
-              absolute
-              top-1/2
-              transform
-              -translate-y-1/2 -translate-x-1/2
-              z-10
-            "
+            class="hidden sm:circle circle-22 bg-white/30 backdrop-blur-sm shadow rotate-90 absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 z-10"
           >
             <arrow-down-icon />
           </button>
           <button
             @click="scrollPackages(false)"
             style="box-shadow: -1px -1px 8px #c1c1c1"
-            class="
-              circle circle-22
-              bg-white/30
-              backdrop-blur-sm
-              shadow
-              -rotate-90
-              absolute
-              top-1/2
-              transform
-              -translate-y-1/2
-              translate-x-1/2
-              z-10
-              right-0
-            "
+            class="hidden sm:circle circle-22 bg-white/30 backdrop-blur-sm shadow -rotate-90 absolute top-1/2 transform -translate-y-1/2 translate-x-1/2 z-10 right-0"
           >
             <arrow-down-icon />
           </button>
@@ -96,15 +64,7 @@
             :staging-package="customPackage"
           />
           <div
-            class="
-              border-2 border-paperdazgreen-400
-              w-full
-              rounded-2xl
-              overflow-hidden
-              relative
-              bg-white
-              text-[#505050]
-            "
+            class="border-2 border-paperdazgreen-400 w-full rounded-2xl overflow-hidden relative bg-white text-[#505050]"
           >
             <div class="p-5 overflow-x-auto custom-scrollbar">
               <table class="custom-table">
@@ -211,16 +171,7 @@
                         />
                         <label
                           for="public-profile-checkbox"
-                          class="
-                            inline-grid
-                            place-items-center
-                            h-7
-                            w-7
-                            rounded
-                            border border-gray-300
-                            p-1
-                            cursor-pointer
-                          "
+                          class="inline-grid place-items-center h-7 w-7 rounded border border-gray-300 p-1 cursor-pointer"
                         >
                           <transition name="fade" :duration="100">
                             <check-icon
@@ -247,16 +198,7 @@
                         />
                         <label
                           for="company-ledger-checkbox"
-                          class="
-                            inline-grid
-                            place-items-center
-                            h-7
-                            w-7
-                            rounded
-                            border border-gray-300
-                            p-1
-                            cursor-pointer
-                          "
+                          class="inline-grid place-items-center h-7 w-7 rounded border border-gray-300 p-1 cursor-pointer"
                         >
                           <transition name="fade" :duration="100">
                             <check-icon
@@ -274,15 +216,7 @@
               </table>
             </div>
             <div
-              class="
-                border-t-2 border-paperdazgreen-400
-                py-4
-                px-10
-                text-lg
-                font-bold
-                flex
-                justify-between
-              "
+              class="border-t-2 border-paperdazgreen-400 py-4 px-10 text-lg font-bold flex justify-between"
             >
               <span>Total Amount</span>
               <span class="text-[#606060]">$65.00</span>
