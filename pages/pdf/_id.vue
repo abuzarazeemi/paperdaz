@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import demoPdf from '@/assets/pdf/sample.pdf'
+// import demoPdf from '@/assets/pdf/sample.pdf'
 import * as pdfJs from 'pdfjs-dist/build/pdf'
 import * as worker from 'pdfjs-dist/build/pdf.worker.entry'
 pdfJs.GlobalWorkerOptions.workerSrc = worker
@@ -91,6 +91,7 @@ import InitialIdentifier from '@/components/pdf/tools_identifiers/Initial'
 import SignatureIdentifier from '@/components/pdf/tools_identifiers/Signature'
 export default {
   layout: 'pdf',
+  name: 'SinglePdfPage',
   components: {
     PdfPage,
     ToolWrapper,
@@ -117,9 +118,19 @@ export default {
     this.$BUS.$off('download-pdf')
     this.$BUS.$off('signature-update')
   },
-  // async asyncData({$axios}){
-  //   const file = await $axios.$get('')
-  // },
+  async asyncData({ $axios, params, error }) {
+    const file = await $axios
+      .$get(`/file/${params.id}`)
+      .then((response) => response.file)
+      .catch((err) => {
+        error({
+          statusCode: 404,
+          message: err.message || 'File not found',
+        })
+      })
+
+    return { file }
+  },
   data: () => ({
     pdf: null,
     tools: [],
@@ -134,7 +145,8 @@ export default {
     selectedToolIndex: -1,
 
     signature: null,
-    // file: {},
+    // data populated from asyncData
+    file: {},
   }),
   computed: {
     TOOL_TYPE() {
@@ -467,9 +479,7 @@ export default {
     },
     async fetchPdf() {
       // let res = await fetch(demoPdf)
-      let res = await fetch(
-        'https://paperdazfile.nyc3.digitaloceanspaces.com/users_document/Profile%20%281%29.pdf1642112677318'
-      ).catch((error) => {
+      let res = await fetch(this.file.download_link).catch((error) => {
         this.$notify.error({
           title: 'Pdf',
           message: error.message || 'Unable to fetch pdf',

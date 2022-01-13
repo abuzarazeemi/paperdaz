@@ -1,15 +1,6 @@
 <template>
   <nav
-    class="
-      px-5
-      bg-white
-      lg:rounded-lg
-      w-full
-      flex
-      items-center
-      justify-between
-      shadow
-    "
+    class="px-5 bg-white lg:rounded-lg w-full flex items-center justify-between shadow"
     :class="[compact ? 'py-1 h-12' : 'min-h-[60px] sm:min-h-[70px] py-4 h-16']"
   >
     <p
@@ -20,22 +11,14 @@
         class="inline-block lg:hidden mr-3 sm:mr-4 cursor-pointer"
         @click="$emit('open-sidebar')"
         ><hamburger-icon /></span
-      >{{ routeName }}
+      >{{ title || routeName }}
     </p>
     <div class="h-full self-stretch flex items-center">
       <span class="hidden lg:inline-block text-[#BBBBBB]"
         ><search-icon width="18" height="18"
       /></span>
       <div
-        class="
-          hidden
-          lg:inline-block
-          self-stretch
-          h-full
-          w-px
-          mx-6
-          bg-[#E1E1E1]
-        "
+        class="hidden lg:inline-block self-stretch h-full w-px mx-6 bg-[#E1E1E1]"
       ></div>
       <div class="hidden lg:inline-block text-[#909090] mr-4">
         <bell-icon />
@@ -117,6 +100,10 @@ export default mixins(GlobalMixin).extend({
     compact: {
       type: Boolean,
       default: false,
+    },
+    title: {
+      type: String,
+      default: '',
     },
   },
   computed: {
