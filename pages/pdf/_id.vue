@@ -89,7 +89,6 @@ import DateIdentifier from '@/components/pdf/tools_identifiers/Date'
 import NameIdentifier from '@/components/pdf/tools_identifiers/Name'
 import InitialIdentifier from '@/components/pdf/tools_identifiers/Initial'
 import SignatureIdentifier from '@/components/pdf/tools_identifiers/Signature'
-
 export default {
   layout: 'pdf',
   components: {
@@ -118,6 +117,9 @@ export default {
     this.$BUS.$off('download-pdf')
     this.$BUS.$off('signature-update')
   },
+  // async asyncData({$axios}){
+  //   const file = await $axios.$get('')
+  // },
   data: () => ({
     pdf: null,
     tools: [],
@@ -132,6 +134,7 @@ export default {
     selectedToolIndex: -1,
 
     signature: null,
+    // file: {},
   }),
   computed: {
     TOOL_TYPE() {
@@ -463,7 +466,15 @@ export default {
       this.tools.push(obj)
     },
     async fetchPdf() {
-      let res = await fetch(demoPdf)
+      // let res = await fetch(demoPdf)
+      let res = await fetch(
+        'https://paperdazfile.nyc3.digitaloceanspaces.com/users_document/Profile%20%281%29.pdf1642112677318'
+      ).catch((error) => {
+        this.$notify.error({
+          title: 'Pdf',
+          message: error.message || 'Unable to fetch pdf',
+        })
+      })
       let blob = await res.blob()
       let pdfAsDataUri = await new Promise((resolve, reject) => {
         const reader = new FileReader()

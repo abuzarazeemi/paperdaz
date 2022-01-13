@@ -5,16 +5,7 @@
     </div>
     <div class="flex-1 rounded-3xl bg-white py-6 px-8 overflow-hidden">
       <h3
-        class="
-          text-center text-paperdazgreen-300
-          border-b-2 border-paperdazgreen-300
-          font-semibold
-          text-2xl
-          gap-2
-          pb-1
-          relative
-          mb-4
-        "
+        class="text-center text-paperdazgreen-300 border-b-2 border-paperdazgreen-300 font-semibold text-2xl gap-2 pb-1 relative mb-4"
       >
         Billing
       </h3>

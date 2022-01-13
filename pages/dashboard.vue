@@ -2,9 +2,16 @@
   <div class="lg:pt-4 min-h-full flex flex-col max-w-7xl">
     <top-details-card-container class="mb-5" v-model="activeTab" :tabs="tabs" />
     <leaves-details-container class="mb-9" />
-    <file-ledger class="flex-1" />
+    <file-ledger ref="fileLedger" class="flex-1" />
 
-    <floating-action-button />
+    <floating-action-button @click.native="$refs.uploadFileInput.click()" />
+    <input
+      type="file"
+      accept="application/pdf,application/vnd.ms-excel"
+      ref="uploadFileInput"
+      hidden
+      @change="uploadDocument"
+    />
   </div>
 </template>
 
@@ -81,6 +88,46 @@ export default Vue.extend({
       ],
     }
   },
-  methods: {},
+  methods: {
+    uploadDocument(event: Event) {
+      const inputElement = event.currentTarget as HTMLInputElement
+      if (!inputElement) return
+
+      const file = inputElement.files?.length
+        ? inputElement.files[0]
+        : undefined
+
+      if (!file) return
+
+      const formData = new FormData()
+      formData.append('upload', file)
+
+      const loadingNotification = this.$notify.info({
+        title: 'File Upload',
+        message: 'File uploading ...',
+        duration: 1000 * 60,
+      })
+
+      this.$axios
+        .$post('/file/upload', formData)
+        .then(() => {
+          this.$notify.success({
+            title: 'File Upload',
+            message: 'File uploaded successfully',
+          })
+          // @ts-ignore
+          this.$refs.fileLedger?.$fetch()
+        })
+        .catch((error) => {
+          this.$notify.error({
+            title: 'File Upload',
+            message: error?.response?.data || error.message,
+          })
+        })
+        .finally(() => {
+          loadingNotification.close()
+        })
+    },
+  },
 })
 </script>
