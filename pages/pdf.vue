@@ -332,7 +332,7 @@ export default {
       }
       let prevScale = this.scale
       this.scale = 1
-      await html2pdf().set(options).from().save()
+      await html2pdf().set(options).from(this.$refs.PagesOuter).save()
       this.scale = prevScale
     },
     async deleteTool(id) {
