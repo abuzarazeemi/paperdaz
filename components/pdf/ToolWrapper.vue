@@ -306,13 +306,13 @@ export default {
         top = Math.min(...this.points.filter((v, i) => i % 2 == 1))
         left = Math.min(...this.points.filter((v, i) => i % 2 == 0))
       } else {
-        if (this.y1 != null && this.y1 != null) {
+        if (this.y1 != null && this.y2 != null) {
           if (this.y2 < this.y1) top = this.y2
           else top = this.y1
         }
-        if (this.x1 != null && this.x1 != null) {
-          if (this.x2 < this.x1) left = this.x2
-          else left = this.x1
+        if (this.x1 != null && this.x2 != null) {
+          if (this.x2 < this.x1) left = this.x2 + 3
+          else left = this.x1 - 3
         }
       }
       this.top = top
