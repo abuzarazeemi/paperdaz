@@ -76,7 +76,7 @@
         >
         </el-date-picker>
       </button>
-      <button class="px-0.5 h-full" @click="deleteTool(index)">
+      <button class="px-0.5 h-full" @click="handleDelete">
         <trash-x-icon />
       </button>
       <button class="px-0.5 h-full" @click="onOutsideClick">
@@ -125,6 +125,7 @@ import DateTool from './tools/Date'
 import NameTool from './tools/Name'
 import InitialTool from './tools/Initial'
 import SignatureTool from './tools/Signature'
+import StarTool from './tools/Star'
 import TOOL_DIRECTION from '@/components/pdf/data/toolDragDirection'
 import TOOL_TYPE from '@/components/pdf/data/toolType'
 import MoveIcon from '../svg-icons/MoveIcon.vue'
@@ -141,13 +142,15 @@ export default {
     deleteTool: Function,
     points: Array,
     dragHandler: Function,
-    index: Number,
+    id: Number,
     type: String,
     handleIncrease: Function,
     handleDecrease: Function,
     fontSize: Number,
     scale: Number,
     signature: String,
+    activeToolId: Number,
+    setActiveToolId: Function,
   },
   components: {
     TextTool,
@@ -166,6 +169,7 @@ export default {
     CalendarIcon,
     TrashXIcon,
     CheckCircleIcon,
+    StarTool,
   },
   data: () => ({
     lastPosX: 0,
@@ -173,7 +177,6 @@ export default {
     isDragging: false,
     top: 100,
     left: 0,
-    isActive: false,
     calendarValue: undefined,
     altDirection: false,
     incDecCount: 11,
@@ -183,12 +186,16 @@ export default {
   created() {
     this.checkAndSetPosition()
     this.clcPos()
-    this.$BUS.$on('tool-comp-click', v => {
-      if(v != this.index) this.isActive = false
-    })
-  },
-  beforeDestroy(){
-    this.$BUS.$off('tool-comp-click')
+    // this.$BUS.$on('tool-comp-click', v => {
+    //   console.log(v)
+    //   if(v != this.index) this.isActive = false
+    // })
+
+    // console.log(this.x2, this.x1)
+    // if(this.type == this.TOOL_TYPE.line || this.type == this.TOOL_TYPE.highlight){
+    //   if(this.x2 < this.x1) this.altDirection = true
+    //   else this.altDirection = false
+    // }
   },
   watch: {
     x1() {
@@ -206,11 +213,14 @@ export default {
     points() {
       this.clcPos()
     },
-    isActive(v){
-      if(v) this.toolMenuPosCalculation()
+    activeToolId(v){
+      if(v == this.id) this.toolMenuPosCalculation()
     },
   },
   computed: {
+    isActive(){
+      return this.id == this.activeToolId
+    },
     wrpStyle() {
       let top = this.top
       let left = this.left
@@ -241,15 +251,19 @@ export default {
     },
   },
   methods: {
+    handleDelete(){
+      this.setActiveToolId(null)
+      this.deleteTool(this.id)
+    },
     inc(){
       if(this.incDecCount == this.incDecMax) return
       ++this.incDecCount
-      this.handleIncrease(this.index)
+      this.handleIncrease(this.id)
     },
     dec(){
       if(this.incDecCount == this.incDecMin) return
       --this.incDecCount
-      this.handleDecrease(this.index)
+      this.handleDecrease(this.id)
     },
     openCalendar() {
       this.$refs.datePicker.focus()
@@ -270,7 +284,7 @@ export default {
       if(this.altDirection){
         direction = direction == this.TOOL_DIRECTION.left ? this.TOOL_DIRECTION.right : this.TOOL_DIRECTION.left
       }
-      this.dragHandler(event, this.index, direction)
+      this.dragHandler(event, this.id, direction)
       if(event.isFinal){
         if(this.type == this.TOOL_TYPE.line || this.type == this.TOOL_TYPE.highlight){
           if(this.x2 < this.x1) this.altDirection = true
@@ -279,11 +293,11 @@ export default {
       }
     },
     onClick() {
-      this.isActive = true
-      this.$BUS.$emit('tool-comp-click', this.index)
+      this.setActiveToolId(this.id)
+      // this.$BUS.$emit('tool-comp-click', this.id)
     },
     onOutsideClick() {
-      this.isActive = false
+      this.setActiveToolId(null)
     },
     clcPos() {
       let top = this.top
@@ -332,7 +346,7 @@ export default {
         
         this.$emit('pos-change', {
           dx, dy,
-          index: this.index,
+          id: this.id,
         })
 
         // Tool Menu Position Calculation

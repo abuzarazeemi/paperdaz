@@ -1,6 +1,6 @@
 <template>
   <svg preserveAspectRatio="none" :viewBox="viewBox" :style="style">
-    <path :d="d" style="stroke: #000000; stroke-width: 2" fill="none"></path>
+    <path :d="d" stroke="#000" fill="none"></path>
   </svg>
 </template>
 
@@ -18,6 +18,9 @@ export default {
     style(){
       return {
         width: `${this.width}px`,
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round',
+        'stroke-width': '2',
       }
     },
     x1(){
@@ -35,7 +38,7 @@ export default {
     viewBox(){
       let x1 = Math.min(this.x1, this.x2)
       let y1 = this.y2 < this.y1 ? this.y2 : this.y1 //Math.min(this.y1, this.y2) : Math.max(this.y1, this.y2)
-      return `${x1} ${y1} ${this.width} ${this.height}`
+      return `${x1 - 5} ${y1 - 5} ${this.width + 10} ${this.height + 10}`
     },
     width(){
       return Math.abs(this.x2 - this.x1)
