@@ -37,7 +37,7 @@
         <user-profile-solid-icon />
       </button>
 
-      <button class="text-[#5FA348]">
+      <button class="text-[#5FA348]" @click="setSelectedType(TOOL_TYPE.star)">
         <star-icon />
       </button>
       <button
@@ -91,6 +91,10 @@
         class="text-xs text-white bg-paperdazgreen-400 px-2 rounded h-8"
       >
         Download
+      </button>
+
+      <button @click="$emit('undo')">
+        UNDO
       </button>
     </div>
 

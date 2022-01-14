@@ -1,6 +1,6 @@
 <template>
   <svg preserveAspectRatio="none" :viewBox="viewBox" :style="style">
-    <path :d="d" stroke-linecap="round" style="fill: rgba(254,207,38, 0.4); stroke-width: 0;"></path>
+    <path :d="d" stroke-linecap="round" style="fill: rgb(255, 255, 0); opacity: 0.4; stroke-width: 0;"></path>
   </svg>
 </template>
 

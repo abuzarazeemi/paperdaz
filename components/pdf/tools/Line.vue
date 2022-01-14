@@ -19,8 +19,8 @@ export default {
       }
     },
     viewBox(){
-      let x1 = this.x2 < this.x1 ? this.x2 - 2 : this.x1 - 2
-      let y1 = Math.min(this.y1, this.y2) - 2
+      let x1 = this.x2 < this.x1 ? this.x2 - 3 : this.x1 - 3
+      let y1 = Math.min(this.y1, this.y2) - 3
       return `${x1} ${y1} ${this.width + 10} ${this.height + 10}`
     },
     width(){
