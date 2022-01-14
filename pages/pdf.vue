@@ -7,12 +7,20 @@
       h-full
       max-h-full
       overflow-hidden
-      gap-4
     "
     id="pdf-page-vue"
   >
+    <!-- pdf page aside has hidden md:grid -->
     <pdf-page-aside class="hidden md:block" />
-    <main class="grid grid-rows-[max-content,max-content,1fr] gap-1">
+    <main
+      class="
+        grid grid-rows-[max-content,max-content,1fr]
+        gap-1
+        max-w-max
+        mx-auto
+        px-[2%]
+      "
+    >
       <pdf-page-action-tray class="w-full" />
       <tool-bar @tool-change="onToolChange" @undo="undo" class="max-w-4xl" />
       <div
@@ -250,13 +258,12 @@ export default {
     onPosChange({ dx, dy, id }){
       let index = this.tools.findIndex(t => t.id == id)
       let type = this.tools[index].type
-      if(type == this.TOOL_TYPE.line){
+      if (type == this.TOOL_TYPE.line) {
         this.tools[index].x1 -= dx
         this.tools[index].x2 -= dx
         this.tools[index].y1 -= dy
         this.tools[index].y2 -= dy
-      }
-      else if(type == this.TOOL_TYPE.highlight){
+      } else if (type == this.TOOL_TYPE.highlight) {
         this.tools[index].x1 -= dx
         this.tools[index].x2 -= dx
         this.tools[index].y1 -= dy
@@ -367,13 +374,13 @@ export default {
 
       const getPointPos = () => {
         let { x, y } = this.pointerPos(event.srcEvent, this.$refs.PagesOuter)
-        
-        if(y < 0) y = 0
-        if(y > elem.clientHeight) x = elem.clientHeight
-        if(x < 0) x = 0
-        if(x > elem.clientWidth) x = elem.clientWidth
-        
-        return { x , y }
+
+        if (y < 0) y = 0
+        if (y > elem.clientHeight) x = elem.clientHeight
+        if (x < 0) x = 0
+        if (x > elem.clientWidth) x = elem.clientWidth
+
+        return { x, y }
       }
 
       let index = this.tools.findIndex(t => t.id == this.selectedToolId)

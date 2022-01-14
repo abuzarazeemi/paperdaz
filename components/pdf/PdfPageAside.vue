@@ -1,17 +1,6 @@
 <template>
-  <aside
-    class="
-      bg-[#717171] bg-opacity-40
-      w-[200px]
-      py-4
-      flex flex-col
-      justify-between
-      self-start
-      h-full
-      gap-3
-    "
-  >
-    <div class="flex-1 overflow-y-auto custom-scrollbar px-5">
+  <aside class="pdf-page-aside">
+    <div class="overflow-y-auto custom-scrollbar px-5">
       <div class="bg-white h-56 mb-5" v-for="i in 4" :key="i"></div>
     </div>
     <div class="px-5">
@@ -51,6 +40,16 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+.pdf-page-aside {
+  @apply bg-[#717171] bg-opacity-40
+      w-[200px]
+      py-4
+      h-full
+      max-h-full
+      gap-3
+      overflow-hidden hidden md:grid;
+  grid-template-rows: 1fr max-content;
+}
 .custom-scrollbar {
   /* Handle */
   &::-webkit-scrollbar-thumb {

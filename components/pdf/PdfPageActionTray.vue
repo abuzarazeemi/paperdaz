@@ -1,6 +1,17 @@
 <template>
   <div class="py-2 flex items-center text-black gap-4">
-    <div class="flex items-center gap-4 flex-1 justify-between max-w-4xl px-4">
+    <div
+      class="
+        flex
+        items-center
+        gap-4
+        flex-1
+        justify-between
+        max-w-4xl
+        px-4
+        text-sm
+      "
+    >
       <el-dropdown trigger="click" class="font-medium">
         <span class="el-dropdown-link">
           Complete <i class="el-icon-arrow-down el-icon--right"></i>
@@ -26,58 +37,58 @@
           <el-dropdown-item divided>Action 5</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <div
+      <!-- <div
         class="flex-1 flex items-center gap-5 justify-end text-xs font-medium"
-      >
-        <span class="hidden md:inline">Ajinomotojobapplication</span>
+      > -->
+      <span class="hidden md:inline">Ajinomotojobapplication</span>
 
-        <span class="hidden md:inline">
-          <span class="circle circle-2 bg-[#757575]"></span>
+      <span class="hidden md:inline">
+        <span class="circle circle-2 bg-[#757575]"></span>
+      </span>
+
+      <span class="hidden md:inline">Akay Devakr</span>
+
+      <span class="hidden md:inline">
+        <span class="circle circle-2 bg-[#757575]"></span>
+      </span>
+
+      <span class="hidden md:inline">05.08.2021 10:04 </span>
+
+      <el-dropdown trigger="click" class="font-medium">
+        <span class="el-dropdown-link text-[#555454] px-1 flex items-center">
+          <ellipsis-icon-vertical-icon />
         </span>
-
-        <span class="hidden md:inline">Akay Devakr</span>
-
-        <span class="hidden md:inline">
-          <span class="circle circle-2 bg-[#757575]"></span>
-        </span>
-
-        <span class="hidden md:inline">05.08.2021 10:04 </span>
-
-        <el-dropdown trigger="click" class="font-medium">
-          <span class="el-dropdown-link text-[#555454] px-1 flex items-center">
-            <ellipsis-icon-vertical-icon />
-          </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>
-              <button
-                class="text-xs text-white bg-paperdazgreen-400 rounded px-5 h-7"
-              >
-                Save
-              </button>
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <button
-                class="
-                  px-2
-                  w-[70px]
-                  rounded
-                  flex
-                  items-center
-                  justify-center
-                  bg-gray-600
-                  py-1.5
-                  text-white
-                "
-              >
-                <export-icon />
-              </button>
-            </el-dropdown-item>
-            <el-dropdown-item>Action 3</el-dropdown-item>
-            <el-dropdown-item disabled>Action 4</el-dropdown-item>
-            <el-dropdown-item divided>Action 5</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </div>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>
+            <button
+              class="text-xs text-white bg-paperdazgreen-400 rounded px-5 h-7"
+            >
+              Save
+            </button>
+          </el-dropdown-item>
+          <el-dropdown-item>
+            <button
+              class="
+                px-2
+                w-[70px]
+                rounded
+                flex
+                items-center
+                justify-center
+                bg-gray-600
+                py-1.5
+                text-white
+              "
+            >
+              <export-icon />
+            </button>
+          </el-dropdown-item>
+          <el-dropdown-item>Action 3</el-dropdown-item>
+          <el-dropdown-item disabled>Action 4</el-dropdown-item>
+          <el-dropdown-item divided>Action 5</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+      <!-- </div> -->
     </div>
 
     <div class="lg:flex items-center hidden">
