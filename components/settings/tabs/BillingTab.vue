@@ -5,16 +5,7 @@
     </div>
     <div class="flex-1 rounded-3xl bg-white py-6 px-8 overflow-hidden">
       <h3
-        class="
-          text-center text-paperdazgreen-300
-          border-b-2 border-paperdazgreen-300
-          font-semibold
-          text-2xl
-          gap-2
-          pb-1
-          relative
-          mb-4
-        "
+        class="text-center text-paperdazgreen-300 border-b-2 border-paperdazgreen-300 font-semibold text-2xl gap-2 pb-1 relative mb-4"
       >
         Billing
       </h3>
@@ -150,10 +141,17 @@
                 <p class="">
                   Credit card number
                   <span class="text-paperdazgreen-300"
-                    >**** **** **** 1221</span
+                    >**** **** ****
+                    {{
+                      (card.card_number || '').substring(
+                        (card.card_number || '').length - 4
+                      )
+                    }}</span
                   >
                   <br />Expiration date:
-                  <span class="text-paperdazgreen-300">12/21</span>
+                  <span class="text-paperdazgreen-300"
+                    >{{ card.exp_month }}/{{ card.exp_year }}</span
+                  >
                 </p>
               </td>
               <td>
@@ -210,6 +208,20 @@ export default Vue.extend({
     DeleteBillingInformationModal,
     UpdateBillingInformationModal,
   },
+  async fetch() {
+    const fetchCard = () =>
+      new Promise((resolve, reject) => {
+        this.$axios
+          .$get('/card')
+          .then((response) => {
+            this.card = response.card
+            resolve(true)
+          })
+          .catch((err) => reject(err))
+      })
+
+    await Promise.allSettled([fetchCard()])
+  },
   data() {
     return {
       showAdditionalFeatureModal: false,
@@ -217,6 +229,7 @@ export default Vue.extend({
       showCancelSubscriptionModal: false,
       showDeleteBillingInfoModal: false,
       showUpdateBillingInfoModal: false,
+      card: {},
       additionalFeature: {
         paperlinks: 0,
         team_members: 0,

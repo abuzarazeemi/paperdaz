@@ -1,39 +1,25 @@
 <template>
   <div
-    class="
-      grid grid-cols-1
-      md:grid-cols-[max-content,1fr]
-      grid-rows-1
-      h-full
-      max-h-full
-      overflow-hidden
-    "
+    class="grid grid-cols-1 md:grid-cols-[max-content,1fr] grid-rows-1 h-full max-h-full overflow-hidden"
     id="pdf-page-vue"
   >
     <!-- pdf page aside has hidden md:grid -->
     <pdf-page-aside class="hidden md:block" />
     <main
-      class="
-        grid grid-rows-[max-content,max-content,1fr]
-        gap-1
-        max-w-max
-        mx-auto
-        px-[2%]
-      "
+      class="grid grid-rows-[max-content,max-content,1fr] gap-1 max-w-max mx-auto px-[2%]"
     >
       <pdf-page-action-tray class="w-full" />
       <tool-bar @tool-change="onToolChange" @undo="undo" class="max-w-4xl" />
       <div
-        class="
-          pdf-editor-view
-          relative
-          overflow-y-auto
-          custom-scrollbar
-          max-w-4xl
-        "
+        class="pdf-editor-view relative overflow-y-auto custom-scrollbar max-w-4xl"
+        v-if="pdf"
         ref="scrollingElement"
       >
-        <div class="pdf-pages-outer pb-6 relative" ref="PagesOuter" :style="pagesOuterStyle">
+        <div
+          class="pdf-pages-outer pb-6 relative"
+          ref="PagesOuter"
+          :style="pagesOuterStyle"
+        >
           <tool-wrapper
             v-for="tool in fillteredTools"
             :key="tool.id"
@@ -71,7 +57,10 @@
               v-for="(page, pI) in pdf.numPages"
               :key="pI"
             >
-              <div class="mt-6 page-break" v-if="pI > 0 && pI < pdf.numPages"></div>
+              <div
+                class="mt-6 page-break"
+                v-if="pI > 0 && pI < pdf.numPages"
+              ></div>
               <pdf-page :page-number="pI + 1" :pdf="pdf" />
             </div>
           </div>
@@ -82,7 +71,7 @@
 </template>
 
 <script>
-import demoPdf from '@/assets/pdf/sample.pdf'
+// import demoPdf from '@/assets/pdf/sample.pdf'
 import * as pdfJs from 'pdfjs-dist/build/pdf'
 import * as worker from 'pdfjs-dist/build/pdf.worker.entry'
 pdfJs.GlobalWorkerOptions.workerSrc = worker
@@ -112,6 +101,7 @@ import StarIdentifier from '@/components/pdf/tools_identifiers/Star'
 
 export default {
   layout: 'pdf',
+  name: 'SinglePdfPage',
   components: {
     PdfPage,
     ToolWrapper,
@@ -139,6 +129,19 @@ export default {
     this.$BUS.$off('download-pdf')
     this.$BUS.$off('signature-update')
   },
+  async asyncData({ $axios, params, error }) {
+    const file = await $axios
+      .$get(`/file/${params.id}`)
+      .then((response) => response.file)
+      .catch((err) => {
+        error({
+          statusCode: 404,
+          message: err.message || 'File not found',
+        })
+      })
+
+    return { file }
+  },
   data: () => ({
     pdf: null,
     tools: [],
@@ -153,25 +156,27 @@ export default {
     selectedToolId: null,
 
     signature: null,
+    // data populated from asyncData
+    file: {},
 
     scale: 1,
     deletedToolStack: [],
-    
+
     activeToolId: null,
 
     toolId: 0,
   }),
   computed: {
-    pagesOuterStyle(){
+    pagesOuterStyle() {
       let scale = `scale(${this.scale})`
       return {
-        'transform': scale,
+        transform: scale,
         '-webkit-transform': scale,
         'transform-origin': '0px 0px',
       }
     },
-    fillteredTools(){
-      return this.tools.filter(t => !t.isDeleted)
+    fillteredTools() {
+      return this.tools.filter((t) => !t.isDeleted)
     },
     TOOL_TYPE() {
       return TOOL_TYPE
@@ -240,23 +245,23 @@ export default {
     },
   },
   watch: {
-    pdf(v){
+    pdf(v) {
       this.handleScale()
     },
   },
   methods: {
-    undo(){
+    undo() {
       let lastId = this.deletedToolStack.pop()
-      if(lastId){
-        let index = this.tools.findIndex(t => t.id == lastId)
-        if(index >= 0) this.tools[index].isDeleted = false
+      if (lastId) {
+        let index = this.tools.findIndex((t) => t.id == lastId)
+        if (index >= 0) this.tools[index].isDeleted = false
       }
     },
-    setActiveToolId(v){
+    setActiveToolId(v) {
       this.activeToolId = v
     },
-    onPosChange({ dx, dy, id }){
-      let index = this.tools.findIndex(t => t.id == id)
+    onPosChange({ dx, dy, id }) {
+      let index = this.tools.findIndex((t) => t.id == id)
       let type = this.tools[index].type
       if (type == this.TOOL_TYPE.line) {
         this.tools[index].x1 -= dx
@@ -271,7 +276,7 @@ export default {
       }
     },
     handleIncrease(id) {
-      let index = this.tools.findIndex(t => t.id == id)
+      let index = this.tools.findIndex((t) => t.id == id)
       let tool = this.tools[index]
       if (
         tool.type == this.TOOL_TYPE.text ||
@@ -296,7 +301,7 @@ export default {
       this.$forceUpdate()
     },
     handleDecrease(id) {
-      let index = this.tools.findIndex(t => t.id == id)
+      let index = this.tools.findIndex((t) => t.id == id)
       let tool = this.tools[index]
       if (
         tool.type == this.TOOL_TYPE.text ||
@@ -325,10 +330,10 @@ export default {
       this.activeToolId = null
       let options = {
         pagebreak: { avoid: '.page-break', after: '.page-break' },
-        image: { type: 'jpeg', quality: 1.00 },
-        margin: [0,0,0,0],
-        html2canvas:  { scale: 2 },
-        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+        image: { type: 'jpeg', quality: 1.0 },
+        margin: [0, 0, 0, 0],
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
       }
       let prevScale = this.scale
       this.scale = 1
@@ -336,7 +341,7 @@ export default {
       this.scale = prevScale
     },
     async deleteTool(id) {
-      let index = this.tools.findIndex(t => t.id == id)
+      let index = this.tools.findIndex((t) => t.id == id)
       this.selectedToolId = null
       this.activeToolId = null
       // this.tools.splice(index, 1)
@@ -364,7 +369,7 @@ export default {
           this.selectedToolId = this.tools[this.tools.length - 1].id
         }
       } else if (id != undefined && this.selectedToolId != id) {
-        let index = this.tools.findIndex(t => t.id == id)
+        let index = this.tools.findIndex((t) => t.id == id)
         this.selectedToolId = id
         this.selectedToolType = this.tools[index].type
       }
@@ -383,7 +388,7 @@ export default {
         return { x, y }
       }
 
-      let index = this.tools.findIndex(t => t.id == this.selectedToolId)
+      let index = this.tools.findIndex((t) => t.id == this.selectedToolId)
       if (this.selectedToolType == this.TOOL_TYPE.line) {
         let { x, y } = getPointPos()
         if (direction && direction == this.TOOL_DIRECTION.left) {
@@ -401,14 +406,11 @@ export default {
         } else {
           this.tools[index].x2 = x
         }
-        this.tools[index].y2 =
-          this.tools[index].y1 + 15
+        this.tools[index].y2 = this.tools[index].y1 + 15
         this.$forceUpdate()
       } else if (this.selectedToolType == this.TOOL_TYPE.draw) {
         let { x, y } = getPointPos()
-        this.tools[index].points = this.tools[
-          index
-        ].points.concat([ x, y ])
+        this.tools[index].points = this.tools[index].points.concat([x, y])
         this.$forceUpdate()
       }
 
@@ -442,6 +444,7 @@ export default {
         parent ||
         event.currentTarget.parentElement ||
         this.$refs.scrollingElement
+
       event = event || window.event
 
       const scrollingElement =
@@ -466,7 +469,7 @@ export default {
       const y =
         mouseYRelativeToScrollingElement + (scrollingElement.scrollTop || 0)
 
-      return { x: x/this.scale, y: y/this.scale }
+      return { x: x / this.scale, y: y / this.scale }
     },
     previousPointerPos(event, parent) {
       let eventDoc, doc, body
@@ -541,17 +544,23 @@ export default {
       }
       this.tools.push(obj)
     },
-    handleScale(){
+    handleScale() {
       let scrollingElem = this.$refs.scrollingElement
       let pagesOuter = this.$refs.PagesOuter
-      if(scrollingElem && pagesOuter){
+      if (scrollingElem && pagesOuter) {
         this.scale = scrollingElem.clientWidth / pagesOuter.clientWidth
         this.$forceUpdate()
       }
       console.log(this.scale, [scrollingElem, pagesOuter])
     },
     async fetchPdf() {
-      let res = await fetch(demoPdf)
+      // let res = await fetch(demoPdf)
+      let res = await fetch(this.file.download_link).catch((error) => {
+        this.$notify.error({
+          title: 'Pdf',
+          message: error.message || 'Unable to fetch pdf',
+        })
+      })
       let blob = await res.blob()
       let pdfAsDataUri = await new Promise((resolve, reject) => {
         const reader = new FileReader()

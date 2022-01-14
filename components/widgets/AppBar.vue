@@ -21,31 +21,7 @@
         </nuxt-link>
       </div>
       <div
-        class="
-          transition
-          left-0
-          transform
-          text-sm
-          font-medium
-          gap-4
-          fixed
-          top-0
-          bottom-0
-          w-56
-          bg-white
-          flex flex-col
-          p-6
-          shadow-lg
-          lg:shadow-none
-          lg:items-center
-          lg:gap-9
-          lg:p-0
-          lg:relative
-          lg:bg-transparent
-          lg:w-auto
-          lg:flex-row
-          lg:translate-x-0
-        "
+        class="transition left-0 transform text-sm font-medium gap-4 fixed top-0 bottom-0 w-56 bg-white flex flex-col p-6 shadow-lg lg:shadow-none lg:items-center lg:gap-9 lg:p-0 lg:relative lg:bg-transparent lg:w-auto lg:flex-row lg:translate-x-0"
         :class="[collapsed ? 'translate-x-0' : '-translate-x-56']"
       >
         <div class="flex justify-end lg:hidden">
@@ -66,7 +42,7 @@
         <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
         <nuxt-link to="/packages" class="">Packages </nuxt-link>
         <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
-        <nuxt-link to="#" class="">About </nuxt-link>
+        <nuxt-link to="/about" class="">About </nuxt-link>
         <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
         <nuxt-link to="#" class="">Contact Us </nuxt-link>
         <div
@@ -82,18 +58,7 @@
           >
           <nuxt-link
             to="/register"
-            class="
-              bg-paperdazgreen-300
-              text-white
-              h-8
-              rounded
-              shadow
-              px-3
-              flex
-              items-center
-              justify-center
-              whitespace-nowrap
-            "
+            class="bg-paperdazgreen-300 text-white h-8 rounded shadow px-3 flex items-center justify-center whitespace-nowrap"
             >Get Started</nuxt-link
           >
         </div>
@@ -105,12 +70,7 @@
           >
             <span class="flex items-center el-dropdown-link">
               <span
-                class="
-                  circle circle-20
-                  border border-paperdazgreen-300
-                  mr-2
-                  p-0.5
-                "
+                class="circle circle-20 border border-paperdazgreen-300 mr-2 p-0.5"
               >
                 <img :src="profilePhoto" class="circle" alt="" />
               </span>
@@ -149,17 +109,7 @@
         </div>
       </div>
       <div
-        class="
-          flex
-          items-center
-          gap-1.5
-          xs:gap-3
-          sm:gap-5
-          text-xs
-          xs:text-sm
-          sm:text-base
-          md:text-ls
-        "
+        class="flex items-center gap-1.5 xs:gap-3 sm:gap-5 text-xs xs:text-sm sm:text-base md:text-ls"
       >
         <span>
           <search-icon width="15" />
@@ -173,20 +123,7 @@
         <nuxt-link
           v-if="!$auth.loggedIn"
           to="/register"
-          class="
-            bg-paperdazgreen-300
-            text-white
-            h-7
-            xs:h-8
-            rounded
-            shadow
-            px-2
-            xs:px-3
-            flex
-            items-center
-            justify-center
-            whitespace-nowrap
-          "
+          class="bg-paperdazgreen-300 text-white h-7 xs:h-8 rounded shadow px-2 xs:px-3 flex items-center justify-center whitespace-nowrap"
           >Get Started</nuxt-link
         >
         <el-dropdown
@@ -196,12 +133,7 @@
         >
           <span class="flex items-center el-dropdown-link">
             <span
-              class="
-                circle circle-20
-                border border-paperdazgreen-300
-                mr-2
-                p-0.5
-              "
+              class="circle circle-20 border border-paperdazgreen-300 mr-2 p-0.5"
             >
               <img :src="profilePhoto" class="circle" alt="" />
             </span>

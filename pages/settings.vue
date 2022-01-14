@@ -15,8 +15,8 @@ import ChangePasswordTab from '~/components/settings/tabs/ChangePasswordTab.vue'
 import SignatureInitialsTab from '~/components/settings/tabs/SignatureInitialsTab.vue'
 import NotificationsTab from '~/components/settings/tabs/NotificationsTab.vue'
 const BillingTab = () => import('~/components/settings/tabs/BillingTab.vue')
-const YourProductsTab = () =>
-  import('~/components/settings/tabs/YourProductsTab.vue')
+// const YourProductsTab = () =>
+//   import('~/components/settings/tabs/YourProductsTab.vue')
 
 export default Vue.extend({
   name: 'SettingsPage',
@@ -24,7 +24,7 @@ export default Vue.extend({
   layout: 'dashboard',
   data() {
     return {
-      currentTab: 'account',
+      currentTab: 'billing',
       tabs: [
         { label: 'Account', value: 'account', component: AccountTab },
         { label: 'Security', value: 'security', component: ChangePasswordTab },
@@ -34,11 +34,11 @@ export default Vue.extend({
           component: SignatureInitialsTab,
         },
         { label: 'Billing', value: 'billing', component: BillingTab },
-        {
-          label: 'Your Proucts',
-          value: 'your-products',
-          component: YourProductsTab,
-        },
+        // {
+        //   label: 'Your Proucts',
+        //   value: 'your-products',
+        //   component: YourProductsTab,
+        // },
         {
           label: 'Notifications',
           value: 'notifications',

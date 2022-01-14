@@ -1,18 +1,7 @@
 <template>
   <div class="flex flex-col">
     <h3
-      class="
-        text-paperdazgray-700
-        font-semibold
-        text-xl
-        mb-5
-        sm:mb-7
-        flex flex-col
-        gap-3
-        xs:flex-row xs:items-center
-        justify-between
-        whitespace-nowrap
-      "
+      class="text-paperdazgray-700 font-semibold text-xl mb-5 sm:mb-7 flex flex-col gap-3 xs:flex-row xs:items-center justify-between whitespace-nowrap"
     >
       <span>File Ledger</span>
 
@@ -22,17 +11,7 @@
       >
         <input
           type="text"
-          class="
-            h-10
-            pl-4
-            mr-2
-            bg-transparent
-            flex-1
-            border border-paperdazgreen-300
-            rounded-tl-lg rounded-bl-lg
-            focus:border-paperdazgreen-700
-            outline-none
-          "
+          class="h-10 pl-4 mr-2 bg-transparent flex-1 border border-paperdazgreen-300 rounded-tl-lg rounded-bl-lg focus:border-paperdazgreen-700 outline-none"
           placeholder="Search Files"
         />
         <button class="circle circle-20 bg-paperdazgreen-300 text-white">
@@ -45,112 +24,106 @@
       ref="ledgerContainer"
       class="bg-white rounded-2xl flex-1 min-h-[50vh] lg:min-h-[40vh]"
       :class="[
-        (files || []).length <= 0
-          ? 'p-5 flexitems-center justify-center'
+        (files || []).length <= 0 || $fetchState.pending
+          ? 'p-5 flex items-center justify-center'
           : 'pb-4 overflow-x-auto custom-scrollbar',
       ]"
     >
-      <!-- Start:: empty file ledger -->
-      <div
-        v-if="(files || []).length <= 0"
-        class="
-          text-center
-          flex flex-col
-          items-center
-          justify-between
-          sm:justify-items-start
-        "
-      >
-        <h4
-          class="
-            text-paperdazgray-700
-            font-semibold
-            text-base
-            sm:text-lg
-            lg:text-xl
-            mb-10
-          "
-        >
-          Complete file and upload files to earn leaves
-        </h4>
-        <tree-icon height="88" width="80" class="mb-7" />
-        <span class="text-paperdazgray-700 text-sm mb-10 inline-block">
-          We will plant a tree in your honor at 25,0000 leaves
-        </span>
-      </div>
       <scribble-icon
         v-if="(files || []).length <= 0"
         v-show="showScribble"
-        class="
-          text-paperdazgreen-250
-          fixed
-          bottom-9
-          right-20
-          sm:bottom-10 sm:right-44
-          h-40
-          w-40
-          sm:h-64 sm:w-64
-          transition
-          ease-in-out
-          duration-200
-          animate-pulse
-        "
+        class="text-paperdazgreen-250 fixed bottom-9 right-20 sm:bottom-10 sm:right-44 h-40 w-40 sm:h-64 sm:w-64 transition ease-in-out duration-200 animate-pulse"
         :class="[
           showScribble
             ? 'opacity-100 pointer-events-auto'
             : 'opacity-0 pointer-events-none',
         ]"
       />
-      <!-- End:: empty file ledger -->
 
-      <table ref="fileLedgerTable" class="file-ledger-table">
-        <thead>
-          <tr class="text-left">
-            <th class="text-center fixed-col left">No</th>
-            <th>File Name</th>
-            <th class="text-center">Action</th>
-            <th class="text-center">Action By</th>
-            <th>Date & time</th>
-            <th class="fixed-col right"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(file, i) in files" :key="i">
-            <td class="text-center fixed-col left">{{ i + 1 }}</td>
-            <td>
-              <div class="flex items-center gap-1.5">
-                <div
-                  class="circle circle-17 border border-paperdazgreen-300 p-0.5"
-                >
-                  <img :src="(file.user || {}).avatar" alt="" class="circle" />
+      <transition name="fade" mode="out-in">
+        <div v-if="$fetchState.pending" key="1" class="p-6">
+          <spinner-dotted-icon class="text-paperdazgreen-400 animate-spin" />
+        </div>
+        <!-- Start:: empty file ledger -->
+        <div
+          key="2"
+          v-else-if="(files || []).length <= 0"
+          class="text-center flex flex-col items-center justify-between sm:justify-items-start py-8"
+        >
+          <h4
+            class="text-paperdazgray-700 font-semibold text-base sm:text-lg lg:text-xl mb-10"
+          >
+            Complete file and upload files to earn leaves
+          </h4>
+          <tree-icon height="88" width="80" class="mb-7" />
+          <span class="text-paperdazgray-700 text-sm mb-10 inline-block">
+            We will plant a tree in your honor at 25,0000 leaves
+          </span>
+        </div>
+
+        <!-- End:: empty file ledger -->
+
+        <table key="3" v-else ref="fileLedgerTable" class="file-ledger-table">
+          <thead>
+            <tr class="text-left">
+              <th class="text-center fixed-col left">No</th>
+              <th>File Name</th>
+              <th class="text-center">Action</th>
+              <th class="text-center">Action By</th>
+              <th>Date & time</th>
+              <th class="fixed-col right"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(file, i) in files" :key="i">
+              <td class="text-center fixed-col left">{{ i + 1 }}</td>
+              <td>
+                <div class="flex items-center gap-1.5">
+                  <div
+                    class="circle circle-17 border border-paperdazgreen-300 p-0.5"
+                  >
+                    <img
+                      :src="
+                        (file.user || {}).profile_picture ||
+                        '/img/placeholder_picture.png'
+                      "
+                      alt=""
+                      class="circle"
+                    />
+                  </div>
+                  <div>
+                    <p class="text-sm font-medium">
+                      <nuxt-link :to="`/pdf/${file.id}`">
+                        {{ file.file_name }}</nuxt-link
+                      >
+                    </p>
+                    <p class="text-xs">
+                      {{
+                        (file.user || {}).first_name +
+                        (file.user || {}).last_name
+                      }}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p class="text-sm font-medium">
-                    {{ file.name }}
-                  </p>
-                  <p class="text-xs">
-                    {{ (file.user || {}).name }}
-                  </p>
-                </div>
-              </div>
-            </td>
-            <td class="text-center">
-              {{ file.action }}
-            </td>
-            <td class="text-center">
-              {{ file.action_by }}
-            </td>
-            <td>
-              {{ formatDateTime(file.action_date) }}
-            </td>
-            <td class="fixed-col right">
-              <div class="cursor-pointer">
-                <share-icon class="w-4 h-4" />
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              </td>
+              <td class="text-center">
+                {{ file.action || '-' }}
+              </td>
+              <td class="text-center">
+                {{ (file.user || {}).first_name + (file.user || {}).last_name }}
+              </td>
+              <td>
+                {{ formatDateTime(file.updated_at) }}
+              </td>
+              <td class="fixed-col right">
+                <button class="cursor-pointer" @click="shareFile(file)">
+                  <share-icon class="w-4 h-4" />
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </transition>
     </div>
   </div>
 </template>
@@ -162,102 +135,30 @@ import SearchIcon from '../svg-icons/SearchIcon.vue'
 import TreeIcon from '../svg-icons/TreeIcon.vue'
 import DateFormatter from '~/utils/DateFormatter'
 import ShareIcon from '../svg-icons/ShareIcon.vue'
+import SpinnerDottedIcon from '../svg-icons/SpinnerDottedIcon.vue'
 
 export default Vue.extend({
-  components: { TreeIcon, ScribbleIcon, SearchIcon, ShareIcon },
+  components: {
+    TreeIcon,
+    ScribbleIcon,
+    SearchIcon,
+    ShareIcon,
+    SpinnerDottedIcon,
+  },
+
+  async fetch() {
+    await this.$axios.$get(`/file`).then((response: { files: Array<any> }) => {
+      const files = response.files.map((el) => {
+        if (!el.user) el.user = this.$auth.user
+        return el
+      })
+      this.files = files
+    })
+  },
   data() {
     return {
       showScribble: false,
-      files: [
-        {
-          name: 'Good Manufacturing practice',
-          action: 'Completed',
-          action_by: 'Abdallah hamouda',
-          action_date: new Date(),
-          user: {
-            name: 'Alex Denvikar',
-            avatar:
-              'http://greginhollywood.com/wordpress/wp-content/uploads/ee92ba015561f1657763d72c60b87013.jpg',
-          },
-        },
-        {
-          name: 'Good Manufacturing practice',
-          action: 'Completed',
-          action_by: 'Abdallah hamouda',
-          action_date: new Date(),
-          user: {
-            name: 'Alex Denvikar',
-            avatar:
-              'http://greginhollywood.com/wordpress/wp-content/uploads/ee92ba015561f1657763d72c60b87013.jpg',
-          },
-        },
-        {
-          name: 'Good Manufacturing practice',
-          action: 'Completed',
-          action_by: 'Abdallah hamouda',
-          action_date: new Date(),
-          user: {
-            name: 'Alex Denvikar',
-            avatar:
-              'http://greginhollywood.com/wordpress/wp-content/uploads/ee92ba015561f1657763d72c60b87013.jpg',
-          },
-        },
-        {
-          name: 'Good Manufacturing practice',
-          action: 'Completed',
-          action_by: 'Abdallah hamouda',
-          action_date: new Date(),
-          user: {
-            name: 'Alex Denvikar',
-            avatar:
-              'http://greginhollywood.com/wordpress/wp-content/uploads/ee92ba015561f1657763d72c60b87013.jpg',
-          },
-        },
-        {
-          name: 'Good Manufacturing practice',
-          action: 'Completed',
-          action_by: 'Abdallah hamouda',
-          action_date: new Date(),
-          user: {
-            name: 'Alex Denvikar',
-            avatar:
-              'http://greginhollywood.com/wordpress/wp-content/uploads/ee92ba015561f1657763d72c60b87013.jpg',
-          },
-        },
-        {
-          name: 'Good Manufacturing practice',
-          action: 'Completed',
-          action_by: 'Abdallah hamouda',
-          action_date: new Date(),
-          user: {
-            name: 'Alex Denvikar',
-            avatar:
-              'http://greginhollywood.com/wordpress/wp-content/uploads/ee92ba015561f1657763d72c60b87013.jpg',
-          },
-        },
-        {
-          name: 'Good Manufacturing practice',
-          action: 'Completed',
-          action_by: 'Abdallah hamouda',
-          action_date: new Date(),
-          user: {
-            name: 'Alex Denvikar',
-            avatar:
-              'http://greginhollywood.com/wordpress/wp-content/uploads/ee92ba015561f1657763d72c60b87013.jpg',
-          },
-        },
-        {
-          name: 'Good Manufacturing practice',
-          action: 'Completed',
-          action_by: 'Abdallah hamouda',
-          action_date: new Date(),
-          user: {
-            name: 'Alex Denvikar',
-            avatar:
-              'http://greginhollywood.com/wordpress/wp-content/uploads/ee92ba015561f1657763d72c60b87013.jpg',
-          },
-        },
-      ],
+      files: [] as Array<any>,
 
       scrollObserver: undefined as undefined | any,
     }
@@ -270,6 +171,13 @@ export default Vue.extend({
     this.tableScrollObserver()
   },
   methods: {
+    shareFile(file: any) {
+      const url = location.origin.replace(/\/+$/, '') + `/pdf/${file.id}`
+      navigator.share({
+        url,
+        title: file.file_name,
+      })
+    },
     async tableScrollObserver() {
       await this.$nextTick()
       if (this.scrollObserver) {
