@@ -11,4 +11,5 @@ export default {
   name: 'name',
   initial: 'initial',
   signature: 'signature',
+  star: 'star',
 }
