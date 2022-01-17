@@ -8,7 +8,12 @@
     <main
       class="grid grid-rows-[max-content,max-content,1fr] gap-1 max-w-max mx-auto px-[2%]"
     >
-      <pdf-page-action-tray class="w-full" />
+      <pdf-page-action-tray
+        :file="file"
+        @update-file="file = $event"
+        class="w-full"
+      />
+
       <tool-bar @tool-change="onToolChange" @undo="undo" class="max-w-4xl" />
       <div
         class="pdf-editor-view relative overflow-y-auto custom-scrollbar max-w-4xl"
@@ -65,6 +70,9 @@
             </div>
           </div>
         </div>
+        <!-- <button class="w-full bg-paperdazgreen-400 h-12 text white">
+          Confirm Button
+        </button> -->
       </div>
     </main>
   </div>

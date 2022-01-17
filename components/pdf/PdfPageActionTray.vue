@@ -3,29 +3,39 @@
     <div
       class="flex items-center gap-4 flex-1 justify-between max-w-4xl px-4 text-sm"
     >
-      <el-dropdown trigger="click" class="font-medium">
-        <span class="el-dropdown-link">
-          Complete <i class="el-icon-arrow-down el-icon--right"></i>
+      <el-dropdown
+        trigger="click"
+        class="font-medium"
+        @command="handleActionChange"
+      >
+        <span class="el-dropdown-link capitalize">
+          {{ file.action }} <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>Action 1</el-dropdown-item>
-          <el-dropdown-item>Action 2</el-dropdown-item>
-          <el-dropdown-item>Action 3</el-dropdown-item>
-          <el-dropdown-item disabled>Action 4</el-dropdown-item>
-          <el-dropdown-item divided>Action 5</el-dropdown-item>
+          <el-dropdown-item
+            command="complete"
+            :disabled="file.action == 'complete'"
+            >Complete</el-dropdown-item
+          >
+          <el-dropdown-item
+            command="confirm"
+            :disabled="file.action == 'confirm'"
+            >Confirm</el-dropdown-item
+          >
+          <el-dropdown-item command="sign" :disabled="file.action == 'sign'"
+            >Sign</el-dropdown-item
+          >
         </el-dropdown-menu>
       </el-dropdown>
 
       <el-dropdown trigger="click" class="font-medium">
         <span class="el-dropdown-link">
-          Public <i class="el-icon-arrow-down el-icon--right"></i>
+          Private <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>Action 1</el-dropdown-item>
-          <el-dropdown-item>Action 2</el-dropdown-item>
-          <el-dropdown-item>Action 3</el-dropdown-item>
-          <el-dropdown-item disabled>Action 4</el-dropdown-item>
-          <el-dropdown-item divided>Action 5</el-dropdown-item>
+          <el-dropdown-item>Private</el-dropdown-item>
+          <el-dropdown-item>Public</el-dropdown-item>
+          <el-dropdown-item>Do not Post</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
       <!-- <div
@@ -49,7 +59,7 @@
         <span class="el-dropdown-link text-[#555454] px-1 flex items-center">
           <ellipsis-icon-vertical-icon />
         </span>
-        <el-dropdown-menu slot="dropdown">
+        <el-dropdown-menu slot="dropdown" class="text-black">
           <el-dropdown-item>
             <button
               class="text-xs text-white bg-paperdazgreen-400 rounded px-5 h-7"
@@ -64,9 +74,33 @@
               <export-icon />
             </button>
           </el-dropdown-item>
-          <el-dropdown-item>Action 3</el-dropdown-item>
-          <el-dropdown-item disabled>Action 4</el-dropdown-item>
-          <el-dropdown-item divided>Action 5</el-dropdown-item>
+          <el-dropdown-item divided></el-dropdown-item>
+          <el-dropdown-item divided>
+            <div class="flex items-center gap-2">
+              <share-icon width="16" height="16" /> Share
+            </div>
+          </el-dropdown-item>
+          <el-dropdown-item>
+            <div class="flex items-center gap-2">
+              <request-icon width="16" height="16" /> Request
+            </div>
+          </el-dropdown-item>
+          <el-dropdown-item>
+            <div class="flex items-center gap-2">
+              <span class="font-medium">#</span>
+              Paper tag
+            </div>
+          </el-dropdown-item>
+          <el-dropdown-item>
+            <div class="flex items-center gap-2">
+              <copy-icon width="16" height="16" /> Carbon Copy
+            </div>
+          </el-dropdown-item>
+          <el-dropdown-item>
+            <div class="flex items-center gap-2">
+              <trash-can-solid-icon width="16" height="16" /> Remove
+            </div>
+          </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
       <!-- </div> -->
@@ -89,8 +123,32 @@
 import Vue from 'vue'
 import EllipsisIconVerticalIcon from '../svg-icons/EllipsisIconVerticalIcon.vue'
 import ExportIcon from '../svg-icons/ExportIcon.vue'
+import _ from 'lodash'
+import ShareIcon from '../svg-icons/ShareIcon.vue'
+import RequestIcon from '../svg-icons/RequestIcon.vue'
+import CopyIcon from '../svg-icons/CopyIcon.vue'
+
 export default Vue.extend({
-  components: { EllipsisIconVerticalIcon, ExportIcon },
+  components: {
+    EllipsisIconVerticalIcon,
+    ExportIcon,
+    ShareIcon,
+    RequestIcon,
+    CopyIcon,
+  },
   name: 'PdfPageActionTray',
+  props: {
+    file: {
+      type: Object,
+      required: true,
+    },
+  },
+  methods: {
+    handleActionChange(command: string) {
+      const fileTemp = { ...this.file }
+      fileTemp.action = command
+      this.$emit('update-file', fileTemp)
+    },
+  },
 })
 </script>
