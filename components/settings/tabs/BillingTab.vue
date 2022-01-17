@@ -184,7 +184,10 @@
     <delete-additional-features-modal v-model="showDeleteFeatureModal" />
     <cancel-package-subscription-modal v-model="showCancelSubscriptionModal" />
     <delete-billing-information-modal v-model="showDeleteBillingInfoModal" />
-    <update-billing-information-modal v-model="showUpdateBillingInfoModal" />
+    <update-billing-information-modal
+      @success="$fetch"
+      v-model="showUpdateBillingInfoModal"
+    />
   </section>
 </template>
 
@@ -210,15 +213,17 @@ export default Vue.extend({
   },
   async fetch() {
     const fetchCard = () =>
-      new Promise((resolve, reject) => {
-        this.$axios
-          .$get('/card')
-          .then((response) => {
-            this.card = response.card
-            resolve(true)
+      this.$axios
+        .$get('/card')
+        .then((response) => {
+          this.card = response.card
+        })
+        .catch(() => {
+          this.$notify.error({
+            title: 'Card',
+            message: 'Unable to fetch Card Information',
           })
-          .catch((err) => reject(err))
-      })
+        })
 
     await Promise.allSettled([fetchCard()])
   },

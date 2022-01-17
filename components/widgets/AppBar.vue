@@ -81,10 +81,7 @@
 
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="dashboard">
-                <span class="inline-flex gap-2 items-center">
-                  <dashboard-icon height="14" width="14" />
-                  Dashboard</span
-                >
+                <span class="inline-flex gap-2 items-center"> Dashboard</span>
               </el-dropdown-item>
               <el-dropdown-item command="profile" divided>
                 <span class="inline-flex gap-2 items-center">

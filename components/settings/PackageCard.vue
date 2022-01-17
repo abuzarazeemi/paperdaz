@@ -19,7 +19,7 @@
       >
     </div>
     <div class="px-5 py-4">
-      <div class="flex justify-center mb-10">
+      <div class="flex justify-center mb-10" v-show="true">
         <span class="mr-2">Yeary</span>
         <span
           class="inline-flex bg-opacity-30 w-12 rounded-full mr-2 cursor-pointer transition ease-in-out duration-200"
