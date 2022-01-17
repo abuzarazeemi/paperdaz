@@ -1,16 +1,7 @@
 <template>
   <div class="py-2 flex items-center text-black gap-4">
     <div
-      class="
-        flex
-        items-center
-        gap-4
-        flex-1
-        justify-between
-        max-w-4xl
-        px-4
-        text-sm
-      "
+      class="flex items-center gap-4 flex-1 justify-between max-w-4xl px-4 text-sm"
     >
       <el-dropdown trigger="click" class="font-medium">
         <span class="el-dropdown-link">
@@ -68,17 +59,7 @@
           </el-dropdown-item>
           <el-dropdown-item>
             <button
-              class="
-                px-2
-                w-[70px]
-                rounded
-                flex
-                items-center
-                justify-center
-                bg-gray-600
-                py-1.5
-                text-white
-              "
+              class="px-2 w-[70px] rounded flex items-center justify-center bg-gray-600 py-1.5 text-white"
             >
               <export-icon />
             </button>

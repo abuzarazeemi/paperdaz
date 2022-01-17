@@ -40,90 +40,89 @@
         ]"
       />
 
-      <transition name="fade" mode="out-in">
-        <div v-if="$fetchState.pending" key="1" class="p-6">
-          <spinner-dotted-icon class="text-paperdazgreen-400 animate-spin" />
-        </div>
-        <!-- Start:: empty file ledger -->
-        <div
-          key="2"
-          v-else-if="(files || []).length <= 0"
-          class="text-center flex flex-col items-center justify-between sm:justify-items-start py-8"
+      <!-- <transition name="fade" mode="out-in"> -->
+      <div v-if="$fetchState.pending" key="1" class="p-6">
+        <spinner-dotted-icon class="text-paperdazgreen-400 animate-spin" />
+      </div>
+      <!-- Start:: empty file ledger -->
+      <div
+        key="2"
+        v-else-if="(files || []).length <= 0"
+        class="text-center flex flex-col items-center justify-between sm:justify-items-start py-8"
+      >
+        <h4
+          class="text-paperdazgray-700 font-semibold text-base sm:text-lg lg:text-xl mb-10"
         >
-          <h4
-            class="text-paperdazgray-700 font-semibold text-base sm:text-lg lg:text-xl mb-10"
-          >
-            Complete file and upload files to earn leaves
-          </h4>
-          <tree-icon height="88" width="80" class="mb-7" />
-          <span class="text-paperdazgray-700 text-sm mb-10 inline-block">
-            We will plant a tree in your honor at 25,0000 leaves
-          </span>
-        </div>
+          Complete file and upload files to earn leaves
+        </h4>
+        <tree-icon height="88" width="80" class="mb-7" />
+        <span class="text-paperdazgray-700 text-sm mb-10 inline-block">
+          We will plant a tree in your honor at 25,0000 leaves
+        </span>
+      </div>
 
-        <!-- End:: empty file ledger -->
+      <!-- End:: empty file ledger -->
 
-        <table key="3" v-else ref="fileLedgerTable" class="file-ledger-table">
-          <thead>
-            <tr class="text-left">
-              <th class="text-center fixed-col left">No</th>
-              <th>File Name</th>
-              <th class="text-center">Action</th>
-              <th class="text-center">Action By</th>
-              <th>Date & time</th>
-              <th class="fixed-col right"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(file, i) in files" :key="i">
-              <td class="text-center fixed-col left">{{ i + 1 }}</td>
-              <td>
-                <div class="flex items-center gap-1.5">
-                  <div
-                    class="circle circle-17 border border-paperdazgreen-300 p-0.5"
-                  >
-                    <img
-                      :src="
-                        (file.user || {}).profile_picture ||
-                        '/img/placeholder_picture.png'
-                      "
-                      alt=""
-                      class="circle"
-                    />
-                  </div>
-                  <div>
-                    <p class="text-sm font-medium">
-                      <nuxt-link :to="`/pdf/${file.id}`">
-                        {{ file.file_name }}</nuxt-link
-                      >
-                    </p>
-                    <p class="text-xs">
-                      {{
-                        (file.user || {}).first_name +
-                        (file.user || {}).last_name
-                      }}
-                    </p>
-                  </div>
+      <table key="3" v-else ref="fileLedgerTable" class="file-ledger-table">
+        <thead>
+          <tr class="text-left">
+            <th class="text-center fixed-col left">No</th>
+            <th>File Name</th>
+            <th class="text-center">Action</th>
+            <th class="text-center">Action By</th>
+            <th>Date & time</th>
+            <th class="fixed-col right"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(file, i) in files" :key="i">
+            <td class="text-center fixed-col left">{{ i + 1 }}</td>
+            <td>
+              <div class="flex items-center gap-1.5">
+                <div
+                  class="circle circle-17 border border-paperdazgreen-300 p-0.5"
+                >
+                  <img
+                    :src="
+                      (file.user || {}).profile_picture ||
+                      '/img/placeholder_picture.png'
+                    "
+                    alt=""
+                    class="circle"
+                  />
                 </div>
-              </td>
-              <td class="text-center">
-                {{ file.action || '-' }}
-              </td>
-              <td class="text-center">
-                {{ (file.user || {}).first_name + (file.user || {}).last_name }}
-              </td>
-              <td>
-                {{ formatDateTime(file.updated_at) }}
-              </td>
-              <td class="fixed-col right">
-                <button class="cursor-pointer" @click="shareFile(file)">
-                  <share-icon class="w-4 h-4" />
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </transition>
+                <div>
+                  <p class="text-sm font-medium">
+                    <nuxt-link :to="`/pdf/${file.id}`">
+                      {{ file.file_name }}</nuxt-link
+                    >
+                  </p>
+                  <p class="text-xs">
+                    {{
+                      (file.user || {}).first_name + (file.user || {}).last_name
+                    }}
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td class="text-center">
+              {{ file.action || '-' }}
+            </td>
+            <td class="text-center">
+              {{ (file.user || {}).first_name + (file.user || {}).last_name }}
+            </td>
+            <td>
+              {{ formatDateTime(file.updated_at) }}
+            </td>
+            <td class="fixed-col right">
+              <button class="cursor-pointer" @click="shareFile(file)">
+                <share-icon class="w-4 h-4" />
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- </transition> -->
     </div>
   </div>
 </template>
@@ -167,9 +166,7 @@ export default Vue.extend({
     this.handleShowingLedger()
     this.tableScrollObserver()
   },
-  updated() {
-    this.tableScrollObserver()
-  },
+
   methods: {
     shareFile(file: any) {
       const url = location.origin.replace(/\/+$/, '') + `/pdf/${file.id}`
@@ -252,6 +249,10 @@ export default Vue.extend({
 
       observer.observe(ledgerContainer)
     },
+  },
+
+  updated() {
+    this.tableScrollObserver()
   },
 })
 </script>

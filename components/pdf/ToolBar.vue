@@ -93,9 +93,7 @@
         Download
       </button>
 
-      <button @click="$emit('undo')">
-        UNDO
-      </button>
+      <button @click="$emit('undo')">UNDO</button>
     </div>
 
     <pdf-signature-modal

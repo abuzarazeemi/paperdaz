@@ -32,13 +32,7 @@
     <!--End:: Close Button -->
     <template #title>
       <h4
-        class="
-          text-center
-          font-semibold
-          text-xl text-paperdazgreen-400
-          border-b border-paperdazgreen-400
-          pb-2
-        "
+        class="text-center font-semibold text-xl text-paperdazgreen-400 border-b border-paperdazgreen-400 pb-2"
       >
         Additional Features
       </h4>

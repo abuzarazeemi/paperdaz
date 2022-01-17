@@ -3,26 +3,13 @@
     <div class="container py-20">
       <h1 class="font-bold text-4xl text-center mb-2">Key Features</h1>
       <p
-        class="
-          font-semibold
-          text-center text-sm text-paperdazgray-300
-          mx-auto
-          max-w-md
-          mb-6
-        "
+        class="font-semibold text-center text-sm text-paperdazgray-300 mx-auto max-w-md mb-6"
       >
         Paperdaz will replace paper
       </p>
 
       <div
-        class="
-          my-12
-          grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))]
-          sm:grid-cols-[repeat(auto-fit,minmax(200px,1fr))]
-          gap-x-2
-          sm:gap-x-4
-          gap-y-10
-        "
+        class="my-12 grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] sm:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-x-2 sm:gap-x-4 gap-y-10"
       >
         <div v-for="(block, i) in fets" :key="i">
           <img
@@ -32,11 +19,7 @@
           />
           <p class="mt-5 text-center font-semibold">{{ block.tag }}</p>
           <p
-            class="
-              mt-3
-              text-center text-[13px] text-paperdazgray-400
-              font-medium
-            "
+            class="mt-3 text-center text-[13px] text-paperdazgray-400 font-medium"
           >
             {{ block.des }}
           </p>

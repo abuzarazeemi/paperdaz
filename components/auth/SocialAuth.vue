@@ -1,14 +1,7 @@
 <template>
   <div>
     <div
-      class="
-        flex flex-wrap
-        gap-2
-        xs:gap-4
-        text-sm
-        font-medium
-        text-paperdazgray-400
-      "
+      class="flex flex-wrap gap-2 xs:gap-4 text-sm font-medium text-paperdazgray-400"
     >
       <div
         class="flex-1 cursor-pointer social-card"

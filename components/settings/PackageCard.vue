@@ -1,13 +1,6 @@
 <template>
   <div
-    class="
-      border-2 border-paperdazgreen-400
-      w-full
-      rounded-2xl
-      overflow-hidden
-      relative
-      pb-5
-    "
+    class="border-2 border-paperdazgreen-400 w-full rounded-2xl overflow-hidden relative pb-5"
   >
     <div class="promoted-banner" v-if="promoted">Popular</div>
     <h4 class="text-lg px-5 py-4 text-center uppercase font-semibold">
@@ -29,17 +22,7 @@
       <div class="flex justify-center mb-10">
         <span class="mr-2">Yeary</span>
         <span
-          class="
-            inline-flex
-            bg-opacity-30
-            w-12
-            rounded-full
-            mr-2
-            cursor-pointer
-            transition
-            ease-in-out
-            duration-200
-          "
+          class="inline-flex bg-opacity-30 w-12 rounded-full mr-2 cursor-pointer transition ease-in-out duration-200"
           :class="[
             isMonthly
               ? 'justify-end bg-paperdazgreen-300'
@@ -82,14 +65,7 @@
     <div class="grid place-items-center" v-if="showBottomButton">
       <button
         @click="$emit('bottom-button-clicked', { stagingPackage, isMonthly })"
-        class="
-          text-sm text-white
-          bg-paperdazgreen-400
-          rounded-lg
-          shadow
-          h-9
-          px-5
-        "
+        class="text-sm text-white bg-paperdazgreen-400 rounded-lg shadow h-9 px-5"
       >
         Start Now
       </button>

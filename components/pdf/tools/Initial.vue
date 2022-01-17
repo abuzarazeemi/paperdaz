@@ -1,6 +1,6 @@
 <template>
   <div class="tool">
-    <p :style="style">{{text}}</p>
+    <p :style="style">{{ text }}</p>
   </div>
 </template>
 
@@ -8,15 +8,15 @@
 export default {
   props: {
     isActive: Boolean,
-    fontSize: Number
+    fontSize: Number,
   },
   data: () => ({
     text: 'Initial',
   }),
   computed: {
-    style(){
+    style() {
       return {
-        fontSize: `${this.fontSize || 11}px`
+        fontSize: `${this.fontSize || 11}px`,
       }
     },
   },

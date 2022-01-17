@@ -9,16 +9,7 @@
           <arrow-with-stick-icon />
         </button>
         <div
-          class="
-            flex-1
-            grid
-            place-items-center
-            h-7
-            bg-white
-            text-sm
-            px-1
-            py-0.5
-          "
+          class="flex-1 grid place-items-center h-7 bg-white text-sm px-1 py-0.5"
         >
           1/4
         </div>

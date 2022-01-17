@@ -1,29 +1,11 @@
 <template>
   <div
-    class="
-      flex
-      items-center
-      overflow-x-auto overflow-y-hidden
-      sm:border-b
-      border-gray-200
-      custom-scrollbar
-    "
+    class="flex items-center overflow-x-auto overflow-y-hidden sm:border-b border-gray-200 custom-scrollbar"
   >
     <div
       v-for="(tab, i) in tabs"
       :key="i"
-      class="
-        h-8
-        sm:h-9
-        lg:h-10
-        border-b-2
-        cursor-pointer
-        font-semibold
-        text-sm
-        sm:text-base
-        lg:text-lg
-        whitespace-nowrap
-      "
+      class="h-8 sm:h-9 lg:h-10 border-b-2 cursor-pointer font-semibold text-sm sm:text-base lg:text-lg whitespace-nowrap"
       :class="[
         currentTab == tab.value
           ? 'border-paperdazgreen-300 text-paperdazgreen-300'

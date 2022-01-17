@@ -5,14 +5,7 @@
     >
       <div class="flex flex-col items-center">
         <h3
-          class="
-            uppercase
-            text-paperdazgray-500
-            font-semibold
-            text-center
-            mb-4
-            text-xl
-          "
+          class="uppercase text-paperdazgray-500 font-semibold text-center mb-4 text-xl"
         >
           Paid Account
         </h3>

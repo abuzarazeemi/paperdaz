@@ -24,20 +24,7 @@
       <div class="delete" @click="onOutsideClick">OK</div>
     </div> -->
     <div
-      class="
-        h-8
-        rounded-full
-        border border-black
-        text-black
-        inline-flex
-        items-center
-        px-4
-        gap-1.5
-        backdrop-blur-sm
-        bg-white/30
-        absolute
-        tool-menu
-      "
+      class="h-8 rounded-full border border-black text-black inline-flex items-center px-4 gap-1.5 backdrop-blur-sm bg-white/30 absolute tool-menu"
       v-show="isActive"
       ref="toolMenu"
     >
@@ -98,13 +85,21 @@
         :signature="signature"
       />
       <div
-        :class="['dr__right', { 'line': type == TOOL_TYPE.line }, { 'line-alt': (x1 < x2 && y1 < y2) || (x1 > x2 && y1 > y2) }]"
+        :class="[
+          'dr__right',
+          { line: type == TOOL_TYPE.line },
+          { 'line-alt': (x1 < x2 && y1 < y2) || (x1 > x2 && y1 > y2) },
+        ]"
         ref="drRight"
         v-hammer:pan="(ev) => handleToolDrag(ev, TOOL_DIRECTION.right)"
         v-if="isAvailableDrRight"
       ></div>
       <div
-        :class="['dr__left', { 'line': type == TOOL_TYPE.line }, { 'line-alt': (x1 < x2 && y1 < y2) || (x1 > x2 && y1 > y2) }]"
+        :class="[
+          'dr__left',
+          { line: type == TOOL_TYPE.line },
+          { 'line-alt': (x1 < x2 && y1 < y2) || (x1 > x2 && y1 > y2) },
+        ]"
         v-hammer:pan="(ev) => handleToolDrag(ev, TOOL_DIRECTION.left)"
         v-if="isAvailableDrLeft"
       ></div>
@@ -213,12 +208,12 @@ export default {
     points() {
       this.clcPos()
     },
-    activeToolId(v){
-      if(v == this.id) this.toolMenuPosCalculation()
+    activeToolId(v) {
+      if (v == this.id) this.toolMenuPosCalculation()
     },
   },
   computed: {
-    isActive(){
+    isActive() {
       return this.id == this.activeToolId
     },
     wrpStyle() {
@@ -251,17 +246,17 @@ export default {
     },
   },
   methods: {
-    handleDelete(){
+    handleDelete() {
       this.setActiveToolId(null)
       this.deleteTool(this.id)
     },
-    inc(){
-      if(this.incDecCount == this.incDecMax) return
+    inc() {
+      if (this.incDecCount == this.incDecMax) return
       ++this.incDecCount
       this.handleIncrease(this.id)
     },
-    dec(){
-      if(this.incDecCount == this.incDecMin) return
+    dec() {
+      if (this.incDecCount == this.incDecMin) return
       --this.incDecCount
       this.handleDecrease(this.id)
     },
@@ -281,13 +276,19 @@ export default {
       return true
     },
     handleToolDrag(event, direction) {
-      if(this.altDirection){
-        direction = direction == this.TOOL_DIRECTION.left ? this.TOOL_DIRECTION.right : this.TOOL_DIRECTION.left
+      if (this.altDirection) {
+        direction =
+          direction == this.TOOL_DIRECTION.left
+            ? this.TOOL_DIRECTION.right
+            : this.TOOL_DIRECTION.left
       }
       this.dragHandler(event, this.id, direction)
-      if(event.isFinal){
-        if(this.type == this.TOOL_TYPE.line || this.type == this.TOOL_TYPE.highlight){
-          if(this.x2 < this.x1) this.altDirection = true
+      if (event.isFinal) {
+        if (
+          this.type == this.TOOL_TYPE.line ||
+          this.type == this.TOOL_TYPE.highlight
+        ) {
+          if (this.x2 < this.x1) this.altDirection = true
           else this.altDirection = false
         }
       }
@@ -335,17 +336,23 @@ export default {
       var posY = event.deltaY + this.lastPosY
 
       // Set Boundary
-      if(posX > 0 && posX + elem.clientWidth < elem.parentElement.clientWidth) this.left = posX
-      if(posY > 0 && posY + elem.clientHeight < elem.parentElement.clientHeight) this.top = posY
+      if (posX > 0 && posX + elem.clientWidth < elem.parentElement.clientWidth)
+        this.left = posX
+      if (
+        posY > 0 &&
+        posY + elem.clientHeight < elem.parentElement.clientHeight
+      )
+        this.top = posY
 
       if (event.isFinal) {
         this.isDragging = false
-        
+
         let dx = this.lastPosX - this.left
         let dy = this.lastPosY - this.top
-        
+
         this.$emit('pos-change', {
-          dx, dy,
+          dx,
+          dy,
           id: this.id,
         })
 
@@ -353,22 +360,24 @@ export default {
         this.toolMenuPosCalculation()
       }
     },
-    async toolMenuPosCalculation(){
+    async toolMenuPosCalculation() {
       await this.$nextTick()
       var elem = this.$refs.Wrp
 
       let toolMenuHeight = this.$refs.toolMenu.clientHeight + 7
       let toolMenuWidth = this.$refs.toolMenu.clientWidth
-      if(this.top < toolMenuHeight){
+      if (this.top < toolMenuHeight) {
         this.$refs.toolMenu.style.top = 'unset'
         this.$refs.toolMenu.style.bottom = `-${toolMenuHeight}px`
-      }else {
+      } else {
         this.$refs.toolMenu.style.top = `-${toolMenuHeight}px`
         this.$refs.toolMenu.style.bottom = 'unset'
       }
-      if(Math.abs(this.left - elem.parentElement.clientWidth) < toolMenuWidth){
+      if (
+        Math.abs(this.left - elem.parentElement.clientWidth) < toolMenuWidth
+      ) {
         this.$refs.toolMenu.style.left = `${elem.clientWidth - toolMenuWidth}px`
-      }else{
+      } else {
         this.$refs.toolMenu.style.left = `0`
       }
     },
@@ -390,17 +399,17 @@ export default {
     position: absolute;
     width: 7px;
     height: 7px;
-    background-color: #77C360;
+    background-color: #77c360;
     border-radius: 50%;
     cursor: pointer;
     &__right {
       @extend .dr;
       right: -10px;
       top: calc(50% - 3.5px);
-      &.line{
+      &.line {
         top: 0;
         right: -5px;
-        &.line-alt{
+        &.line-alt {
           top: unset;
           bottom: 0;
         }
@@ -410,10 +419,10 @@ export default {
       @extend .dr;
       left: -10px;
       top: calc(50% - 3.5px);
-      &.line{
+      &.line {
         top: unset;
         bottom: 0;
-        &.line-alt{
+        &.line-alt {
           bottom: unset;
           top: 0;
         }

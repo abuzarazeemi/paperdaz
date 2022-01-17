@@ -1,6 +1,10 @@
 <template>
   <svg :viewBox="viewBox" :style="style">
-    <path :d="d" stroke-linecap="round" style="stroke: rgb(0, 0, 0); stroke-width: 3;"></path>
+    <path
+      :d="d"
+      stroke-linecap="round"
+      style="stroke: rgb(0, 0, 0); stroke-width: 3"
+    ></path>
   </svg>
 </template>
 
@@ -13,23 +17,23 @@ export default {
     y2: Number,
   },
   computed: {
-    style(){
+    style() {
       return {
         width: `${this.width + 10}px`,
       }
     },
-    viewBox(){
+    viewBox() {
       let x1 = this.x2 < this.x1 ? this.x2 - 3 : this.x1 - 3
       let y1 = Math.min(this.y1, this.y2) - 3
       return `${x1} ${y1} ${this.width + 10} ${this.height + 10}`
     },
-    width(){
+    width() {
       return Math.abs(this.x2 - this.x1)
     },
-    height(){
+    height() {
       return Math.abs(this.y2 - this.y1)
     },
-    d(){
+    d() {
       let x1 = this.x1
       let y1 = this.y1
       let x2 = this.x2
@@ -42,7 +46,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.line{
+.line {
   width: 100%;
   height: 100%;
   background-color: #000;

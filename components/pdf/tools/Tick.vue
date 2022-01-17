@@ -1,6 +1,6 @@
 <template>
   <div class="text-field tool">
-    <img src="../assets/tick_tool.svg" alt="" :style="style">
+    <img src="../assets/tick_tool.svg" alt="" :style="style" />
   </div>
 </template>
 
@@ -10,7 +10,7 @@ export default {
     scale: Number,
   },
   computed: {
-    style(){
+    style() {
       return {
         width: `${(this.scale || 1) * 20}px`,
         height: `${(this.scale || 1) * 19}px`,
@@ -21,8 +21,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-input{
-  border: 0.5px solid #E9E9E9;
+input {
+  border: 0.5px solid #e9e9e9;
   background-color: transparent;
   border-radius: 4px;
 }

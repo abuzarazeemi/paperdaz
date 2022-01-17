@@ -5,27 +5,13 @@
         Be SOCIAL RESPONSIBLE together
       </h1>
       <p
-        class="
-          font-semibold
-          text-center text-sm text-paperdazgray-300
-          mx-auto
-          max-w-md
-          mb-6
-        "
+        class="font-semibold text-center text-sm text-paperdazgray-300 mx-auto max-w-md mb-6"
       >
         Keep everyone safe and the world green!
       </p>
       <div class="flex justify-center">
         <button
-          class="
-            h-10
-            rounded-md
-            shadow-md
-            text-white
-            bg-paperdazgreen-300
-            px-5
-            text-[13px]
-          "
+          class="h-10 rounded-md shadow-md text-white bg-paperdazgreen-300 px-5 text-[13px]"
         >
           Start Now For Free
         </button>
