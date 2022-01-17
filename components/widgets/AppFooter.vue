@@ -1,29 +1,14 @@
 <template>
   <footer class="bg-paperdazgreen-50">
     <div
-      class="
-        flex flex-wrap flex-col
-        gap-10
-        lg:gap-5 lg:flex-row
-        items-center
-        container
-        py-12
-      "
+      class="flex flex-wrap flex-col gap-10 lg:gap-5 lg:flex-row items-center container py-12"
     >
       <div class="flex flex-col gap-2 items-center">
         <logo-with-text class="h-5 xs:h-6 sm:h-7" />
         <span class="text-[#888392]">Contactless Paper</span>
       </div>
       <div
-        class="
-          flex-1 flex flex-wrap flex-col
-          lg:flex-row
-          items-center
-          gap-3
-          sm:gap-10
-          text-[#6C6777]
-          justify-center
-        "
+        class="flex-1 flex flex-wrap flex-col lg:flex-row items-center gap-3 sm:gap-10 text-[#6C6777] justify-center"
       >
         <nuxt-link to="#">Features</nuxt-link>
         <nuxt-link to="#">Packages</nuxt-link>
@@ -37,22 +22,12 @@
         <h4 class="font-semibold text-lg">Share Our Mission</h4>
         <div class="flex flex-wrap items-center gap-2">
           <span
-            class="
-              circle circle-15
-              cursor-pointer
-              bg-paperdazgreen-300
-              text-white
-            "
+            class="circle circle-15 cursor-pointer bg-paperdazgreen-300 text-white"
           >
             <facebook-icon height="18" />
           </span>
           <span
-            class="
-              circle circle-15
-              cursor-pointer
-              bg-paperdazgreen-300
-              text-white
-            "
+            class="circle circle-15 cursor-pointer bg-paperdazgreen-300 text-white"
           >
             <linked-in-icon height="17" />
           </span>
@@ -60,32 +35,17 @@
             <redit-icon :background="'#77C360'" height="50" width="50" />
           </span>
           <span
-            class="
-              circle circle-15
-              cursor-pointer
-              bg-paperdazgreen-300
-              text-white
-            "
+            class="circle circle-15 cursor-pointer bg-paperdazgreen-300 text-white"
           >
             <envelope-icon height="16" />
           </span>
           <span
-            class="
-              circle circle-15
-              cursor-pointer
-              bg-paperdazgreen-300
-              text-white
-            "
+            class="circle circle-15 cursor-pointer bg-paperdazgreen-300 text-white"
           >
             <twitter-icon height="16" />
           </span>
           <span
-            class="
-              circle circle-15
-              cursor-pointer
-              bg-paperdazgreen-300
-              text-white
-            "
+            class="circle circle-15 cursor-pointer bg-paperdazgreen-300 text-white"
           >
             <whatsapp-icon height="18" />
           </span>

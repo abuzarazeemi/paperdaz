@@ -1,7 +1,5 @@
 <template>
-  <div class="tool-identifier" :style="style">
-    2021-12-04
-  </div>
+  <div class="tool-identifier" :style="style">2021-12-04</div>
 </template>
 
 <script>
@@ -11,10 +9,10 @@ export default {
       type: Object,
       top: { type: Number, default: 0 },
       left: { type: Number, default: 0 },
-    }
+    },
   },
   computed: {
-    style(){
+    style() {
       return {
         top: `${this.position.top}px`,
         left: `${this.position.left}px`,

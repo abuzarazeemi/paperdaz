@@ -3,13 +3,7 @@
     <div class="container">
       <h1 class="font-bold text-4xl text-center mb-2">Contactless Paper</h1>
       <p
-        class="
-          font-semibold
-          text-center text-sm text-paperdazgray-300
-          mx-auto
-          max-w-md
-          mb-6
-        "
+        class="font-semibold text-center text-sm text-paperdazgray-300 mx-auto max-w-md mb-6"
       >
         Three actions to complete, confirm or sign a paper anytime anywhere
       </p>
@@ -22,15 +16,7 @@
           <img
             :src="block.img"
             alt=""
-            class="
-              object-contain
-              w-72
-              h-56
-              max-w-full max-h-full
-              mx-auto
-              mb-1
-              min-w-[220px]
-            "
+            class="object-contain w-72 h-56 max-w-full max-h-full mx-auto mb-1 min-w-[220px]"
           />
           <p class="text-2xl mb-2 font-semibold">{{ block.heading }}</p>
           <p class="text-paperdazgray-300">

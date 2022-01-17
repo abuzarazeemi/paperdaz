@@ -1,29 +1,10 @@
 <template>
   <section
-    class="
-      bg-white
-      rounded-2xl
-      px-10
-      py-11
-      flex-1 flex
-      items-center
-      justify-center
-    "
+    class="bg-white rounded-2xl px-10 py-11 flex-1 flex items-center justify-center"
   >
     <form class="w-full max-w-2xl mx-auto">
       <h3
-        class="
-          flex
-          justify-center
-          text-paperdazgreen-300
-          border-b-2 border-paperdazgreen-300
-          font-semibold
-          text-2xl
-          gap-2
-          pb-1
-          relative
-          mb-12
-        "
+        class="flex justify-center text-paperdazgreen-300 border-b-2 border-paperdazgreen-300 font-semibold text-2xl gap-2 pb-1 relative mb-12"
       >
         <span>Change Your Password</span>
         <button
@@ -68,15 +49,7 @@
       </div>
       <div class="flex justify-center">
         <button
-          class="
-            bg-paperdazgreen-300
-            text-white
-            rounded-xl
-            h-12
-            px-5
-            font-medium
-            text-lg
-          "
+          class="bg-paperdazgreen-300 text-white rounded-xl h-12 px-5 font-medium text-lg"
           v-show="editingDetails"
         >
           Update Password

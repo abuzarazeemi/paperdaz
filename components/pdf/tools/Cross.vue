@@ -1,6 +1,6 @@
 <template>
   <div class="tool">
-    <img src="../assets/cross_tool.svg" alt="" :style="style">
+    <img src="../assets/cross_tool.svg" alt="" :style="style" />
   </div>
 </template>
 
@@ -10,7 +10,7 @@ export default {
     scale: Number,
   },
   computed: {
-    style(){
+    style() {
       return {
         width: `${(this.scale || 1) * 19}px`,
         height: `${(this.scale || 1) * 19}px`,
@@ -20,5 +20,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

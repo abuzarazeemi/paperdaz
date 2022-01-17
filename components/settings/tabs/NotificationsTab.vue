@@ -28,18 +28,7 @@
         class="flex-1 px-8 py-10 bg-white rounded-2xl"
       >
         <h3
-          class="
-            flex
-            justify-center
-            text-paperdazgreen-300
-            border-b-2 border-paperdazgreen-300
-            font-semibold
-            text-2xl
-            gap-2
-            pb-1
-            relative
-            mb-7
-          "
+          class="flex justify-center text-paperdazgreen-300 border-b-2 border-paperdazgreen-300 font-semibold text-2xl gap-2 pb-1 relative mb-7"
         >
           <span>App Notifications</span>
         </h3>
@@ -113,18 +102,7 @@
         class="flex-1 px-8 py-10 bg-white rounded-2xl"
       >
         <h3
-          class="
-            flex
-            justify-center
-            text-paperdazgreen-300
-            border-b-2 border-paperdazgreen-300
-            font-semibold
-            text-2xl
-            gap-2
-            pb-1
-            relative
-            mb-7
-          "
+          class="flex justify-center text-paperdazgreen-300 border-b-2 border-paperdazgreen-300 font-semibold text-2xl gap-2 pb-1 relative mb-7"
         >
           <span>Email Notifications</span>
         </h3>

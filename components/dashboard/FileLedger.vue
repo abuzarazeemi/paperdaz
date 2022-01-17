@@ -166,9 +166,7 @@ export default Vue.extend({
     this.handleShowingLedger()
     this.tableScrollObserver()
   },
-  updated() {
-    this.tableScrollObserver()
-  },
+
   methods: {
     shareFile(file: any) {
       const url = location.origin.replace(/\/+$/, '') + `/pdf/${file.id}`
@@ -251,6 +249,10 @@ export default Vue.extend({
 
       observer.observe(ledgerContainer)
     },
+  },
+
+  updated() {
+    this.tableScrollObserver()
   },
 })
 </script>

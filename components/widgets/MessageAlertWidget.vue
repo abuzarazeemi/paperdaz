@@ -1,18 +1,6 @@
 <template>
   <div
-    class="
-      message-alert-widget
-      text-white
-      border
-      px-4
-      py-3
-      rounded-lg
-      text-xs
-      flex
-      items-center
-      gap-2
-      font-medium
-    "
+    class="message-alert-widget text-white border px-4 py-3 rounded-lg text-xs flex items-center gap-2 font-medium"
     :class="{ [type]: true }"
   >
     <div class="icon-container p-1.5 bg-gray-100 bg-opacity-90 rounded-md">

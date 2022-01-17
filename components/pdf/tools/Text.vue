@@ -1,7 +1,7 @@
 <template>
   <div class="text-field tool">
-    <input type="text" v-model="text" v-if="isActive" :style="style">
-    <p v-else :style="style">{{text || 'Click to type'}}</p>
+    <input type="text" v-model="text" v-if="isActive" :style="style" />
+    <p v-else :style="style">{{ text || 'Click to type' }}</p>
   </div>
 </template>
 
@@ -9,15 +9,15 @@
 export default {
   props: {
     isActive: Boolean,
-    fontSize: Number
+    fontSize: Number,
   },
   data: () => ({
     text: null,
   }),
   computed: {
-    style(){
+    style() {
       return {
-        fontSize: `${this.fontSize || 11}px`
+        fontSize: `${this.fontSize || 11}px`,
       }
     },
   },
@@ -25,8 +25,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-input{
-  border: 0.5px solid #E9E9E9;
+input {
+  border: 0.5px solid #e9e9e9;
   background-color: transparent;
   border-radius: 4px;
 }

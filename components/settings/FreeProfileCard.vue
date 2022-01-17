@@ -2,14 +2,7 @@
   <div class="rounded-2xl bg-white py-6 px-6 flex items-center justify-center">
     <div class="flex flex-col items-center">
       <h3
-        class="
-          uppercase
-          text-paperdazgray-500
-          font-semibold
-          text-center
-          mb-4
-          text-xl
-        "
+        class="uppercase text-paperdazgray-500 font-semibold text-center mb-4 text-xl"
       >
         Free Account
       </h3>
@@ -24,16 +17,7 @@
         {{ `${user.first_name} ${user.last_name}` }}
       </p>
       <div
-        class="
-          border border-paperdazgray-100
-          inline-flex
-          items-center
-          px-2
-          py-0.5
-          text-xs
-          font-semibold
-          rounded-full
-        "
+        class="border border-paperdazgray-100 inline-flex items-center px-2 py-0.5 text-xs font-semibold rounded-full"
       >
         <p class="mr-2">700</p>
         <single-leaf-no-stalk />

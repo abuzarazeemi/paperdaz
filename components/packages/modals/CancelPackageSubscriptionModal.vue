@@ -35,14 +35,7 @@
     </template>
     <!-- Start:: Body -->
     <p
-      class="
-        text-center
-        font-medium
-        max-w-[300px]
-        mx-auto
-        mb-6
-        whitespace-normal
-      "
+      class="text-center font-medium max-w-[300px] mx-auto mb-6 whitespace-normal"
     >
       Do you want to cancel your active
       <span class="font-semibold">'--Package Name--'</span>
@@ -50,17 +43,7 @@
     </p>
     <div class="flex justify-around">
       <button
-        class="
-          disabled:bg-opacity-50 disabled:cursor-not-allowed
-          h-10
-          text-xs
-          w-[150px]
-          max-w-[50%]
-          text-white
-          rounded-lg
-          shadow
-          bg-paperdazgreen-400
-        "
+        class="disabled:bg-opacity-50 disabled:cursor-not-allowed h-10 text-xs w-[150px] max-w-[50%] text-white rounded-lg shadow bg-paperdazgreen-400"
         type="button"
         :disabled="loading"
         @click="closeModal()"
@@ -68,17 +51,7 @@
         No
       </button>
       <button
-        class="
-          disabled:bg-opacity-50 disabled:cursor-progress
-          h-10
-          text-xs
-          w-[150px]
-          max-w-[50%]
-          text-white
-          rounded-lg
-          shadow
-          bg-red-500
-        "
+        class="disabled:bg-opacity-50 disabled:cursor-progress h-10 text-xs w-[150px] max-w-[50%] text-white rounded-lg shadow bg-red-500"
         :disabled="loading"
         @click="onSubmit"
       >

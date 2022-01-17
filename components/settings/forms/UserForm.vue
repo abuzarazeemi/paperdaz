@@ -130,15 +130,7 @@
       >
         <button
           :disabled="!editingDetails || loading"
-          class="
-            shadow
-            h-10
-            px-5
-            text-white
-            rounded-md
-            bg-paperdazgreen-300
-            disabled:opacity-50
-          "
+          class="shadow h-10 px-5 text-white rounded-md bg-paperdazgreen-300 disabled:opacity-50"
         >
           <span class="inline-flex items-center gap-3">
             <span>Update</span>

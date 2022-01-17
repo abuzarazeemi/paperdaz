@@ -101,16 +101,7 @@
 
         <div class="grid place-items-center mt-6">
           <button
-            class="
-              rounded-lg
-              bg-paperdazgreen-400
-              text-white
-              shadow
-              text-sm
-              h-10
-              px-6
-              disabled:bg-opacity-50
-            "
+            class="rounded-lg bg-paperdazgreen-400 text-white shadow text-sm h-10 px-6 disabled:bg-opacity-50"
             :disabled="loading"
           >
             <span class="inline-flex items-center gap-3">
@@ -199,16 +190,7 @@
 
         <div class="grid place-items-center mt-6">
           <button
-            class="
-              rounded-lg
-              bg-paperdazgreen-400
-              text-white
-              shadow
-              text-sm
-              h-10
-              px-6
-              disabled:bg-opacity-50
-            "
+            class="rounded-lg bg-paperdazgreen-400 text-white shadow text-sm h-10 px-6 disabled:bg-opacity-50"
             :disabled="loading"
           >
             <span class="inline-flex items-center gap-3">
@@ -282,16 +264,7 @@
 
         <div class="flex items-center justify-center gap-6 mt-6">
           <button
-            class="
-              rounded-lg
-              bg-gray-400
-              text-white
-              shadow
-              text-sm
-              h-10
-              px-6
-              w-[100px]
-            "
+            class="rounded-lg bg-gray-400 text-white shadow text-sm h-10 px-6 w-[100px]"
             type="button"
             v-show="!edittingConfirmed"
             @click.prevent="edittingConfirmed = true"
@@ -301,17 +274,7 @@
 
           <button
             v-show="edittingConfirmed"
-            class="
-              rounded-lg
-              bg-gray-400
-              text-white
-              shadow
-              text-sm
-              h-10
-              px-6
-              w-[100px]
-              disabled:bg-opacity-50 disabled:cursor-progress
-            "
+            class="rounded-lg bg-gray-400 text-white shadow text-sm h-10 px-6 w-[100px] disabled:bg-opacity-50 disabled:cursor-progress"
             :disabled="loading"
           >
             <span class="inline-flex items-center gap-3">
@@ -325,17 +288,7 @@
           </button>
 
           <button
-            class="
-              rounded-lg
-              bg-paperdazgreen-400
-              text-white
-              shadow
-              text-sm
-              h-10
-              w-[100px]
-              px-6
-              disabled:cursor-not-allowed disabled:bg-opacity-50
-            "
+            class="rounded-lg bg-paperdazgreen-400 text-white shadow text-sm h-10 w-[100px] px-6 disabled:cursor-not-allowed disabled:bg-opacity-50"
             @click.prevent="verifyConfirmForm"
             :disabled="edittingConfirmed"
           >

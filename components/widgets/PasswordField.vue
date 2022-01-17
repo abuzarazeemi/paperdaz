@@ -11,14 +11,7 @@
       v-model="value"
       :type="showPassword ? 'text' : 'password'"
       :placeholder="placeholder"
-      class="
-        outline-none
-        focus:outline-none
-        border-none
-        flex-1
-        h-full
-        disabled:cursor-not-allowed
-      "
+      class="outline-none focus:outline-none border-none flex-1 h-full disabled:cursor-not-allowed"
       :required="required"
       :disabled="disabled"
       @focus="focus = true"

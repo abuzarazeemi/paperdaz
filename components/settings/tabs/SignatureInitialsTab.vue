@@ -12,18 +12,7 @@
         </div> -->
       <!-- </div> -->
       <h3
-        class="
-          flex
-          justify-center
-          text-paperdazgreen-300
-          border-b-2 border-paperdazgreen-300
-          font-semibold
-          text-2xl
-          gap-2
-          pb-2
-          relative
-          mb-7
-        "
+        class="flex justify-center text-paperdazgreen-300 border-b-2 border-paperdazgreen-300 font-semibold text-2xl gap-2 pb-2 relative mb-7"
       >
         <span class="flex items-center gap-3"
           >Signature <exclamation-icon class="text-paperdazgreen-300 w-4 h-4"
@@ -32,16 +21,7 @@
             class="absolute right-0 top-1/2 transform -translate-y-1/2"
           /> -->
         <button
-          class="
-            action-button action-button-sm
-            primary
-            mr-3
-            absolute
-            right-0
-            top-1/2
-            transform
-            -translate-y-1/2
-          "
+          class="action-button action-button-sm primary mr-3 absolute right-0 top-1/2 transform -translate-y-1/2"
         >
           Edit
         </button>
@@ -64,18 +44,7 @@
         </div>
       </div> -->
       <h3
-        class="
-          flex
-          justify-center
-          text-paperdazgreen-300
-          border-b-2 border-paperdazgreen-300
-          font-semibold
-          text-2xl
-          gap-2
-          pb-2
-          relative
-          mb-7
-        "
+        class="flex justify-center text-paperdazgreen-300 border-b-2 border-paperdazgreen-300 font-semibold text-2xl gap-2 pb-2 relative mb-7"
       >
         <span class="flex items-center gap-3"
           >Initials <exclamation-icon class="text-paperdazgreen-300 w-4 h-4"
@@ -84,16 +53,7 @@
             class="absolute right-0 top-1/2 transform -translate-y-1/2"
           /> -->
         <button
-          class="
-            action-button action-button-sm
-            primary
-            mr-3
-            absolute
-            right-0
-            top-1/2
-            transform
-            -translate-y-1/2
-          "
+          class="action-button action-button-sm primary mr-3 absolute right-0 top-1/2 transform -translate-y-1/2"
         >
           Edit
         </button>

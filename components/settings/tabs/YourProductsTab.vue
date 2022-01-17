@@ -15,17 +15,7 @@
     <section class="bg-white rounded-2xl py-6 px-8 min-w-[400px] flex flex-col">
       <!-- <package-card class="flex-1" /> -->
       <button
-        class="
-          text-white
-          font-medium
-          text-xs
-          rounded-full
-          h-7
-          bg-paperdazgreen-300
-          mt-5
-          self-center
-          px-5
-        "
+        class="text-white font-medium text-xs rounded-full h-7 bg-paperdazgreen-300 mt-5 self-center px-5"
       >
         Upgrade Plan
       </button>

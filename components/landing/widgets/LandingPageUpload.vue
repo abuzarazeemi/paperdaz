@@ -1,10 +1,6 @@
 <template>
   <section
-    class="
-      bg-gradient-to-t
-      from-[rgba(119,195,96,0.1)]
-      to-[rgba(119,195,96,0.2)]
-    "
+    class="bg-gradient-to-t from-[rgba(119,195,96,0.1)] to-[rgba(119,195,96,0.2)]"
   >
     <div class="bg-white">
       <div class="container py-14">
@@ -12,13 +8,7 @@
           Click to upload files to create a Paperlink
         </h1>
         <p
-          class="
-            font-semibold
-            text-center text-sm text-paperdazgray-300
-            mx-auto
-            max-w-md
-            mb-6
-          "
+          class="font-semibold text-center text-sm text-paperdazgray-300 mx-auto max-w-md mb-6"
         >
           Complete a file here then share our mission on one social media
           platform!
@@ -29,18 +19,7 @@
       <div class="container">
         <div class="shadow-lg rounded-2xl bg-white px-4 py-16">
           <div
-            class="
-              mt-2
-              mb-14
-              mx-auto
-              px-4
-              py-8
-              flex flex-col
-              items-center
-              border-2 border-paperdazgreen-300 border-dashed
-              rounded-2xl
-              max-w-3xl
-            "
+            class="mt-2 mb-14 mx-auto px-4 py-8 flex flex-col items-center border-2 border-paperdazgreen-300 border-dashed rounded-2xl max-w-3xl"
           >
             <span
               class="circle circle-46 bg-paperdazgreen-300 text-white mb-20"
@@ -49,22 +28,12 @@
             </span>
             <div class="flex flex-wrap items-center gap-2">
               <span
-                class="
-                  circle circle-20
-                  cursor-pointer
-                  bg-paperdazgreen-300
-                  text-white
-                "
+                class="circle circle-20 cursor-pointer bg-paperdazgreen-300 text-white"
               >
                 <facebook-icon height="20" />
               </span>
               <span
-                class="
-                  circle circle-20
-                  cursor-pointer
-                  bg-paperdazgreen-300
-                  text-white
-                "
+                class="circle circle-20 cursor-pointer bg-paperdazgreen-300 text-white"
               >
                 <linked-in-icon height="20" />
               </span>
@@ -72,32 +41,17 @@
                 <redit-icon :background="'#77C360'" height="50" width="50" />
               </span>
               <span
-                class="
-                  circle circle-20
-                  cursor-pointer
-                  bg-paperdazgreen-300
-                  text-white
-                "
+                class="circle circle-20 cursor-pointer bg-paperdazgreen-300 text-white"
               >
                 <envelope-icon height="20" />
               </span>
               <span
-                class="
-                  circle circle-20
-                  cursor-pointer
-                  bg-paperdazgreen-300
-                  text-white
-                "
+                class="circle circle-20 cursor-pointer bg-paperdazgreen-300 text-white"
               >
                 <twitter-icon height="20" />
               </span>
               <span
-                class="
-                  circle circle-20
-                  cursor-pointer
-                  bg-paperdazgreen-300
-                  text-white
-                "
+                class="circle circle-20 cursor-pointer bg-paperdazgreen-300 text-white"
               >
                 <whatsapp-icon height="20" />
               </span>
@@ -114,28 +68,11 @@
               class="flex items-center gap-3 sm:gap-5"
             >
               <div
-                class="
-                  h-16
-                  w-16
-                  rounded-lg
-                  bg-white
-                  border border-paperdazgray-200
-                  flex
-                  items-center
-                  justify-center
-                  relative
-                  text-paperdazgreen-300
-                "
+                class="h-16 w-16 rounded-lg bg-white border border-paperdazgray-200 flex items-center justify-center relative text-paperdazgreen-300"
               >
                 <component :is="field.icon" />
                 <not-allowed-traffic-icon
-                  class="
-                    absolute
-                    left-1/2
-                    top-1/2
-                    transform
-                    -translate-x-1/2 -translate-y-1/2
-                  "
+                  class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2"
                 />
               </div>
               <span>{{ field.text }}</span>

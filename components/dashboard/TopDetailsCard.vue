@@ -6,15 +6,7 @@
       </slot>
     </span>
     <div
-      class="
-        text-content
-        inline-flex
-        flex-col
-        justify-between
-        items-center
-        sm:items-end
-        mt-2
-      "
+      class="text-content inline-flex flex-col justify-between items-center sm:items-end mt-2"
     >
       <span class="font-bold text-2xl">
         <slot name="count">800</slot>

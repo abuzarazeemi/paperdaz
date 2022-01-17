@@ -60,16 +60,7 @@
 
       <div class="grid place-items-center mt-6">
         <button
-          class="
-            rounded-lg
-            bg-paperdazgreen-400
-            text-white
-            shadow
-            text-sm
-            h-10
-            px-6
-            disabled:bg-opacity-50
-          "
+          class="rounded-lg bg-paperdazgreen-400 text-white shadow text-sm h-10 px-6 disabled:bg-opacity-50"
           :disabled="loading"
         >
           <span class="inline-flex items-center gap-3">

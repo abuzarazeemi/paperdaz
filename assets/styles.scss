@@ -25,15 +25,12 @@ body {
   padding-left: 5%;
   // max-width: unset;
   max-width: 1200px;
-
 }
 
 @screen xl {
   .container {
   }
 }
-
-
 
 .h-0\.25 {
   height: 1px;
@@ -58,22 +55,21 @@ body {
   }
 }
 
-
 // Circle class
 
 @mixin circle-content($size) {
   $t: calc(2px * #{$size});
-    height: $t;
-    width: $t;
-    min-height: $t;
-    min-width: $t;
+  height: $t;
+  width: $t;
+  min-height: $t;
+  min-width: $t;
 }
 
 @mixin circle-parent-content() {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius:50%;
+  border-radius: 50%;
 }
 
 $screens: 'xxs', 'xs', 'sm', 'md', 'lg', 'xl';
@@ -84,15 +80,15 @@ $screens: 'xxs', 'xs', 'sm', 'md', 'lg', 'xl';
 
 @for $i from 1 through 100 {
   .circle-#{$i} {
-    @include circle-content($i)
+    @include circle-content($i);
   }
 
-    @each $screen in $screens {
-      .#{$screen}\:circle {
-        @media screen and (min-width: theme('screens.' + #{$screen})) {
-          @include circle-parent-content();
-        }
+  @each $screen in $screens {
+    .#{$screen}\:circle {
+      @media screen and (min-width: theme('screens.' + #{$screen})) {
+        @include circle-parent-content();
       }
+    }
     .#{$screen}\:circle-#{$i} {
       @media screen and (min-width: theme('screens.' + #{$screen})) {
         @include circle-content($i);
@@ -119,7 +115,7 @@ $screens: 'xxs', 'xs', 'sm', 'md', 'lg', 'xl';
 
   &.danger {
     @apply text-white;
-    background: #EB3A34;
+    background: #eb3a34;
   }
 }
 
@@ -147,8 +143,9 @@ $screens: 'xxs', 'xs', 'sm', 'md', 'lg', 'xl';
   }
 }
 
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
@@ -161,8 +158,8 @@ $screens: 'xxs', 'xs', 'sm', 'md', 'lg', 'xl';
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 #remember-me-checkbox {

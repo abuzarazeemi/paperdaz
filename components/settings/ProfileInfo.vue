@@ -1,18 +1,7 @@
 <template>
   <div class="bg-white p-6 rounded-2xl">
     <h3
-      class="
-        flex
-        justify-center
-        text-paperdazgreen-300
-        border-b-2 border-paperdazgreen-300
-        font-semibold
-        text-2xl
-        gap-2
-        pb-1
-        relative
-        mb-7
-      "
+      class="flex justify-center text-paperdazgreen-300 border-b-2 border-paperdazgreen-300 font-semibold text-2xl gap-2 pb-1 relative mb-7"
     >
       <span>{{ headerText }}</span>
       <button

@@ -2,16 +2,7 @@
   <section class="bg-gradient-to-t from-white to-transparent">
     <div class="container py-20">
       <div
-        class="
-          w-full
-          max-w-md
-          mx-auto
-          bg-white
-          shadow-2xl
-          rounded-xl
-          px-6
-          py-10
-        "
+        class="w-full max-w-md mx-auto bg-white shadow-2xl rounded-xl px-6 py-10"
       >
         <h4 class="text-lg font-medium mb-8 text-center">
           Sign up to Paperdaz
@@ -19,19 +10,7 @@
         <social-auth class="mb-10" />
         <div class="h-px bg-paperdazgray-100 w-full relative mb-10">
           <span
-            class="
-              inline-block
-              bg-white
-              p-2
-              absolute
-              top-1/2
-              left-1/2
-              transform
-              -translate-x-1/2 -translate-y-1/2
-              text-paperdazgray-500
-              font-medium
-              text-sm
-            "
+            class="inline-block bg-white p-2 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-paperdazgray-500 font-medium text-sm"
             >OR</span
           >
         </div>
@@ -150,15 +129,7 @@
           </div>
           <div class="flex flex-col items-center">
             <button
-              class="
-                h-10
-                rounded-lg
-                shadow
-                px-5
-                text-white text-sm
-                bg-paperdazgreen-300
-                disabled:bg-opacity-70
-              "
+              class="h-10 rounded-lg shadow px-5 text-white text-sm bg-paperdazgreen-300 disabled:bg-opacity-70"
               :class="[isLoading ? 'cursor-progress' : '']"
               :disabled="isLoading"
             >

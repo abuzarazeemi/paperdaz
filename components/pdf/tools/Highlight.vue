@@ -1,6 +1,10 @@
 <template>
   <svg preserveAspectRatio="none" :viewBox="viewBox" :style="style">
-    <path :d="d" stroke-linecap="round" style="fill: rgb(255, 255, 0); opacity: 0.4; stroke-width: 0;"></path>
+    <path
+      :d="d"
+      stroke-linecap="round"
+      style="fill: rgb(255, 255, 0); opacity: 0.4; stroke-width: 0"
+    ></path>
   </svg>
 </template>
 
@@ -13,23 +17,23 @@ export default {
     y2: Number,
   },
   computed: {
-    d(){
+    d() {
       return `M${this.x1},${this.y1}L${this.x2},${this.y1}L${this.x2},${this.y2}L${this.x1},${this.y2}`
     },
-    style(){
+    style() {
       return {
         width: `${this.width}px`,
       }
     },
-    viewBox(){
+    viewBox() {
       let x1 = Math.min(this.x1, this.x2)
       let y1 = this.y2 < this.y1 ? this.y2 : this.y1 //Math.min(this.y1, this.y2) : Math.max(this.y1, this.y2)
       return `${x1} ${y1} ${this.width} ${this.height}`
     },
-    width(){
+    width() {
       return Math.abs(this.x2 - this.x1)
     },
-    height(){
+    height() {
       return Math.abs(this.y2 - this.y1)
     },
   },
@@ -37,7 +41,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.line{
+.line {
   width: 100%;
   height: 100%;
   background-color: #000;
