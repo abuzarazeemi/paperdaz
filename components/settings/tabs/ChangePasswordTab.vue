@@ -8,6 +8,7 @@
       >
         <span>Change Your Password</span>
         <button
+          type="button"
           @click="editingDetails = !editingDetails"
           class="absolute right-0 top-1/2 transform -translate-y-1/2 px-2 py-1"
         >
