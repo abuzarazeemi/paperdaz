@@ -14,6 +14,7 @@ import AccountTab from '~/components/settings/tabs/AccountTab.vue'
 import ChangePasswordTab from '~/components/settings/tabs/ChangePasswordTab.vue'
 import SignatureInitialsTab from '~/components/settings/tabs/SignatureInitialsTab.vue'
 import NotificationsTab from '~/components/settings/tabs/NotificationsTab.vue'
+import UserTypeEnum from '~/models/UserTypeEnum'
 const BillingTab = () => import('~/components/settings/tabs/BillingTab.vue')
 // const YourProductsTab = () =>
 //   import('~/components/settings/tabs/YourProductsTab.vue')
@@ -33,7 +34,6 @@ export default Vue.extend({
           value: 'signature-initials',
           component: SignatureInitialsTab,
         },
-        { label: 'Billing', value: 'billing', component: BillingTab },
         // {
         //   label: 'Your Proucts',
         //   value: 'your-products',
@@ -44,7 +44,16 @@ export default Vue.extend({
           value: 'notifications',
           component: NotificationsTab,
         },
-      ],
+      ] as Array<{ [key: string]: any }>,
+    }
+  },
+  beforeMount() {
+    if (this.$store.getters.userType === UserTypeEnum.PAID) {
+      this.tabs.splice(3, 0, {
+        label: 'Billing',
+        value: 'billing',
+        component: BillingTab,
+      })
     }
   },
   computed: {

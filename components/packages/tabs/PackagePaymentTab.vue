@@ -204,26 +204,19 @@ export default Vue.extend({
             ? 'monthly'
             : 'yearly', //yearly
         })
-        .then(() => {
+        .then(async () => {
           this.$notify.success({
             title: 'Package Subscription',
             message: 'You have successfully subscribed for this package',
           })
+          await this.$auth.fetchUser()
           this.$nuxt.$router.push('/dashboard')
         })
         .catch((error) => {
-          let message = ''
-          if (
-            error &&
-            error.response &&
-            error.response.data &&
-            error.response.data.message
-          ) {
-            message = error.response.data.message
-          } else {
-            message = 'Server not reachable'
-          }
-          this.errorMessage = error.message || message
+          this.errorMessage =
+            error.response?.data?.message ||
+            error.message ||
+            'Server not reachable'
           this.loading = false
         })
         .finally(() => {

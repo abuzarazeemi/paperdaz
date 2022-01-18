@@ -20,14 +20,23 @@ export const getters: GetterTree<RootState, RootState> = {
     if (!user) return ''
     // return UserTypeEnum.PAID
 
-    switch (user.role) {
-      case 'free-user':
-        return UserTypeEnum.FREE
-      case 'paid_user':
-        return UserTypeEnum.PAID
-      default:
-        return UserTypeEnum.FREE
-    }
+    return user.role
+
+    // return UserTypeEnum.FREE === 'free_user'
+
+    // const userType = (<any>UserTypeEnum)[user.role]
+
+    // if (!userType) return UserTypeEnum.FREE
+    // else return userType
+
+    // // switch (user.role) {
+    // //   case 'free_user':
+    // //     return UserTypeEnum.FREE
+    // //   case 'paid_user':
+    // //     return UserTypeEnum.PAID
+    // //   default:
+    // //     return UserTypeEnum.FREE
+    // // }
   },
 }
 
