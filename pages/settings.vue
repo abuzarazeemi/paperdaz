@@ -25,7 +25,7 @@ export default Vue.extend({
   layout: 'dashboard',
   data() {
     return {
-      currentTab: 'billing',
+      currentTab: 'account',
       tabs: [
         { label: 'Account', value: 'account', component: AccountTab },
         { label: 'Security', value: 'security', component: ChangePasswordTab },
