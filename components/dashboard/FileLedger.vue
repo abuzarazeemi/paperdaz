@@ -99,7 +99,9 @@
                   </p>
                   <p class="text-xs">
                     {{
-                      (file.user || {}).first_name + (file.user || {}).last_name
+                      (file.user || {}).first_name +
+                      ' ' +
+                      (file.user || {}).last_name
                     }}
                   </p>
                 </div>

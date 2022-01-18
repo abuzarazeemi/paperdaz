@@ -19,7 +19,7 @@
       >
     </div>
     <div class="px-5 py-4">
-      <div class="flex justify-center mb-10">
+      <div class="flex justify-center mb-10" v-show="!lockPrice">
         <span class="mr-2">Yeary</span>
         <span
           class="inline-flex bg-opacity-30 w-12 rounded-full mr-2 cursor-pointer transition ease-in-out duration-200"
@@ -93,10 +93,20 @@ export default Vue.extend({
       type: Object,
       required: true,
     },
+    // monthly, yearly
+    lockPrice: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
       isMonthly: true,
+    }
+  },
+  beforeMount() {
+    if (this.lockPrice) {
+      this.isMonthly = String(this.lockPrice).toLowerCase() == 'monthly'
     }
   },
 })

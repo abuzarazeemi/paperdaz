@@ -59,10 +59,19 @@
           v-if="errorMessage"
           :type="'error'"
         />
+
+        <message-alert-widget
+          class="mb-7"
+          message="Fetching card details"
+          v-if="$fetchState.pending"
+          :type="'info'"
+          isLoading
+        />
+
         <div class="form-group">
           <label class="input-label" for="">Name of card holder</label>
           <el-input
-            :disabled="loading"
+            :disabled="loading || $fetchState.pending"
             placeholder="Name Surname"
             required
             v-model="name"
@@ -71,7 +80,7 @@
         <div class="form-group">
           <label class="input-label" for="">Card Number</label>
           <el-input
-            :disabled="loading"
+            :disabled="loading || $fetchState.pending"
             placeholder="0000-0000-0000-0000"
             :value="cardNumberWithDashes"
             @input="inputCardNumber"
@@ -82,7 +91,7 @@
           <div class="form-group">
             <label class="input-label" for="">Expiration Date</label>
             <el-input
-              :disabled="loading"
+              :disabled="loading || $fetchState.pending"
               placeholder="MM/YY"
               required
               :value="expirationDateWithSlashes"
@@ -92,7 +101,7 @@
           <div class="form-group">
             <label class="input-label" for="">CVV</label>
             <el-input
-              :disabled="loading"
+              :disabled="loading || $fetchState.pending"
               placeholder="000"
               required
               v-model="cvv"
@@ -126,12 +135,29 @@
 <script lang="ts">
 import Vue from 'vue'
 import SpinnerDottedIcon from '~/components/svg-icons/SpinnerDottedIcon.vue'
+import MessageAlertWidget from '~/components/widgets/MessageAlertWidget.vue'
 export default Vue.extend({
   name: 'UpdateBillingInformationModal',
-  components: { SpinnerDottedIcon },
+  components: { SpinnerDottedIcon, MessageAlertWidget },
   model: {
     prop: 'visible',
     event: 'updateVisibility',
+  },
+  async fetch() {
+    const fetchCard = () =>
+      this.$axios
+        .$get('/card')
+        .then((response) => {
+          this.card = response.card
+        })
+        .catch(() => {
+          this.$notify.error({
+            title: 'Card',
+            message: 'Unable to fetch Card Information',
+          })
+        })
+
+    await Promise.allSettled([fetchCard()])
   },
   props: {
     visible: {
@@ -148,6 +174,7 @@ export default Vue.extend({
       name: '',
       cvv: '',
       expirationDateWithSlashes: '',
+      card: {} as { [key: string]: string | number },
     }
   },
   watch: {
@@ -156,6 +183,21 @@ export default Vue.extend({
     },
     showModal(val) {
       this.$emit('updateVisibility', val)
+
+      if (val && (!this.card || Object.keys(this.card).length == 0)) {
+        this.$fetch()
+      }
+    },
+    card: {
+      immediate: true,
+      handler(card: any) {
+        if (!card) return
+
+        this.inputCardNumber(card.card_number || '')
+        this.name = card.name || ''
+        this.inputExpirationDate(`${card.exp_month}/${card.exp_year}`)
+        // this.cvv = card.cvc
+      },
     },
   },
   mounted() {
@@ -203,7 +245,7 @@ export default Vue.extend({
     submit() {
       event?.preventDefault()
 
-      if (this.loading) return
+      if (this.loading || !this.card || !this.card.id) return
 
       const userId = (this.$auth.user || { id: '' }).id
 
@@ -218,32 +260,38 @@ export default Vue.extend({
       this.loading = true
       this.errorMessage = ''
 
-      setTimeout(() => {
-        this.loading = false
-        ;(async () => {
-          await this.$notify.info({
-            title: 'Unimplemented',
-            message: 'This feature has not been implemented',
-          })
-        })()
-        this.closeModal()
-      }, 1000)
-
-      // this.$axios.$patch(`/card/${id}`, data).catch((error) => {
-      //   let message = ''
-      //   if (
-      //     error &&
-      //     error.response &&
-      //     error.response.data &&
-      //     error.response.data.message
-      //   ) {
-      //     message = error.response.data.message
-      //   } else {
-      //     message = 'Server not reachable'
-      //   }
-      //   this.errorMessage = message
+      // setTimeout(() => {
       //   this.loading = false
-      // })
+      //   ;(async () => {
+      //     await this.$notify.info({
+      //       title: 'Unimplemented',
+      //       message: 'This feature has not been implemented',
+      //     })
+      //   })()
+      //   this.closeModal()
+      // }, 1000)
+
+      this.$axios
+        .$patch(`/card/${this.card.id}`, data)
+        .then(() => {
+          this.$emit('success')
+          ;(async () => {
+            await this.$notify.info({
+              title: 'Billing Information',
+              message: 'Billing information updated',
+            })
+          })()
+          this.closeModal()
+        })
+        .catch((error) => {
+          this.errorMessage =
+            error.response?.data?.message ||
+            error.message ||
+            'Server not reachable'
+        })
+        .finally(() => {
+          this.loading = false
+        })
     },
   },
 })

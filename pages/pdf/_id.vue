@@ -8,8 +8,18 @@
     <main
       class="grid grid-rows-[max-content,max-content,1fr] gap-1 max-w-max mx-auto px-[2%]"
     >
-      <pdf-page-action-tray class="w-full" />
-      <tool-bar @tool-change="onToolChange" @undo="undo" class="max-w-4xl" />
+      <pdf-page-action-tray
+        :file="file"
+        @update-file="file = $event"
+        class="w-full"
+      />
+
+      <tool-bar
+        :file="file"
+        @tool-change="onToolChange"
+        @undo="undo"
+        class="max-w-4xl"
+      />
       <div
         class="pdf-editor-view relative overflow-y-auto custom-scrollbar max-w-4xl"
         v-if="pdf"
@@ -65,6 +75,9 @@
             </div>
           </div>
         </div>
+        <button class="w-full bg-paperdazgreen-400 h-12 text-white">
+          Confirm Button
+        </button>
       </div>
     </main>
   </div>
@@ -132,7 +145,14 @@ export default {
   async asyncData({ $axios, params, error }) {
     const file = await $axios
       .$get(`/file/${params.id}`)
-      .then((response) => response.file)
+      .then((response) => {
+        const file = response.file
+        file.action = file.action || 'complete'
+        file.user = response.user
+
+        console.log(file.user)
+        return file
+      })
       .catch((err) => {
         error({
           statusCode: 404,

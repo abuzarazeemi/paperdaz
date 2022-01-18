@@ -3,44 +3,54 @@
     <div
       class="flex flex-wrap items-center justify-between bg-[#E8EAEC] py-2 w-full gap-x-1 gap-y-2 px-6 text-[#757575] text-base sm:text-2xl"
     >
-      <button @click="setSelectedType(TOOL_TYPE.text)">
+      <button @click="setSelectedType(TOOL_TYPE.text)" v-if="isComplete">
         <pdf-text-tool-icon />
       </button>
-      <button @click="setSelectedType(TOOL_TYPE.tick)">
+      <button @click="setSelectedType(TOOL_TYPE.tick)" v-if="isComplete">
         <pdf-tick-icon />
       </button>
-      <button @click="setSelectedType(TOOL_TYPE.cross)">
+      <button @click="setSelectedType(TOOL_TYPE.cross)" v-if="isComplete">
         <pdf-times-icon />
       </button>
-      <button @click="setSelectedType(TOOL_TYPE.dot)" class="text-base">
+      <button
+        @click="setSelectedType(TOOL_TYPE.dot)"
+        v-if="isComplete"
+        class="text-base"
+      >
         <solid-circle-icon />
       </button>
-      <button @click="setSelectedType(TOOL_TYPE.circle)">
+      <button @click="setSelectedType(TOOL_TYPE.circle)" v-if="isComplete">
         <hollow-circle-icon />
       </button>
-      <button @click="setSelectedType(TOOL_TYPE.line)">
+      <button @click="setSelectedType(TOOL_TYPE.line)" v-if="isComplete">
         <pdf-rectangle-tool-icon />
       </button>
       <button
+        v-if="isComplete"
         @click="setSelectedType(TOOL_TYPE.highlight)"
         class="text-[#FFCF27]"
       >
         <pdf-highlight-tool-icon />
       </button>
-      <button @click="setSelectedType(TOOL_TYPE.draw)">
+      <button @click="setSelectedType(TOOL_TYPE.draw)" v-if="isComplete">
         <pdf-pen-tool-icon />
       </button>
-      <button @click="setSelectedType(TOOL_TYPE.date)">
+      <button @click="setSelectedType(TOOL_TYPE.date)" v-if="isComplete">
         <calendar-icon />
       </button>
-      <button @click="setSelectedType(TOOL_TYPE.name)">
+      <button @click="setSelectedType(TOOL_TYPE.name)" v-if="isComplete">
         <user-profile-solid-icon />
       </button>
 
-      <button class="text-[#5FA348]" @click="setSelectedType(TOOL_TYPE.star)">
+      <button
+        class="text-[#5FA348]"
+        @click="setSelectedType(TOOL_TYPE.star)"
+        v-if="isComplete"
+      >
         <star-icon />
       </button>
       <button
+        v-if="isComplete"
         @click="onSignClick"
         class="inline-flex items-center gap-2 bg-paperdazgreen-300 py-1 pr-1 pl-2 text-white text-sm"
       >
@@ -63,6 +73,7 @@
       </button>
 
       <button
+        v-if="isComplete"
         class="inline-flex items-center gap-2 bg-paperdazgreen-300 py-1 pr-1 pl-2 tool-item text-white text-sm"
         @click="setSelectedType(TOOL_TYPE.initial)"
       >
@@ -87,13 +98,14 @@
       <!-- <p @click="signaturePad = !signaturePad">Signature Pad</p> -->
 
       <button
+        v-if="isCreator"
         @click="downloadPdf"
         class="text-xs text-white bg-paperdazgreen-400 px-2 rounded h-8"
       >
         Download
       </button>
 
-      <button @click="$emit('undo')">UNDO</button>
+      <button @click="$emit('undo')" class="text-sm">UNDO</button>
     </div>
 
     <pdf-signature-modal
@@ -139,9 +151,31 @@ export default {
     signaturePad: false,
     showSignatureModal: false,
   }),
+  props: {
+    file: {
+      type: Object,
+      required: true,
+    },
+  },
   computed: {
     TOOL_TYPE() {
       return TOOL_TYPE
+    },
+    isCreator() {
+      try {
+        return this.file.user.id === this.$auth.user.id
+      } catch (e) {
+        return false
+      }
+    },
+    isConfirm() {
+      return String(this.file.action).toLowerCase() === 'confirm'
+    },
+    isComplete() {
+      return String(this.file.action).toLowerCase() === 'complete'
+    },
+    isSign() {
+      return String(this.file.action).toLowerCase() === 'sign'
     },
   },
   methods: {
