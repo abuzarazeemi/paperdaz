@@ -3,7 +3,11 @@
     <div
       class="flex items-center gap-4 flex-1 justify-between max-w-4xl px-4 text-sm"
     >
+      <p>{{ file.user.id }}</p>
+      <p>{{ $auth.user.id }}</p>
+      <span v-if="!isCreator" class="capitalize">{{ file.action }}</span>
       <el-dropdown
+        v-else
         trigger="click"
         class="font-medium"
         @command="handleActionChange"
@@ -47,7 +51,9 @@
         <span class="circle circle-2 bg-[#757575]"></span>
       </span>
 
-      <span class="hidden md:inline">Akay Devakr</span>
+      <span class="hidden md:inline">{{
+        `${file.user.first_name} ${file.user.last_name}`
+      }}</span>
 
       <span class="hidden md:inline">
         <span class="circle circle-2 bg-[#757575]"></span>
@@ -169,6 +175,15 @@ export default Vue.extend({
       showCCFlowModal: false,
       showPapertagsModal: false,
     }
+  },
+  computed: {
+    isCreator() {
+      try {
+        return this.file.user.id === this.$auth.user?.id
+      } catch (e) {
+        return false
+      }
+    },
   },
   methods: {
     handleActionChange(command: string) {
