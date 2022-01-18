@@ -115,8 +115,9 @@ export default Vue.extend({
             title: 'File Upload',
             message: 'File uploaded successfully',
           })
-          // @ts-ignore
-          this.$refs.fileLedger?.$fetch()
+
+          // TODO: replace this with the id
+          this.$nuxt.$router.push(`/pdf/{id}`)
         })
         .catch((error) => {
           this.$notify.error({

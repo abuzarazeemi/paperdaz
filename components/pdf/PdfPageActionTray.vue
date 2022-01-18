@@ -55,50 +55,54 @@
 
       <span class="hidden md:inline">05.08.2021 10:04 </span>
 
-      <el-dropdown trigger="click" class="font-medium">
+      <el-dropdown
+        trigger="click"
+        class="font-medium"
+        @command="handleCommand($event)"
+      >
         <span class="el-dropdown-link text-[#555454] px-1 flex items-center">
           <ellipsis-icon-vertical-icon />
         </span>
         <el-dropdown-menu slot="dropdown" class="text-black">
-          <el-dropdown-item>
+          <el-dropdown-item command="save">
             <button
-              class="text-xs text-white bg-paperdazgreen-400 rounded px-5 h-7"
+              class="text-xs text-white bg-paperdazgreen-400 rounded px-5 h-7 w-[130px]"
             >
               Save
             </button>
           </el-dropdown-item>
-          <el-dropdown-item>
+          <el-dropdown-item command="save">
             <button
-              class="px-2 w-[70px] rounded flex items-center justify-center bg-gray-600 py-1.5 text-white"
+              class="px-2 w-[130px] rounded flex items-center justify-center bg-gray-600 py-1.5 text-white"
             >
               <export-icon />
             </button>
           </el-dropdown-item>
           <el-dropdown-item divided></el-dropdown-item>
-          <el-dropdown-item divided>
+          <el-dropdown-item command="share" divided>
             <div class="flex items-center gap-2">
               <share-icon width="16" height="16" /> Share
             </div>
           </el-dropdown-item>
-          <el-dropdown-item>
+          <el-dropdown-item command="request">
             <div class="flex items-center gap-2">
               <request-icon width="16" height="16" /> Request
             </div>
           </el-dropdown-item>
-          <el-dropdown-item>
+          <el-dropdown-item command="papertag">
             <div class="flex items-center gap-2">
               <span class="font-medium">#</span>
               Paper tag
             </div>
           </el-dropdown-item>
-          <el-dropdown-item>
+          <el-dropdown-item command="carbon-copy">
             <div class="flex items-center gap-2">
               <copy-icon width="16" height="16" /> Carbon Copy
             </div>
           </el-dropdown-item>
-          <el-dropdown-item>
+          <el-dropdown-item command="remove">
             <div class="flex items-center gap-2">
-              <trash-can-solid-icon width="16" height="16" /> Remove
+              <trash-can-icon width="16" height="16" /> Remove
             </div>
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -116,6 +120,8 @@
         <export-icon />
       </button>
     </div>
+
+    <pdf-share-modal :file="file" v-model="showShareModal" />
   </div>
 </template>
 
@@ -127,6 +133,9 @@ import _ from 'lodash'
 import ShareIcon from '../svg-icons/ShareIcon.vue'
 import RequestIcon from '../svg-icons/RequestIcon.vue'
 import CopyIcon from '../svg-icons/CopyIcon.vue'
+import TrashCanSolidIcon from '../svg-icons/TrashCanSolidIcon.vue'
+import TrashCanIcon from '../svg-icons/TrashCanIcon.vue'
+import PdfShareModal from './modals/PdfShareModal.vue'
 
 export default Vue.extend({
   components: {
@@ -135,6 +144,9 @@ export default Vue.extend({
     ShareIcon,
     RequestIcon,
     CopyIcon,
+    TrashCanSolidIcon,
+    TrashCanIcon,
+    PdfShareModal,
   },
   name: 'PdfPageActionTray',
   props: {
@@ -143,11 +155,23 @@ export default Vue.extend({
       required: true,
     },
   },
+  data() {
+    return {
+      showShareModal: true,
+    }
+  },
   methods: {
     handleActionChange(command: string) {
       const fileTemp = { ...this.file }
       fileTemp.action = command
       this.$emit('update-file', fileTemp)
+    },
+    handleCommand(command: string) {
+      switch (String(command).toLowerCase()) {
+        case 'share':
+          this.showShareModal = true
+          break
+      }
     },
   },
 })
