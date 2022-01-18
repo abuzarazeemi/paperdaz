@@ -122,6 +122,7 @@
     </div>
 
     <pdf-share-modal :file="file" v-model="showShareModal" />
+    <pdf-request-modal :file="file" v-model="showRequestModal" />
   </div>
 </template>
 
@@ -157,7 +158,8 @@ export default Vue.extend({
   },
   data() {
     return {
-      showShareModal: true,
+      showShareModal: false,
+      showRequestModal: false,
     }
   },
   methods: {
@@ -170,6 +172,9 @@ export default Vue.extend({
       switch (String(command).toLowerCase()) {
         case 'share':
           this.showShareModal = true
+          break
+        case 'request':
+          this.showRequestModal = true
           break
       }
     },

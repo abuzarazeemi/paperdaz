@@ -32,7 +32,7 @@
     <!--End:: Close Button -->
     <template #title>
       <h4 class="text-center font-semibold text-2xl text-gray-800 pb-2">
-        Share
+        Request
       </h4>
     </template>
     <!-- Start:: Body -->
@@ -50,7 +50,7 @@
       <el-input
         type="textarea"
         :rows="6"
-        placeholder="Description"
+        placeholder="Note..."
         v-model="description"
       >
       </el-input>
@@ -69,7 +69,7 @@
 <script lang="ts">
 import Vue from 'vue'
 export default Vue.extend({
-  name: 'PdfShareModal',
+  name: 'PdfRequestModal',
   model: {
     prop: 'visible',
     event: 'updateVisibility',
