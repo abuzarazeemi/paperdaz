@@ -124,6 +124,7 @@
     <pdf-share-modal :file="file" v-model="showShareModal" />
     <pdf-request-modal :file="file" v-model="showRequestModal" />
     <pdf-c-c-flow-modal :file="file" v-model="showCCFlowModal" />
+    <pdf-papertags-modal :file="file" v-model="showPapertagsModal" />
   </div>
 </template>
 
@@ -139,6 +140,7 @@ import TrashCanSolidIcon from '../svg-icons/TrashCanSolidIcon.vue'
 import TrashCanIcon from '../svg-icons/TrashCanIcon.vue'
 import PdfShareModal from './modals/PdfShareModal.vue'
 import PdfCCFlowModal from './modals/PdfCCFlowModal.vue'
+import PdfPapertagsModal from './modals/PdfPapertagsModal.vue'
 
 export default Vue.extend({
   components: {
@@ -151,6 +153,7 @@ export default Vue.extend({
     TrashCanIcon,
     PdfShareModal,
     PdfCCFlowModal,
+    PdfPapertagsModal,
   },
   name: 'PdfPageActionTray',
   props: {
@@ -164,6 +167,7 @@ export default Vue.extend({
       showShareModal: false,
       showRequestModal: false,
       showCCFlowModal: false,
+      showPapertagsModal: false,
     }
   },
   methods: {
@@ -182,6 +186,9 @@ export default Vue.extend({
           break
         case 'carbon-copy':
           this.showCCFlowModal = true
+          break
+        case 'papertag':
+          this.showPapertagsModal = true
           break
       }
     },
