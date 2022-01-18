@@ -3,8 +3,6 @@
     <div
       class="flex items-center gap-4 flex-1 justify-between max-w-4xl px-4 text-sm"
     >
-      <p>{{ file.user.id }}</p>
-      <p>{{ $auth.user.id }}</p>
       <span v-if="!isCreator" class="capitalize">{{ file.action }}</span>
       <el-dropdown
         v-else
