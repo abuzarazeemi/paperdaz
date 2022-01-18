@@ -168,14 +168,14 @@ export default Vue.extend({
   },
   data() {
     return {
-      showShareModal: false,
-      showRequestModal: false,
-      showCCFlowModal: false,
-      showPapertagsModal: false,
+      showShareModal: false as boolean,
+      showRequestModal: false as boolean,
+      showCCFlowModal: false as boolean,
+      showPapertagsModal: false as boolean,
     }
   },
   computed: {
-    isCreator() {
+    isCreator(): boolean {
       try {
         return this.file.user.id === this.$auth.user?.id
       } catch (e) {
