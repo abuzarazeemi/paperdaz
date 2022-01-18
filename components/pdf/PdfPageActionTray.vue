@@ -123,6 +123,7 @@
 
     <pdf-share-modal :file="file" v-model="showShareModal" />
     <pdf-request-modal :file="file" v-model="showRequestModal" />
+    <pdf-c-c-flow-modal :file="file" v-model="showCCFlowModal" />
   </div>
 </template>
 
@@ -137,6 +138,7 @@ import CopyIcon from '../svg-icons/CopyIcon.vue'
 import TrashCanSolidIcon from '../svg-icons/TrashCanSolidIcon.vue'
 import TrashCanIcon from '../svg-icons/TrashCanIcon.vue'
 import PdfShareModal from './modals/PdfShareModal.vue'
+import PdfCCFlowModal from './modals/PdfCCFlowModal.vue'
 
 export default Vue.extend({
   components: {
@@ -148,6 +150,7 @@ export default Vue.extend({
     TrashCanSolidIcon,
     TrashCanIcon,
     PdfShareModal,
+    PdfCCFlowModal,
   },
   name: 'PdfPageActionTray',
   props: {
@@ -160,6 +163,7 @@ export default Vue.extend({
     return {
       showShareModal: false,
       showRequestModal: false,
+      showCCFlowModal: false,
     }
   },
   methods: {
@@ -175,6 +179,9 @@ export default Vue.extend({
           break
         case 'request':
           this.showRequestModal = true
+          break
+        case 'carbon-copy':
+          this.showCCFlowModal = true
           break
       }
     },
