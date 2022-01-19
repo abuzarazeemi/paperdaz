@@ -22,39 +22,43 @@
             class="mt-2 mb-14 mx-auto px-4 py-8 flex flex-col items-center border-2 border-paperdazgreen-300 border-dashed rounded-2xl max-w-3xl"
           >
             <span
-              class="circle circle-46 bg-paperdazgreen-300 text-white mb-20"
+              class="circle circle-46 bg-paperdazgreen-300 text-white mb-10 sm:mb-20"
             >
               <cloud-icon width="47" height="47" />
             </span>
             <div class="flex flex-wrap items-center gap-2">
-              <span
-                class="circle circle-20 cursor-pointer bg-paperdazgreen-300 text-white"
-              >
-                <facebook-icon height="20" />
-              </span>
-              <span
-                class="circle circle-20 cursor-pointer bg-paperdazgreen-300 text-white"
-              >
-                <linked-in-icon height="20" />
-              </span>
-              <span class="circle circle-20 cursor-pointer text-white">
-                <redit-icon :background="'#77C360'" height="50" width="50" />
-              </span>
-              <span
-                class="circle circle-20 cursor-pointer bg-paperdazgreen-300 text-white"
-              >
-                <envelope-icon height="20" />
-              </span>
-              <span
-                class="circle circle-20 cursor-pointer bg-paperdazgreen-300 text-white"
-              >
-                <twitter-icon height="20" />
-              </span>
-              <span
-                class="circle circle-20 cursor-pointer bg-paperdazgreen-300 text-white"
-              >
-                <whatsapp-icon height="20" />
-              </span>
+              <div class="flex items-center gap-2.5 justify-center flex-1">
+                <span
+                  class="circle circle-20 cursor-pointer bg-paperdazgreen-300 text-white"
+                >
+                  <facebook-icon height="20" />
+                </span>
+                <span
+                  class="circle circle-20 cursor-pointer bg-paperdazgreen-300 text-white"
+                >
+                  <linked-in-icon height="20" />
+                </span>
+                <span class="circle circle-20 cursor-pointer text-white">
+                  <redit-icon :background="'#77C360'" height="50" width="50" />
+                </span>
+              </div>
+              <div class="flex items-center gap-2.5 justify-center flex-1">
+                <span
+                  class="circle circle-20 cursor-pointer bg-paperdazgreen-300 text-white"
+                >
+                  <envelope-icon height="20" />
+                </span>
+                <span
+                  class="circle circle-20 cursor-pointer bg-paperdazgreen-300 text-white"
+                >
+                  <twitter-icon height="20" />
+                </span>
+                <span
+                  class="circle circle-20 cursor-pointer bg-paperdazgreen-300 text-white"
+                >
+                  <whatsapp-icon height="20" />
+                </span>
+              </div>
             </div>
           </div>
           <!-- Start:: not allowed icon container -->

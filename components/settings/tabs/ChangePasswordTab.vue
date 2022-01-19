@@ -23,9 +23,10 @@
         >
 
         <el-input
-          placeholder="*******************************"
+          placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
           show-password
-          :disabled="!editingDetails"
+          required
+          :disabled="!editingDetails || loading"
         ></el-input>
       </div>
       <div class="mb-7">
@@ -33,9 +34,10 @@
           >New Password</label
         >
         <el-input
-          placeholder="*******************************"
+          placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
           show-password
-          :disabled="!editingDetails"
+          required
+          :disabled="!editingDetails || loading"
         ></el-input>
       </div>
       <div class="mb-10">
@@ -43,15 +45,17 @@
           >Confirm New Password</label
         >
         <el-input
-          placeholder="*******************************"
+          placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
           show-password
-          :disabled="!editingDetails"
+          required
+          :disabled="!editingDetails || loading"
         ></el-input>
       </div>
       <div class="flex justify-center">
         <button
-          class="bg-paperdazgreen-300 text-white rounded-xl h-12 px-5 font-medium text-lg"
+          class="disabled:opacity-50 disabled:cursor-not-allowed bg-paperdazgreen-300 text-white rounded-xl h-12 px-5 font-medium text-lg"
           v-show="editingDetails"
+          :disabled="loading"
         >
           Update Password
         </button>
@@ -71,7 +75,8 @@ export default Vue.extend({
   components: { InputField, PasswordField, PenIcon, TimesIcon },
   data() {
     return {
-      editingDetails: false,
+      editingDetails: true,
+      loading: true,
     }
   },
 })
