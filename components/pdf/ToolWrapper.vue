@@ -146,6 +146,7 @@ export default {
     signature: String,
     activeToolId: Number,
     setActiveToolId: Function,
+    pageNumber: Number,
   },
   components: {
     TextTool,
@@ -282,7 +283,7 @@ export default {
             ? this.TOOL_DIRECTION.right
             : this.TOOL_DIRECTION.left
       }
-      this.dragHandler(event, this.id, direction)
+      this.dragHandler(event, this.id, direction, this.pageNumber)
       if (event.isFinal) {
         if (
           this.type == this.TOOL_TYPE.line ||
