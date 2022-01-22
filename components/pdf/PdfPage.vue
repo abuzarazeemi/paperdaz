@@ -1,6 +1,12 @@
 <template>
   <div class="pdf-page" ref="PdfPage">
-    <canvas ref="canvas"></canvas>
+    <canvas 
+    
+                v-hammer:pan="(ev) => handlePanning(ev, undefined, undefined, pageNumber)"
+                @click="e => onCLickSinglePageOuter(e, pageNumber)"
+                @mousemove="onMouseMoveOnPages"
+                @mouseleave="onMouseLeaveFromPages"
+    ref="canvas"></canvas>
   </div>
 </template>
 
@@ -9,6 +15,10 @@ export default {
   props: {
     pageNumber: Number,
     pdf: Object,
+    handlePanning: Function,
+    onCLickSinglePageOuter: Function,
+    onMouseMoveOnPages: Function,
+    onMouseLeaveFromPages: Function,
   },
   data: () => ({
     scale: 2,
@@ -56,4 +66,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="sass" scoped>
+.pdf-page
+  max-height: 296.85mm
+</style>

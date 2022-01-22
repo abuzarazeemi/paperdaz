@@ -192,15 +192,19 @@ export default Vue.extend({
     handleCommand(command: string) {
       switch (String(command).toLowerCase()) {
         case 'share':
+          // @ts-ignore
           this.showShareModal = true
           break
         case 'request':
+          // @ts-ignore
           this.showRequestModal = true
           break
         case 'carbon-copy':
+          // @ts-ignore
           this.showCCFlowModal = true
           break
         case 'papertag':
+          // @ts-ignore
           this.showPapertagsModal = true
           break
       }
