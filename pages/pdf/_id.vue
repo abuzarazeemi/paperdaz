@@ -30,7 +30,7 @@
           ref="PagesOuter"
           :style="pagesOuterStyle"
         >
-          <tool-wrapper
+          <!-- <tool-wrapper
             v-for="tool in fillteredTools"
             :key="tool.id"
             :dragHandler="handlePanning"
@@ -51,27 +51,50 @@
             @pos-change="onPosChange"
             :activeToolId="activeToolId"
             :setActiveToolId="setActiveToolId"
-          />
+          /> -->
           <!-- <component :is="`${selectedToolType}-identifier`" v-if="selectedToolType && showToolIdentifier" :position="toolIdentifierPosition" /> -->
           <div
             class="pdf-single-pages-outer"
             ref="pdf-single-pages-outer"
-            v-hammer:pan="(ev) => handlePanning(ev)"
-            @click="onCLickSinglePageOuter"
-            @mousemove="onMouseMoveOnPages"
-            @mouseleave="onMouseLeaveFromPages"
             v-if="pdf"
           >
             <div
-              class="pdf-single-page-outer"
+              :class="['pdf-single-page-outer', { 'mt-6': pI > 0 && !downloadingPdf }]"
+              :ref="`pdf-single-page-outer-${pI+1}`"
               v-for="(page, pI) in pdf.numPages"
               :key="pI"
+              style="position: relative"
             >
-              <div
-                class="mt-6 page-break"
-                v-if="pI > 0 && pI < pdf.numPages"
-              ></div>
-              <pdf-page :page-number="pI + 1" :pdf="pdf" />
+              <tool-wrapper
+                v-for="tool in fillteredTools(pI + 1)"
+                :key="tool.id"
+                :dragHandler="handlePanning"
+                :id="tool.id"
+                :tool="tool"
+                :type="tool.type"
+                :x1="tool.x1"
+                :y1="tool.y1"
+                :x2="tool.x2"
+                :y2="tool.y2"
+                :points="tool.points"
+                :deleteTool="deleteTool"
+                :handleIncrease="handleIncrease"
+                :handleDecrease="handleDecrease"
+                :fontSize="tool.fontSize"
+                :scale="tool.scale"
+                :signature="signature"
+                @pos-change="onPosChange"
+                :activeToolId="activeToolId"
+                :setActiveToolId="setActiveToolId"
+                :pageNumber="pI + 1"
+              />
+              <pdf-page
+                :handlePanning="handlePanning"
+                :onCLickSinglePageOuter="onCLickSinglePageOuter"
+                :onMouseMoveOnPages="onMouseMoveOnPages"
+                :onMouseLeaveFromPages="onMouseLeaveFromPages"
+                :page-number="pI + 1" :pdf="pdf"
+              />
             </div>
           </div>
         </div>
@@ -185,6 +208,7 @@ export default {
     activeToolId: null,
 
     toolId: 0,
+    downloadingPdf: false,
   }),
   computed: {
     pagesOuterStyle() {
@@ -194,9 +218,6 @@ export default {
         '-webkit-transform': scale,
         'transform-origin': '0px 0px',
       }
-    },
-    fillteredTools() {
-      return this.tools.filter((t) => !t.isDeleted)
     },
     TOOL_TYPE() {
       return TOOL_TYPE
@@ -345,20 +366,36 @@ export default {
       }
       this.$forceUpdate()
     },
+    fillteredTools(pageNumber) {
+      return this.tools.filter((t) => !t.isDeleted && t.pageNumber == pageNumber)
+    },
     async downloadPdf() {
       this.selectedToolId = null
       this.activeToolId = null
       let options = {
-        pagebreak: { avoid: '.page-break', after: '.page-break' },
+        // pagebreak: { after: '.pdf-single-page-outer' },
         image: { type: 'jpeg', quality: 1.0 },
         margin: [0, 0, 0, 0],
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
+        html2canvas: { scale: 2, },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
       }
       let prevScale = this.scale
       this.scale = 1
-      await html2pdf().set(options).from(this.$refs.PagesOuter).save()
+      this.downloadingPdf = true
+      await this.$nextTick()
+      let elements = Array.from(this.$refs['pdf-single-pages-outer'].children)
+      let worker = html2pdf().set(options).from(elements[0]).toContainer().toCanvas().toPdf()
+
+      if (elements.length > 1) {
+        let pdfs = []
+        elements.slice(1).forEach(element => {
+          worker = worker.get('pdf').then(pdf => pdf.addPage()).set(options).from(element).toContainer().toCanvas().toPdf()
+        })
+      }
+
+      await worker.save()
       this.scale = prevScale
+      this.downloadingPdf = false
     },
     async deleteTool(id) {
       let index = this.tools.findIndex((t) => t.id == id)
@@ -371,7 +408,7 @@ export default {
       await this.$nextTick()
       this.$forceUpdate()
     },
-    handlePanning(event, id = undefined, direction = undefined) {
+    async handlePanning(event, id = undefined, direction = undefined, pageNumber) {
       var elem = this.$refs['pdf-single-pages-outer']
 
       if (!this.isPanning && id == undefined) {
@@ -379,13 +416,13 @@ export default {
         this.lastPosX = elem.offsetLeft
         this.lastPosY = elem.offsetTop
         if (this.selectedToolType == this.TOOL_TYPE.line) {
-          this.placeTool(event.srcEvent, null)
+          await this.placeTool(event.srcEvent, pageNumber)
           this.selectedToolId = this.tools[this.tools.length - 1].id
         } else if (this.selectedToolType == this.TOOL_TYPE.highlight) {
-          this.placeTool(event.srcEvent, null)
+          await this.placeTool(event.srcEvent, pageNumber)
           this.selectedToolId = this.tools[this.tools.length - 1].id
         } else if (this.selectedToolType == this.TOOL_TYPE.draw) {
-          this.placeTool(event.srcEvent, null)
+          await this.placeTool(event.srcEvent, pageNumber)
           this.selectedToolId = this.tools[this.tools.length - 1].id
         }
       } else if (id != undefined && this.selectedToolId != id) {
@@ -398,7 +435,9 @@ export default {
       var posY = event.deltaY + this.lastPosY
 
       const getPointPos = () => {
-        let { x, y } = this.pointerPos(event.srcEvent, this.$refs.PagesOuter)
+        let parent = this.$refs[`pdf-single-page-outer-${pageNumber}`]
+        if(Array.isArray(parent)) parent = parent[0]
+        let { x, y } = this.pointerPos(event.srcEvent, parent)
 
         if (y < 0) y = 0
         if (y > elem.clientHeight) x = elem.clientHeight
@@ -467,7 +506,7 @@ export default {
 
       event = event || window.event
 
-      const scrollingElement =
+      const scrollingElement = parent ||
         this.$refs.scrollingElement ||
         document.scrollingElement ||
         document.body
@@ -530,7 +569,7 @@ export default {
 
       return { x, y }
     },
-    onCLickSinglePageOuter(event) {
+    onCLickSinglePageOuter(event, pageNumber) {
       if (
         !this.selectedToolType ||
         this.selectedToolType == this.TOOL_TYPE.line ||
@@ -538,9 +577,12 @@ export default {
         this.selectedToolType == this.TOOL_TYPE.draw
       )
         return
-      this.placeTool(event, this.$refs.PagesOuter)
+      this.placeTool(event, pageNumber)
     },
-    placeTool(e, parent) {
+    placeTool(e, pageNumber) {
+      let parent = this.$refs[`pdf-single-page-outer-${pageNumber}`]
+      if(Array.isArray(parent)) parent = parent[0]
+
       let { x, y } = this.pointerPos(e, parent || this.$refs.PagesOuter)
       let obj = {
         type: this.TOOL_TYPE[this.selectedToolType],
@@ -548,6 +590,7 @@ export default {
         left: x - this.TOOL_THRESHOLD[this.selectedToolType].tool.left,
         isDeleted: false,
         id: ++this.toolId,
+        pageNumber,
       }
       if (this.selectedToolType == this.TOOL_TYPE.line) {
         obj.x1 = obj.left
@@ -564,14 +607,14 @@ export default {
       }
       this.tools.push(obj)
     },
-    handleScale() {
+    async handleScale() {
+      await this.$nextTick()
       let scrollingElem = this.$refs.scrollingElement
       let pagesOuter = this.$refs.PagesOuter
       if (scrollingElem && pagesOuter) {
         this.scale = scrollingElem.clientWidth / pagesOuter.clientWidth
         this.$forceUpdate()
       }
-      console.log(this.scale, [scrollingElem, pagesOuter])
     },
     async fetchPdf() {
       // let res = await fetch(demoPdf)
