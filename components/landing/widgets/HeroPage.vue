@@ -1,5 +1,5 @@
 <template>
-  <div class="container py-14 sm:py-20 a">
+  <div class="container py-14 sm:py-20">
     <div
       class="grid grid-cols-1 sm:grid-cols-[1fr,max-content] gap-2 sm:gap-8 md:gap-10"
     >

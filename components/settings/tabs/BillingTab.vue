@@ -176,26 +176,12 @@
                     </div>
                   </td>
                 </tr>
-                <tr>
-                  <td class="text-base font-bold">PAYMENT METHOD</td>
-                  <td>
-                    <p class="">
-                      Credit card number
-                      <span class="text-paperdazgreen-300"
-                        >**** **** ****
-                        {{
-                          (card.card_number || '').substring(
-                            (card.card_number || '').length - 4
-                          )
-                        }}</span
-                      >
-                      <br />Expiration date:
-                      <span class="text-paperdazgreen-300"
-                        >{{ card.exp_month }}/{{ card.exp_year }}</span
-                      >
-                    </p>
+                <tr style="border-bottom: none">
+                  <td class="text-base font-bold" style="padding-bottom: 2px">
+                    PAYMENT METHOD
                   </td>
-                  <td>
+                  <td style="padding-bottom: 2px"></td>
+                  <td rowspan="2">
                     <div class="grid place-items-center h-full w-full">
                       <p class="mb-2">
                         <button
@@ -214,6 +200,41 @@
                         </button>
                       </p>
                     </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-base font-bold">
+                    <div class="inline-grid grid-cols-2 text-xs">
+                      <button
+                        type="button"
+                        class="w-16 h-9 text-white bg-paperdazgreen-400 m-0 rounded-l-full"
+                      >
+                        Card
+                      </button>
+                      <button
+                        type="button"
+                        class="w-16 h-9 text-white bg-[#FFC003] m-0 rounded-r-full"
+                      >
+                        Credit
+                      </button>
+                    </div>
+                  </td>
+                  <td>
+                    <p class="">
+                      Credit card number
+                      <span class="text-paperdazgreen-300"
+                        >**** **** ****
+                        {{
+                          (card.card_number || '').substring(
+                            (card.card_number || '').length - 4
+                          )
+                        }}</span
+                      >
+                      <br />Expiration date:
+                      <span class="text-paperdazgreen-300"
+                        >{{ card.exp_month }}/{{ card.exp_year }}</span
+                      >
+                    </p>
                   </td>
                 </tr>
               </tbody>
