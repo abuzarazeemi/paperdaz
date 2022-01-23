@@ -1,5 +1,10 @@
 <template>
   <section>
+    <div class="mb-10">
+      <button class="h-10 px-5 rounded bg-paperdazgreen-400 text-white text-sm">
+        Not enough credits!
+      </button>
+    </div>
     <transition name="fade" mode="out-in">
       <div
         v-if="$fetchState.pending"
@@ -208,12 +213,14 @@
                       <button
                         type="button"
                         class="w-16 h-9 text-white bg-paperdazgreen-400 m-0 rounded-l-full"
+                        @click="showBillingChangeModalAction('credit', 'card')"
                       >
                         Card
                       </button>
                       <button
                         type="button"
                         class="w-16 h-9 text-white bg-[#FFC003] m-0 rounded-r-full"
+                        @click="showBillingChangeModalAction('card', 'credit')"
                       >
                         Credit
                       </button>
@@ -252,6 +259,11 @@
       @success="$fetch"
       v-model="showUpdateBillingInfoModal"
     />
+    <change-payment-method-modal
+      v-model="showBillingChangeModal"
+      :from="billingFrom"
+      :to="billingTo"
+    />
   </section>
 </template>
 
@@ -259,6 +271,7 @@
 import Vue from 'vue'
 import AdditionalFeatureModal from '~/components/packages/modals/AdditionalFeatureModal.vue'
 import CancelPackageSubscriptionModal from '~/components/packages/modals/CancelPackageSubscriptionModal.vue'
+import ChangePaymentMethodModal from '~/components/packages/modals/ChangePaymentMethodModal.vue'
 import DeleteAdditionalFeaturesModal from '~/components/packages/modals/DeleteAdditionalFeaturesModal.vue'
 import DeleteBillingInformationModal from '~/components/packages/modals/DeleteBillingInformationModal.vue'
 import UpdateBillingInformationModal from '~/components/packages/modals/UpdateBillingInformationModal.vue'
@@ -276,6 +289,7 @@ export default Vue.extend({
     DeleteBillingInformationModal,
     UpdateBillingInformationModal,
     SpinnerDottedIcon,
+    ChangePaymentMethodModal,
   },
   async fetch() {
     const fetchCard = () =>
@@ -308,6 +322,9 @@ export default Vue.extend({
   },
   data() {
     return {
+      showBillingChangeModal: false,
+      billingFrom: '',
+      billingTo: '',
       showAdditionalFeatureModal: false,
       showDeleteFeatureModal: false,
       showCancelSubscriptionModal: false,
@@ -328,6 +345,13 @@ export default Vue.extend({
       return (
         this.additionalFeature && Object.keys(this.additionalFeature).length > 0
       )
+    },
+  },
+  methods: {
+    showBillingChangeModalAction(from: string, to: string) {
+      this.billingFrom = from
+      this.billingTo = to
+      this.showBillingChangeModal = true
     },
   },
 })
