@@ -1,6 +1,6 @@
 <template>
   <div class="tool">
-    <p :style="style">{{ text }}</p>
+    <p :style="style">{{ value }}</p>
   </div>
 </template>
 
@@ -9,10 +9,8 @@ export default {
   props: {
     isActive: Boolean,
     fontSize: Number,
+    value: String,
   },
-  data: () => ({
-    text: '2021-12-04',
-  }),
   computed: {
     style() {
       return {
