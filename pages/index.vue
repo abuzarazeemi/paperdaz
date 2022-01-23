@@ -1,6 +1,8 @@
 <template>
   <div class="">
-    <div class="bg-gradient-to-t from-white via-transparent">
+    <div
+      class="bg-gradient-to-t from-white via-transparent min-h-[80vh] grid place-items-center"
+    >
       <hero-page />
     </div>
     <landing-page-info />

@@ -26,6 +26,7 @@ export default {
       { name: 'format-detection', content: 'telephone=no' },
     ],
     link: [{ rel: 'icon', type: 'image/png', href: '/icon.png' }],
+    script: [{ src: 'https://www.google.com/recaptcha/api.js' }],
   },
 
   router: {

@@ -17,7 +17,7 @@
           <div>
             <nuxt-link
               to="/register"
-              class="font-semibold text-[13px] text-white bg-paperdazgreen-300 shadow-md h-10 inline-flex items-center rounded-md px-5 w-full mb-8 sm:mb-0 sm:w-[unset]"
+              class="font-semibold text-[13px] text-white bg-paperdazgreen-300 shadow-md h-10 inline-flex items-center justify-center rounded-md px-5 w-full mb-8 sm:mb-0 sm:w-[unset]"
             >
               Try Paperdaz for free
             </nuxt-link>
