@@ -7,6 +7,7 @@
     <pdf-page-aside class="hidden md:block" />
     <main
       class="grid grid-rows-[max-content,max-content,1fr] gap-1 max-w-max mx-auto px-[2%]"
+      @resize="handleScale"
     >
       <pdf-page-action-tray
         :file="file"
@@ -87,6 +88,8 @@
                 :activeToolId="activeToolId"
                 :setActiveToolId="setActiveToolId"
                 :pageNumber="pI + 1"
+                :value="tool.value"
+                v-model="tool.value"
               />
               <pdf-page
                 :handlePanning="handlePanning"
@@ -134,6 +137,8 @@ import NameIdentifier from '@/components/pdf/tools_identifiers/Name'
 import InitialIdentifier from '@/components/pdf/tools_identifiers/Initial'
 import SignatureIdentifier from '@/components/pdf/tools_identifiers/Signature'
 import StarIdentifier from '@/components/pdf/tools_identifiers/Star'
+
+import moment from 'moment'
 
 export default {
   layout: 'pdf',
@@ -387,7 +392,6 @@ export default {
       let worker = html2pdf().set(options).from(elements[0]).toContainer().toCanvas().toPdf()
 
       if (elements.length > 1) {
-        let pdfs = []
         elements.slice(1).forEach(element => {
           worker = worker.get('pdf').then(pdf => pdf.addPage()).set(options).from(element).toContainer().toCanvas().toPdf()
         })
@@ -604,6 +608,8 @@ export default {
         delete obj.top
       } else if (this.selectedToolType == this.TOOL_TYPE.draw) {
         obj.points = [obj.left, obj.top]
+      } else if (this.selectedToolType == this.TOOL_TYPE.date) {
+        obj.value = moment().format('YYYY-MM-DD')
       }
       this.tools.push(obj)
     },
