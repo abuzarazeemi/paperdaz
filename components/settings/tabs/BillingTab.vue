@@ -1,7 +1,10 @@
 <template>
   <section>
     <div class="mb-10">
-      <button class="h-10 px-5 rounded bg-paperdazgreen-400 text-white text-sm">
+      <button
+        @click="showInsufficientCreditModal = true"
+        class="h-10 px-5 rounded bg-paperdazgreen-400 text-white text-sm"
+      >
         Not enough credits!
       </button>
     </div>
@@ -264,6 +267,7 @@
       :from="billingFrom"
       :to="billingTo"
     />
+    <insufficient-credit-modal v-model="showInsufficientCreditModal" />
   </section>
 </template>
 
@@ -274,6 +278,7 @@ import CancelPackageSubscriptionModal from '~/components/packages/modals/CancelP
 import ChangePaymentMethodModal from '~/components/packages/modals/ChangePaymentMethodModal.vue'
 import DeleteAdditionalFeaturesModal from '~/components/packages/modals/DeleteAdditionalFeaturesModal.vue'
 import DeleteBillingInformationModal from '~/components/packages/modals/DeleteBillingInformationModal.vue'
+import InsufficientCreditModal from '~/components/packages/modals/InsufficientCreditModal.vue'
 import UpdateBillingInformationModal from '~/components/packages/modals/UpdateBillingInformationModal.vue'
 import SpinnerDottedIcon from '~/components/svg-icons/SpinnerDottedIcon.vue'
 import TrashCanIcon from '~/components/svg-icons/TrashCanIcon.vue'
@@ -290,6 +295,7 @@ export default Vue.extend({
     UpdateBillingInformationModal,
     SpinnerDottedIcon,
     ChangePaymentMethodModal,
+    InsufficientCreditModal,
   },
   async fetch() {
     const fetchCard = () =>
@@ -322,6 +328,7 @@ export default Vue.extend({
   },
   data() {
     return {
+      showInsufficientCreditModal: false,
       showBillingChangeModal: false,
       billingFrom: '',
       billingTo: '',
