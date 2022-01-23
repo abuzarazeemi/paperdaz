@@ -49,6 +49,7 @@
       <button
         class="px-0.5 h-full flex items-center relative text-[15px]"
         @click="openCalendar"
+        v-if="type == TOOL_TYPE.date"
       >
         <calendar-icon />
         <el-date-picker
@@ -83,6 +84,7 @@
         :fontSize="fontSize"
         :scale="scale"
         :signature="signature"
+        :value="value"
       />
       <div
         :class="[
@@ -127,6 +129,7 @@ import MoveIcon from '../svg-icons/MoveIcon.vue'
 import CalendarIcon from '../svg-icons/CalendarIcon.vue'
 import TrashXIcon from '../svg-icons/TrashXIcon.vue'
 import CheckCircleIcon from '../svg-icons/CheckCircleIcon.vue'
+import moment from 'moment'
 export default {
   props: {
     tool: Object,
@@ -147,6 +150,7 @@ export default {
     activeToolId: Number,
     setActiveToolId: Function,
     pageNumber: Number,
+    value: undefined,
   },
   components: {
     TextTool,
@@ -211,6 +215,9 @@ export default {
     },
     activeToolId(v) {
       if (v == this.id) this.toolMenuPosCalculation()
+    },
+    calendarValue(v){
+      this.$emit('input', moment(new Date(v).getTime()).format('YYYY-MM-DD'))
     },
   },
   computed: {
