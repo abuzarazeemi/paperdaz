@@ -10,7 +10,7 @@
           Fear not. We'll email you instructions to reset your password.
         </p>
 
-        <form action="" class="text-sm" @submit.prevent="login">
+        <form action="" class="text-sm" @submit.prevent="onSubmit">
           <message-alert-widget
             :message="errorMessage"
             v-show="errorMessage"
@@ -33,15 +33,7 @@
           <p class="text-xs text-paperdazgreen-400 mb-10">
             Enter the email associated with your account
           </p>
-
-          <!-- <button
-            class="g-recaptcha"
-            data-sitekey="reCAPTCHA_site_key"
-            data-callback="onSubmit"
-            data-action="submit"
-          >
-            Submit
-          </button> -->
+          <!-- <recaptcha /> -->
 
           <div class="flex flex-col items-center">
             <button
@@ -99,12 +91,31 @@ export default Vue.extend({
       errorMessage: '',
     }
   },
+  // async mounted() {
+  //   try {
+  //     await this.$recaptcha.init()
+  //   } catch (e) {
+  //     console.error(e)
+  //   }
+  // },
+  // beforeDestroy() {
+  //   this.$recaptcha.destroy()
+  // },
   methods: {
-    login() {
+    onSubmit() {
       event?.preventDefault()
-
-      console.log('Submitted successfully')
+      this.$nuxt.$router.push('/create-new-password')
     },
+    // async onSubmit() {
+    //   try {
+    //     const token = await this.$recaptcha.execute('login')
+    //     console.log('ReCaptcha token:', token)
+
+    //     // send token to server alongside your form data
+    //   } catch (error) {
+    //     console.log('Login error:', error)
+    //   }
+    // },
   },
 })
 </script>

@@ -11,6 +11,10 @@ export default {
     APP_URL: process.env.APP_URL,
     countryApiKey: process.env.COUNTRY_STATE_CITY_API_KEY,
     googleFontsApiKey: process.env.GOOGLE_FONTS_API_KEY,
+    // recaptcha: {
+    //   /* reCAPTCHA options */
+    //   siteKey: process.env.RECAPTCHA_SITE_KEY, // for example
+    // },
   },
   env: {
     API_URL: process.env.API_URL,
@@ -26,7 +30,6 @@ export default {
       { name: 'format-detection', content: 'telephone=no' },
     ],
     link: [{ rel: 'icon', type: 'image/png', href: '/icon.png' }],
-    script: [{ src: 'https://www.google.com/recaptcha/api.js' }],
   },
 
   router: {
@@ -66,6 +69,15 @@ export default {
     '@nuxtjs/pwa',
     // '@nuxtjs/firebase',
     '@nuxtjs/toast',
+    [
+      '@nuxtjs/recaptcha',
+      {
+        // hideBadge: false, // Hide badge element (v3 & v2 via size=invisible)
+        // language: 'en', // Recaptcha language (v2)
+        siteKey: process.env.RECAPTCHA_SITE_KEY, // Site key for requests
+        version: 3, // Version
+      },
+    ],
   ],
   axios: {
     baseURL: process.env.API_URL,
