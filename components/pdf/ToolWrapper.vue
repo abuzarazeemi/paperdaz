@@ -83,7 +83,6 @@
         :isActive="isActive"
         :fontSize="fontSize"
         :scale="scale"
-        :signature="signature"
         :value="value"
       />
       <div
