@@ -65,6 +65,22 @@ export default Vue.extend({
       packages: [],
     }
   },
+  head() {
+    return {
+      script: [
+        // ...
+        {
+          hid: 'tawk.to',
+          src: 'https://embed.tawk.to/61ee08389bd1f31184d8e4d8/1fq4t07bg',
+          defer: true,
+        },
+      ],
+    }
+  },
+  beforeRouteLeave(to, from, next) {
+    location.href = to.fullPath
+    return
+  },
   async asyncData({ $axios, error }) {
     const packages = await $axios
       .$get('/package')
