@@ -44,7 +44,7 @@
         <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
         <nuxt-link to="/about" class="">About </nuxt-link>
         <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
-        <nuxt-link to="#" class="">Contact Us </nuxt-link>
+        <nuxt-link to="/contact-us" class="">Contact Us </nuxt-link>
         <div
           class="h-px bg-paperdazgray-300 w-full lg:hidden"
           v-if="!$auth.loggedIn"
