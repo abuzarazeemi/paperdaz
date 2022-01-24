@@ -32,6 +32,10 @@ import LandingPageUpload from '~/components/landing/widgets/LandingPageUpload.vu
     LandingPageKeyFeatures,
     LandingJoinSection,
   },
+  beforeRouteLeave(to, from, next) {
+    location.href = to.fullPath
+    return
+  },
 })
 export default class LandingPage extends Vue {
   gsapLoaded: boolean = false
@@ -62,6 +66,11 @@ export default class LandingPage extends Vue {
           callback: () => {
             this.motionPluginLoaded = true
           },
+        },
+        {
+          hid: 'tawk.to',
+          src: 'https://embed.tawk.to/61ee08389bd1f31184d8e4d8/1fq4t07bg',
+          defer: true,
         },
       ],
     }
