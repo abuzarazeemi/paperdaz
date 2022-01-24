@@ -42,6 +42,7 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '~/plugins/element.ts',
+    // '~/plugins/tawkto.client.js',
     { src: '~/plugins/nuxt-hammer.js', ssr: false },
     { src: '~/plugins/bus.js' },
     { src: '~/plugins/outside-click.js' },
