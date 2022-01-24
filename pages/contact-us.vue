@@ -111,7 +111,6 @@ export default Vue.extend({
   --scaling-factor: 1.05;
   border: 1px solid rgba(0, 0, 0, 0.17);
   border-top: 3px solid var(--accent-color);
-  padding: 16px;
   max-width: 100%;
   transition: all 0.3s ease-in-out;
   background: white;
@@ -121,6 +120,7 @@ export default Vue.extend({
   align-items: stretch;
   position: relative;
   z-index: 1;
+  padding: 32px 16px;
 
   @media only screen and (min-width: 768px) {
     --scaling-factor: 1.2;
@@ -129,12 +129,13 @@ export default Vue.extend({
   }
 
   & .card-header {
-    @apply text-center text-[#414142] text-xl font-semibold mb-6;
+    @apply text-center text-[#414142] text-xl font-semibold mb-8;
   }
 
   & .body {
-    @apply text-center text-sm font-normal mb-4;
+    @apply text-center  font-normal mb-6;
     flex: 1;
+    font-size: 13px;
   }
 
   & > .button {
