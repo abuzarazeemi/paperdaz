@@ -1,6 +1,6 @@
 <template>
   <div class="tool">
-    <img :src="signature" alt="" v-if="signature" :style="style" />
+    <img :src="value" alt="" v-if="value" :style="style" />
     <div class="no-signature" v-else>
       <p>No Signature</p>
     </div>
@@ -11,7 +11,7 @@
 export default {
   props: {
     scale: Number,
-    signature: String,
+    value: String,
   },
   computed: {
     style() {

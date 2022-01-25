@@ -83,7 +83,6 @@
                 :handleDecrease="handleDecrease"
                 :fontSize="tool.fontSize"
                 :scale="tool.scale"
-                :signature="signature"
                 @pos-change="onPosChange"
                 :activeToolId="activeToolId"
                 :setActiveToolId="setActiveToolId"
@@ -165,6 +164,12 @@ export default {
     this.fetchPdf()
     this.$BUS.$on('download-pdf', this.downloadPdf)
     this.$BUS.$on('signature-update', (v) => (this.signature = v))
+  },
+  mounted () {
+    document.addEventListener('keyup', this.keyupHandler)
+  },
+  destroyed () {
+    document.removeEventListener('keyup', this.keyupHandler)
   },
   beforeDestroy() {
     this.$BUS.$off('download-pdf')
@@ -296,6 +301,11 @@ export default {
     },
   },
   methods: {
+    keyupHandler (event) {
+      if (event.ctrlKey && event.code === 'KeyZ') {
+        this.undo()
+      }
+    },
     undo() {
       let lastId = this.deletedToolStack.pop()
       if (lastId) {
@@ -610,6 +620,8 @@ export default {
         obj.points = [obj.left, obj.top]
       } else if (this.selectedToolType == this.TOOL_TYPE.date) {
         obj.value = moment().format('YYYY-MM-DD')
+      } else if (this.selectedToolType == this.TOOL_TYPE.signature) {
+        obj.value = this.signature
       }
       this.tools.push(obj)
     },
