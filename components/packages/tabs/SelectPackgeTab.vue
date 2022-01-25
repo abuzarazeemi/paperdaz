@@ -29,7 +29,10 @@
             <arrow-down-icon />
           </button>
 
-          <div class="packages-container" ref="packagesContainer">
+          <div
+            class="packages-container custom-scrollbar"
+            ref="packagesContainer"
+          >
             <package-card
               v-for="(p, i) in orderedPackages"
               :key="p.id"
@@ -247,7 +250,7 @@ import CheckIcon from '~/components/svg-icons/CheckIcon.vue'
 
 export default Vue.extend({
   components: { PackageCard, ArrowDownIcon, CheckIcon },
-  name: 'SelectPackage',
+  name: 'SelectPackageTab',
 
   data() {
     return {
@@ -318,8 +321,6 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .packages-container {
   @apply flex
-        
-        custom-scrollbar
         py-12
         gap-12
         sm:gap-8
