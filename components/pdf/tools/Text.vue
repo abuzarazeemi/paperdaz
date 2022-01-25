@@ -10,10 +10,22 @@ export default {
   props: {
     isActive: Boolean,
     fontSize: Number,
+    value: String,
   },
   data: () => ({
     text: null,
   }),
+  created(){
+    this.text = this.value
+  },
+  watch: {
+    value(v){
+      if(this.text != v) this.text = v
+    },
+    text(v){
+      if(this.value != v) this.$emit('input', v)
+    },
+  },
   computed: {
     style() {
       return {

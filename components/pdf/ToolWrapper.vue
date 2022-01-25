@@ -84,6 +84,7 @@
         :fontSize="fontSize"
         :scale="scale"
         :value="value"
+        @input="onInp"
       />
       <div
         :class="[
@@ -387,6 +388,9 @@ export default {
       } else {
         this.$refs.toolMenu.style.left = `0`
       }
+    },
+    onInp(...v){
+      this.$emit('input', ...v)
     },
   },
 }

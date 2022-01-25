@@ -7,7 +7,6 @@
     <pdf-page-aside class="hidden md:block" />
     <main
       class="grid grid-rows-[max-content,max-content,1fr] gap-1 max-w-max mx-auto px-[2%]"
-      @resize="handleScale"
     >
       <pdf-page-action-tray
         :file="file"
@@ -195,6 +194,9 @@ export default {
 
     return { file }
   },
+  updated(){
+    this.handleScale()
+  },
   data: () => ({
     pdf: null,
     tools: [],
@@ -213,7 +215,8 @@ export default {
     file: {},
 
     scale: 1,
-    deletedToolStack: [],
+    stack: [],
+    undoStack: [],
 
     activeToolId: null,
 
@@ -302,15 +305,31 @@ export default {
   },
   methods: {
     keyupHandler (event) {
-      if (event.ctrlKey && event.code === 'KeyZ') {
+      if (event.ctrlKey && event.shiftKey && event.code === 'KeyZ') {
+        this.redo()
+      }
+      else if (event.ctrlKey && event.code === 'KeyZ') {
         this.undo()
       }
     },
     undo() {
-      let lastId = this.deletedToolStack.pop()
+      let lastId = this.stack.pop()
       if (lastId) {
         let index = this.tools.findIndex((t) => t.id == lastId)
-        if (index >= 0) this.tools[index].isDeleted = false
+        if (index >= 0) {
+          this.undoStack.push(lastId)
+          this.tools[index].isDeleted = !this.tools[index].isDeleted
+        }
+      }
+    },
+    redo() {
+      let lastId = this.undoStack.pop()
+      if (lastId) {
+        let index = this.tools.findIndex((t) => t.id == lastId)
+        if (index >= 0) {
+          this.stack.push(lastId)
+          this.tools[index].isDeleted = !this.tools[index].isDeleted
+        }
       }
     },
     setActiveToolId(v) {
@@ -329,6 +348,11 @@ export default {
         this.tools[index].x2 -= dx
         this.tools[index].y1 -= dy
         this.tools[index].y2 -= dy
+      } else if (type == this.TOOL_TYPE.draw) {
+        this.tools[index].points = this.tools[index].points.map((p, i) => i%2 == 0 ? p-dx : p-dy)
+      } else {
+        this.tools[index].left -= dx
+        this.tools[index].top -= dy
       }
     },
     handleIncrease(id) {
@@ -417,7 +441,7 @@ export default {
       this.activeToolId = null
       // this.tools.splice(index, 1)
       // this.$forceUpdate()
-      this.deletedToolStack.push(id)
+      this.stack.push(id)
       this.tools[index].isDeleted = true
       await this.$nextTick()
       this.$forceUpdate()
@@ -624,14 +648,18 @@ export default {
         obj.value = this.signature
       }
       this.tools.push(obj)
+      this.stack.push(this.toolId)
     },
     async handleScale() {
       await this.$nextTick()
       let scrollingElem = this.$refs.scrollingElement
       let pagesOuter = this.$refs.PagesOuter
       if (scrollingElem && pagesOuter) {
-        this.scale = scrollingElem.clientWidth / pagesOuter.clientWidth
-        this.$forceUpdate()
+        let s = scrollingElem.clientWidth / pagesOuter.clientWidth
+        if(s != this.scale) {
+          this.scale = s
+          this.$forceUpdate()
+        }
       }
     },
     async fetchPdf() {
