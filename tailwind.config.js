@@ -1,3 +1,4 @@
+const plugin = require('tailwindcss/plugin')
 module.exports = {
   // mode: 'jit',
   content: [
@@ -42,5 +43,33 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    plugin(({ addUtilities, e, theme, variants }) => {
+      addUtilities({
+        '.flex-gap-wrapper': {
+          overflow: 'auto',
+        },
+        // This bit might need some work if you use a custo,
+        // prefix. See https://tailwindcss.com/docs/plugins#manually-prefixing-selectors
+        // for more info on manual prefixing complex selectors.
+        '[class*="flex-gap-"]:not([class*="flex-gap-wrapper"])': {
+          margin: 'calc(-1 * var(--gap)) 0 0 calc(-1 * var(--gap))',
+          '& > *': {
+            margin: 'calc(var(--gap)) 0 0 calc(var(--gap))',
+          },
+        },
+      })
+
+      Object.entries(theme('gap')).forEach(([key, value]) => {
+        addUtilities(
+          {
+            [`.flex-gap-${e(key)}`]: {
+              '--gap': value,
+            },
+          },
+          variants('gap')
+        )
+      })
+    }),
+  ],
 }
