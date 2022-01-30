@@ -1,5 +1,6 @@
 <template>
   <section
+    id="upload-file-section"
     class="bg-gradient-to-t from-[rgba(119,195,96,0.1)] to-[rgba(119,195,96,0.2)]"
   >
     <div class="bg-white">
@@ -15,7 +16,7 @@
         </p>
       </div>
     </div>
-    <div class="py-20">
+    <div class="py-20 cursor-pointer" @click="$nuxt.$router.push(`/dashboard`)">
       <div class="container">
         <div class="shadow-lg rounded-2xl bg-white px-4 py-16">
           <div
