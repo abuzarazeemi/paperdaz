@@ -157,7 +157,7 @@ export default Vue.extend({
 }
 
 .tab-button-group {
-  @apply text-sm font-medium;
+  @apply text-xs sm:text-sm font-medium;
   display: grid;
   // grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   grid-template-columns: repeat(4, 1fr);
@@ -166,7 +166,7 @@ export default Vue.extend({
   padding: 1px;
 
   & > .tab-button {
-    --slide-size: 30px;
+    --slide-size: 0px;
     cursor: pointer;
     background: #cde8ca;
     display: flex;
@@ -181,6 +181,18 @@ export default Vue.extend({
       100% 100%,
       var(--slide-size) 100%
     );
+
+    @media only screen and (min-width: 375px) {
+      --slide-size: 15px;
+    }
+
+    @media only screen and (min-width: 425px) {
+      --slide-size: 20px;
+    }
+
+    @media only screen and (min-width: 640px) {
+      --slide-size: 30px;
+    }
 
     &:not(:first-child) {
       margin-left: calc(-1 * var(--slide-size));
