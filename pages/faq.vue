@@ -40,12 +40,12 @@
                   @click="setGeneralIndex(i)"
                 >
                   <span
-                    class="circle circle-15 bg-paperdazgreen-400 text-white"
+                    class="circle circle-12 sm:circle-15 bg-paperdazgreen-400 text-white"
                   >
-                    <search-icon width="16" height="16" />
+                    <search-icon class="w-3 sm:w-4 h-3 sm:h-4" />
                   </span>
 
-                  <p class="text-[#505050]">
+                  <p class="text-[#505050] text-sm sm:text-base">
                     {{ faq.question }}
                   </p>
                   <span>
@@ -56,17 +56,17 @@
                     />
                   </span>
                 </div>
-                <div class="collapsible">
+                <div class="collapsible text-xs sm:text-sm">
                   <div
                     class="grid grid-cols-[min-content,1fr] gap-4 cursor-pointer mt-3"
                     v-for="(answer, j) in faq.answers"
                     :key="j"
                   >
                     <span
-                      class="circle circle-15 bg-[#EFDF4D] text-paperdazgreen-400"
+                      class="circle circle-12 sm:circle-15 bg-[#EFDF4D] text-paperdazgreen-400"
                       >A</span
                     >
-                    <p class="text-sm text-gray-500">
+                    <p class="text-gray-500">
                       {{ answer.text }}
                     </p>
                   </div>
