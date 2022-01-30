@@ -226,11 +226,15 @@
       </svg>
     </div>
 
-    <h3 class="text-[#414042] text-center text-2xl mb-4 font-medium">
+    <h3
+      class="text-[#414042] text-center text-2xl mb-4 font-medium"
+      style="word-break: break-word"
+    >
       Not enough credits!
     </h3>
     <p
-      class="text-black text-center max-w-[300px] mx-auto mb-6 whitespace-normal"
+      class="text-black text-center max-w-[300px] mx-auto mb-6"
+      style="word-break: break-word"
     >
       You don't have enough referral credits to switch to billing with credits
     </p>
