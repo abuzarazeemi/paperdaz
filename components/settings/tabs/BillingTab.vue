@@ -215,14 +215,14 @@
                     <div class="inline-grid grid-cols-2 text-xs">
                       <button
                         type="button"
-                        class="w-16 h-9 text-white bg-paperdazgreen-400 m-0 rounded-l-full"
+                        class="payment-method-button active w-16 h-9 text-white bg-paperdazgreen-400 m-0 rounded-l-full"
                         @click="showBillingChangeModalAction('credit', 'card')"
                       >
                         Card
                       </button>
                       <button
                         type="button"
-                        class="w-16 h-9 text-white bg-[#FFC003] m-0 rounded-r-full"
+                        class="payment-method-button w-16 h-9 text-white bg-[#FFC003] m-0 rounded-r-full"
                         @click="showBillingChangeModalAction('card', 'credit')"
                       >
                         Credit
@@ -400,5 +400,9 @@ export default Vue.extend({
   &.cancel {
     @apply bg-transparent border border-red-600 text-red-600;
   }
+}
+
+.payment-method-button.active {
+  box-shadow: inset 0px 5px 5px rgba(0, 0, 0, 0.25);
 }
 </style>
