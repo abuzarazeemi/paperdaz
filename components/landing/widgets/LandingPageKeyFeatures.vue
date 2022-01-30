@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section id="key-features-section">
     <div class="container py-20">
       <h1 class="font-bold text-4xl text-center mb-2">Key Features</h1>
       <p

@@ -36,9 +36,11 @@
             <logo-with-text class="mb-4 h-7" />
           </nuxt-link>
         </div>
-        <nuxt-link to="#" class="">Features </nuxt-link>
+        <a href="/#key-features-section" class="">Features </a>
         <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
-        <nuxt-link to="#" class="">Upload File </nuxt-link>
+        <a href="/#upload-file-section" class="">Upload File </a>
+        <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
+        <nuxt-link to="/faq" class="">FAQ</nuxt-link>
         <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
         <nuxt-link to="/packages" class="">Packages </nuxt-link>
         <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>

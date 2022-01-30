@@ -17,6 +17,10 @@ body {
   @apply bg-white;
 }
 
+html, body {
+  scroll-behavior: smooth;
+}
+
 .container {
   margin-right: auto;
   margin-left: auto;
