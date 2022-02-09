@@ -35,7 +35,9 @@
           {{ card.content }}
         </div>
 
-        <button class="button">{{ card.buttonText }}</button>
+        <button class="button" @click="handleCommand(card.command || '')">
+          {{ card.buttonText }}
+        </button>
       </article>
     </section>
   </div>
@@ -73,6 +75,7 @@ export default Vue.extend({
           content:
             "Let's strategically partner to keep everyone SAFE while reducing carbon footprint in the world we live in.",
           buttonText: 'CONTACT US',
+          command: 'tawk',
         },
         {
           id: 2,
@@ -80,18 +83,33 @@ export default Vue.extend({
           content:
             'Our support team is spread across the globe to give you answers fast. We also have answers ready for many of freuqntly asked questions.',
           buttonText: "VISIT FAQ's",
+          command: 'faq',
         },
         {
           id: 3,
           heading: 'Chat with us',
           content: 'Our team is ready to answer any questions you may have.',
           buttonText: 'INITIATE CHAT',
+          command: 'tawk',
         },
       ],
     }
   },
   methods: {
     mouseHover(id: number) {},
+    handleCommand(command: string) {
+      switch (String(command).toLowerCase()) {
+        case 'faq':
+          this.$nuxt.$router.push('/faq')
+          break
+        case 'tawk':
+          ;(Tawk_API as any)?.toggle()
+          // ;(
+          //   document.querySelector('.tawk-button') as HTMLButtonElement
+          // )?.click()
+          break
+      }
+    },
   },
 })
 </script>
