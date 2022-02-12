@@ -13,6 +13,7 @@
       id="dashboard-navbar"
       class="relative z-10 mb-4 justify-self-stretch"
       @open-sidebar="collapseSidebar = true"
+      :title="$store.state.pageName || ''"
     />
     <div id="main-container" class="overflow-y-auto overflow-x-hidden">
       <Nuxt class="py-4 flex-1 px-2 sm:px-4 lg:px-6 xl:px-10 lg:pb-10" />
