@@ -20,8 +20,57 @@
       <div
         class="hidden lg:inline-block self-stretch h-full w-px mx-6 bg-[#E1E1E1]"
       ></div>
-      <div class="hidden lg:inline-block text-[#909090] mr-4">
-        <bell-icon />
+      <div class="hidden lg:inline-block text-[#909090] mr-4 relative">
+        <el-dropdown trigger="click">
+          <span class="el-dropdown-link">
+            <bell-icon />
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <div class="max-w-[433px] text-xs text-[#676464]">
+              <div class="flex justify-end mb-2 px-4">
+                <button class="text-red-600 underline">Clear all</button>
+              </div>
+              <div class="max-h-[70vh] custom-scrollbar overflow-y-auto px-4">
+                <!-- Start:: Single row -->
+                <div
+                  class="grid grid-cols-[max-content,1fr] items-center gap-3 min-w-[200px] py-4 border-b border-gray-100"
+                >
+                  <notification-dropdown-icon />
+                  <p>
+                    <span class="font-bold">Axay Devikar</span> has sent you an
+                    invitation request to sign a file
+                  </p>
+                </div>
+                <!-- End:: single row -->
+                <!-- Start:: Single row -->
+                <div
+                  class="grid grid-cols-[max-content,1fr] items-center gap-3 min-w-[200px] py-4 border-b border-gray-100"
+                >
+                  <notification-dropdown-icon />
+                  <p>
+                    <span class="font-bold">Axay Devikar</span> has sent you an
+                    invitation request to join team of company
+                    <span class="font-bold">"Apple Dental"</span>
+                  </p>
+                </div>
+                <!-- End:: single row -->
+                <!-- Start:: Single row -->
+                <div
+                  v-for="i in 20"
+                  :key="i"
+                  class="grid grid-cols-[max-content,1fr] items-center gap-3 min-w-[200px] py-4"
+                >
+                  <notification-dropdown-icon />
+                  <p>
+                    <span class="font-bold">Axay Devikar</span> has sent you an
+                    invitation request to sign a file
+                  </p>
+                </div>
+                <!-- End:: single row -->
+              </div>
+            </div>
+          </el-dropdown-menu>
+        </el-dropdown>
       </div>
       <nuxt-link
         to="/settings"
@@ -85,6 +134,7 @@ import ArrowDownIcon from '../svg-icons/ArrowDownIcon.vue'
 import BellIcon from '../svg-icons/BellIcon.vue'
 import GearIcon from '../svg-icons/GearIcon.vue'
 import HamburgerIcon from '../svg-icons/HamburgerIcon.vue'
+import NotificationDropdownIcon from '../svg-icons/NotificationDropdownIcon.vue'
 import SearchIcon from '../svg-icons/SearchIcon.vue'
 import SignOutIcon from '../svg-icons/SignOutIcon.vue'
 import UserProfileIcon from '../svg-icons/UserProfileIcon.vue'
@@ -101,6 +151,7 @@ export default mixins(GlobalMixin).extend({
     SignOutIcon,
     UserProfileIcon,
     UserProfileSolidIcon,
+    NotificationDropdownIcon,
   },
   props: {
     compact: {
