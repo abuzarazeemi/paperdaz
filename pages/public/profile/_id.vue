@@ -6,7 +6,7 @@
       <div class="order-2 p-4 bg-white rounded-lg grid place-items-center">
         <div class="p-4 rounded-xl border-paperdazgreen-400 border">
           <img
-            src=" https://source.unsplash.com/200x200"
+            :src="$store.getters.profilePhoto"
             alt=""
             class="w-36 h-36 object-contain rounded-lg"
           />

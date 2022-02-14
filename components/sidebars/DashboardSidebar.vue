@@ -109,6 +109,11 @@ export default Vue.extend({
         { label: 'Home', icon: 'HomeIcon', link: '/', exact: true },
         { label: 'Packages', icon: 'NewsPaperIcon', link: '/packages' },
         { label: 'FAQ', icon: 'ConversationIcon', link: '/faq' },
+        {
+          label: 'Public Profile',
+          icon: 'UserProfileIcon',
+          link: '/public/profile',
+        },
         { label: 'Contact us', icon: 'CustomerCareIcon', link: '/contact-us' },
       ],
     }
