@@ -17,10 +17,7 @@
       <span class="hidden lg:inline-block text-[#BBBBBB]"
         ><search-icon width="18" height="18"
       /></span>
-      <div
-        class="hidden lg:inline-block self-stretch h-full w-px mx-6 bg-[#E1E1E1]"
-      ></div>
-      <div class="hidden lg:inline-block text-[#909090] mr-4 relative">
+      <div class="grid place-items-center text-[#909090] mr-4 relative">
         <el-dropdown trigger="click">
           <span class="el-dropdown-link">
             <bell-icon />
