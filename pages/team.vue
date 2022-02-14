@@ -1,7 +1,19 @@
 <template>
   <div class="max-w-7xl">
     <top-details-card-container class="mb-5" :tabs="tabs" />
-    <leaves-details-container class="mb-9" />
+    <leaves-details-container class="mb-12" />
+
+    <div class="flex items-center flex-wrap gap-4 justify-between mb-6">
+      <h5 class="text-lg font-semibold text-[#272727]">Team Members</h5>
+      <div class="text-white flex">
+        <button class="circle circle-18 bg-paperdazgreen-400 mr-2">
+          <search-icon width="16" height="16" />
+        </button>
+        <button class="circle circle-18 bg-paperdazgreen-400">
+          <user-plus-icon width="16" height="16" />
+        </button>
+      </div>
+    </div>
 
     <div class="rounded-2xl bg-white overflow-x-auto custom-scrollbar">
       <table class="custom-table">
@@ -68,13 +80,17 @@ import DisketIconVue from '~/components/svg-icons/DisketIcon.vue'
 import EllipsisIconVerticalIcon from '~/components/svg-icons/EllipsisIconVerticalIcon.vue'
 import NoteAndPenIconVue from '~/components/svg-icons/NoteAndPenIcon.vue'
 import PageIconVue from '~/components/svg-icons/PageIcon.vue'
+import SearchIcon from '~/components/svg-icons/SearchIcon.vue'
 import ShareIconVue from '~/components/svg-icons/ShareIcon.vue'
 import TickCircleIconVue from '~/components/svg-icons/TickCircleIcon.vue'
+import UserPlusIcon from '~/components/svg-icons/UserPlusIcon.vue'
 export default Vue.extend({
   components: {
     TopDetailsCardContainer,
     LeavesDetailsContainer,
     EllipsisIconVerticalIcon,
+    SearchIcon,
+    UserPlusIcon,
   },
   name: 'TeamsPage',
   layout: 'dashboard',
