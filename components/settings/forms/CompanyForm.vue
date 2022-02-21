@@ -5,7 +5,7 @@
 
       <el-input
         placeholder="business / username"
-        value="Mai | "
+        v-model="formData.name"
         type="text"
         :disabled="!editingDetails"
       />
@@ -18,13 +18,14 @@
         <label for="">Slogan</label>
         <el-input
           placeholder="Enter slogan..."
-          value="Maiblu90 "
+          v-model="formData.slogan"
           :disabled="!editingDetails"
         />
       </div>
       <div>
         <label for="">Brief Introduction</label>
         <el-input
+          v-model="formData.intro"
           placeholder="Enter brief introduction..."
           :disabled="!editingDetails"
         />
@@ -32,6 +33,7 @@
       <div>
         <label for="">Phone Number</label>
         <el-input
+          v-model="formData.phone"
           placeholder="Enter phone number..."
           :disabled="!editingDetails"
         />
@@ -138,14 +140,16 @@ export default Vue.extend({
   data() {
     return {
       formData: {
-        first_name: '',
-        last_name: '',
-        email: '',
-        phone: '',
-        timezone: '',
-        country: '',
+        name:
+          (this.$auth.user as AuthUser).first_name +
+          ' ' +
+          (this.$auth.user as AuthUser).last_name,
         state: '',
-      } as AuthUser,
+        country: '',
+        slogan: '',
+        intro: '',
+        phone: '',
+      } as { [key: string]: any },
       countries: [] as Array<any>,
       states: [] as Array<any>,
       timezones,
@@ -169,7 +173,8 @@ export default Vue.extend({
   },
   beforeMount() {
     for (const key of Object.keys(this.formData)) {
-      this.formData[key] = this.$auth.user ? this.$auth.user[key] : ''
+      if ((this.$auth?.user as AuthUser)[key])
+        this.formData[key] = (this.$auth.user as AuthUser)[key]
     }
   },
   methods: {
