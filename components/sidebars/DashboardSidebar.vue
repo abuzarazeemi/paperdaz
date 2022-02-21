@@ -78,6 +78,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import UserTypeEnum from '~/models/UserTypeEnum'
 import LogoWithText from '../LogoWithText.vue'
 import EnvelopeIcon from '../svg-icons/EnvelopeIcon.vue'
 import FacebookIcon from '../svg-icons/FacebookIcon.vue'
@@ -106,17 +107,26 @@ export default Vue.extend({
         { label: 'Dashboard', icon: 'DashboardIcon', link: '/dashboard' },
         // { label: 'Profile', icon: 'UserProfileIcon', link: '/profile' },
         // { label: 'My Files', icon: 'FileIcon', link: '/my-files' },
-        { label: 'Team', icon: 'HoldingHandsIcon', link: '/team' },
+        // { label: 'Team', icon: 'HoldingHandsIcon', link: '/team' },
         { label: 'Home', icon: 'HomeIcon', link: '/', exact: true },
         { label: 'Packages', icon: 'NewsPaperIcon', link: '/packages' },
         { label: 'FAQ', icon: 'ConversationIcon', link: '/faq' },
-        {
-          label: 'Public Profile',
-          icon: 'UserProfileIcon',
-          link: '/public/profile',
-        },
+        // {
+        //   label: 'Public Profile',
+        //   icon: 'UserProfileIcon',
+        //   link: '/public/profile',
+        // },
         { label: 'Contact us', icon: 'CustomerCareIcon', link: '/contact-us' },
       ],
+    }
+  },
+  beforeMount() {
+    if (this.$store.getters.userType === UserTypeEnum.PAID) {
+      this.links.splice(1, 0, {
+        label: 'Team',
+        icon: 'HoldingHandsIcon',
+        link: '/team',
+      })
     }
   },
 })
