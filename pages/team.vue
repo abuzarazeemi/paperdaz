@@ -9,7 +9,10 @@
         <button class="circle circle-18 bg-paperdazgreen-400 mr-2">
           <search-icon width="16" height="16" />
         </button>
-        <button class="circle circle-18 bg-paperdazgreen-400">
+        <button
+          class="circle circle-18 bg-paperdazgreen-400"
+          @click="showInviteTeamMemberModal = true"
+        >
           <user-plus-icon width="16" height="16" />
         </button>
       </div>
@@ -69,6 +72,8 @@
         </tbody>
       </table>
     </div>
+
+    <invite-team-member-modal v-model="showInviteTeamMemberModal" />
   </div>
 </template>
 
@@ -76,6 +81,7 @@
 import Vue from 'vue'
 import LeavesDetailsContainer from '~/components/dashboard/LeavesDetailsContainer.vue'
 import TopDetailsCardContainer from '~/components/dashboard/TopDetailsCardContainer.vue'
+import InviteTeamMemberModal from '~/components/pdf/modals/InviteTeamMemberModal.vue'
 import DisketIconVue from '~/components/svg-icons/DisketIcon.vue'
 import EllipsisIconVerticalIcon from '~/components/svg-icons/EllipsisIconVerticalIcon.vue'
 import NoteAndPenIconVue from '~/components/svg-icons/NoteAndPenIcon.vue'
@@ -91,11 +97,13 @@ export default Vue.extend({
     EllipsisIconVerticalIcon,
     SearchIcon,
     UserPlusIcon,
+    InviteTeamMemberModal,
   },
   name: 'TeamsPage',
   layout: 'dashboard',
   data() {
     return {
+      showInviteTeamMemberModal: false,
       teamMembers: [
         {
           name: 'Juno Okyo',

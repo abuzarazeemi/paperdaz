@@ -14,7 +14,7 @@
       >{{ title || routeName }}
     </p>
     <div class="h-full self-stretch flex items-center">
-      <span class="hidden lg:inline-block text-[#BBBBBB]"
+      <span class="hidden lg:inline-block text-[#BBBBBB] mr-4"
         ><search-icon width="18" height="18"
       /></span>
       <div class="grid place-items-center text-[#909090] mr-4 relative">

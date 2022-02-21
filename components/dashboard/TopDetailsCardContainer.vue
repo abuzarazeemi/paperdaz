@@ -81,7 +81,7 @@ export default Vue.extend({
 .small-details-card-container {
   @apply gap-3 lg:gap-4;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 
   @media screen and (min-width: 425px) {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));

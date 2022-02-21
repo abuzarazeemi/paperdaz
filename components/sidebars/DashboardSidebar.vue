@@ -105,7 +105,7 @@ export default Vue.extend({
       links: [
         { label: 'Dashboard', icon: 'DashboardIcon', link: '/dashboard' },
         // { label: 'Profile', icon: 'UserProfileIcon', link: '/profile' },
-        { label: 'My Files', icon: 'FileIcon', link: '/my-files' },
+        // { label: 'My Files', icon: 'FileIcon', link: '/my-files' },
         { label: 'Team', icon: 'HoldingHandsIcon', link: '/team' },
         { label: 'Home', icon: 'HomeIcon', link: '/', exact: true },
         { label: 'Packages', icon: 'NewsPaperIcon', link: '/packages' },
