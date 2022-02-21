@@ -85,7 +85,7 @@
       <div class="py-3 grid place-items-center">
         <button
           type="submit"
-          class="w-full bg-paperdazgreen-400 rounded-lg text-white h-12 max-w-[450px]"
+          class="shadow-lg w-full bg-paperdazgreen-400 rounded-lg text-white h-12 max-w-[450px]"
         >
           INVITE
         </button>
