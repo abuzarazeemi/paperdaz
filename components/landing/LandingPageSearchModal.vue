@@ -5,11 +5,11 @@
   >
     <button class="overlay" @click="$emit('input', false)"></button>
     <section class="container">
-      <form class="relative text-sm">
+      <form class="relative text-xs">
         <input
           type="text"
           class="search-input"
-          placeholder="Enter search term"
+          placeholder="Search by file name or company name or papertag..."
           v-model="searchParam"
         />
         <button
