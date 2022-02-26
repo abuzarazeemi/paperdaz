@@ -30,18 +30,18 @@
         <div class="max-h-[70vh] custom-scrollbar overflow-y-auto p-4">
           <article
             class="py-4 text-[#9F9F9F] grid grid-cols-[max-content,1fr,max-content] gap-4"
-            v-for="i in 4"
+            v-for="i in 20"
             :key="i"
           >
             <img
               src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&w=1000&q=80"
               alt=""
-              class="h-20 w-20 rounded-lg object-cover"
+              class="h-16 w-16 rounded-lg object-cover"
             />
             <div class="overflow-hidden">
-              <p class="text-sm text-black mb-3 truncate">MyStar@gmail.com</p>
+              <p class="text-sm text-black mb-1 truncate">MyStar@gmail.com</p>
               <p class="text-xs truncate">MyStar</p>
-              <p class="text-[11px] mt-1 truncate">patient intake</p>
+              <p class="text-[11px] mt-0.5 truncate">patient intake</p>
             </div>
             <div class="self-center flex items-center">
               <button class="mr-1.5 pr-1.5 border-[#EBEBEB] border-r">
