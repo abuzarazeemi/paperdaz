@@ -11,6 +11,7 @@
           class="search-input"
           placeholder="Search by file name or company name or papertag..."
           @input="searchParam = $event.target.value"
+          :value="searchParam"
         />
         <button
           class="bg-paperdazgreen-400 rounded-lg text-white h-full w-10 grid place-items-center absolute right-0 top-0"
