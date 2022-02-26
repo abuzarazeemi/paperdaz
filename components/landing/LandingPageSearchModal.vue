@@ -5,12 +5,12 @@
   >
     <button class="overlay" @click="$emit('input', false)"></button>
     <section class="container">
-      <form class="relative text-xs">
+      <form class="relative text-xs" @submit.prevent="submit">
         <input
           type="text"
           class="search-input"
           placeholder="Search by file name or company name or papertag..."
-          v-model="searchParam"
+          @input="searchParam = $event.target.value"
         />
         <button
           class="bg-paperdazgreen-400 rounded-lg text-white h-full w-10 grid place-items-center absolute right-0 top-0"
@@ -85,7 +85,12 @@ export default Vue.extend({
     displayingResults(): Array<any> {
       const searchParam = this.searchParam
       if (!searchParam) return []
-      return [{}]
+      return [{ name: 'name' }]
+    },
+  },
+  methods: {
+    submit(event: Event) {
+      event.preventDefault()
     },
   },
   watch: {
