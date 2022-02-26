@@ -110,9 +110,9 @@
       <div
         class="flex items-center gap-1.5 xs:gap-3 sm:gap-5 text-xs xs:text-sm sm:text-base md:text-ls"
       >
-        <span>
+        <button type="button" @click="showLandingPageSearchModal = true">
           <search-icon width="15" />
-        </span>
+        </button>
         <nuxt-link
           v-if="!$auth.loggedIn"
           to="/login"
@@ -170,6 +170,8 @@
         </el-dropdown>
       </div>
     </nav>
+
+    <landing-page-search-modal v-model="showLandingPageSearchModal" />
   </div>
 </template>
 <script lang="ts">
@@ -199,6 +201,7 @@ export default mixins(GlobalMixin).extend({
     return {
       scrolled: false,
       collapsed: false,
+      showLandingPageSearchModal: false,
     }
   },
   watch: {

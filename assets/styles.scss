@@ -2,9 +2,11 @@
 @import 'keyframes';
 @import 'cursor';
 @import 'tables';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import 'input';
 :root {
   --viewport-height: 100vh;
 }
@@ -19,6 +21,28 @@ body {
 
 html, body {
   scroll-behavior: smooth;
+
+  /* width */
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    border-radius: 3px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    @apply bg-paperdazgreen-300 bg-opacity-30;
+    border-radius: 3px;
+
+    &:hover {
+      @apply bg-paperdazgreen-300 bg-opacity-100 cursor-pointer;
+    }
+  }
 }
 
 .container {
