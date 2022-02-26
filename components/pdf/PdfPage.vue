@@ -1,18 +1,22 @@
 <template>
   <div class="pdf-page" ref="PdfPage">
-    <canvas 
-    
-                v-hammer:pan="(ev) => handlePanning(ev, undefined, undefined, pageNumber)"
-                @click="e => onCLickSinglePageOuter(e, pageNumber)"
-                @mousemove="onMouseMoveOnPages"
-                @mouseleave="onMouseLeaveFromPages"
-    ref="canvas"></canvas>
+    <div class="annotationLayer" ref="annotationLayer"></div>
+    <canvas
+      v-hammer:pan="(ev) => handlePanning(ev, undefined, undefined, pageNumber)"
+      @click="e => onCLickSinglePageOuter(e, pageNumber)"
+      @mousemove="onMouseMoveOnPages"
+      @mouseleave="onMouseLeaveFromPages"
+      ref="canvas"
+    ></canvas>
   </div>
 </template>
 
 <script>
+import * as PDFJS from "pdfjs-dist"
+import "pdfjs-dist/web/pdf_viewer.css"
 export default {
   props: {
+    scale: Number,
     pageNumber: Number,
     pdf: Object,
     handlePanning: Function,
@@ -21,7 +25,7 @@ export default {
     onMouseLeaveFromPages: Function,
   },
   data: () => ({
-    scale: 2,
+    scaleZ: 2,
   }),
   mounted() {
     this.getPage()
@@ -43,16 +47,13 @@ export default {
         context.backingStorePixelRatio ||
         1
       let ratio = dpr / bsr
-      let originalviewport = page.getViewport({ scale: this.scale })
-      console.log([this.$refs.PdfPage])
+      let originalviewport = page.getViewport({ scale: this.scaleZ })
       var viewport = page.getViewport({
         scale: this.$refs.PdfPage.clientWidth / originalviewport.width,
       })
       viewport = originalviewport
       canvas.width = viewport.width * ratio
       canvas.height = viewport.height * ratio
-      // canvas.style.width = viewport.width + 'px'
-      // canvas.style.height = viewport.height + 'px'
       canvas.style.width = '100%'
       canvas.style.height = '100%'
       context.setTransform(ratio, 0, 0, ratio, 0, 0)
@@ -61,6 +62,20 @@ export default {
         canvasContext: context,
         viewport: originalviewport,
       })
+
+      this.renderAnnotation(page)
+    },
+    async renderAnnotation(page){
+      let annotationLayer = this.$refs.annotationLayer
+      let annotations = await page.getAnnotations()
+      let v = page.getViewport({scale: 1.345})
+      await PDFJS.AnnotationLayer.render({
+        viewport: v.clone({ dontFlip: true }),
+        div: annotationLayer,
+        page,
+        annotations: annotations,
+        renderInteractiveForms: true
+      });
     },
   },
 }

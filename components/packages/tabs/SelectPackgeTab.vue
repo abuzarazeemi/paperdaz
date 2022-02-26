@@ -316,24 +316,24 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.packages-container {
-  @apply flex
+// .packages-container {
+//   @apply flex
         
-        custom-scrollbar
-        py-12
-        gap-12
-        sm:gap-8
-        md:gap-12
-        flex-col
-        sm:flex-row
-        mb-12;
-  @apply px-3;
+//         custom-scrollbar
+//         py-12
+//         gap-12
+//         sm:gap-8
+//         md:gap-12
+//         flex-col
+//         sm:flex-row
+//         mb-12;
+//   @apply px-3;
 
-  @media only screen and (min-width: 640px) {
-    @apply overflow-x-auto;
-    scroll-snap-type: x mandatory;
-  }
-}
+//   @media only screen and (min-width: 640px) {
+//     @apply overflow-x-auto;
+//     scroll-snap-type: x mandatory;
+//   }
+// }
 .package-card-check-width {
   /* min-width: calc(100% / var(--count, 1)); */
   @media only screen and (min-width: 640px) {

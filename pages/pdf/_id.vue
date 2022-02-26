@@ -95,6 +95,7 @@
                 :onMouseMoveOnPages="onMouseMoveOnPages"
                 :onMouseLeaveFromPages="onMouseLeaveFromPages"
                 :page-number="pI + 1" :pdf="pdf"
+                :scale="scale"
               />
             </div>
           </div>
