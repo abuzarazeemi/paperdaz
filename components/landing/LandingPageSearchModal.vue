@@ -83,7 +83,8 @@ export default Vue.extend({
   },
   computed: {
     displayingResults(): Array<any> {
-      if (!this.searchParam) return []
+      const searchParam = this.searchParam
+      if (!searchParam) return []
       return [{}]
     },
   },
