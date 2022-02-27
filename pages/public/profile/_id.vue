@@ -84,58 +84,63 @@
             @submit.prevent
             class="flex flex-1 justify-end items-center gap-2 text-xs text-gray-800 relative"
           >
-            <input
-              type="text"
-              placeholder="Search any folder..."
-              class="rounded-lg border border-paperdazgreen-400 px-2 h-8 placeholder:italic"
-              :value="searchFolderParam"
-              @input="searchFolderParam = $event.target.value"
-            />
+            <el-dropdown trigger="click">
+              <span class="el-dropdown-link">
+                <input
+                  type="text"
+                  placeholder="Search any folder..."
+                  class="rounded-lg border border-paperdazgreen-400 px-2 h-8 placeholder:italic"
+                  :value="searchFolderParam"
+                  @input="searchFolderParam = $event.target.value"
+                />
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <!-- Start:: dropdown -->
+                <div
+                  class="bg-white rounded-lg whitespace-nowrap w-[600px] max-w-[80vw]"
+                >
+                  <div
+                    class="max-h-[40vh] custom-scrollbar overflow-y-auto p-4"
+                  >
+                    <article
+                      class="py-4 text-[#9F9F9F] grid grid-cols-[max-content,1fr,max-content] gap-4"
+                      v-for="i in 20"
+                      :key="i"
+                    >
+                      <img
+                        src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&w=1000&q=80"
+                        alt=""
+                        class="h-16 w-16 rounded-lg object-cover"
+                      />
+                      <div class="overflow-hidden">
+                        <p class="text-sm text-black mb-1 truncate">
+                          MyStar@gmail.com
+                        </p>
+                        <p class="text-xs truncate">MyStar</p>
+                        <p class="text-[11px] mt-0.5 truncate">
+                          patient intake
+                        </p>
+                      </div>
+                      <div class="self-center flex items-center">
+                        <button class="mr-1.5 pr-1.5 border-[#EBEBEB] border-r">
+                          <heart-outline-icon />
+                        </button>
+                        <button>
+                          <share-outline-icon />
+                        </button>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+                <!-- End:: dropdown -->
+              </el-dropdown-menu>
+            </el-dropdown>
             <button
               type="button"
               class="circle circle-15 bg-paperdazgreen-400 text-white"
             >
               <search-icon width="14" height="14" />
             </button>
-            <!-- Start:: dropdown -->
-            <div
-              class="search-dropdown mt-1 bg-white rounded-lg whitespace-nowrap overflow-hidden transition transform duration-200 absolute right-0 top-full z-10 shadow-lg w-96 max-w-[80vw]"
-              :class="[
-                searchFolderParam
-                  ? 'opacity-100 translate-y-0 pointer-events-auto'
-                  : 'opacity-0 translate-y-[5%] pointer-events-none',
-              ]"
-            >
-              <div class="max-h-[60vh] custom-scrollbar overflow-y-auto p-4">
-                <article
-                  class="py-4 text-[#9F9F9F] grid grid-cols-[max-content,1fr,max-content] gap-4"
-                  v-for="i in 20"
-                  :key="i"
-                >
-                  <img
-                    src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&w=1000&q=80"
-                    alt=""
-                    class="h-16 w-16 rounded-lg object-cover"
-                  />
-                  <div class="overflow-hidden">
-                    <p class="text-sm text-black mb-1 truncate">
-                      MyStar@gmail.com
-                    </p>
-                    <p class="text-xs truncate">MyStar</p>
-                    <p class="text-[11px] mt-0.5 truncate">patient intake</p>
-                  </div>
-                  <div class="self-center flex items-center">
-                    <button class="mr-1.5 pr-1.5 border-[#EBEBEB] border-r">
-                      <heart-outline-icon />
-                    </button>
-                    <button>
-                      <share-outline-icon />
-                    </button>
-                  </div>
-                </article>
-              </div>
-            </div>
-            <!-- End:: dropdown -->
           </form>
         </header>
         <div class="max-h-36 overflow-y-auto custom-scrollbar">
@@ -191,58 +196,63 @@
             @submit.prevent
             class="flex flex-1 justify-end items-center gap-2 text-xs text-gray-800 relative"
           >
-            <input
-              type="text"
-              placeholder="Search any file..."
-              class="rounded-lg border border-paperdazgreen-400 px-2 h-8 placeholder:italic"
-              :value="searchFileParam"
-              @input="searchFileParam = $event.target.value"
-            />
+            <el-dropdown trigger="click">
+              <span class="el-dropdown-link">
+                <input
+                  type="text"
+                  placeholder="Search any file..."
+                  class="rounded-lg border border-paperdazgreen-400 px-2 h-8 placeholder:italic"
+                  :value="searchFileParam"
+                  @input="searchFileParam = $event.target.value"
+                />
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <!-- Start:: dropdown -->
+                <div
+                  class="bg-white rounded-lg whitespace-nowrap w-[600px] max-w-[80vw]"
+                >
+                  <div
+                    class="max-h-[40vh] custom-scrollbar overflow-y-auto p-4"
+                  >
+                    <article
+                      class="py-4 text-[#9F9F9F] grid grid-cols-[max-content,1fr,max-content] gap-4"
+                      v-for="i in 20"
+                      :key="i"
+                    >
+                      <img
+                        src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&w=1000&q=80"
+                        alt=""
+                        class="h-16 w-16 rounded-lg object-cover"
+                      />
+                      <div class="overflow-hidden">
+                        <p class="text-sm text-black mb-1 truncate">
+                          MyStar@gmail.com
+                        </p>
+                        <p class="text-xs truncate">MyStar</p>
+                        <p class="text-[11px] mt-0.5 truncate">
+                          patient intake
+                        </p>
+                      </div>
+                      <div class="self-center flex items-center">
+                        <button class="mr-1.5 pr-1.5 border-[#EBEBEB] border-r">
+                          <heart-outline-icon />
+                        </button>
+                        <button>
+                          <share-outline-icon />
+                        </button>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+                <!-- End:: dropdown -->
+              </el-dropdown-menu>
+            </el-dropdown>
             <button
               type="button"
               class="circle circle-15 bg-paperdazgreen-400 text-white"
             >
               <search-icon width="14" height="14" />
             </button>
-            <!-- Start:: dropdown -->
-            <div
-              class="search-dropdown mt-1 bg-white rounded-lg whitespace-nowrap overflow-hidden transition transform duration-200 absolute right-0 top-full z-10 shadow-lg w-96 max-w-[80vw]"
-              :class="[
-                searchFileParam
-                  ? 'opacity-100 translate-y-0 pointer-events-auto'
-                  : 'opacity-0 translate-y-[5%] pointer-events-none',
-              ]"
-            >
-              <div class="max-h-[60vh] custom-scrollbar overflow-y-auto p-4">
-                <article
-                  class="py-4 text-[#9F9F9F] grid grid-cols-[max-content,1fr,max-content] gap-4"
-                  v-for="i in 20"
-                  :key="i"
-                >
-                  <img
-                    src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&w=1000&q=80"
-                    alt=""
-                    class="h-16 w-16 rounded-lg object-cover"
-                  />
-                  <div class="overflow-hidden">
-                    <p class="text-sm text-black mb-1 truncate">
-                      MyStar@gmail.com
-                    </p>
-                    <p class="text-xs truncate">MyStar</p>
-                    <p class="text-[11px] mt-0.5 truncate">patient intake</p>
-                  </div>
-                  <div class="self-center flex items-center">
-                    <button class="mr-1.5 pr-1.5 border-[#EBEBEB] border-r">
-                      <heart-outline-icon />
-                    </button>
-                    <button>
-                      <share-outline-icon />
-                    </button>
-                  </div>
-                </article>
-              </div>
-            </div>
-            <!-- End:: dropdown -->
           </form>
         </header>
         <div class="max-h-72 overflow-y-auto custom-scrollbar">
