@@ -72,23 +72,78 @@
       </div>
     </div>
 
-    <div class="mt-4 bg-white rounded-xl" v-else>
+    <div class="mt-4" v-else>
       <!-- Start:: Folders -->
-      <div class="">
+      <div class="bg-white rounded-xl mb-4">
         <header
-          class="p-4 border-b border-[#DCDCDC] text-paperdazgreen-400 flex items-center gap-2 justify-between"
+          class="p-4 border-b border-[#DCDCDC] text-paperdazgreen-400 flex flex-wrap items-center gap-2 justify-between"
         >
           <h4 class="text-xl font-medium">Folders</h4>
-          <div>
+
+          <form
+            @submit.prevent
+            class="flex flex-1 justify-end items-center gap-2 text-xs text-gray-800 relative"
+          >
+            <el-dropdown trigger="click">
+              <span class="el-dropdown-link">
+                <input
+                  type="text"
+                  placeholder="Search any folder..."
+                  class="rounded-lg border border-paperdazgreen-400 px-2 h-8 placeholder:italic"
+                  :value="searchFolderParam"
+                  @input="searchFolderParam = $event.target.value"
+                />
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <!-- Start:: dropdown -->
+                <div
+                  class="bg-white rounded-lg whitespace-nowrap w-[600px] max-w-[80vw]"
+                >
+                  <div
+                    class="max-h-[40vh] custom-scrollbar overflow-y-auto p-4"
+                  >
+                    <article
+                      class="py-4 text-[#9F9F9F] grid grid-cols-[max-content,1fr,max-content] gap-4"
+                      v-for="i in 20"
+                      :key="i"
+                    >
+                      <img
+                        src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&w=1000&q=80"
+                        alt=""
+                        class="h-16 w-16 rounded-lg object-cover"
+                      />
+                      <div class="overflow-hidden">
+                        <p class="text-sm text-black mb-1 truncate">
+                          MyStar@gmail.com
+                        </p>
+                        <p class="text-xs truncate">MyStar</p>
+                        <p class="text-[11px] mt-0.5 truncate">
+                          patient intake
+                        </p>
+                      </div>
+                      <div class="self-center flex items-center">
+                        <button class="mr-1.5 pr-1.5 border-[#EBEBEB] border-r">
+                          <heart-outline-icon />
+                        </button>
+                        <button>
+                          <share-outline-icon />
+                        </button>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+                <!-- End:: dropdown -->
+              </el-dropdown-menu>
+            </el-dropdown>
             <button
               type="button"
               class="circle circle-15 bg-paperdazgreen-400 text-white"
             >
               <search-icon width="14" height="14" />
             </button>
-          </div>
+          </form>
         </header>
-        <div>
+        <div class="max-h-36 overflow-y-auto custom-scrollbar">
           <!-- Start:: Single row -->
           <div
             class="grid grid-cols-[max-content,1fr] gap-2 items-center px-4 border-b border-[#DCDCDC] py-2"
@@ -115,6 +170,8 @@
           <!-- End:: Single row -->
           <!-- Start:: Single row -->
           <div
+            v-for="i in 5"
+            :key="i"
             class="grid grid-cols-[max-content,1fr] gap-2 items-center px-4 border-b border-[#DCDCDC] py-2"
           >
             <folder-solid-icon />
@@ -130,21 +187,75 @@
       <!-- Start:: Folders -->
 
       <!-- Start:: Files -->
-      <div>
+      <div class="bg-white rounded-xl">
         <header
-          class="p-4 border-b border-[#DCDCDC] text-paperdazgreen-400 flex items-center gap-2 justify-between"
+          class="p-4 border-b border-[#DCDCDC] text-paperdazgreen-400 flex flex-wrap items-center gap-2 justify-between"
         >
           <h4 class="text-xl font-medium">Files</h4>
-          <div>
+          <form
+            @submit.prevent
+            class="flex flex-1 justify-end items-center gap-2 text-xs text-gray-800 relative"
+          >
+            <el-dropdown trigger="click">
+              <span class="el-dropdown-link">
+                <input
+                  type="text"
+                  placeholder="Search any file..."
+                  class="rounded-lg border border-paperdazgreen-400 px-2 h-8 placeholder:italic"
+                  :value="searchFileParam"
+                  @input="searchFileParam = $event.target.value"
+                />
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <!-- Start:: dropdown -->
+                <div
+                  class="bg-white rounded-lg whitespace-nowrap w-[600px] max-w-[80vw]"
+                >
+                  <div
+                    class="max-h-[40vh] custom-scrollbar overflow-y-auto p-4"
+                  >
+                    <article
+                      class="py-4 text-[#9F9F9F] grid grid-cols-[max-content,1fr,max-content] gap-4"
+                      v-for="i in 20"
+                      :key="i"
+                    >
+                      <img
+                        src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&w=1000&q=80"
+                        alt=""
+                        class="h-16 w-16 rounded-lg object-cover"
+                      />
+                      <div class="overflow-hidden">
+                        <p class="text-sm text-black mb-1 truncate">
+                          MyStar@gmail.com
+                        </p>
+                        <p class="text-xs truncate">MyStar</p>
+                        <p class="text-[11px] mt-0.5 truncate">
+                          patient intake
+                        </p>
+                      </div>
+                      <div class="self-center flex items-center">
+                        <button class="mr-1.5 pr-1.5 border-[#EBEBEB] border-r">
+                          <heart-outline-icon />
+                        </button>
+                        <button>
+                          <share-outline-icon />
+                        </button>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+                <!-- End:: dropdown -->
+              </el-dropdown-menu>
+            </el-dropdown>
             <button
               type="button"
               class="circle circle-15 bg-paperdazgreen-400 text-white"
             >
               <search-icon width="14" height="14" />
             </button>
-          </div>
+          </form>
         </header>
-        <div>
+        <div class="max-h-72 overflow-y-auto custom-scrollbar">
           <!-- Start:: Single row -->
           <div
             class="grid grid-cols-[max-content,1fr,max-content] gap-2 items-center px-4 border-b border-[#DCDCDC] py-2"
@@ -243,6 +354,8 @@
           <!-- End:: Single row -->
           <!-- Start:: Single row -->
           <div
+            v-for="i in 10"
+            :key="i"
             class="grid grid-cols-[max-content,1fr,max-content] gap-2 items-center px-4 border-b border-[#DCDCDC] py-2"
           >
             <img src="/icon.png" width="25" height="25" />
@@ -311,6 +424,12 @@ export default Vue.extend({
   },
   mounted() {
     this.generateQR()
+  },
+  data() {
+    return {
+      searchFolderParam: '',
+      searchFileParam: '',
+    }
   },
   methods: {
     async generateQR() {

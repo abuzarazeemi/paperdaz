@@ -177,6 +177,7 @@
 <script lang="ts">
 import mixins from 'vue-typed-mixins'
 import GlobalMixin from '~/mixins/GlobalMixin'
+import LandingPageSearchModal from '../landing/LandingPageSearchModal.vue'
 import LogoWithText from '../LogoWithText.vue'
 import ArrowDownIcon from '../svg-icons/ArrowDownIcon.vue'
 import DashboardIcon from '../svg-icons/DashboardIcon.vue'
@@ -196,6 +197,7 @@ export default mixins(GlobalMixin).extend({
     GearIcon,
     SignOutIcon,
     DashboardIcon,
+    LandingPageSearchModal,
   },
   data() {
     return {

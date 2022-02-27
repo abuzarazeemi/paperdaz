@@ -4,16 +4,58 @@
       class="text-paperdazgray-700 font-semibold text-xl mb-5 sm:mb-7 flex flex-col gap-3 xs:flex-row xs:items-center justify-between whitespace-nowrap"
     >
       <span>File Ledger</span>
-
       <form
         action=""
-        class="w-full xs:max-w-[280px] text-xs font-medium flex items-center"
+        class="w-full xs:max-w-[280px] text-xs font-medium flex items-center relative"
+        @submit.prevent="$event.preventDefault()"
       >
-        <input
-          type="text"
-          class="h-10 pl-4 mr-2 bg-transparent flex-1 border border-paperdazgreen-300 rounded-tl-lg rounded-bl-lg focus:border-paperdazgreen-700 outline-none"
-          placeholder="Search Files"
-        />
+        <el-dropdown trigger="click">
+          <span class="el-dropdown-link">
+            <input
+              type="text"
+              class="search-input h-10 pl-4 mr-2 bg-transparent flex-1 border border-paperdazgreen-300 rounded-tl-lg rounded-bl-lg focus:border-paperdazgreen-700 outline-none"
+              placeholder="Search Files"
+              :value="searchParam"
+              @input="searchParam = $event.target.value"
+            />
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <!-- Start:: dropdown -->
+            <div
+              class="bg-white rounded-lg whitespace-nowrap w-[600px] max-w-[80vw]"
+            >
+              <div class="max-h-[40vh] custom-scrollbar overflow-y-auto p-4">
+                <article
+                  class="py-4 text-[#9F9F9F] grid grid-cols-[max-content,1fr,max-content] gap-4"
+                  v-for="i in 20"
+                  :key="i"
+                >
+                  <img
+                    src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&w=1000&q=80"
+                    alt=""
+                    class="h-16 w-16 rounded-lg object-cover"
+                  />
+                  <div class="overflow-hidden">
+                    <p class="text-sm text-black mb-1 truncate">
+                      MyStar@gmail.com
+                    </p>
+                    <p class="text-xs truncate">MyStar</p>
+                    <p class="text-[11px] mt-0.5 truncate">patient intake</p>
+                  </div>
+                  <div class="self-center flex items-center">
+                    <button class="mr-1.5 pr-1.5 border-[#EBEBEB] border-r">
+                      <heart-outline-icon />
+                    </button>
+                    <button>
+                      <share-outline-icon />
+                    </button>
+                  </div>
+                </article>
+              </div>
+            </div>
+            <!-- End:: dropdown -->
+          </el-dropdown-menu>
+        </el-dropdown>
         <button class="circle circle-20 bg-paperdazgreen-300 text-white">
           <search-icon />
         </button>
@@ -137,6 +179,8 @@ import TreeIcon from '../svg-icons/TreeIcon.vue'
 import DateFormatter from '~/utils/DateFormatter'
 import ShareIcon from '../svg-icons/ShareIcon.vue'
 import SpinnerDottedIcon from '../svg-icons/SpinnerDottedIcon.vue'
+import HeartOutlineIcon from '../svg-icons/HeartOutlineIcon.vue'
+import ShareOutlineIcon from '../svg-icons/ShareOutlineIcon.vue'
 
 export default Vue.extend({
   components: {
@@ -145,6 +189,8 @@ export default Vue.extend({
     SearchIcon,
     ShareIcon,
     SpinnerDottedIcon,
+    HeartOutlineIcon,
+    ShareOutlineIcon,
   },
 
   async fetch() {
@@ -158,6 +204,7 @@ export default Vue.extend({
   },
   data() {
     return {
+      searchParam: '',
       showScribble: false,
       files: [] as Array<any>,
 
@@ -304,4 +351,17 @@ export default Vue.extend({
     }
   }
 }
+
+/* .search-input {
+  & ~ .search-dropdown {
+    @apply opacity-0 translate-y-[5%] pointer-events-none;
+  }
+
+  &:active,
+  &:focus {
+    & ~ .search-dropdown {
+      @apply opacity-100 translate-y-0 pointer-events-auto;
+    }
+  }
+} */
 </style>

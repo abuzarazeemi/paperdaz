@@ -113,7 +113,6 @@ export default Vue.extend({
   overflow-y: auto;
   z-index: 50;
 
-  backdrop-filter: blur(5px);
   transition: opacity ease-in-out 0.2s;
   opacity: 0;
   pointer-events: none;
@@ -130,7 +129,8 @@ export default Vue.extend({
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(167, 167, 167, 0.5);
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
     z-index: 0;
   }
 }
