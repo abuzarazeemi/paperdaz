@@ -4,7 +4,6 @@
       class="text-paperdazgray-700 font-semibold text-xl mb-5 sm:mb-7 flex flex-col gap-3 xs:flex-row xs:items-center justify-between whitespace-nowrap"
     >
       <span>File Ledger</span>
-
       <form
         action=""
         class="w-full xs:max-w-[280px] text-xs font-medium flex items-center relative"
@@ -14,7 +13,8 @@
           type="text"
           class="search-input h-10 pl-4 mr-2 bg-transparent flex-1 border border-paperdazgreen-300 rounded-tl-lg rounded-bl-lg focus:border-paperdazgreen-700 outline-none"
           placeholder="Search Files"
-          v-model="searchParam"
+          :value="searchParam"
+          @input="searchParam = $event.target.value"
         />
         <button class="circle circle-20 bg-paperdazgreen-300 text-white">
           <search-icon />
@@ -22,7 +22,7 @@
 
         <!-- Start:: dropdown -->
         <div
-          class="search-dropdown mt-5 bg-white rounded-lg whitespace-nowrap overflow-hidden transition transform duration-200 absolute right-0 top-full z-10 shadow-lg w-96 max-w-[80vw]"
+          class="search-dropdown mt-0.5 bg-white rounded-lg whitespace-nowrap overflow-hidden transition transform duration-200 absolute right-0 top-full z-10 shadow-lg w-96 max-w-[80vw]"
           :class="[
             searchParam
               ? 'opacity-100 translate-y-0 pointer-events-auto'
