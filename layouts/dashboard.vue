@@ -152,6 +152,7 @@ export default Vue.extend({
   grid-template-rows: max-content 1fr max-content;
   position: relative;
   column-gap: 16px;
+  min-height: var(--viewport-height, 100vh);
 
   &::after {
     content: '';

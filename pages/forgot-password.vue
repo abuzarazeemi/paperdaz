@@ -12,9 +12,9 @@
 
         <form action="" class="text-sm" @submit.prevent="onSubmit">
           <message-alert-widget
-            :message="errorMessage"
-            v-show="errorMessage"
-            type="error"
+            :message="alertMessage.message"
+            v-show="alertMessage.message"
+            :type="alertMessage.isSuccess ? 'success' : 'error'"
             class="mb-8"
           />
           <div class="mb-5">
@@ -85,10 +85,13 @@ export default Vue.extend({
   data() {
     return {
       user: {
-        email: undefined,
+        email: undefined as undefined | string,
       },
       isLoading: false,
-      errorMessage: '',
+      alertMessage: {
+        isSuccess: false,
+        message: '',
+      },
     }
   },
   // async mounted() {
@@ -104,7 +107,30 @@ export default Vue.extend({
   methods: {
     onSubmit() {
       event?.preventDefault()
-      this.$nuxt.$router.push('/create-new-password')
+
+      if (!this.user.email || this.isLoading) return
+
+      this.isLoading = true
+      this.alertMessage.message = ''
+
+      this.$axios
+        .$post(`/auth/forgot_password`, this.user)
+        .then((response) => {
+          this.alertMessage.isSuccess = true
+          this.alertMessage.message =
+            response.message ||
+            'A password reset email has been sent to your mail check your mail to reset it'
+          this.user.email = ''
+        })
+        .catch((err) => {
+          this.alertMessage.isSuccess = false
+          this.alertMessage.message = err.message || 'unable to reset password'
+        })
+        .finally(() => {
+          this.isLoading = false
+        })
+
+      // this.$nuxt.$router.push('/create-new-password')
     },
     // async onSubmit() {
     //   try {

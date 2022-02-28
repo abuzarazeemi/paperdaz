@@ -133,10 +133,11 @@ import Vue from 'vue'
 import InputField from '~/components/widgets/InputField.vue'
 import AuthUser from '~/models/AuthUser'
 import timezones from '~/assets/json/timezones'
+import SpinnerDottedIcon from '~/components/svg-icons/SpinnerDottedIcon.vue'
 
 export default Vue.extend({
   name: 'CompanyForm',
-  components: { InputField },
+  components: { InputField, SpinnerDottedIcon },
   data() {
     return {
       formData: {
