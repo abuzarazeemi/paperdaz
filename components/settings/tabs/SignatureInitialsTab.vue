@@ -68,7 +68,6 @@
 
     <draw-or-type-modal
       v-model="showSignatureModal"
-      v-if="showSignatureModal"
       :src="usingSignature ? $auth.user.signature : $auth.user.initials"
       @image-exported="imageExported($event)"
     />
@@ -109,11 +108,50 @@ export default Vue.extend({
       this.usingSignature = false
       this.showSignatureModal = true
     },
-    imageExported(image: any) {
-      this.$notify.success({
-        title: 'Signature Created/Updated',
-        message: 'Your signature has been created or updated',
-      })
+    dataURIToBlob(dataURI: string) {
+      const splitDataURI = dataURI.split(',')
+      const byteString =
+        splitDataURI[0].indexOf('base64') >= 0
+          ? atob(splitDataURI[1])
+          : decodeURI(splitDataURI[1])
+      const mimeString = splitDataURI[0].split(':')[1].split(';')[0]
+
+      const ia = new Uint8Array(byteString.length)
+      for (let i = 0; i < byteString.length; i++)
+        ia[i] = byteString.charCodeAt(i)
+
+      return new Blob([ia], { type: mimeString })
+    },
+    async imageExported(image: any) {
+      const formData = new FormData()
+      formData.append('upload', this.dataURIToBlob(image))
+
+      this.$axios
+        .$post(
+          this.usingSignature
+            ? '/user/upload_signature'
+            : '/user/update_initials',
+          formData
+        )
+        .then(async (response) => {
+          await this.$auth.fetchUser()
+          this.$notify.success({
+            title: this.usingSignature ? 'Signature' : 'Initials',
+            message: `Your ${
+              this.usingSignature ? 'signature' : 'initials'
+            } has been uploaded`,
+          })
+        })
+        .catch((err) => {
+          this.$notify.error({
+            title: this.usingSignature ? 'Signature' : 'Initials',
+            message:
+              err.message ||
+              `Error uploading ${
+                this.usingSignature ? 'signature' : 'initials'
+              }`,
+          })
+        })
     },
     setupCanvases() {
       const canvasContainers = document.querySelectorAll('.canvas-container')
