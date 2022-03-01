@@ -21,6 +21,7 @@
             class="absolute right-0 top-1/2 transform -translate-y-1/2"
           /> -->
         <button
+          @click="showSignature"
           class="action-button action-button-sm primary mr-3 absolute right-0 top-1/2 transform -translate-y-1/2"
         >
           Edit
@@ -53,6 +54,7 @@
             class="absolute right-0 top-1/2 transform -translate-y-1/2"
           /> -->
         <button
+          @click="showInitial"
           class="action-button action-button-sm primary mr-3 absolute right-0 top-1/2 transform -translate-y-1/2"
         >
           Edit
@@ -63,6 +65,13 @@
       </div>
     </section>
     <!-- End:: Initials section -->
+
+    <draw-or-type-modal
+      v-model="showSignatureModal"
+      v-if="showSignatureModal"
+      :src="usingSignature ? $auth.user.signature : $auth.user.initials"
+      @image-exported="imageExported($event)"
+    />
   </div>
 </template>
 
@@ -70,12 +79,15 @@
 import Vue from 'vue'
 import SignaturePad from 'signature_pad'
 import ExclamationIcon from '~/components/svg-icons/ExclamationIcon.vue'
+import DrawOrTypeModal from '~/components/modals/DrawOrTypeModal.vue'
 
 export default Vue.extend({
   name: 'SignatureInitialsTab',
-  components: { ExclamationIcon },
+  components: { ExclamationIcon, DrawOrTypeModal },
   data() {
     return {
+      showSignatureModal: false,
+      usingSignature: true,
       signatureCanvas: undefined as undefined | any,
       initialsCanvas: undefined as undefined | any,
     }
@@ -89,6 +101,20 @@ export default Vue.extend({
     this.setupCanvases()
   },
   methods: {
+    showSignature() {
+      this.usingSignature = true
+      this.showSignatureModal = true
+    },
+    showInitial() {
+      this.usingSignature = false
+      this.showSignatureModal = true
+    },
+    imageExported(image: any) {
+      this.$notify.success({
+        title: 'Signature Created/Updated',
+        message: 'Your signature has been created or updated',
+      })
+    },
     setupCanvases() {
       const canvasContainers = document.querySelectorAll('.canvas-container')
       canvasContainers.forEach((canvasContainer, index) => {

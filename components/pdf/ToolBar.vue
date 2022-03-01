@@ -111,7 +111,9 @@
     <draw-or-type-modal
       v-model="showSignatureModal"
       v-if="showSignatureModal"
+      :src="$auth.user.signature"
       @image-exported="imageExported($event)"
+      use-default-button
     />
   </section>
 </template>

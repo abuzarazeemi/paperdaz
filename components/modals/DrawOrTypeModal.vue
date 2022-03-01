@@ -34,7 +34,7 @@
 
       <div
         key="default"
-        class="border h-56 border-[#C4C4C4] w-full rounded w-full bg-white grid place-items-center"
+        class="border h-56 border-[#C4C4C4] w-full rounded w-full bg-white flex justify-center items-center overflow-hidden p-4"
         v-else
       >
         <img :src="src" class="h-full w-full object-contain" />
@@ -51,10 +51,7 @@
         >
           {{ displayDefault ? 'EDIT' : 'CLEAR' }}
         </button>
-        <div
-          class="flex items-center justify-end gap-4"
-          v-show="!displayDefault"
-        >
+        <div class="flex items-center justify-end gap-4">
           <button
             class="h-9 rounded border border-gray-100 text-paperdazgreen-300 text-xs px-3 bg-white hover:shadow"
             @click="closeModal"
@@ -64,8 +61,16 @@
           <button
             class="h-9 rounded border border-gray-100 bg-paperdazgreen-300 text-xs text-white px-4 hover:shadow"
             @click="exportImage"
+            v-show="!displayDefault"
           >
             SAVE
+          </button>
+          <button
+            class="h-9 rounded border border-gray-100 bg-paperdazgreen-300 text-xs text-white px-4 hover:shadow"
+            @click="useDefaultImage"
+            v-show="displayDefault && useDefaultButton"
+          >
+            USE
           </button>
         </div>
       </div>
@@ -92,7 +97,12 @@ export default Vue.extend({
     },
     src: {
       type: String,
-      default: '',
+      default:
+        'https://ichef.bbci.co.uk/news/976/cpsprodpb/B9FF/production/_117751674_satan-shoes1.jpg',
+    },
+    useDefaultButton: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -146,6 +156,21 @@ export default Vue.extend({
     },
   },
   methods: {
+    async useDefaultImage() {
+      if (!this.displayDefault) return
+
+      console.log('using the default image')
+      ;(async () => {
+        const response = await fetch(this.src)
+        const imageBlob = await response.blob()
+        const reader = new FileReader()
+        reader.readAsDataURL(imageBlob)
+        reader.onloadend = () => {
+          const base64data = reader.result
+          this.imageExported(base64data)
+        }
+      })()
+    },
     closeModal() {
       this.$emit('updateVisibility', false)
     },

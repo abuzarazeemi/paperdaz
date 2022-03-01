@@ -27,7 +27,7 @@ export default Vue.extend({
   layout: 'dashboard',
   data() {
     return {
-      currentTab: 'account',
+      currentTab: 'signature-initials',
       tabs: [
         { label: 'Profile Info', value: 'account', component: AccountTab },
         { label: 'Security', value: 'security', component: ChangePasswordTab },
@@ -36,11 +36,11 @@ export default Vue.extend({
           value: 'referral-credit',
           component: ReferralTabVue,
         },
-        // {
-        //   label: 'Signature/Initials',
-        //   value: 'signature-initials',
-        //   component: SignatureInitialsTab,
-        // },
+        {
+          label: 'Signature/Initials',
+          value: 'signature-initials',
+          component: SignatureInitialsTab,
+        },
         // {
         //   label: 'Your Proucts',
         //   value: 'your-products',
@@ -62,11 +62,11 @@ export default Vue.extend({
         component: BillingTab,
       })
     } else if (this.$store.getters.userType === UserTypeEnum.FREE) {
-      this.tabs.splice(3, 0, {
-        label: 'Signature/Initials',
-        value: 'signature-initials',
-        component: SignatureInitialsTab,
-      })
+      // this.tabs.splice(3, 0, {
+      //   label: 'Signature/Initials',
+      //   value: 'signature-initials',
+      //   component: SignatureInitialsTab,
+      // })
     }
   },
   computed: {
