@@ -108,15 +108,18 @@
       <button @click="$emit('undo')" class="text-sm">UNDO</button>
     </div>
 
-    <pdf-signature-modal
+    <draw-or-type-modal
       v-model="showSignatureModal"
       v-if="showSignatureModal"
+      :src="$auth.user.signature"
+      @image-exported="imageExported($event)"
+      use-default-button
     />
   </section>
 </template>
 
 <script>
-import PdfSignatureModal from '../modals/PdfSignatureModal.vue'
+import DrawOrTypeModal from '../modals/DrawOrTypeModal.vue'
 import CalendarIcon from '../svg-icons/CalendarIcon.vue'
 import HollowCircleIcon from '../svg-icons/HollowCircleIcon.vue'
 import PdfHighlightToolIcon from '../svg-icons/PdfHighlightToolIcon.vue'
@@ -131,7 +134,7 @@ import UserProfileSolidIcon from '../svg-icons/UserProfileSolidIcon.vue'
 import TOOL_TYPE from './data/toolType'
 export default {
   components: {
-    PdfSignatureModal,
+    DrawOrTypeModal,
     PdfTextToolIcon,
     PdfTickIcon,
     PdfTimesIcon,
@@ -179,6 +182,15 @@ export default {
     },
   },
   methods: {
+    imageExported(image) {
+      this.$BUS.$emit('signature-update', image)
+      this.$notify.success({
+        title: 'Pdf Annotation',
+        message: `${
+          this.activeTab === 'draw' ? 'Signature' : 'Signature'
+        } updated`,
+      })
+    },
     setSelectedType(type) {
       if (this.selectedType == type) this.selectedType = null
       else this.selectedType = type
