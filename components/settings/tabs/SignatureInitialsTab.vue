@@ -1,7 +1,7 @@
 <template>
   <div class="flex-1 rounded-3xl bg-white py-6 px-8">
     <!-- Start:: Signature section -->
-    <section class="mb-12">
+    <section class="mb-16">
       <!-- <div class="flex justify-between items-center mb-4"> -->
       <!-- <h3 class="text-[#524D5B] font-medium text-2xl flex items-center gap-3">
           Signature <exclamation-icon class="text-paperdazgreen-300 w-4 h-4" />
@@ -20,15 +20,28 @@
         <!-- <pen-icon
             class="absolute right-0 top-1/2 transform -translate-y-1/2"
           /> -->
-        <button
+        <!-- <button
           @click="showSignature"
           class="action-button action-button-sm primary mr-3 absolute right-0 top-1/2 transform -translate-y-1/2"
         >
           Edit
-        </button>
+        </button> -->
       </h3>
-      <div class="canvas-container">
+      <!-- <div class="canvas-container">
         <canvas class="border h-56 border-[#C4C4C4] w-full rounded"></canvas>
+      </div> -->
+      <div
+        class="border h-56 border-[#C4C4C4] rounded w-full bg-white flex flex-col justify-center items-center overflow-hidden p-4"
+      >
+        <div class="mb-4 text-gray-600 cursor-not-allowed">
+          <lock-icon width="48" height="48" />
+        </div>
+        <button
+          @click="showSignature"
+          class="text-white rounded shadow bg-paperdazgreen-400 px-5 h-10 text-sm"
+        >
+          {{ !$auth.user.signature ? 'Create' : 'View / Update' }}
+        </button>
       </div>
     </section>
     <!-- End:: Signature section -->
@@ -53,15 +66,28 @@
         <!-- <pen-icon
             class="absolute right-0 top-1/2 transform -translate-y-1/2"
           /> -->
-        <button
+        <!-- <button
           @click="showInitial"
           class="action-button action-button-sm primary mr-3 absolute right-0 top-1/2 transform -translate-y-1/2"
         >
           Edit
-        </button>
+        </button> -->
       </h3>
-      <div class="canvas-container">
+      <!-- <div class="canvas-container">
         <canvas class="border h-56 border-[#C4C4C4] w-full rounded"></canvas>
+      </div> -->
+      <div
+        class="border h-56 border-[#C4C4C4] rounded w-full bg-white flex flex-col justify-center items-center overflow-hidden p-4"
+      >
+        <div class="mb-4 text-gray-600 cursor-not-allowed">
+          <lock-icon width="48" height="48" />
+        </div>
+        <button
+          @click="showInitial"
+          class="text-white rounded shadow bg-paperdazgreen-400 px-5 h-10 text-sm"
+        >
+          {{ !$auth.user.initials ? 'Create' : 'View / Update' }}
+        </button>
       </div>
     </section>
     <!-- End:: Initials section -->
@@ -79,25 +105,26 @@ import Vue from 'vue'
 import SignaturePad from 'signature_pad'
 import ExclamationIcon from '~/components/svg-icons/ExclamationIcon.vue'
 import DrawOrTypeModal from '~/components/modals/DrawOrTypeModal.vue'
+import LockIcon from '~/components/svg-icons/LockIcon.vue'
 
 export default Vue.extend({
   name: 'SignatureInitialsTab',
-  components: { ExclamationIcon, DrawOrTypeModal },
+  components: { ExclamationIcon, DrawOrTypeModal, LockIcon },
   data() {
     return {
       showSignatureModal: false,
       usingSignature: true,
-      signatureCanvas: undefined as undefined | any,
-      initialsCanvas: undefined as undefined | any,
+      // signatureCanvas: undefined as undefined | any,
+      // initialsCanvas: undefined as undefined | any,
     }
   },
   computed: {
-    functionalCanvases(): Array<any> {
-      return [this.signatureCanvas, this.initialsCanvas]
-    },
+    // functionalCanvases(): Array<any> {
+    //   return [this.signatureCanvas, this.initialsCanvas]
+    // },
   },
   mounted() {
-    this.setupCanvases()
+    // this.setupCanvases()
   },
   methods: {
     showSignature() {
@@ -153,39 +180,39 @@ export default Vue.extend({
           })
         })
     },
-    setupCanvases() {
-      const canvasContainers = document.querySelectorAll('.canvas-container')
-      canvasContainers.forEach((canvasContainer, index) => {
-        const canvas = canvasContainer.querySelector(
-          'canvas'
-        ) as HTMLCanvasElement
+    // setupCanvases() {
+    //   const canvasContainers = document.querySelectorAll('.canvas-container')
+    //   canvasContainers.forEach((canvasContainer, index) => {
+    //     const canvas = canvasContainer.querySelector(
+    //       'canvas'
+    //     ) as HTMLCanvasElement
 
-        if (!canvas) return
+    //     if (!canvas) return
 
-        let currentSignaturePad = this.functionalCanvases[index]
+    //     let currentSignaturePad = this.functionalCanvases[index]
 
-        currentSignaturePad = new SignaturePad(canvas)
-      })
+    //     currentSignaturePad = new SignaturePad(canvas)
+    //   })
 
-      window.addEventListener('resize', this.resizeCanvas)
-      this.resizeCanvas()
-    },
-    resizeCanvas() {
-      const ratio = Math.max(window.devicePixelRatio || 1, 1)
-      const canvasContainers = document.querySelectorAll('.canvas-container')
-      canvasContainers.forEach((canvasContainer) => {
-        const canvas = canvasContainer.querySelector(
-          'canvas'
-        ) as HTMLCanvasElement
+    //   window.addEventListener('resize', this.resizeCanvas)
+    //   this.resizeCanvas()
+    // },
+    // resizeCanvas() {
+    //   const ratio = Math.max(window.devicePixelRatio || 1, 1)
+    //   const canvasContainers = document.querySelectorAll('.canvas-container')
+    //   canvasContainers.forEach((canvasContainer) => {
+    //     const canvas = canvasContainer.querySelector(
+    //       'canvas'
+    //     ) as HTMLCanvasElement
 
-        if (!canvas) return
+    //     if (!canvas) return
 
-        canvas.width = canvas.offsetWidth * ratio
-        canvas.height = canvas.offsetHeight * ratio
-        // @ts-ignore
-        canvas.getContext('2d').scale(ratio, ratio)
-      })
-    },
+    //     canvas.width = canvas.offsetWidth * ratio
+    //     canvas.height = canvas.offsetHeight * ratio
+    //     // @ts-ignore
+    //     canvas.getContext('2d').scale(ratio, ratio)
+    //   })
+    // },
   },
 })
 </script>

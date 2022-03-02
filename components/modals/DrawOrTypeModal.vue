@@ -34,7 +34,7 @@
 
       <div
         key="default"
-        class="border h-56 border-[#C4C4C4] w-full rounded w-full bg-white flex justify-center items-center overflow-hidden p-4"
+        class="border h-56 border-[#C4C4C4] rounded w-full bg-white flex justify-center items-center overflow-hidden p-4"
         v-else
       >
         <img :src="src" class="h-full w-full object-contain" />
