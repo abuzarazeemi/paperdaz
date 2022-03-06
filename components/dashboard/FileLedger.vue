@@ -117,7 +117,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(file, i) in files" :key="i">
+          <tr
+            v-for="(file, i) in files"
+            :key="file.id"
+            :class="{ highlight: file.id == highlightedFileId }"
+          >
             <td class="text-center fixed-col left">{{ i + 1 }}</td>
             <td>
               <div class="flex items-center gap-1.5">
@@ -207,16 +211,24 @@ export default Vue.extend({
       searchParam: '',
       showScribble: false,
       files: [] as Array<any>,
-
+      highlightedFileId: undefined as any,
       scrollObserver: undefined as undefined | any,
     }
   },
   mounted() {
+    this.handleFileHighlight()
     this.handleShowingLedger()
     this.tableScrollObserver()
   },
 
   methods: {
+    handleFileHighlight() {
+      this.highlightedFileId = this.$nuxt.$route.query.highlight_file
+
+      setTimeout(() => {
+        this.highlightedFileId = undefined
+      }, 20000)
+    },
     shareFile(file: any) {
       const url = location.origin.replace(/\/+$/, '') + `/pdf/${file.id}`
       navigator.share({
@@ -308,15 +320,22 @@ export default Vue.extend({
 
 <style lang="postcss" scoped>
 .file-ledger-table {
+  --background: white;
   @apply text-sm w-full whitespace-nowrap;
   border-collapse: separate;
   border-spacing: 0px 0px;
+
   & tr {
     @apply border-b border-gray-100;
+    transition: all 0.2s ease-in-out;
+    &.highlight {
+      --background: rgba(233, 254, 219, 0.46);
+    }
   }
 
   & th {
     @apply pt-8 pb-3;
+    background: var(--background);
   }
 
   & td {
@@ -326,6 +345,8 @@ export default Vue.extend({
   & td,
   & th {
     @apply px-2 border-b border-gray-100;
+    transition: all 0.2s ease-in-out;
+    background: var(--background);
     &:first-child {
       @apply pl-5;
     }
@@ -336,6 +357,7 @@ export default Vue.extend({
     &.fixed-col {
       position: sticky;
       background: white;
+      background: var(--background);
       &.left {
         left: -0.1px;
         &.scrolled {

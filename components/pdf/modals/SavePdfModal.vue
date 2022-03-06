@@ -134,7 +134,9 @@ export default Vue.extend({
             })
             await this.$auth.fetchUser()
           })()
-          this.$nuxt.$router.push('/dashboard')
+          this.$nuxt.$router.push(
+            `/dashboard?highlight_file=${this.$nuxt.$route.params.id}`
+          )
           // this.closeModal()
         })
         .catch(() => {
