@@ -60,172 +60,7 @@
       <!-- End:: already existing package -->
       <!-- Start:: Create custom package -->
       <div v-else key="creating">
-        <div class="grid md:grid-cols-[max-content,1fr] mb-12 gap-5">
-          <package-card
-            class="md:min-w-[300px] lg:min-w-[320px]"
-            show-bottom-button
-            :staging-package="customPackage"
-          />
-          <div
-            class="border-2 border-paperdazgreen-400 w-full rounded-2xl overflow-hidden relative bg-white text-[#505050]"
-          >
-            <div class="p-5 overflow-x-auto custom-scrollbar">
-              <table class="custom-table">
-                <thead>
-                  <tr class="text-lg">
-                    <th class="text-left">
-                      <span
-                        class="inline-block border-b-2 border-paperdazgreen-400"
-                        >Feature</span
-                      >
-                    </th>
-                    <th>
-                      <span
-                        class="inline-block border-b-2 border-paperdazgreen-400"
-                        >Price
-                        <span class="text-xxs font-normal">/unit</span></span
-                      >
-                    </th>
-                    <th>
-                      <span
-                        class="inline-block border-b-2 border-paperdazgreen-400"
-                        >Quantity</span
-                      >
-                    </th>
-                    <th>
-                      <span
-                        class="inline-block border-b-2 border-paperdazgreen-400"
-                        >Amount</span
-                      >
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Paperlink</td>
-                    <td class="text-center">$1.00</td>
-                    <td>
-                      <div class="grid place-items-center">
-                        <!-- <el-input
-                          v-model="customPackage.paperlink"
-                          style="width: 80px"
-                          type="number"
-                          min="1"
-                        /> -->
-                        <el-input-number
-                          v-model="customPackage.paperlink"
-                          size="small"
-                          :min="1"
-                        />
-                      </div>
-                    </td>
-                    <td class="text-center">$15.00</td>
-                  </tr>
-                  <tr>
-                    <td>Team Member</td>
-                    <td class="text-center">$1.00</td>
-                    <td>
-                      <div class="grid place-items-center">
-                        <!-- <el-input
-                          v-model="customPackage.team_members"
-                          style="width: 80px"
-                          type="number"
-                          min="1"
-                        /> -->
-                        <el-input-number
-                          v-model="customPackage.team_members"
-                          size="small"
-                          :min="1"
-                        />
-                      </div>
-                    </td>
-                    <td class="text-center">$20.00</td>
-                  </tr>
-                  <tr>
-                    <td>CC Flow</td>
-                    <td class="text-center">$1.00</td>
-                    <td>
-                      <div class="grid place-items-center">
-                        <!-- <el-input
-                          v-model="customPackage.carbon"
-                          style="width: 80px"
-                          type="number"
-                          min="1"
-                        /> -->
-                        <el-input-number
-                          v-model="customPackage.carbon"
-                          size="small"
-                          :min="1"
-                        />
-                      </div>
-                    </td>
-                    <td class="text-center">$10.00</td>
-                  </tr>
-                  <tr>
-                    <td>Public Profile</td>
-                    <td class="text-center">Included</td>
-                    <td>
-                      <div class="grid place-items-center">
-                        <input
-                          type="checkbox"
-                          hidden
-                          id="public-profile-checkbox"
-                          v-model="customPackage.public_profile"
-                        />
-                        <label
-                          for="public-profile-checkbox"
-                          class="inline-grid place-items-center h-7 w-7 rounded border border-gray-300 p-1 cursor-pointer"
-                        >
-                          <transition name="fade" :duration="100">
-                            <check-icon
-                              height="12"
-                              width="16"
-                              v-show="customPackage.public_profile"
-                            />
-                          </transition>
-                        </label>
-                      </div>
-                    </td>
-                    <td class="text-center">$10.00</td>
-                  </tr>
-                  <tr>
-                    <td>Company Ledger</td>
-                    <td class="text-center">Included</td>
-                    <td>
-                      <div class="grid place-items-center">
-                        <input
-                          type="checkbox"
-                          hidden
-                          id="company-ledger-checkbox"
-                          v-model="customPackage.company_ledger"
-                        />
-                        <label
-                          for="company-ledger-checkbox"
-                          class="inline-grid place-items-center h-7 w-7 rounded border border-gray-300 p-1 cursor-pointer"
-                        >
-                          <transition name="fade" :duration="100">
-                            <check-icon
-                              height="12"
-                              width="16"
-                              v-show="customPackage.company_ledger"
-                            />
-                          </transition>
-                        </label>
-                      </div>
-                    </td>
-                    <td class="text-center">$10.00</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div
-              class="border-t-2 border-paperdazgreen-400 py-4 px-10 text-lg font-bold flex justify-between"
-            >
-              <span>Total Amount</span>
-              <span class="text-[#606060]">$65.00</span>
-            </div>
-          </div>
-        </div>
+        <select-custom-package />
         <p class="font-medium text-lg text-center">
           Want to select pre-created packaged?
           <button
@@ -247,26 +82,14 @@ import PackageCard from '~/components/settings/PackageCard.vue'
 import _ from 'lodash'
 import ArrowDownIcon from '~/components/svg-icons/ArrowDownIcon.vue'
 import CheckIcon from '~/components/svg-icons/CheckIcon.vue'
+import SelectCustomPackage from '../SelectCustomPackage.vue'
 
 export default Vue.extend({
-  components: { PackageCard, ArrowDownIcon, CheckIcon },
+  components: { PackageCard, ArrowDownIcon, CheckIcon, SelectCustomPackage },
   name: 'SelectPackageTab',
-
   data() {
     return {
-      customPackage: {
-        name: 'Custom',
-        description: 'Custom package',
-        monthly_price: '20',
-        yearly_price: '120',
-        paperlink: 1,
-        team_members: 1,
-        carbon: 1,
-        visibility: true,
-        public_profile: false,
-        company_ledger: false,
-      },
-      creatingCustomPackage: false,
+      creatingCustomPackage: true,
       promotionCode: undefined,
     }
   },
@@ -297,24 +120,7 @@ export default Vue.extend({
       })
     },
   },
-  watch: {
-    creatingCustomPackage(val) {
-      if (!val) return
-
-      this.customPackage = {
-        name: 'Custom',
-        description: 'Custom package',
-        monthly_price: '20',
-        yearly_price: '120',
-        paperlink: 1,
-        team_members: 1,
-        carbon: 1,
-        visibility: true,
-        public_profile: false,
-        company_ledger: false,
-      }
-    },
-  },
+  watch: {},
 })
 </script>
 

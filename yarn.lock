@@ -2281,6 +2281,11 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
+"@workmate/country-and-currency@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@workmate/country-and-currency/-/country-and-currency-1.0.3.tgz#658ed01ffa6906de9c80fedb0f47d92b68e34cc0"
+  integrity sha512-jQcZri6thU769UZkWlzh+3BHd2s49aZvY+iOWGQsL7Uzcssm/ba+ny9aEF6L+8HNiSbqD3IVcg7n7K57Hm4CoA==
+
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@xtuc/ieee754/-/ieee754-1.2.0.tgz#eef014a3145ae477a1cbc00cd1e552336dceb790"
