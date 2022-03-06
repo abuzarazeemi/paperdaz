@@ -59,8 +59,11 @@
             v-if="pdf"
           >
             <div
-              :class="['pdf-single-page-outer', { 'mt-6': pI > 0 && !downloadingPdf }]"
-              :ref="`pdf-single-page-outer-${pI+1}`"
+              :class="[
+                'pdf-single-page-outer',
+                { 'mt-6': pI > 0 && !downloadingPdf },
+              ]"
+              :ref="`pdf-single-page-outer-${pI + 1}`"
               v-for="(page, pI) in pdf.numPages"
               :key="pI"
               style="position: relative"
@@ -94,16 +97,22 @@
                 :onCLickSinglePageOuter="onCLickSinglePageOuter"
                 :onMouseMoveOnPages="onMouseMoveOnPages"
                 :onMouseLeaveFromPages="onMouseLeaveFromPages"
-                :page-number="pI + 1" :pdf="pdf"
+                :page-number="pI + 1"
+                :pdf="pdf"
               />
             </div>
           </div>
         </div>
-        <button class="w-full bg-paperdazgreen-400 h-12 text-white">
-          Confirm Button
+        <button
+          class="w-full bg-paperdazgreen-400 h-12 text-white"
+          v-show="isConfirm && !isCreator"
+          @click="confirmDocument()"
+        >
+          Confirm
         </button>
       </div>
     </main>
+    <save-pdf-modal :file="file" v-model="showSaveModal" />
   </div>
 </template>
 
@@ -137,6 +146,7 @@ import SignatureIdentifier from '@/components/pdf/tools_identifiers/Signature'
 import StarIdentifier from '@/components/pdf/tools_identifiers/Star'
 
 import moment from 'moment'
+import SavePdfModal from '~/components/pdf/modals/SavePdfModal.vue'
 
 export default {
   layout: 'pdf',
@@ -158,44 +168,7 @@ export default {
     InitialIdentifier,
     SignatureIdentifier,
     StarIdentifier,
-  },
-  created() {
-    this.fetchPdf()
-    this.$BUS.$on('download-pdf', this.downloadPdf)
-    this.$BUS.$on('signature-update', (v) => (this.signature = v))
-  },
-  mounted () {
-    document.addEventListener('keyup', this.keyupHandler)
-  },
-  destroyed () {
-    document.removeEventListener('keyup', this.keyupHandler)
-  },
-  beforeDestroy() {
-    this.$BUS.$off('download-pdf')
-    this.$BUS.$off('signature-update')
-  },
-  async asyncData({ $axios, params, error }) {
-    const file = await $axios
-      .$get(`/file/${params.id}`)
-      .then((response) => {
-        const file = response.file
-        file.action = file.action || 'complete'
-        file.user = response.user
-
-        console.log(file.user)
-        return file
-      })
-      .catch((err) => {
-        error({
-          statusCode: 404,
-          message: err.message || 'File not found',
-        })
-      })
-
-    return { file }
-  },
-  updated(){
-    this.handleScale()
+    SavePdfModal,
   },
   data: () => ({
     pdf: null,
@@ -222,8 +195,61 @@ export default {
 
     toolId: 0,
     downloadingPdf: false,
+    showSaveModal: false,
   }),
+  created() {
+    this.fetchPdf()
+    this.$BUS.$on('download-pdf', this.downloadPdf)
+    this.$BUS.$on('signature-update', (v) => (this.signature = v))
+  },
+  mounted() {
+    document.addEventListener('keyup', this.keyupHandler)
+  },
+  destroyed() {
+    document.removeEventListener('keyup', this.keyupHandler)
+  },
+  beforeDestroy() {
+    this.$BUS.$off('download-pdf')
+    this.$BUS.$off('signature-update')
+  },
+  async asyncData({ $axios, params, error }) {
+    const file = await $axios
+      .$get(`/file/${params.id}`)
+      .then((response) => {
+        const file = response.file
+        file.action = file.action || 'complete'
+        return file
+      })
+      .catch((err) => {
+        error({
+          statusCode: 404,
+          message: err.message || 'File not found',
+        })
+      })
+
+    return { file }
+  },
+  updated() {
+    this.handleScale()
+  },
+
   computed: {
+    isCreator() {
+      try {
+        return this.file.user.id === this.$auth.user.id
+      } catch (e) {
+        return false
+      }
+    },
+    isConfirm() {
+      return String(this.file.action).toLowerCase() === 'confirm'
+    },
+    isComplete() {
+      return String(this.file.action).toLowerCase() === 'complete'
+    },
+    isSign() {
+      return String(this.file.action).toLowerCase() === 'sign'
+    },
     pagesOuterStyle() {
       let scale = `scale(${this.scale})`
       return {
@@ -304,11 +330,13 @@ export default {
     },
   },
   methods: {
-    keyupHandler (event) {
+    confirmDocument() {
+      this.showSaveModal = true
+    },
+    keyupHandler(event) {
       if (event.ctrlKey && event.shiftKey && event.code === 'KeyZ') {
         this.redo()
-      }
-      else if (event.ctrlKey && event.code === 'KeyZ') {
+      } else if (event.ctrlKey && event.code === 'KeyZ') {
         this.undo()
       }
     },
@@ -349,7 +377,9 @@ export default {
         this.tools[index].y1 -= dy
         this.tools[index].y2 -= dy
       } else if (type == this.TOOL_TYPE.draw) {
-        this.tools[index].points = this.tools[index].points.map((p, i) => i%2 == 0 ? p-dx : p-dy)
+        this.tools[index].points = this.tools[index].points.map((p, i) =>
+          i % 2 == 0 ? p - dx : p - dy
+        )
       } else {
         this.tools[index].left -= dx
         this.tools[index].top -= dy
@@ -406,7 +436,9 @@ export default {
       this.$forceUpdate()
     },
     fillteredTools(pageNumber) {
-      return this.tools.filter((t) => !t.isDeleted && t.pageNumber == pageNumber)
+      return this.tools.filter(
+        (t) => !t.isDeleted && t.pageNumber == pageNumber
+      )
     },
     async downloadPdf() {
       this.selectedToolId = null
@@ -415,7 +447,7 @@ export default {
         // pagebreak: { after: '.pdf-single-page-outer' },
         image: { type: 'jpeg', quality: 1.0 },
         margin: [0, 0, 0, 0],
-        html2canvas: { scale: 2, },
+        html2canvas: { scale: 2 },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
       }
       let prevScale = this.scale
@@ -423,11 +455,23 @@ export default {
       this.downloadingPdf = true
       await this.$nextTick()
       let elements = Array.from(this.$refs['pdf-single-pages-outer'].children)
-      let worker = html2pdf().set(options).from(elements[0]).toContainer().toCanvas().toPdf()
+      let worker = html2pdf()
+        .set(options)
+        .from(elements[0])
+        .toContainer()
+        .toCanvas()
+        .toPdf()
 
       if (elements.length > 1) {
-        elements.slice(1).forEach(element => {
-          worker = worker.get('pdf').then(pdf => pdf.addPage()).set(options).from(element).toContainer().toCanvas().toPdf()
+        elements.slice(1).forEach((element) => {
+          worker = worker
+            .get('pdf')
+            .then((pdf) => pdf.addPage())
+            .set(options)
+            .from(element)
+            .toContainer()
+            .toCanvas()
+            .toPdf()
         })
       }
 
@@ -446,7 +490,12 @@ export default {
       await this.$nextTick()
       this.$forceUpdate()
     },
-    async handlePanning(event, id = undefined, direction = undefined, pageNumber) {
+    async handlePanning(
+      event,
+      id = undefined,
+      direction = undefined,
+      pageNumber
+    ) {
       var elem = this.$refs['pdf-single-pages-outer']
 
       if (!this.isPanning && id == undefined) {
@@ -474,7 +523,7 @@ export default {
 
       const getPointPos = () => {
         let parent = this.$refs[`pdf-single-page-outer-${pageNumber}`]
-        if(Array.isArray(parent)) parent = parent[0]
+        if (Array.isArray(parent)) parent = parent[0]
         let { x, y } = this.pointerPos(event.srcEvent, parent)
 
         if (y < 0) y = 0
@@ -544,7 +593,8 @@ export default {
 
       event = event || window.event
 
-      const scrollingElement = parent ||
+      const scrollingElement =
+        parent ||
         this.$refs.scrollingElement ||
         document.scrollingElement ||
         document.body
@@ -619,7 +669,7 @@ export default {
     },
     placeTool(e, pageNumber) {
       let parent = this.$refs[`pdf-single-page-outer-${pageNumber}`]
-      if(Array.isArray(parent)) parent = parent[0]
+      if (Array.isArray(parent)) parent = parent[0]
 
       let { x, y } = this.pointerPos(e, parent || this.$refs.PagesOuter)
       let obj = {
@@ -656,7 +706,7 @@ export default {
       let pagesOuter = this.$refs.PagesOuter
       if (scrollingElem && pagesOuter) {
         let s = scrollingElem.clientWidth / pagesOuter.clientWidth
-        if(s != this.scale) {
+        if (s != this.scale) {
           this.scale = s
           this.$forceUpdate()
         }
