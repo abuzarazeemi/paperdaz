@@ -62,11 +62,11 @@ export default Vue.extend({
         component: BillingTab,
       })
     } else if (this.$store.getters.userType === UserTypeEnum.FREE) {
-      // this.tabs.splice(3, 0, {
-      //   label: 'Signature/Initials',
-      //   value: 'signature-initials',
-      //   component: SignatureInitialsTab,
-      // })
+      this.tabs.splice(3, 0, {
+        label: 'Signature/Initials',
+        value: 'signature-initials',
+        component: SignatureInitialsTab,
+      })
     }
   },
   computed: {

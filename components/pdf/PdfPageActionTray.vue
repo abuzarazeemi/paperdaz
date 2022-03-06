@@ -3,7 +3,9 @@
     <div
       class="flex items-center gap-4 flex-1 justify-between max-w-4xl px-4 text-sm"
     >
+      <!-- If authenticated user is created -->
       <span v-if="!isCreator" class="capitalize">{{ file.action }}</span>
+      <!-- else -->
       <el-dropdown
         v-else
         trigger="click"
@@ -30,14 +32,20 @@
         </el-dropdown-menu>
       </el-dropdown>
 
-      <el-dropdown trigger="click" class="font-medium">
+      <!-- If authenticated user is created -->
+      <span v-if="!isCreator" class="capitalize">{{ access }}</span>
+      <el-dropdown
+        v-else
+        trigger="click"
+        class="font-medium"
+        @command="handleAccessChange"
+      >
         <span class="el-dropdown-link">
-          Private <i class="el-icon-arrow-down el-icon--right"></i>
+          {{ access }} <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>Private</el-dropdown-item>
-          <el-dropdown-item>Public</el-dropdown-item>
-          <el-dropdown-item>Do not Post</el-dropdown-item>
+          <el-dropdown-item command="private">Private</el-dropdown-item>
+          <el-dropdown-item command="public">Public</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
       <!-- <div
@@ -182,11 +190,19 @@ export default Vue.extend({
         return false
       }
     },
+    access(): string {
+      return this.file.isPrivate ? 'Private' : 'Public'
+    },
   },
   methods: {
     handleActionChange(command: string) {
       const fileTemp = { ...this.file }
       fileTemp.action = command
+      this.$emit('update-file', fileTemp)
+    },
+    handleAccessChange(command: string) {
+      const fileTemp = { ...this.file }
+      fileTemp.isPrivate = String(command).toLowerCase() === 'private'
       this.$emit('update-file', fileTemp)
     },
     handleCommand(command: string) {
