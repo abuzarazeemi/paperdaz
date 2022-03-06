@@ -83,7 +83,7 @@
               Save
             </button>
           </el-dropdown-item>
-          <el-dropdown-item command="save">
+          <el-dropdown-item>
             <button
               class="px-2 w-[130px] rounded flex items-center justify-center bg-gray-600 py-1.5 text-white"
             >
@@ -124,6 +124,7 @@
 
     <div class="lg:flex items-center hidden">
       <button
+        @click="saveChanges"
         class="mr-2 text-xs text-white bg-paperdazgreen-400 rounded px-5 h-7"
       >
         Save
@@ -137,6 +138,7 @@
     <pdf-request-modal :file="file" v-model="showRequestModal" />
     <pdf-c-c-flow-modal :file="file" v-model="showCCFlowModal" />
     <pdf-papertags-modal :file="file" v-model="showPapertagsModal" />
+    <save-pdf-modal :file="file" v-model="showSaveModal" />
   </div>
 </template>
 
@@ -153,6 +155,7 @@ import TrashCanIcon from '../svg-icons/TrashCanIcon.vue'
 import PdfShareModal from './modals/PdfShareModal.vue'
 import PdfCCFlowModal from './modals/PdfCCFlowModal.vue'
 import PdfPapertagsModal from './modals/PdfPapertagsModal.vue'
+import SavePdfModal from './modals/SavePdfModal.vue'
 
 export default Vue.extend({
   components: {
@@ -166,6 +169,7 @@ export default Vue.extend({
     PdfShareModal,
     PdfCCFlowModal,
     PdfPapertagsModal,
+    SavePdfModal,
   },
   name: 'PdfPageActionTray',
   props: {
@@ -180,6 +184,7 @@ export default Vue.extend({
       showRequestModal: false as boolean,
       showCCFlowModal: false as boolean,
       showPapertagsModal: false as boolean,
+      showSaveModal: false as boolean,
     }
   },
   computed: {
@@ -207,8 +212,10 @@ export default Vue.extend({
     },
     handleCommand(command: string) {
       switch (String(command).toLowerCase()) {
+        case 'save':
+          this.saveChanges()
+          break
         case 'share':
-          // @ts-ignore
           this.showShareModal = true
           break
         case 'request':
@@ -224,6 +231,9 @@ export default Vue.extend({
           this.showPapertagsModal = true
           break
       }
+    },
+    saveChanges() {
+      this.showSaveModal = true
     },
   },
 })
