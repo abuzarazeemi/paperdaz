@@ -35,6 +35,7 @@
     </template>
     <!-- Start:: Body -->
     <p
+      v-show="false"
       class="text-center font-medium max-w-[300px] mx-auto mb-6 whitespace-normal"
     >
       You've not done any changes yet! Do you still want to exit the file?
@@ -83,6 +84,10 @@ export default Vue.extend({
       type: Boolean,
       default: false,
     },
+    file: {
+      type: Object,
+      default: () => ({}),
+    },
   },
   data() {
     return {
@@ -106,8 +111,52 @@ export default Vue.extend({
     closeModal() {
       this.$emit('updateVisibility', false)
     },
+
+    saveByCreator() {
+      if (this.loading) return
+
+      this.loading = true
+      this.errorMessage = ''
+
+      const tempFile = { ...this.file }
+
+      delete tempFile.user
+      delete tempFile.updated_at
+      delete tempFile.created_at
+
+      this.$axios
+        .$patch(`/file/${this.$nuxt.$route.params.id}`, tempFile)
+        .then(() => {
+          ;(async () => {
+            await this.$notify.success({
+              title: 'File',
+              message: 'Update Successful',
+            })
+            await this.$auth.fetchUser()
+          })()
+          this.$nuxt.$router.push('/dashboard')
+          // this.closeModal()
+        })
+        .catch(() => {
+          ;(async () => {
+            await this.$notify.error({
+              title: 'File',
+              message: 'Error saving file',
+            })
+          })()
+        })
+        .finally(() => {
+          this.loading = false
+        })
+    },
+
     onSubmit() {
       event?.preventDefault()
+
+      if (this.$auth.user?.id === this.file.user.id) {
+        this.saveByCreator()
+        return
+      }
 
       if (this.loading) return
 
