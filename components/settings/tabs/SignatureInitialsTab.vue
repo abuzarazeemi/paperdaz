@@ -95,19 +95,20 @@
     <draw-or-type-modal
       v-model="showSignatureModal"
       :src="usingSignature ? $auth.user.signature : $auth.user.initials"
-      @image-exported="imageExported($event)"
+      @image-exported="imageExportedLocal($event)"
     />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import SignaturePad from 'signature_pad'
 import ExclamationIcon from '~/components/svg-icons/ExclamationIcon.vue'
 import DrawOrTypeModal from '~/components/modals/DrawOrTypeModal.vue'
 import LockIcon from '~/components/svg-icons/LockIcon.vue'
+import mixins from 'vue-typed-mixins'
+import SaveSignatureInitialsMixin from '~/mixins/SaveSignatureInitialsMixin'
 
-export default Vue.extend({
+export default mixins(SaveSignatureInitialsMixin).extend({
   name: 'SignatureInitialsTab',
   components: { ExclamationIcon, DrawOrTypeModal, LockIcon },
   data() {
@@ -135,51 +136,10 @@ export default Vue.extend({
       this.usingSignature = false
       this.showSignatureModal = true
     },
-    dataURIToBlob(dataURI: string) {
-      const splitDataURI = dataURI.split(',')
-      const byteString =
-        splitDataURI[0].indexOf('base64') >= 0
-          ? atob(splitDataURI[1])
-          : decodeURI(splitDataURI[1])
-      const mimeString = splitDataURI[0].split(':')[1].split(';')[0]
-
-      const ia = new Uint8Array(byteString.length)
-      for (let i = 0; i < byteString.length; i++)
-        ia[i] = byteString.charCodeAt(i)
-
-      return new Blob([ia], { type: mimeString })
+    imageExportedLocal(image: any) {
+      this.imageExported(image, this.usingSignature)
     },
-    async imageExported(image: any) {
-      const formData = new FormData()
-      formData.append('upload', this.dataURIToBlob(image))
 
-      this.$axios
-        .$post(
-          this.usingSignature
-            ? '/user/upload_signature'
-            : '/user/update_initials',
-          formData
-        )
-        .then(async (response) => {
-          await this.$auth.fetchUser()
-          this.$notify.success({
-            title: this.usingSignature ? 'Signature' : 'Initials',
-            message: `Your ${
-              this.usingSignature ? 'signature' : 'initials'
-            } has been uploaded`,
-          })
-        })
-        .catch((err) => {
-          this.$notify.error({
-            title: this.usingSignature ? 'Signature' : 'Initials',
-            message:
-              err.message ||
-              `Error uploading ${
-                this.usingSignature ? 'signature' : 'initials'
-              }`,
-          })
-        })
-    },
     // setupCanvases() {
     //   const canvasContainers = document.querySelectorAll('.canvas-container')
     //   canvasContainers.forEach((canvasContainer, index) => {

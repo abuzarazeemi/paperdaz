@@ -4,7 +4,9 @@
       class="flex items-center gap-4 flex-1 justify-between max-w-4xl px-4 text-sm"
     >
       <!-- If authenticated user is created -->
-      <span v-if="!isCreator" class="capitalize">{{ file.action }}</span>
+      <span v-if="!isCreator" class="capitalize font-medium">{{
+        file.action
+      }}</span>
       <!-- else -->
       <el-dropdown
         v-else
@@ -33,7 +35,7 @@
       </el-dropdown>
 
       <!-- If authenticated user is created -->
-      <span v-if="!isCreator" class="capitalize">{{ access }}</span>
+      <span v-if="!isCreator" class="capitalize font-medium">{{ access }}</span>
       <el-dropdown
         v-else
         trigger="click"

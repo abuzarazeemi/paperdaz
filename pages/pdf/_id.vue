@@ -103,7 +103,10 @@
             </div>
           </div>
         </div>
-        <button class="w-full bg-paperdazgreen-400 h-12 text-white">
+        <button
+          class="w-full bg-paperdazgreen-400 h-12 text-white"
+          v-show="false"
+        >
           Confirm Button
         </button>
       </div>

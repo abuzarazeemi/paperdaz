@@ -52,7 +52,7 @@
       <button
         v-if="isComplete"
         @click="onSignClick"
-        class="inline-flex items-center gap-2 bg-paperdazgreen-300 py-1 pr-1 pl-2 text-white text-sm"
+        class="cursor-pointer inline-flex items-center gap-2 bg-paperdazgreen-300 py-1 pr-1 pl-2 text-white text-sm"
       >
         Sign
         <span
@@ -74,8 +74,8 @@
 
       <button
         v-if="isComplete"
-        class="inline-flex items-center gap-2 bg-paperdazgreen-300 py-1 pr-1 pl-2 tool-item text-white text-sm"
-        @click="setSelectedType(TOOL_TYPE.initial)"
+        class="cursor-pointer inline-flex items-center gap-2 bg-paperdazgreen-300 py-1 pr-1 pl-2 tool-item text-white text-sm"
+        @click="onInitialsClick"
       >
         Initial
         <span
@@ -110,15 +110,21 @@
 
     <draw-or-type-modal
       v-model="showSignatureModal"
-      v-if="showSignatureModal"
       :src="$auth.user.signature"
-      @image-exported="imageExported($event)"
+      @image-exported="imageExportedLocal($event, true)"
+      use-default-button
+    />
+    <draw-or-type-modal
+      v-model="showInitialsModal"
+      :src="$auth.user.initials"
+      @image-exported="imageExportedLocal($event, false)"
       use-default-button
     />
   </section>
 </template>
 
 <script>
+import SaveSignatureInitialsMixin from '~/mixins/SaveSignatureInitialsMixin'
 import DrawOrTypeModal from '../modals/DrawOrTypeModal.vue'
 import CalendarIcon from '../svg-icons/CalendarIcon.vue'
 import HollowCircleIcon from '../svg-icons/HollowCircleIcon.vue'
@@ -147,12 +153,14 @@ export default {
     UserProfileSolidIcon,
     StarIcon,
   },
+  mixins: [SaveSignatureInitialsMixin],
   data: () => ({
     selectedType: null,
 
     components: { PdfTextToolIcon },
     signaturePad: false,
     showSignatureModal: false,
+    showInitialsModal: false,
   }),
   props: {
     file: {
@@ -182,14 +190,12 @@ export default {
     },
   },
   methods: {
-    imageExported(image) {
-      this.$BUS.$emit('signature-update', image)
-      this.$notify.success({
-        title: 'Pdf Annotation',
-        message: `${
-          this.activeTab === 'draw' ? 'Signature' : 'Signature'
-        } updated`,
-      })
+    imageExportedLocal(image, isSignature) {
+      this.$BUS.$emit(
+        isSignature ? 'signature-update' : 'initials-update',
+        image
+      )
+      this.imageExported(image, isSignature)
     },
     setSelectedType(type) {
       if (this.selectedType == type) this.selectedType = null
@@ -202,6 +208,10 @@ export default {
     onSignClick() {
       this.showSignatureModal = true
       this.setSelectedType(this.TOOL_TYPE.signature)
+    },
+    onInitialsClick() {
+      this.showInitialsModal = true
+      this.setSelectedType(this.TOOL_TYPE.initial)
     },
   },
 }
