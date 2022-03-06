@@ -34,7 +34,7 @@
         class="border h-56 border-[#C4C4C4] rounded w-full bg-white flex flex-col justify-center items-center overflow-hidden p-4"
       >
         <div class="mb-4 text-gray-600 cursor-not-allowed">
-          <lock-icon width="48" height="48" />
+          <signature-icon width="64" height="64" />
         </div>
         <button
           @click="showSignature"
@@ -107,10 +107,11 @@ import DrawOrTypeModal from '~/components/modals/DrawOrTypeModal.vue'
 import LockIcon from '~/components/svg-icons/LockIcon.vue'
 import mixins from 'vue-typed-mixins'
 import SaveSignatureInitialsMixin from '~/mixins/SaveSignatureInitialsMixin'
+import SignatureIcon from '~/components/svg-icons/SignatureIcon.vue'
 
 export default mixins(SaveSignatureInitialsMixin).extend({
   name: 'SignatureInitialsTab',
-  components: { ExclamationIcon, DrawOrTypeModal, LockIcon },
+  components: { ExclamationIcon, DrawOrTypeModal, LockIcon, SignatureIcon },
   data() {
     return {
       showSignatureModal: false,
