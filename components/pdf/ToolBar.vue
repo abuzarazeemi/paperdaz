@@ -1,6 +1,14 @@
 <template>
   <section>
     <div
+      class="bg-[#FF5252] text-white text-base px-6 py-2 flex items-center"
+      v-if="!isCreator && isConfirm"
+    >
+      <exclamation-icon class="text-white mr-2" />
+      Please scroll to the end of file to confirm that you have read this file
+    </div>
+    <div
+      v-else
       class="flex flex-wrap items-center justify-between bg-[#E8EAEC] py-2 w-full gap-x-1 gap-y-2 px-6 text-[#757575] text-base sm:text-2xl"
     >
       <button @click="setSelectedType(TOOL_TYPE.text)" v-if="isComplete">
@@ -50,7 +58,7 @@
         <star-icon />
       </button>
       <button
-        v-if="isComplete"
+        v-if="isComplete || isSign"
         @click="onSignClick"
         class="cursor-pointer inline-flex items-center gap-2 bg-paperdazgreen-300 py-1 pr-1 pl-2 text-white text-sm"
       >
@@ -73,7 +81,7 @@
       </button>
 
       <button
-        v-if="isComplete"
+        v-if="isComplete || isSign"
         class="cursor-pointer inline-flex items-center gap-2 bg-paperdazgreen-300 py-1 pr-1 pl-2 tool-item text-white text-sm"
         @click="onInitialsClick"
       >
@@ -127,6 +135,7 @@
 import SaveSignatureInitialsMixin from '~/mixins/SaveSignatureInitialsMixin'
 import DrawOrTypeModal from '../modals/DrawOrTypeModal.vue'
 import CalendarIcon from '../svg-icons/CalendarIcon.vue'
+import ExclamationIcon from '../svg-icons/ExclamationIcon.vue'
 import HollowCircleIcon from '../svg-icons/HollowCircleIcon.vue'
 import PdfHighlightToolIcon from '../svg-icons/PdfHighlightToolIcon.vue'
 import PdfPenToolIcon from '../svg-icons/PdfPenToolIcon.vue'
@@ -152,6 +161,7 @@ export default {
     CalendarIcon,
     UserProfileSolidIcon,
     StarIcon,
+    ExclamationIcon,
   },
   mixins: [SaveSignatureInitialsMixin],
   data: () => ({

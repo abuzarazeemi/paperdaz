@@ -105,12 +105,14 @@
         </div>
         <button
           class="w-full bg-paperdazgreen-400 h-12 text-white"
-          v-show="false"
+          v-show="isConfirm && !isCreator"
+          @click="confirmDocument()"
         >
-          Confirm Button
+          Confirm
         </button>
       </div>
     </main>
+    <save-pdf-modal :file="file" v-model="showSaveModal" />
   </div>
 </template>
 
@@ -144,6 +146,7 @@ import SignatureIdentifier from '@/components/pdf/tools_identifiers/Signature'
 import StarIdentifier from '@/components/pdf/tools_identifiers/Star'
 
 import moment from 'moment'
+import SavePdfModal from '~/components/pdf/modals/SavePdfModal.vue'
 
 export default {
   layout: 'pdf',
@@ -165,7 +168,35 @@ export default {
     InitialIdentifier,
     SignatureIdentifier,
     StarIdentifier,
+    SavePdfModal,
   },
+  data: () => ({
+    pdf: null,
+    tools: [],
+    selectedToolType: null,
+    toolIdentifierPosition: { top: 0, left: 0 },
+    showToolIdentifier: false,
+
+    lastPosX: 0,
+    lastPosY: 0,
+    isPanning: false,
+
+    selectedToolId: null,
+
+    signature: null,
+    // data populated from asyncData
+    file: {},
+
+    scale: 1,
+    stack: [],
+    undoStack: [],
+
+    activeToolId: null,
+
+    toolId: 0,
+    downloadingPdf: false,
+    showSaveModal: false,
+  }),
   created() {
     this.fetchPdf()
     this.$BUS.$on('download-pdf', this.downloadPdf)
@@ -201,33 +232,24 @@ export default {
   updated() {
     this.handleScale()
   },
-  data: () => ({
-    pdf: null,
-    tools: [],
-    selectedToolType: null,
-    toolIdentifierPosition: { top: 0, left: 0 },
-    showToolIdentifier: false,
 
-    lastPosX: 0,
-    lastPosY: 0,
-    isPanning: false,
-
-    selectedToolId: null,
-
-    signature: null,
-    // data populated from asyncData
-    file: {},
-
-    scale: 1,
-    stack: [],
-    undoStack: [],
-
-    activeToolId: null,
-
-    toolId: 0,
-    downloadingPdf: false,
-  }),
   computed: {
+    isCreator() {
+      try {
+        return this.file.user.id === this.$auth.user.id
+      } catch (e) {
+        return false
+      }
+    },
+    isConfirm() {
+      return String(this.file.action).toLowerCase() === 'confirm'
+    },
+    isComplete() {
+      return String(this.file.action).toLowerCase() === 'complete'
+    },
+    isSign() {
+      return String(this.file.action).toLowerCase() === 'sign'
+    },
     pagesOuterStyle() {
       let scale = `scale(${this.scale})`
       return {
@@ -308,6 +330,9 @@ export default {
     },
   },
   methods: {
+    confirmDocument() {
+      this.showSaveModal = true
+    },
     keyupHandler(event) {
       if (event.ctrlKey && event.shiftKey && event.code === 'KeyZ') {
         this.redo()
