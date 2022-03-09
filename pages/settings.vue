@@ -27,7 +27,7 @@ export default Vue.extend({
   layout: 'dashboard',
   data() {
     return {
-      currentTab: 'account',
+      currentTab: 'signature-initials',
       tabs: [
         { label: 'Profile Info', value: 'account', component: AccountTab },
         { label: 'Security', value: 'security', component: ChangePasswordTab },
@@ -36,11 +36,11 @@ export default Vue.extend({
           value: 'referral-credit',
           component: ReferralTabVue,
         },
-        // {
-        //   label: 'Signature/Initials',
-        //   value: 'signature-initials',
-        //   component: SignatureInitialsTab,
-        // },
+        {
+          label: 'Signature/Initials',
+          value: 'signature-initials',
+          component: SignatureInitialsTab,
+        },
         // {
         //   label: 'Your Proucts',
         //   value: 'your-products',

@@ -4,6 +4,7 @@
       class="md:min-w-[300px] lg:min-w-[320px]"
       show-bottom-button
       :staging-package="stagingPackage"
+      @bottom-button-clicked="createAndProceed($event)"
     />
     <div
       class="border-2 border-paperdazgreen-400 w-full rounded-2xl overflow-hidden relative bg-white text-[#505050]"
@@ -280,6 +281,19 @@ export default Vue.extend({
   methods: {
     formatPrice(amount: number): string {
       return StringUtils.formatPrice(Number(amount))
+    },
+    createAndProceed({
+      stagingPackage,
+      isMonthly,
+    }: {
+      stagingPackage: Object
+      isMonthly: boolean
+    }) {
+      // Create the custom package
+      this.$axios.$post('/package', this.stagingPackage).then((response) => {
+        debugger
+        // this.$emit('next-tab', { stagingPackage, isMonthly })
+      })
     },
   },
 })

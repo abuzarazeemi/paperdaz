@@ -60,7 +60,7 @@
       <!-- End:: already existing package -->
       <!-- Start:: Create custom package -->
       <div v-else key="creating">
-        <select-custom-package />
+        <select-custom-package @next-tab="$emit('next-tab', $event)" />
         <p class="font-medium text-lg text-center">
           Want to select pre-created packaged?
           <button
