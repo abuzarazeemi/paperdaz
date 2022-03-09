@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-7xl">
+  <main class="max-w-7xl mb-24">
     <top-details-card-container class="mb-5" :tabs="tabs" />
     <leaves-details-container class="mb-12" />
 
@@ -69,7 +69,7 @@
 
     <floating-action-button @click.native="showUploadDocumentModal = true" />
     <upload-document-modal v-model="showUploadDocumentModal" />
-  </div>
+  </main>
 </template>
 
 <script lang="ts">
@@ -101,6 +101,7 @@ export default Vue.extend({
   },
   name: 'MyFilesPage',
   layout: 'dashboard',
+  middleware: ['free-user'],
   data() {
     return {
       showUploadDocumentModal: false,
