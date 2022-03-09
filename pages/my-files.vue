@@ -5,11 +5,63 @@
 
     <div class="flex items-center flex-wrap gap-4 justify-between mb-6">
       <h5 class="text-lg font-semibold text-[#272727]">My Files</h5>
-      <div class="text-white flex">
-        <button class="circle circle-18 bg-paperdazgreen-400 mr-2">
+
+      <form
+        action=""
+        class="w-full xs:max-w-[280px] text-xs font-medium flex items-center relative justify-end"
+        @submit.prevent="$event.preventDefault()"
+      >
+        <el-dropdown trigger="click">
+          <span class="el-dropdown-link">
+            <input
+              type="text"
+              class="search-input h-10 pl-4 mr-2 bg-transparent flex-1 border border-paperdazgreen-300 rounded-tl-lg rounded-bl-lg focus:border-paperdazgreen-700 outline-none"
+              placeholder="Search Files"
+              :value="searchParam"
+              @input="searchParam = $event.target.value"
+            />
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <!-- Start:: dropdown -->
+            <div
+              class="bg-white rounded-lg whitespace-nowrap w-[600px] max-w-[80vw]"
+            >
+              <div class="max-h-[40vh] custom-scrollbar overflow-y-auto p-4">
+                <article
+                  class="py-4 text-[#9F9F9F] grid grid-cols-[max-content,1fr,max-content] gap-4"
+                  v-for="i in 20"
+                  :key="i"
+                >
+                  <img
+                    src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&w=1000&q=80"
+                    alt=""
+                    class="h-16 w-16 rounded-lg object-cover"
+                  />
+                  <div class="overflow-hidden">
+                    <p class="text-sm text-black mb-1 truncate">
+                      MyStar@gmail.com
+                    </p>
+                    <p class="text-xs truncate">MyStar</p>
+                    <p class="text-[11px] mt-0.5 truncate">patient intake</p>
+                  </div>
+                  <div class="self-center flex items-center">
+                    <button class="mr-1.5 pr-1.5 border-[#EBEBEB] border-r">
+                      <heart-outline-icon />
+                    </button>
+                    <button>
+                      <share-outline-icon />
+                    </button>
+                  </div>
+                </article>
+              </div>
+            </div>
+            <!-- End:: dropdown -->
+          </el-dropdown-menu>
+        </el-dropdown>
+        <button class="circle circle-18 bg-paperdazgreen-400 text-white">
           <search-icon width="16" height="16" />
         </button>
-      </div>
+      </form>
     </div>
 
     <div class="rounded-2xl bg-white overflow-x-auto custom-scrollbar">
@@ -80,10 +132,12 @@ import UploadDocumentModal from '~/components/dashboard/UploadDocumentModal.vue'
 import InviteTeamMemberModal from '~/components/pdf/modals/InviteTeamMemberModal.vue'
 import DisketIconVue from '~/components/svg-icons/DisketIcon.vue'
 import FacebookIcon from '~/components/svg-icons/FacebookIcon.vue'
+import HeartOutlineIcon from '~/components/svg-icons/HeartOutlineIcon.vue'
 import NoteAndPenIconVue from '~/components/svg-icons/NoteAndPenIcon.vue'
 import PageIconVue from '~/components/svg-icons/PageIcon.vue'
 import SearchIcon from '~/components/svg-icons/SearchIcon.vue'
 import ShareIconVue from '~/components/svg-icons/ShareIcon.vue'
+import ShareOutlineIcon from '~/components/svg-icons/ShareOutlineIcon.vue'
 import TickCircleIconVue from '~/components/svg-icons/TickCircleIcon.vue'
 import TrashCanIcon from '~/components/svg-icons/TrashCanIcon.vue'
 import FloatingActionButton from '~/components/widgets/FloatingActionButton.vue'
@@ -98,6 +152,8 @@ export default Vue.extend({
     TrashCanIcon,
     FloatingActionButton,
     UploadDocumentModal,
+    HeartOutlineIcon,
+    ShareOutlineIcon,
   },
   name: 'MyFilesPage',
   layout: 'dashboard',
@@ -105,6 +161,7 @@ export default Vue.extend({
   data() {
     return {
       showUploadDocumentModal: false,
+      searchParam: '',
       tabs: [
         {
           label: 'Ledger',
