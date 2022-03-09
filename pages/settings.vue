@@ -17,9 +17,6 @@ import NotificationsTab from '~/components/settings/tabs/NotificationsTab.vue'
 import BillingTab from '~/components/settings/tabs/BillingTab.vue'
 import UserTypeEnum from '~/models/UserTypeEnum'
 import ReferralTabVue from '~/components/settings/tabs/ReferralTab.vue'
-// const BillingTab = () => import('~/components/settings/tabs/BillingTab.vue')
-// const YourProductsTab = () =>
-//   import('~/components/settings/tabs/YourProductsTab.vue')
 
 export default Vue.extend({
   name: 'SettingsPage',
@@ -27,7 +24,7 @@ export default Vue.extend({
   layout: 'dashboard',
   data() {
     return {
-      currentTab: 'signature-initials',
+      currentTab: 'account',
       tabs: [
         { label: 'Profile Info', value: 'account', component: AccountTab },
         { label: 'Security', value: 'security', component: ChangePasswordTab },
@@ -36,15 +33,10 @@ export default Vue.extend({
           value: 'referral-credit',
           component: ReferralTabVue,
         },
-        {
-          label: 'Signature/Initials',
-          value: 'signature-initials',
-          component: SignatureInitialsTab,
-        },
         // {
-        //   label: 'Your Proucts',
-        //   value: 'your-products',
-        //   component: YourProductsTab,
+        //   label: 'Signature/Initials',
+        //   value: 'signature-initials',
+        //   component: SignatureInitialsTab,
         // },
         {
           label: 'Notifications',

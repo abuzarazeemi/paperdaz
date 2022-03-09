@@ -226,12 +226,9 @@ export default Vue.extend({
       customPackage: {
         name: 'Custom',
         description: 'Custom package',
-        monthly_price: '20',
-        yearly_price: '120',
         paperlink: 1,
         team_members: 1,
         carbon: 1,
-        visibility: true,
         public_profile: false,
         company_ledger: false,
       },
@@ -289,8 +286,11 @@ export default Vue.extend({
       stagingPackage: Object
       isMonthly: boolean
     }) {
+      const data = { ...this.customPackage } as any
+      data.plan = isMonthly ? 'monthly' : 'yearly'
+      return
       // Create the custom package
-      this.$axios.$post('/package', this.stagingPackage).then((response) => {
+      this.$axios.$post('/package/custom', data).then((response) => {
         debugger
         // this.$emit('next-tab', { stagingPackage, isMonthly })
       })
