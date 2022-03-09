@@ -14,7 +14,7 @@ class StringUtilsAbstraction {
   formatPrice(amount: any, options?: Object) {
     const uOptions = {
       style: 'currency',
-      currency: 'NGN',
+      currency: 'USD',
       minimumFractionDigits: 2,
     }
 
@@ -22,7 +22,7 @@ class StringUtilsAbstraction {
       Object.assign(uOptions, options)
     }
 
-    const formatter = new Intl.NumberFormat('en-NG', uOptions)
+    const formatter = new Intl.NumberFormat('en-US', uOptions)
 
     return formatter.format(Number(amount))
   } // end method formatPrice

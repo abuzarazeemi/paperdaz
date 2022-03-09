@@ -419,6 +419,7 @@ export default Vue.extend({
   },
   name: 'PublicProfilePage',
   layout: 'dashboard',
+  middleware: ['paid-user'],
   asyncData({ store }) {
     store.commit('SET_PAGE_NAME', { name: 'Profile' })
   },

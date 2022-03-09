@@ -6,7 +6,7 @@
       <span>File Ledger</span>
       <form
         action=""
-        class="w-full xs:max-w-[280px] text-xs font-medium flex items-center relative"
+        class="w-full xs:max-w-[280px] text-xs font-medium flex items-center relative justify-end"
         @submit.prevent="$event.preventDefault()"
       >
         <el-dropdown trigger="click">
@@ -56,8 +56,8 @@
             <!-- End:: dropdown -->
           </el-dropdown-menu>
         </el-dropdown>
-        <button class="circle circle-20 bg-paperdazgreen-300 text-white">
-          <search-icon />
+        <button class="circle circle-18 bg-paperdazgreen-400 text-white">
+          <search-icon width="16" height="16" />
         </button>
       </form>
     </h3>

@@ -1,6 +1,6 @@
 <template>
   <button class="fab-button" :class="[relativeToParent ? 'absolute' : 'fixed']">
-    <plus-icon class="h-8 w-8 sm:h-12 sm:w-12" />
+    <plus-icon class="h-6 w-6 sm:h-8 sm:w-8" />
   </button>
 </template>
 
@@ -21,14 +21,13 @@ export default {
 .fab-button {
   @apply bg-paperdazgreen-250 text-white
       inline-flex
-      bottom-20
+      bottom-16
       right-5
-      h-16
-      w-16
-      sm:bottom-20
-      sm:right-20 
-      sm:h-20 
-      sm:w-20 
+      h-14
+      w-14
+      sm:right-10
+      sm:h-16
+      sm:w-16
       items-center 
       justify-center 
       shadow-lg;

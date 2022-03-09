@@ -127,6 +127,17 @@ export default Vue.extend({
         icon: 'HoldingHandsIcon',
         link: '/team',
       })
+      this.links.splice(1, 0, {
+        label: 'Company Files',
+        icon: 'DocumentIcon',
+        link: '/company-files',
+      })
+    } else if (this.$store.getters.userType === UserTypeEnum.FREE) {
+      this.links.splice(1, 0, {
+        label: 'My Files',
+        icon: 'FileIcon',
+        link: '/my-files',
+      })
     }
   },
 })
