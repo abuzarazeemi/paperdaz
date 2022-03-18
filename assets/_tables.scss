@@ -45,16 +45,46 @@
 }
 
 .table-menu-dropdown-menu {
-  @apply rounded-xl;
+  @apply rounded-xl overflow-hidden;
 
   padding: 0 !important;
   background-color: #F8F8F8 !important;
   border-radius: 10px !important;
 
   .dropdown-item {
-    @apply py-4 px-5 text-center text-black text-sm font-medium cursor-pointer;
+    @apply text-center text-black text-sm font-medium cursor-pointer relative;
+
+    & > *:not(.suffix-icon):not(.inner-dropdown):not(input)
+    {
+      @apply px-5 py-3 relative block cursor-pointer;
+    }
+
     &:not(:last-child) {
       @apply border-b border-[#C4C4C4];
+    }
+
+    & .suffix-icon {
+      @apply absolute top-1/2 transform -translate-y-1/2 right-3;
+    }
+
+    input[type]:checked ~ * .suffix-icon, input[type]:checked ~ .suffix-icon {
+      @apply transform rotate-180;
+    }
+
+    .inner-dropdown {
+      max-height: 0px;
+      overflow: hidden;
+    }
+
+    input[type]:checked ~ .inner-dropdown {
+      max-height: unset;
+    }
+
+    .inner-dropdown-item {
+      @apply px-5 py-2 bg-white;
+      &:not(:last-child) {
+        @apply border-b border-[#C4C4C4];
+      }
     }
   }
 }

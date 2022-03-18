@@ -122,7 +122,7 @@
                 <td class="text-sm text-center">2</td>
                 <td class="fixed-col right w-[50px]">
                   <div class="w-full h-full grid place-items-center">
-                    <el-dropdown>
+                    <el-dropdown trigger="click">
                       <button class="el-dropdown-link px-3">
                         <ellipsis-icon-vertical-icon />
                       </button>
