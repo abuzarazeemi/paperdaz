@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main class="max-w-[1440px]">
     <top-details-card-container class="mb-5" v-model="activeTab" :tabs="tabs" />
     <leaves-details-container class="mb-9" />
     <company-file-ledger />
