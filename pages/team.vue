@@ -118,7 +118,55 @@
             </td>
             <td class="fixed-col right w-[50px]">
               <div class="w-full h-full grid place-items-center">
-                <ellipsis-icon-vertical-icon />
+                <el-dropdown trigger="click">
+                  <button class="el-dropdown-link px-3">
+                    <ellipsis-icon-vertical-icon />
+                  </button>
+                  <el-dropdown-menu
+                    slot="dropdown"
+                    class="table-menu-dropdown-menu"
+                  >
+                    <ul class="min-w-[150px]">
+                      <li class="dropdown-item">
+                        <input
+                          hidden
+                          type="radio"
+                          :id="`team-member-${i}-dropdown-item-status`"
+                          name="team-member-dropdown-item"
+                        />
+                        <label :for="`team-member-${i}-dropdown-item-status`"
+                          >Status
+                          <span class="suffix-icon"
+                            ><arrow-down-icon width="12" height="12" /></span
+                        ></label>
+
+                        <ul class="bg-green-600 inner-dropdown">
+                          <li class="inner-dropdown-item">Active</li>
+                          <li class="inner-dropdown-item">Disable</li>
+                          <li class="inner-dropdown-item">Pending</li>
+                        </ul>
+                      </li>
+                      <li class="dropdown-item">
+                        <input
+                          hidden
+                          type="radio"
+                          :id="`team-member-${i}-dropdown-item-access`"
+                          name="team-member-dropdown-item"
+                        />
+                        <label :for="`team-member-${i}-dropdown-item-access`"
+                          >Acces Right
+                          <span class="suffix-icon"
+                            ><arrow-down-icon width="12" height="12" /></span
+                        ></label>
+
+                        <ul class="bg-green-600 inner-dropdown">
+                          <li class="inner-dropdown-item">Own Files</li>
+                          <li class="inner-dropdown-item">Company Files</li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </el-dropdown-menu>
+                </el-dropdown>
               </div>
             </td>
           </tr>
@@ -135,6 +183,7 @@ import Vue from 'vue'
 import LeavesDetailsContainer from '~/components/dashboard/LeavesDetailsContainer.vue'
 import TopDetailsCardContainer from '~/components/dashboard/TopDetailsCardContainer.vue'
 import InviteTeamMemberModal from '~/components/pdf/modals/InviteTeamMemberModal.vue'
+import ArrowDownIcon from '~/components/svg-icons/ArrowDownIcon.vue'
 import DisketIconVue from '~/components/svg-icons/DisketIcon.vue'
 import EllipsisIconVerticalIcon from '~/components/svg-icons/EllipsisIconVerticalIcon.vue'
 import NoteAndPenIconVue from '~/components/svg-icons/NoteAndPenIcon.vue'
@@ -151,6 +200,7 @@ export default Vue.extend({
     SearchIcon,
     UserPlusIcon,
     InviteTeamMemberModal,
+    ArrowDownIcon,
   },
   name: 'TeamsPage',
   layout: 'dashboard',
