@@ -131,8 +131,8 @@
                         class="table-menu-dropdown-menu"
                       >
                         <ul class="min-w-[150px]">
-                          <li class="dropdown-item">Edit</li>
-                          <li class="dropdown-item">Remove</li>
+                          <li class="dropdown-item"><span>Edit</span></li>
+                          <li class="dropdown-item"><span>Remove</span></li>
                         </ul>
                       </el-dropdown-menu>
                     </el-dropdown>
@@ -202,9 +202,9 @@
                         class="table-menu-dropdown-menu"
                       >
                         <ul class="min-w-[150px]">
-                          <li class="dropdown-item">Share</li>
-                          <li class="dropdown-item">Request</li>
-                          <li class="dropdown-item">Remove</li>
+                          <li class="dropdown-item"><span>Share</span></li>
+                          <li class="dropdown-item"><span>Request</span></li>
+                          <li class="dropdown-item"><span>Remove</span></li>
                         </ul>
                       </el-dropdown-menu>
                     </el-dropdown>
