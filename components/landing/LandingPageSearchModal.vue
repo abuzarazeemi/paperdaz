@@ -10,8 +10,8 @@
           type="text"
           class="search-input"
           placeholder="Search by file name or company name or papertag..."
-          @input="searchParam = $event.target.value"
-          :value="searchParam"
+          @input="queryString = $event.target.value"
+          :value="queryString"
         />
         <button
           class="bg-paperdazgreen-400 rounded-lg text-white h-full w-10 grid place-items-center absolute right-0 top-0"
@@ -23,36 +23,48 @@
       <div
         class="mt-5 bg-white rounded-lg whitespace-nowrap overflow-hidden transition transform duration-200"
         :class="[
-          displayingResults.length > 0
+          this.queryString
             ? 'opacity-100 translate-y-0 pointer-events-auto'
             : 'opacity-0 translate-y-[5%] pointer-events-none',
         ]"
       >
-        <div class="max-h-[70vh] custom-scrollbar overflow-y-auto p-4">
-          <article
-            class="py-4 text-[#9F9F9F] grid grid-cols-[max-content,1fr,max-content] gap-4"
-            v-for="i in 20"
-            :key="i"
+        <div
+          v-if="this.queryString"
+          class="px-4 flex h-12 text-sm border-b border-gray-100 font-medium"
+        >
+          <button
+            class="tab-button"
+            :class="{ active: key == activeTab }"
+            v-for="key in Object.keys(searchResult || {})"
+            :key="key"
+            type="button"
+            @click="activeTab = key"
           >
-            <img
-              src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&w=1000&q=80"
-              alt=""
-              class="h-16 w-16 rounded-lg object-cover"
-            />
-            <div class="overflow-hidden">
-              <p class="text-sm text-black mb-1 truncate">MyStar@gmail.com</p>
-              <p class="text-xs truncate">MyStar</p>
-              <p class="text-[11px] mt-0.5 truncate">patient intake</p>
+            {{ key }} ({{ searchResult[key].length }})
+          </button>
+        </div>
+        <div
+          class="max-h-[70vh] custom-scrollbar overflow-y-auto p-4"
+          v-loading="(loadingArray || []).length > 0"
+        >
+          <div
+            class="grid place-items-center min-h-[30vh]"
+            v-if="displayingResults.length <= 0"
+          >
+            <div class="text-center">
+              <h2 class="capitalize font-medium text-xl">
+                {{ activeTab }} search
+              </h2>
+              <p class="text-sm">Does not match any records.</p>
             </div>
-            <div class="self-center flex items-center">
-              <button class="mr-1.5 pr-1.5 border-[#EBEBEB] border-r">
-                <heart-outline-icon />
-              </button>
-              <button>
-                <share-outline-icon />
-              </button>
-            </div>
-          </article>
+          </div>
+          <component
+            v-else
+            :is="searchStripComponent"
+            v-for="record in displayingResults"
+            :key="record.id"
+            :record="record"
+          />
         </div>
       </div>
     </section>
@@ -61,11 +73,21 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import _ from 'lodash'
+
 import HeartOutlineIcon from '../svg-icons/HeartOutlineIcon.vue'
 import SearchIcon from '../svg-icons/SearchIcon.vue'
 import ShareOutlineIcon from '../svg-icons/ShareOutlineIcon.vue'
+import FileSearchStrip from '../search-strips/FileSearchStrip.vue'
+import UserSearchStripVue from '../search-strips/UserSearchStrip.vue'
+import CompanySearchStripVue from '../search-strips/CompanySearchStrip.vue'
 export default Vue.extend({
-  components: { SearchIcon, HeartOutlineIcon, ShareOutlineIcon },
+  components: {
+    SearchIcon,
+    HeartOutlineIcon,
+    ShareOutlineIcon,
+    FileSearchStrip,
+  },
   name: 'LandingPageSearchModal',
   props: {
     visible: {
@@ -79,24 +101,78 @@ export default Vue.extend({
   },
   data() {
     return {
-      searchParam: '',
+      queryString: '',
+      activeTab: '',
+      searchResult: {} as { [key: string]: Array<any> },
+      loadingArray: [] as Array<boolean>,
     }
+  },
+  created() {
+    this.remoteSearch = _.debounce(this.remoteSearch, 200) as any
   },
   computed: {
     displayingResults(): Array<any> {
-      const searchParam = this.searchParam
-      if (!searchParam) return []
-      return [{ name: 'name' }]
+      return (this.searchResult || {})[this.activeTab] || []
+    },
+    searchStripComponent(): any {
+      switch (String(this.activeTab).toLowerCase()) {
+        case 'companies':
+          return CompanySearchStripVue
+        case 'users':
+          return UserSearchStripVue
+        case 'files':
+        default:
+          return FileSearchStrip
+      }
     },
   },
   methods: {
     submit(event: Event) {
       event.preventDefault()
     },
+    remoteSearch() {
+      // if (!this.queryString) return
+      this.loadingArray.push(true)
+      this.$axios
+        .$get(
+          `/search/global?page=1&per_page=15&query=${encodeURI(
+            this.queryString || 'tabs'
+          )}`
+        )
+        .then((response) => {
+          const temp = response
+
+          if (this.queryString) {
+            this.searchResult = response
+          } else {
+            for (const key in temp) {
+              temp[key] = []
+            }
+            this.searchResult = temp
+          }
+
+          if (!this.activeTab)
+            this.activeTab = Object.keys(this.searchResult || {}).length
+              ? Object.keys(this.searchResult || {})[0]
+              : ''
+        })
+        .catch((error) => {
+          debugger
+        })
+        .finally(() => {
+          this.loadingArray.pop()
+        })
+    },
   },
   watch: {
     visible() {
-      this.searchParam = ''
+      this.queryString = ''
+    },
+    queryString: {
+      immediate: true,
+      handler() {
+        this.remoteSearch()
+      },
     },
   },
 })
@@ -116,10 +192,12 @@ export default Vue.extend({
   transition: opacity ease-in-out 0.2s;
   opacity: 0;
   pointer-events: none;
+  // display: none;
 
   &.visible {
     opacity: 1;
     pointer-events: all;
+    // display: block;
   }
 
   & .overlay {
@@ -141,5 +219,12 @@ export default Vue.extend({
 
 .search-input {
   @apply h-10 bg-white shadow rounded-lg w-full  pl-2 pr-14;
+}
+
+.tab-button {
+  @apply transition duration-200 ease-in-out capitalize flex-1 h-full flex items-center justify-center border-b-2 border-transparent hover:border-paperdazgreen-400/50;
+  &.active {
+    @apply border-paperdazgreen-400 text-paperdazgreen-400;
+  }
 }
 </style>

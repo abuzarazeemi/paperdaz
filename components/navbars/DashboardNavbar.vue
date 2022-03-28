@@ -14,6 +14,7 @@
       >{{ title || routeName }}
     </p>
     <div class="h-full self-stretch flex items-center">
+      <!-- Start:: search -->
       <div class="hidden lg:inline-block text-[#BBBBBB] mr-4">
         <!-- <div class="text-[#BBBBBB] mr-4"> -->
         <el-dropdown trigger="click">
@@ -68,6 +69,7 @@
           </el-dropdown-menu>
         </el-dropdown>
       </div>
+       <!-- End:: search -->
 
       <div class="grid place-items-center text-[#909090] mr-4 relative">
         <el-dropdown trigger="click">
