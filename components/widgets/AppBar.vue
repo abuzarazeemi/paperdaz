@@ -36,15 +36,17 @@
             <logo-with-text class="mb-4 h-7" />
           </nuxt-link>
         </div>
-        <nuxt-link to="#" class="">Features </nuxt-link>
+        <a href="/#key-features-section" class="">Features </a>
         <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
-        <nuxt-link to="#" class="">Upload File </nuxt-link>
+        <a href="/#upload-file-section" class="">Upload File </a>
+        <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
+        <nuxt-link to="/faq" class="">FAQ</nuxt-link>
         <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
         <nuxt-link to="/packages" class="">Packages </nuxt-link>
         <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
         <nuxt-link to="/about" class="">About </nuxt-link>
         <div class="h-px bg-paperdazgray-300 w-full lg:hidden"></div>
-        <nuxt-link to="#" class="">Contact Us </nuxt-link>
+        <nuxt-link to="/contact-us" class="">Contact Us </nuxt-link>
         <div
           class="h-px bg-paperdazgray-300 w-full lg:hidden"
           v-if="!$auth.loggedIn"
@@ -108,9 +110,9 @@
       <div
         class="flex items-center gap-1.5 xs:gap-3 sm:gap-5 text-xs xs:text-sm sm:text-base md:text-ls"
       >
-        <span>
+        <button type="button" @click="showLandingPageSearchModal = true">
           <search-icon width="15" />
-        </span>
+        </button>
         <nuxt-link
           v-if="!$auth.loggedIn"
           to="/login"
@@ -168,11 +170,14 @@
         </el-dropdown>
       </div>
     </nav>
+
+    <landing-page-search-modal v-model="showLandingPageSearchModal" />
   </div>
 </template>
 <script lang="ts">
 import mixins from 'vue-typed-mixins'
 import GlobalMixin from '~/mixins/GlobalMixin'
+import LandingPageSearchModal from '../landing/LandingPageSearchModal.vue'
 import LogoWithText from '../LogoWithText.vue'
 import ArrowDownIcon from '../svg-icons/ArrowDownIcon.vue'
 import DashboardIcon from '../svg-icons/DashboardIcon.vue'
@@ -192,11 +197,13 @@ export default mixins(GlobalMixin).extend({
     GearIcon,
     SignOutIcon,
     DashboardIcon,
+    LandingPageSearchModal,
   },
   data() {
     return {
       scrolled: false,
       collapsed: false,
+      showLandingPageSearchModal: false,
     }
   },
   watch: {

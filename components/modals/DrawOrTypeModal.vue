@@ -7,7 +7,7 @@
     center
   >
     <template #title>
-      <div class="tab-container">
+      <div class="tab-container" v-show="!displayDefault">
         <button
           class="tab-button"
           v-for="tab in tabs"
@@ -21,15 +21,25 @@
     </template>
 
     <!-- Body -->
-    <div class="w-full">
-      <transition mode="out-in" name="fade" :duration="200">
-        <component
-          ref="activeTabComponent"
-          @export-image="imageExported($event)"
-          :is="activeTabComponent"
-        />
-      </transition>
-    </div>
+    <transition mode="out-in" name="fade" :duration="200">
+      <div class="w-full" v-if="!displayDefault" key="updating">
+        <transition mode="out-in" name="fade" :duration="200">
+          <component
+            ref="activeTabComponent"
+            @export-image="imageExported($event)"
+            :is="activeTabComponent"
+          />
+        </transition>
+      </div>
+
+      <div
+        key="default"
+        class="border h-56 border-[#C4C4C4] rounded w-full bg-white flex justify-center items-center overflow-hidden p-4"
+        v-else
+      >
+        <img :src="src" class="h-full w-full object-contain" />
+      </div>
+    </transition>
     <!-- End:: Body -->
 
     <!-- Start:: Footer section -->
@@ -39,7 +49,7 @@
           class="h-9 rounded border border-gray-100 text-xs px-5 bg-black text-white hover:shadow"
           @click="clear"
         >
-          CLEAR
+          {{ displayDefault ? 'EDIT' : 'CLEAR' }}
         </button>
         <div class="flex items-center justify-end gap-4">
           <button
@@ -51,8 +61,16 @@
           <button
             class="h-9 rounded border border-gray-100 bg-paperdazgreen-300 text-xs text-white px-4 hover:shadow"
             @click="exportImage"
+            v-show="!displayDefault"
           >
             SAVE
+          </button>
+          <button
+            class="h-9 rounded border border-gray-100 bg-paperdazgreen-300 text-xs text-white px-4 hover:shadow"
+            @click="useDefaultImage"
+            v-show="displayDefault && useDefaultButton"
+          >
+            USE
           </button>
         </div>
       </div>
@@ -67,17 +85,30 @@ import Vue from 'vue'
 import SignatureDrawBodyTab from './pdfsignature/SignatureDrawBodyTab.vue'
 import SignatureTypeBodyTabVue from './pdfsignature/SignatureTypeBodyTab.vue'
 export default Vue.extend({
-  name: 'PdfSignatureModal',
+  name: 'DrawOrTypeModal',
   model: {
     prop: 'visible',
     event: 'updateVisibility',
   },
-  // eslint-disable-next-line vue/require-prop-types
-  props: ['visible'],
+  props: {
+    visible: {
+      type: Boolean,
+      default: false,
+    },
+    src: {
+      type: String,
+      default:
+        'https://ichef.bbci.co.uk/news/976/cpsprodpb/B9FF/production/_117751674_satan-shoes1.jpg',
+    },
+    useDefaultButton: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       showModal: false,
-
+      forceDisplaySrc: true,
       activeTab: 'draw',
       tabs: [
         {
@@ -97,6 +128,7 @@ export default Vue.extend({
     visible(val) {
       // this.$emit("updateVisibility", val)
       this.showModal = val
+      this.forceDisplaySrc = true
     },
     showModal(val) {
       this.$emit('updateVisibility', val)
@@ -106,6 +138,9 @@ export default Vue.extend({
     this.showModal = this.visible
   },
   computed: {
+    displayDefault(): boolean {
+      return this.forceDisplaySrc && !!this.src
+    },
     activeTabComponent(): any {
       const activeTab = this.tabs.find((el) => el.value === this.activeTab)
 
@@ -121,11 +156,31 @@ export default Vue.extend({
     },
   },
   methods: {
+    async useDefaultImage() {
+      if (!this.displayDefault) return
+
+      console.log('using the default image')
+      ;(async () => {
+        const response = await fetch(this.src)
+        const imageBlob = await response.blob()
+        const reader = new FileReader()
+        reader.readAsDataURL(imageBlob)
+        reader.onloadend = () => {
+          const base64data = reader.result
+          this.imageExported(base64data)
+        }
+      })()
+    },
     closeModal() {
       this.$emit('updateVisibility', false)
     },
 
     clear() {
+      if (this.displayDefault) {
+        this.forceDisplaySrc = false
+        return
+      }
+
       const activeTabComponent = this.$refs.activeTabComponent as any
 
       if (!activeTabComponent) return
@@ -138,21 +193,9 @@ export default Vue.extend({
       if (!activeTabComponent) return
       activeTabComponent.exportImage()
     },
-
     imageExported(image: any) {
       if (!image) return
-      //TODO: replace the second 'signature-update' with the initials event name
-      const busEvent =
-        this.activeTab === 'draw' ? 'signature-update' : 'signature-update'
-
-      // @ts-ignore
-      this.$BUS.$emit(busEvent, image)
-      this.$notify.success({
-        title: 'Pdf Annotation',
-        message: `${
-          this.activeTab === 'draw' ? 'Signature' : 'Signature'
-        } updated`,
-      })
+      this.$emit('image-exported', image)
       this.closeModal()
     },
   },

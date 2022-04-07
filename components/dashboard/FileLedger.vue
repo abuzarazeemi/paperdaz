@@ -4,18 +4,60 @@
       class="text-paperdazgray-700 font-semibold text-xl mb-5 sm:mb-7 flex flex-col gap-3 xs:flex-row xs:items-center justify-between whitespace-nowrap"
     >
       <span>File Ledger</span>
-
       <form
         action=""
-        class="w-full xs:max-w-[280px] text-xs font-medium flex items-center"
+        class="w-full xs:max-w-[280px] text-xs font-medium flex items-center relative justify-end"
+        @submit.prevent="$event.preventDefault()"
       >
-        <input
-          type="text"
-          class="h-10 pl-4 mr-2 bg-transparent flex-1 border border-paperdazgreen-300 rounded-tl-lg rounded-bl-lg focus:border-paperdazgreen-700 outline-none"
-          placeholder="Search Files"
-        />
-        <button class="circle circle-20 bg-paperdazgreen-300 text-white">
-          <search-icon />
+        <el-dropdown trigger="click">
+          <span class="el-dropdown-link">
+            <input
+              type="text"
+              class="search-input h-10 pl-4 mr-2 bg-transparent flex-1 border border-paperdazgreen-300 rounded-tl-lg rounded-bl-lg focus:border-paperdazgreen-700 outline-none"
+              placeholder="Search Files"
+              :value="searchParam"
+              @input="searchParam = $event.target.value"
+            />
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <!-- Start:: dropdown -->
+            <div
+              class="bg-white rounded-lg whitespace-nowrap w-[600px] max-w-[80vw]"
+            >
+              <div class="max-h-[40vh] custom-scrollbar overflow-y-auto p-4">
+                <article
+                  class="py-4 text-[#9F9F9F] grid grid-cols-[max-content,1fr,max-content] gap-4"
+                  v-for="i in 20"
+                  :key="i"
+                >
+                  <img
+                    src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&w=1000&q=80"
+                    alt=""
+                    class="h-16 w-16 rounded-lg object-cover"
+                  />
+                  <div class="overflow-hidden">
+                    <p class="text-sm text-black mb-1 truncate">
+                      MyStar@gmail.com
+                    </p>
+                    <p class="text-xs truncate">MyStar</p>
+                    <p class="text-[11px] mt-0.5 truncate">patient intake</p>
+                  </div>
+                  <div class="self-center flex items-center">
+                    <button class="mr-1.5 pr-1.5 border-[#EBEBEB] border-r">
+                      <heart-outline-icon />
+                    </button>
+                    <button>
+                      <share-outline-icon />
+                    </button>
+                  </div>
+                </article>
+              </div>
+            </div>
+            <!-- End:: dropdown -->
+          </el-dropdown-menu>
+        </el-dropdown>
+        <button class="circle circle-18 bg-paperdazgreen-400 text-white">
+          <search-icon width="16" height="16" />
         </button>
       </form>
     </h3>
@@ -75,7 +117,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(file, i) in files" :key="i">
+          <tr
+            v-for="(file, i) in files"
+            :key="file.id"
+            :class="{ highlight: file.id == highlightedFileId }"
+          >
             <td class="text-center fixed-col left">{{ i + 1 }}</td>
             <td>
               <div class="flex items-center gap-1.5">
@@ -137,6 +183,8 @@ import TreeIcon from '../svg-icons/TreeIcon.vue'
 import DateFormatter from '~/utils/DateFormatter'
 import ShareIcon from '../svg-icons/ShareIcon.vue'
 import SpinnerDottedIcon from '../svg-icons/SpinnerDottedIcon.vue'
+import HeartOutlineIcon from '../svg-icons/HeartOutlineIcon.vue'
+import ShareOutlineIcon from '../svg-icons/ShareOutlineIcon.vue'
 
 export default Vue.extend({
   components: {
@@ -145,6 +193,8 @@ export default Vue.extend({
     SearchIcon,
     ShareIcon,
     SpinnerDottedIcon,
+    HeartOutlineIcon,
+    ShareOutlineIcon,
   },
 
   async fetch() {
@@ -158,18 +208,27 @@ export default Vue.extend({
   },
   data() {
     return {
+      searchParam: '',
       showScribble: false,
       files: [] as Array<any>,
-
+      highlightedFileId: undefined as any,
       scrollObserver: undefined as undefined | any,
     }
   },
   mounted() {
+    this.handleFileHighlight()
     this.handleShowingLedger()
     this.tableScrollObserver()
   },
 
   methods: {
+    handleFileHighlight() {
+      this.highlightedFileId = this.$nuxt.$route.query.highlight_file
+
+      setTimeout(() => {
+        this.highlightedFileId = undefined
+      }, 20000)
+    },
     shareFile(file: any) {
       const url = location.origin.replace(/\/+$/, '') + `/pdf/${file.id}`
       navigator.share({
@@ -261,15 +320,22 @@ export default Vue.extend({
 
 <style lang="postcss" scoped>
 .file-ledger-table {
+  --background: white;
   @apply text-sm w-full whitespace-nowrap;
   border-collapse: separate;
   border-spacing: 0px 0px;
+
   & tr {
     @apply border-b border-gray-100;
+    transition: all 0.2s ease-in-out;
+    &.highlight {
+      --background: rgba(233, 254, 219, 0.46);
+    }
   }
 
   & th {
     @apply pt-8 pb-3;
+    background: var(--background);
   }
 
   & td {
@@ -279,6 +345,8 @@ export default Vue.extend({
   & td,
   & th {
     @apply px-2 border-b border-gray-100;
+    transition: all 0.2s ease-in-out;
+    background: var(--background);
     &:first-child {
       @apply pl-5;
     }
@@ -289,6 +357,7 @@ export default Vue.extend({
     &.fixed-col {
       position: sticky;
       background: white;
+      background: var(--background);
       &.left {
         left: -0.1px;
         &.scrolled {
@@ -304,4 +373,17 @@ export default Vue.extend({
     }
   }
 }
+
+/* .search-input {
+  & ~ .search-dropdown {
+    @apply opacity-0 translate-y-[5%] pointer-events-none;
+  }
+
+  &:active,
+  &:focus {
+    & ~ .search-dropdown {
+      @apply opacity-100 translate-y-0 pointer-events-auto;
+    }
+  }
+} */
 </style>

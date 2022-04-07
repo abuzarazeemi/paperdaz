@@ -72,7 +72,7 @@
                 >Remember me</label
               >
             </div>
-            <nuxt-link to="#" class="text-paperdazgreen-300"
+            <nuxt-link to="/forgot-password" class="text-paperdazgreen-300"
               >Forgot Password</nuxt-link
             >
           </div>

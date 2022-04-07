@@ -26,10 +26,13 @@
         <share-icon class="w-full h-8 text-paperdazgreen-300 mb-2" />
         <p class="text-center text-[10px] font-medium">Share</p>
       </div>
-      <div class="bg-white rounded-lg px-2 py-4">
+      <nuxt-link
+        to="/public/profile"
+        class="block bg-white rounded-lg px-2 py-4"
+      >
         <building-icon class="w-full h-8 text-paperdazgreen-300 mb-2" />
         <p class="text-center text-[10px] font-medium">View Profile</p>
-      </div>
+      </nuxt-link>
     </div>
   </div>
 </template>

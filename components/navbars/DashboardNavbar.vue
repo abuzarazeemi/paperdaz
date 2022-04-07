@@ -4,7 +4,7 @@
     :class="[compact ? 'py-1 h-12' : 'min-h-[60px] sm:min-h-[70px] py-4 h-16']"
   >
     <p
-      class="capitalize inline-flex items-center"
+      class="capitalize inline-flex items-center gap-3"
       :class="[compact ? 'text-sm sm:text-base' : 'text-base sm:text-xl']"
     >
       <span
@@ -14,14 +14,114 @@
       >{{ title || routeName }}
     </p>
     <div class="h-full self-stretch flex items-center">
-      <span class="hidden lg:inline-block text-[#BBBBBB]"
-        ><search-icon width="18" height="18"
-      /></span>
-      <div
-        class="hidden lg:inline-block self-stretch h-full w-px mx-6 bg-[#E1E1E1]"
-      ></div>
-      <div class="hidden lg:inline-block text-[#909090] mr-4">
-        <bell-icon />
+      <!-- Start:: search -->
+      <div class="hidden lg:inline-block text-[#BBBBBB] mr-4">
+        <!-- <div class="text-[#BBBBBB] mr-4"> -->
+        <el-dropdown trigger="click">
+          <span class="el-dropdown-link">
+            <el-input
+              placeholder="search anything..."
+              v-model="searchString"
+              size="small"
+            >
+              <template #suffix>
+                <span class="grid place-items-center h-full w-full"
+                  ><search-icon width="14" height="14"
+                /></span>
+              </template>
+            </el-input>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <!-- Start:: dropdown -->
+            <div
+              class="bg-white rounded-lg whitespace-nowrap w-[600px] max-w-[80vw]"
+            >
+              <div class="max-h-[60vh] custom-scrollbar overflow-y-auto p-4">
+                <article
+                  class="py-4 text-[#9F9F9F] grid grid-cols-[max-content,1fr,max-content] gap-4"
+                  v-for="i in 20"
+                  :key="i"
+                >
+                  <img
+                    src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&w=1000&q=80"
+                    alt=""
+                    class="h-16 w-16 rounded-lg object-cover"
+                  />
+                  <div class="overflow-hidden">
+                    <p class="text-sm text-black mb-1 truncate">
+                      MyStar@gmail.com
+                    </p>
+                    <p class="text-xs truncate">MyStar</p>
+                    <p class="text-[11px] mt-0.5 truncate">patient intake</p>
+                  </div>
+                  <div class="self-center flex items-center">
+                    <button class="mr-1.5 pr-1.5 border-[#EBEBEB] border-r">
+                      <heart-outline-icon />
+                    </button>
+                    <button>
+                      <share-outline-icon />
+                    </button>
+                  </div>
+                </article>
+              </div>
+            </div>
+            <!-- End:: dropdown -->
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
+       <!-- End:: search -->
+
+      <div class="grid place-items-center text-[#909090] mr-4 relative">
+        <el-dropdown trigger="click">
+          <span class="el-dropdown-link">
+            <bell-icon />
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <div class="max-w-[433px] text-xs text-[#676464]">
+              <div class="flex justify-end mb-2 px-4">
+                <button class="text-red-600 underline">Clear all</button>
+              </div>
+              <div class="max-h-[70vh] custom-scrollbar overflow-y-auto px-4">
+                <!-- Start:: Single row -->
+                <div
+                  class="grid grid-cols-[max-content,1fr] items-center gap-3 min-w-[200px] py-4 border-b border-gray-100"
+                >
+                  <notification-dropdown-icon />
+                  <p>
+                    <span class="font-bold">Axay Devikar</span> has sent you an
+                    invitation request to sign a file
+                  </p>
+                </div>
+                <!-- End:: single row -->
+                <!-- Start:: Single row -->
+                <div
+                  class="grid grid-cols-[max-content,1fr] items-center gap-3 min-w-[200px] py-4 border-b border-gray-100"
+                >
+                  <notification-dropdown-icon />
+                  <p>
+                    <span class="font-bold">Axay Devikar</span> has sent you an
+                    invitation request to join team of company
+                    <span class="font-bold">"Apple Dental"</span>
+                  </p>
+                </div>
+                <!-- End:: single row -->
+                <!-- Start:: Single row -->
+                <div
+                  v-for="i in 20"
+                  :key="i"
+                  class="grid grid-cols-[max-content,1fr] items-center gap-3 min-w-[200px] py-4"
+                >
+                  <notification-dropdown-icon />
+                  <p>
+                    <span class="font-bold">Axay Devikar</span> has sent you an
+                    invitation request to sign a file
+                  </p>
+                </div>
+                <!-- End:: single row -->
+              </div>
+            </div>
+          </el-dropdown-menu>
+        </el-dropdown>
       </div>
       <nuxt-link
         to="/settings"
@@ -85,7 +185,10 @@ import ArrowDownIcon from '../svg-icons/ArrowDownIcon.vue'
 import BellIcon from '../svg-icons/BellIcon.vue'
 import GearIcon from '../svg-icons/GearIcon.vue'
 import HamburgerIcon from '../svg-icons/HamburgerIcon.vue'
+import HeartOutlineIcon from '../svg-icons/HeartOutlineIcon.vue'
+import NotificationDropdownIcon from '../svg-icons/NotificationDropdownIcon.vue'
 import SearchIcon from '../svg-icons/SearchIcon.vue'
+import ShareOutlineIcon from '../svg-icons/ShareOutlineIcon.vue'
 import SignOutIcon from '../svg-icons/SignOutIcon.vue'
 import UserProfileIcon from '../svg-icons/UserProfileIcon.vue'
 import UserProfileSolidIcon from '../svg-icons/UserProfileSolidIcon.vue'
@@ -101,6 +204,9 @@ export default mixins(GlobalMixin).extend({
     SignOutIcon,
     UserProfileIcon,
     UserProfileSolidIcon,
+    NotificationDropdownIcon,
+    HeartOutlineIcon,
+    ShareOutlineIcon,
   },
   props: {
     compact: {
@@ -112,7 +218,25 @@ export default mixins(GlobalMixin).extend({
       default: '',
     },
   },
+  data() {
+    return {
+      searchString: '',
+    }
+  },
   computed: {
+    searchResult() {
+      if (!this.searchString) return []
+
+      return [
+        { id: 1 },
+        { id: 2 },
+        { id: 3 },
+        { id: 4 },
+        { id: 5 },
+        { id: 6 },
+        { id: 7 },
+      ]
+    },
     routeName(): string {
       return (this.$nuxt.$route.name || '').replace(/-/g, ' ')
     },
@@ -124,6 +248,9 @@ export default mixins(GlobalMixin).extend({
     },
   },
   methods: {
+    querySearch(_queryString: string, cb: Function) {
+      cb(this.searchResult)
+    },
     handleCommand(command: string) {
       switch (command) {
         case 'logout':

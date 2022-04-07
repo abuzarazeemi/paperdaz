@@ -1,5 +1,13 @@
 <template>
   <section>
+    <div class="mb-10">
+      <button
+        @click="showInsufficientCreditModal = true"
+        class="h-10 px-5 rounded bg-paperdazgreen-400 text-white text-sm"
+      >
+        Not enough credits!
+      </button>
+    </div>
     <transition name="fade" mode="out-in">
       <div
         v-if="$fetchState.pending"
@@ -176,26 +184,12 @@
                     </div>
                   </td>
                 </tr>
-                <tr>
-                  <td class="text-base font-bold">PAYMENT METHOD</td>
-                  <td>
-                    <p class="">
-                      Credit card number
-                      <span class="text-paperdazgreen-300"
-                        >**** **** ****
-                        {{
-                          (card.card_number || '').substring(
-                            (card.card_number || '').length - 4
-                          )
-                        }}</span
-                      >
-                      <br />Expiration date:
-                      <span class="text-paperdazgreen-300"
-                        >{{ card.exp_month }}/{{ card.exp_year }}</span
-                      >
-                    </p>
+                <tr style="border-bottom: none">
+                  <td class="text-base font-bold" style="padding-bottom: 2px">
+                    PAYMENT METHOD
                   </td>
-                  <td>
+                  <td style="padding-bottom: 2px"></td>
+                  <td rowspan="2">
                     <div class="grid place-items-center h-full w-full">
                       <p class="mb-2">
                         <button
@@ -216,6 +210,43 @@
                     </div>
                   </td>
                 </tr>
+                <tr>
+                  <td class="text-base font-bold">
+                    <div class="inline-grid grid-cols-2 text-xs">
+                      <button
+                        type="button"
+                        class="payment-method-button active w-16 h-9 text-white bg-paperdazgreen-400 m-0 rounded-l-full"
+                        @click="showBillingChangeModalAction('credit', 'card')"
+                      >
+                        Card
+                      </button>
+                      <button
+                        type="button"
+                        class="payment-method-button w-16 h-9 text-white bg-[#FFC003] m-0 rounded-r-full"
+                        @click="showBillingChangeModalAction('card', 'credit')"
+                      >
+                        Credit
+                      </button>
+                    </div>
+                  </td>
+                  <td>
+                    <p class="">
+                      Credit card number
+                      <span class="text-paperdazgreen-300"
+                        >**** **** ****
+                        {{
+                          (card.card_number || '').substring(
+                            (card.card_number || '').length - 4
+                          )
+                        }}</span
+                      >
+                      <br />Expiration date:
+                      <span class="text-paperdazgreen-300"
+                        >{{ card.exp_month }}/{{ card.exp_year }}</span
+                      >
+                    </p>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -231,6 +262,12 @@
       @success="$fetch"
       v-model="showUpdateBillingInfoModal"
     />
+    <change-payment-method-modal
+      v-model="showBillingChangeModal"
+      :from="billingFrom"
+      :to="billingTo"
+    />
+    <insufficient-credit-modal v-model="showInsufficientCreditModal" />
   </section>
 </template>
 
@@ -238,8 +275,10 @@
 import Vue from 'vue'
 import AdditionalFeatureModal from '~/components/packages/modals/AdditionalFeatureModal.vue'
 import CancelPackageSubscriptionModal from '~/components/packages/modals/CancelPackageSubscriptionModal.vue'
+import ChangePaymentMethodModal from '~/components/packages/modals/ChangePaymentMethodModal.vue'
 import DeleteAdditionalFeaturesModal from '~/components/packages/modals/DeleteAdditionalFeaturesModal.vue'
 import DeleteBillingInformationModal from '~/components/packages/modals/DeleteBillingInformationModal.vue'
+import InsufficientCreditModal from '~/components/packages/modals/InsufficientCreditModal.vue'
 import UpdateBillingInformationModal from '~/components/packages/modals/UpdateBillingInformationModal.vue'
 import SpinnerDottedIcon from '~/components/svg-icons/SpinnerDottedIcon.vue'
 import TrashCanIcon from '~/components/svg-icons/TrashCanIcon.vue'
@@ -255,6 +294,8 @@ export default Vue.extend({
     DeleteBillingInformationModal,
     UpdateBillingInformationModal,
     SpinnerDottedIcon,
+    ChangePaymentMethodModal,
+    InsufficientCreditModal,
   },
   async fetch() {
     const fetchCard = () =>
@@ -287,6 +328,10 @@ export default Vue.extend({
   },
   data() {
     return {
+      showInsufficientCreditModal: false,
+      showBillingChangeModal: false,
+      billingFrom: '',
+      billingTo: '',
       showAdditionalFeatureModal: false,
       showDeleteFeatureModal: false,
       showCancelSubscriptionModal: false,
@@ -307,6 +352,13 @@ export default Vue.extend({
       return (
         this.additionalFeature && Object.keys(this.additionalFeature).length > 0
       )
+    },
+  },
+  methods: {
+    showBillingChangeModalAction(from: string, to: string) {
+      this.billingFrom = from
+      this.billingTo = to
+      this.showBillingChangeModal = true
     },
   },
 })
@@ -348,5 +400,9 @@ export default Vue.extend({
   &.cancel {
     @apply bg-transparent border border-red-600 text-red-600;
   }
+}
+
+.payment-method-button.active {
+  box-shadow: inset 0px 5px 5px rgba(0, 0, 0, 0.25);
 }
 </style>

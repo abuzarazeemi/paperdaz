@@ -1,6 +1,14 @@
 <template>
   <section>
     <div
+      class="bg-[#FF5252] text-white text-base px-6 py-2 flex items-center"
+      v-if="!isCreator && isConfirm"
+    >
+      <exclamation-icon class="text-white mr-2" />
+      Please scroll to the end of file to confirm that you have read this file
+    </div>
+    <div
+      v-else
       class="flex flex-wrap items-center justify-between bg-[#E8EAEC] py-2 w-full gap-x-1 gap-y-2 px-6 text-[#757575] text-base sm:text-2xl"
     >
       <button @click="setSelectedType(TOOL_TYPE.text)" v-if="isComplete">
@@ -50,9 +58,9 @@
         <star-icon />
       </button>
       <button
-        v-if="isComplete"
+        v-if="isComplete || isSign"
         @click="onSignClick"
-        class="inline-flex items-center gap-2 bg-paperdazgreen-300 py-1 pr-1 pl-2 text-white text-sm"
+        class="cursor-pointer inline-flex items-center gap-2 bg-paperdazgreen-300 py-1 pr-1 pl-2 text-white text-sm"
       >
         Sign
         <span
@@ -73,9 +81,9 @@
       </button>
 
       <button
-        v-if="isComplete"
-        class="inline-flex items-center gap-2 bg-paperdazgreen-300 py-1 pr-1 pl-2 tool-item text-white text-sm"
-        @click="setSelectedType(TOOL_TYPE.initial)"
+        v-if="isComplete || isSign"
+        class="cursor-pointer inline-flex items-center gap-2 bg-paperdazgreen-300 py-1 pr-1 pl-2 tool-item text-white text-sm"
+        @click="onInitialsClick"
       >
         Initial
         <span
@@ -108,16 +116,26 @@
       <button @click="$emit('undo')" class="text-sm">UNDO</button>
     </div>
 
-    <pdf-signature-modal
+    <draw-or-type-modal
       v-model="showSignatureModal"
-      v-if="showSignatureModal"
+      :src="$auth.user.signature"
+      @image-exported="imageExportedLocal($event, true)"
+      use-default-button
+    />
+    <draw-or-type-modal
+      v-model="showInitialsModal"
+      :src="$auth.user.initials"
+      @image-exported="imageExportedLocal($event, false)"
+      use-default-button
     />
   </section>
 </template>
 
 <script>
-import PdfSignatureModal from '../modals/PdfSignatureModal.vue'
+import SaveSignatureInitialsMixin from '~/mixins/SaveSignatureInitialsMixin'
+import DrawOrTypeModal from '../modals/DrawOrTypeModal.vue'
 import CalendarIcon from '../svg-icons/CalendarIcon.vue'
+import ExclamationIcon from '../svg-icons/ExclamationIcon.vue'
 import HollowCircleIcon from '../svg-icons/HollowCircleIcon.vue'
 import PdfHighlightToolIcon from '../svg-icons/PdfHighlightToolIcon.vue'
 import PdfPenToolIcon from '../svg-icons/PdfPenToolIcon.vue'
@@ -131,7 +149,7 @@ import UserProfileSolidIcon from '../svg-icons/UserProfileSolidIcon.vue'
 import TOOL_TYPE from './data/toolType'
 export default {
   components: {
-    PdfSignatureModal,
+    DrawOrTypeModal,
     PdfTextToolIcon,
     PdfTickIcon,
     PdfTimesIcon,
@@ -143,13 +161,16 @@ export default {
     CalendarIcon,
     UserProfileSolidIcon,
     StarIcon,
+    ExclamationIcon,
   },
+  mixins: [SaveSignatureInitialsMixin],
   data: () => ({
     selectedType: null,
 
     components: { PdfTextToolIcon },
     signaturePad: false,
     showSignatureModal: false,
+    showInitialsModal: false,
   }),
   props: {
     file: {
@@ -179,6 +200,13 @@ export default {
     },
   },
   methods: {
+    imageExportedLocal(image, isSignature) {
+      this.$BUS.$emit(
+        isSignature ? 'signature-update' : 'initials-update',
+        image
+      )
+      this.imageExported(image, isSignature)
+    },
     setSelectedType(type) {
       if (this.selectedType == type) this.selectedType = null
       else this.selectedType = type
@@ -190,6 +218,10 @@ export default {
     onSignClick() {
       this.showSignatureModal = true
       this.setSelectedType(this.TOOL_TYPE.signature)
+    },
+    onInitialsClick() {
+      this.showInitialsModal = true
+      this.setSelectedType(this.TOOL_TYPE.initial)
     },
   },
 }

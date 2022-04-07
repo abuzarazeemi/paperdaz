@@ -2,7 +2,9 @@
 import { GetterTree, ActionTree, MutationTree } from 'vuex'
 import UserTypeEnum from '~/models/UserTypeEnum'
 
-export const state = () => ({})
+export const state = () => ({
+  pageName: '',
+})
 
 export type RootState = ReturnType<typeof state>
 
@@ -40,6 +42,10 @@ export const getters: GetterTree<RootState, RootState> = {
   },
 }
 
-export const mutations: MutationTree<RootState> = {}
+export const mutations: MutationTree<RootState> = {
+  SET_PAGE_NAME(state, { name }: { name: string }) {
+    state.pageName = name
+  },
+}
 
 export const actions: ActionTree<RootState, RootState> = {}

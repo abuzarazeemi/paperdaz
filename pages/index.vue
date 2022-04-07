@@ -1,6 +1,8 @@
 <template>
   <div class="">
-    <div class="bg-gradient-to-t from-white via-transparent">
+    <div
+      class="bg-gradient-to-t from-white via-transparent min-h-[80vh] grid place-items-center"
+    >
       <hero-page />
     </div>
     <landing-page-info />
@@ -29,6 +31,10 @@ import LandingPageUpload from '~/components/landing/widgets/LandingPageUpload.vu
     LandingPageUpload,
     LandingPageKeyFeatures,
     LandingJoinSection,
+  },
+  beforeRouteLeave(to, from, next) {
+    location.href = to.fullPath
+    return
   },
 })
 export default class LandingPage extends Vue {
@@ -60,6 +66,11 @@ export default class LandingPage extends Vue {
           callback: () => {
             this.motionPluginLoaded = true
           },
+        },
+        {
+          hid: 'tawk.to',
+          src: 'https://embed.tawk.to/61ee08389bd1f31184d8e4d8/1fq4t07bg',
+          defer: true,
         },
       ],
     }

@@ -10,16 +10,17 @@
           </h1>
           <p class="my-9 font-medium text-sm">
             Keeping everyone safe and the world green by using Less paper
-            <nuxt-link to="#" class="text-paperdazgreen-500"
+            <nuxt-link to="/about" class="text-paperdazgreen-500"
               >Learn More</nuxt-link
             >
           </p>
           <div>
-            <button
-              class="font-semibold text-[13px] text-white bg-paperdazgreen-300 shadow-md h-10 rounded-md px-5 w-full mb-8 sm:mb-0 sm:w-[unset]"
+            <nuxt-link
+              to="/register"
+              class="font-semibold text-[13px] text-white bg-paperdazgreen-300 shadow-md h-10 inline-flex items-center justify-center rounded-md px-5 w-full mb-8 sm:mb-0 sm:w-[unset]"
             >
               Try Paperdaz for free
-            </button>
+            </nuxt-link>
           </div>
         </div>
       </div>

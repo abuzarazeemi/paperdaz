@@ -1,126 +1,93 @@
 <template>
   <div class="flex-1 rounded-3xl bg-white py-6 px-8">
     <!-- Start:: Signature section -->
-    <section class="mb-12">
-      <!-- <div class="flex justify-between items-center mb-4"> -->
-      <!-- <h3 class="text-[#524D5B] font-medium text-2xl flex items-center gap-3">
-          Signature <exclamation-icon class="text-paperdazgreen-300 w-4 h-4" />
-        </h3> -->
-      <!-- <div class="flex">
-          <button class="action-button primary mr-3">Save</button>
-          <button class="action-button danger">Cancel</button>
-        </div> -->
-      <!-- </div> -->
+    <section class="mb-16">
       <h3
         class="flex justify-center text-paperdazgreen-300 border-b-2 border-paperdazgreen-300 font-semibold text-2xl gap-2 pb-2 relative mb-7"
       >
         <span class="flex items-center gap-3"
           >Signature <exclamation-icon class="text-paperdazgreen-300 w-4 h-4"
         /></span>
-        <!-- <pen-icon
-            class="absolute right-0 top-1/2 transform -translate-y-1/2"
-          /> -->
-        <button
-          class="action-button action-button-sm primary mr-3 absolute right-0 top-1/2 transform -translate-y-1/2"
-        >
-          Edit
-        </button>
       </h3>
-      <div class="canvas-container">
-        <canvas class="border h-56 border-[#C4C4C4] w-full rounded"></canvas>
+      <div
+        class="border h-56 border-[#C4C4C4] rounded w-full bg-white flex flex-col justify-center items-center overflow-hidden p-4"
+      >
+        <div class="mb-4 text-gray-600 cursor-not-allowed">
+          <img :src="require(`~/assets/img/Sign.png`)" width="72" height="72" />
+        </div>
+        <button
+          @click="showSignature"
+          class="text-white rounded shadow bg-paperdazgreen-400 px-5 h-10 text-sm"
+        >
+          {{ !$auth.user.signature ? 'Create' : 'View / Update' }}
+        </button>
       </div>
     </section>
     <!-- End:: Signature section -->
 
     <!-- Start:: Initials section -->
     <section>
-      <!-- <div class="flex justify-between items-center mb-4">
-        <h3 class="text-[#524D5B] font-medium text-2xl flex items-center gap-3">
-          Initials <exclamation-icon class="text-paperdazgreen-300 w-4 h-4" />
-        </h3>
-        <div class="flex">
-          <button class="action-button primary mr-3">Save</button>
-          <button class="action-button danger">Cancel</button>
-        </div>
-      </div> -->
       <h3
         class="flex justify-center text-paperdazgreen-300 border-b-2 border-paperdazgreen-300 font-semibold text-2xl gap-2 pb-2 relative mb-7"
       >
         <span class="flex items-center gap-3"
           >Initials <exclamation-icon class="text-paperdazgreen-300 w-4 h-4"
         /></span>
-        <!-- <pen-icon
-            class="absolute right-0 top-1/2 transform -translate-y-1/2"
-          /> -->
-        <button
-          class="action-button action-button-sm primary mr-3 absolute right-0 top-1/2 transform -translate-y-1/2"
-        >
-          Edit
-        </button>
       </h3>
-      <div class="canvas-container">
-        <canvas class="border h-56 border-[#C4C4C4] w-full rounded"></canvas>
+      <div
+        class="border h-56 border-[#C4C4C4] rounded w-full bg-white flex flex-col justify-center items-center overflow-hidden p-4"
+      >
+        <div class="mb-4 text-gray-600 cursor-not-allowed">
+          <img
+            :src="require(`~/assets/img/Initials.png`)"
+            width="72"
+            height="72"
+          />
+        </div>
+        <button
+          @click="showInitial"
+          class="text-white rounded shadow bg-paperdazgreen-400 px-5 h-10 text-sm"
+        >
+          {{ !$auth.user.initials ? 'Create' : 'View / Update' }}
+        </button>
       </div>
     </section>
     <!-- End:: Initials section -->
+
+    <draw-or-type-modal
+      v-model="showSignatureModal"
+      :src="usingSignature ? $auth.user.signature : $auth.user.initials"
+      @image-exported="imageExportedLocal($event)"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import SignaturePad from 'signature_pad'
 import ExclamationIcon from '~/components/svg-icons/ExclamationIcon.vue'
+import DrawOrTypeModal from '~/components/modals/DrawOrTypeModal.vue'
+import mixins from 'vue-typed-mixins'
+import SaveSignatureInitialsMixin from '~/mixins/SaveSignatureInitialsMixin'
 
-export default Vue.extend({
+export default mixins(SaveSignatureInitialsMixin).extend({
   name: 'SignatureInitialsTab',
-  components: { ExclamationIcon },
+  components: { ExclamationIcon, DrawOrTypeModal },
   data() {
     return {
-      signatureCanvas: undefined as undefined | any,
-      initialsCanvas: undefined as undefined | any,
+      showSignatureModal: false,
+      usingSignature: true,
     }
   },
-  computed: {
-    functionalCanvases(): Array<any> {
-      return [this.signatureCanvas, this.initialsCanvas]
-    },
-  },
-  mounted() {
-    this.setupCanvases()
-  },
   methods: {
-    setupCanvases() {
-      const canvasContainers = document.querySelectorAll('.canvas-container')
-      canvasContainers.forEach((canvasContainer, index) => {
-        const canvas = canvasContainer.querySelector(
-          'canvas'
-        ) as HTMLCanvasElement
-
-        if (!canvas) return
-
-        let currentSignaturePad = this.functionalCanvases[index]
-
-        currentSignaturePad = new SignaturePad(canvas)
-      })
-
-      window.addEventListener('resize', this.resizeCanvas)
-      this.resizeCanvas()
+    showSignature() {
+      this.usingSignature = true
+      this.showSignatureModal = true
     },
-    resizeCanvas() {
-      const ratio = Math.max(window.devicePixelRatio || 1, 1)
-      const canvasContainers = document.querySelectorAll('.canvas-container')
-      canvasContainers.forEach((canvasContainer) => {
-        const canvas = canvasContainer.querySelector(
-          'canvas'
-        ) as HTMLCanvasElement
-
-        if (!canvas) return
-
-        canvas.width = canvas.offsetWidth * ratio
-        canvas.height = canvas.offsetHeight * ratio
-        // @ts-ignore
-        canvas.getContext('2d').scale(ratio, ratio)
-      })
+    showInitial() {
+      this.usingSignature = false
+      this.showSignatureModal = true
+    },
+    imageExportedLocal(image: any) {
+      this.imageExported(image, this.usingSignature)
     },
   },
 })

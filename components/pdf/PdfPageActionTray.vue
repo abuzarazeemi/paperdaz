@@ -3,7 +3,11 @@
     <div
       class="flex items-center gap-4 flex-1 justify-between max-w-4xl px-4 text-sm"
     >
-      <span v-if="!isCreator" class="capitalize">{{ file.action }}</span>
+      <!-- If authenticated user is created -->
+      <span v-if="!isCreator" class="capitalize font-medium">{{
+        file.action
+      }}</span>
+      <!-- else -->
       <el-dropdown
         v-else
         trigger="click"
@@ -30,14 +34,20 @@
         </el-dropdown-menu>
       </el-dropdown>
 
-      <el-dropdown trigger="click" class="font-medium">
+      <!-- If authenticated user is created -->
+      <span v-if="!isCreator" class="capitalize font-medium">{{ access }}</span>
+      <el-dropdown
+        v-else
+        trigger="click"
+        class="font-medium"
+        @command="handleAccessChange"
+      >
         <span class="el-dropdown-link">
-          Private <i class="el-icon-arrow-down el-icon--right"></i>
+          {{ access }} <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>Private</el-dropdown-item>
-          <el-dropdown-item>Public</el-dropdown-item>
-          <el-dropdown-item>Do not Post</el-dropdown-item>
+          <el-dropdown-item command="private">Private</el-dropdown-item>
+          <el-dropdown-item command="public">Public</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
       <!-- <div
@@ -75,7 +85,7 @@
               Save
             </button>
           </el-dropdown-item>
-          <el-dropdown-item command="save">
+          <el-dropdown-item>
             <button
               class="px-2 w-[130px] rounded flex items-center justify-center bg-gray-600 py-1.5 text-white"
             >
@@ -116,6 +126,7 @@
 
     <div class="lg:flex items-center hidden">
       <button
+        @click="saveChanges"
         class="mr-2 text-xs text-white bg-paperdazgreen-400 rounded px-5 h-7"
       >
         Save
@@ -129,6 +140,7 @@
     <pdf-request-modal :file="file" v-model="showRequestModal" />
     <pdf-c-c-flow-modal :file="file" v-model="showCCFlowModal" />
     <pdf-papertags-modal :file="file" v-model="showPapertagsModal" />
+    <save-pdf-modal :file="file" v-model="showSaveModal" />
   </div>
 </template>
 
@@ -145,6 +157,7 @@ import TrashCanIcon from '../svg-icons/TrashCanIcon.vue'
 import PdfShareModal from './modals/PdfShareModal.vue'
 import PdfCCFlowModal from './modals/PdfCCFlowModal.vue'
 import PdfPapertagsModal from './modals/PdfPapertagsModal.vue'
+import SavePdfModal from './modals/SavePdfModal.vue'
 
 export default Vue.extend({
   components: {
@@ -158,6 +171,7 @@ export default Vue.extend({
     PdfShareModal,
     PdfCCFlowModal,
     PdfPapertagsModal,
+    SavePdfModal,
   },
   name: 'PdfPageActionTray',
   props: {
@@ -168,19 +182,23 @@ export default Vue.extend({
   },
   data() {
     return {
-      showShareModal: false,
-      showRequestModal: false,
-      showCCFlowModal: false,
-      showPapertagsModal: false,
+      showShareModal: false as boolean,
+      showRequestModal: false as boolean,
+      showCCFlowModal: false as boolean,
+      showPapertagsModal: false as boolean,
+      showSaveModal: false as boolean,
     }
   },
   computed: {
-    isCreator() {
+    isCreator(): boolean {
       try {
         return this.file.user.id === this.$auth.user?.id
       } catch (e) {
         return false
       }
+    },
+    access(): string {
+      return this.file.isPrivate ? 'Private' : 'Public'
     },
   },
   methods: {
@@ -189,10 +207,17 @@ export default Vue.extend({
       fileTemp.action = command
       this.$emit('update-file', fileTemp)
     },
+    handleAccessChange(command: string) {
+      const fileTemp = { ...this.file }
+      fileTemp.isPrivate = String(command).toLowerCase() === 'private'
+      this.$emit('update-file', fileTemp)
+    },
     handleCommand(command: string) {
       switch (String(command).toLowerCase()) {
+        case 'save':
+          this.saveChanges()
+          break
         case 'share':
-          // @ts-ignore
           this.showShareModal = true
           break
         case 'request':
@@ -208,6 +233,9 @@ export default Vue.extend({
           this.showPapertagsModal = true
           break
       }
+    },
+    saveChanges() {
+      this.showSaveModal = true
     },
   },
 })

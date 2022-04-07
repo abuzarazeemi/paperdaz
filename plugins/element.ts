@@ -11,6 +11,7 @@ import {
   Select,
   Option,
   DatePicker,
+  Loading,
 } from 'element-ui'
 // @ts-ignore
 import lang from 'element-ui/lib/locale/lang/en'
@@ -62,6 +63,7 @@ const myPlugin: Plugin = (context, inject) => {
   Vue.use(Select)
   Vue.use(DatePicker)
   Vue.use(Option)
+  Vue.use(Loading)
   inject('notify', Notification)
 }
 

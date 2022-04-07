@@ -14,10 +14,9 @@ import AccountTab from '~/components/settings/tabs/AccountTab.vue'
 import ChangePasswordTab from '~/components/settings/tabs/ChangePasswordTab.vue'
 import SignatureInitialsTab from '~/components/settings/tabs/SignatureInitialsTab.vue'
 import NotificationsTab from '~/components/settings/tabs/NotificationsTab.vue'
+import BillingTab from '~/components/settings/tabs/BillingTab.vue'
 import UserTypeEnum from '~/models/UserTypeEnum'
-const BillingTab = () => import('~/components/settings/tabs/BillingTab.vue')
-// const YourProductsTab = () =>
-//   import('~/components/settings/tabs/YourProductsTab.vue')
+import ReferralTabVue from '~/components/settings/tabs/ReferralTab.vue'
 
 export default Vue.extend({
   name: 'SettingsPage',
@@ -25,26 +24,26 @@ export default Vue.extend({
   layout: 'dashboard',
   data() {
     return {
-      currentTab: 'billing',
+      currentTab: 'account',
       tabs: [
-        { label: 'Account', value: 'account', component: AccountTab },
+        { label: 'Profile Info', value: 'account', component: AccountTab },
         { label: 'Security', value: 'security', component: ChangePasswordTab },
         {
-          label: 'Signature/Initials',
-          value: 'signature-initials',
-          component: SignatureInitialsTab,
+          label: 'Referral Credit',
+          value: 'referral-credit',
+          component: ReferralTabVue,
         },
         // {
-        //   label: 'Your Proucts',
-        //   value: 'your-products',
-        //   component: YourProductsTab,
+        //   label: 'Signature/Initials',
+        //   value: 'signature-initials',
+        //   component: SignatureInitialsTab,
         // },
         {
           label: 'Notifications',
           value: 'notifications',
           component: NotificationsTab,
         },
-      ] as Array<{ [key: string]: any }>,
+      ],
     }
   },
   beforeMount() {
@@ -53,6 +52,12 @@ export default Vue.extend({
         label: 'Billing',
         value: 'billing',
         component: BillingTab,
+      })
+    } else if (this.$store.getters.userType === UserTypeEnum.FREE) {
+      this.tabs.splice(3, 0, {
+        label: 'Signature/Initials',
+        value: 'signature-initials',
+        component: SignatureInitialsTab,
       })
     }
   },

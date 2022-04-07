@@ -1,11 +1,12 @@
 <template>
-  <div class="bg-white p-6 rounded-2xl">
+  <div class="bg-white p-6 rounded-2xl border border-paperdazgreen-400">
     <h3
       class="flex justify-center text-paperdazgreen-300 border-b-2 border-paperdazgreen-300 font-semibold text-2xl gap-2 pb-1 relative mb-7"
     >
       <span>{{ headerText }}</span>
       <button
         @click="editingDetails = !editingDetails"
+        type="button"
         class="absolute right-0 top-1/2 transform -translate-y-1/2 px-2 py-1"
       >
         <pen-icon v-show="!editingDetails" />
