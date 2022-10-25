@@ -327,6 +327,68 @@
           </div>
         </div>
       </div>
+      <div class="payment-info-section">
+        <div class="container">
+          <div class="form-header-outer">
+            <div class="bg-line"></div>
+            <div class="form-header">
+              <div class="step">
+                <div class="icon-box">
+                  <i class="fa-sharp fa-solid fa-check"></i>
+                </div>
+                <h6>1. Select Package</h6>
+              </div>
+              <div class="step">
+                <div class="icon-box"><i class="fa-solid fa-envelope"></i></div>
+                <h6>2. Verify Email</h6>
+              </div>
+              <div class="step">
+                <div class="icon-box">
+                  <i class="fa-solid fa-dollar-sign"></i>
+                </div>
+                <h6>3. Payment</h6>
+              </div>
+            </div>
+          </div>
+          <div class="payment-form">
+            <div class="payemnt-form-card">
+              <div class="banner">
+                <img src="assets/images/pay.png" alt="">
+              </div>
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label for="">Name of card holder</label>
+                    <input type="text" class="form-control" placeholder="Name Surname">
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label for="">Card Number</label>
+                    <input type="text" class="form-control" placeholder="0000-0000-0000-0000">
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="">Expiration Date</label>
+                    <input type="date" class="form-control" placeholder="Name Surname">
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="">CVV</label>
+                    <input type="text" class="form-control" placeholder="000">
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <button class="btn btn-light register-btn">Pay via Stripe</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </template>
