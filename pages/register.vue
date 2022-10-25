@@ -1,7 +1,7 @@
 <template>
   <section class="bg-gradient-to-t from-white to-transparent">
     <div class="container py-20">
-      <div
+      <!-- <div
         class="w-full max-w-md mx-auto bg-white shadow-2xl rounded-xl px-6 py-10"
       >
         <h4 class="text-lg font-medium mb-8 text-center">
@@ -41,7 +41,7 @@
           </message-alert-widget>
           <div class="mb-6">
             <label for="" class="mb-2 block">First Name</label>
-            <input-field
+             class="form-control"<input-field
               v-model="user.firstName"
               required
               :disabled="isLoading || isRedirecting"
@@ -51,7 +51,7 @@
           </div>
           <div class="mb-6">
             <label for="" class="mb-2 block">Last Name</label>
-            <input-field
+             class="form-control"<input-field
               v-model="user.lastName"
               :disabled="isLoading || isRedirecting"
               required
@@ -61,7 +61,7 @@
           </div>
           <div class="mb-6">
             <label for="" class="mb-2 block">Email</label>
-            <input-field
+             class="form-control"<input-field
               v-model="user.email"
               :disabled="isLoading || isRedirecting"
               required
@@ -106,7 +106,7 @@
             <div
               class="text-paperdazgray-400 font-medium flex items-center gap-2"
             >
-              <input id="remember-me-checkbox" type="checkbox" hidden />
+            class="form-control"   <input id="remember-me-checkbox" type="checkbox" hidden />
               <label
                 for="remember-me-checkbox"
                 class="cursor-pointer circle circle-8 text-white relative"
@@ -151,6 +151,181 @@
             >
           </div>
         </form>
+      </div> -->
+      <div class="signup-section">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="left-form">
+                <div class="signup-form">
+                  <h1>Create your free account</h1>
+                  <div class="social-btns">
+                    <button class="btn btn-light">
+                      <i class="fa-brands fa-facebook"></i>Facebook
+                    </button>
+                    <button class="btn btn-light">
+                      <i class="fa-brands fa-google"></i>Google
+                    </button>
+                    <button class="btn btn-light">
+                      <i class="fa-brands fa-twitter"></i>Twitter
+                    </button>
+                  </div>
+                  <div class="or-line">
+                    <div class="text">Or</div>
+                    <div class="line"></div>
+                  </div>
+                  <div class="form">
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <input type="text" placeholder="First name" class="form-control" />
+                      </div>
+                      <div class="col-lg-6">
+                        <input type="text" placeholder="Last name" class="form-control" />
+                      </div>
+                      <div class="col-lg-12">
+                        <input type="text" placeholder="Email address" class="form-control" />
+                      </div>
+                      <div class="col-lg-12">
+                        <button class="btn btn-success next-btn">Next ></button>
+                      </div>
+                      <div class="col-lg-12">
+                        <p>
+                          We’re committed to your privacy. Paperdaz uses the
+                          information you provide to us to you about our relevant
+                          content, products, and services. You may unsubcribe from
+                          these communications at any time. For more information,
+                          check out our <a href="#"> Privacy Policy</a>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="right-image">
+                <img src="../static/card.png" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="payment-info-section">
+        <div class="container">
+          <div class="form-header-outer">
+            <div class="bg-line"></div>
+            <div class="form-header">
+              <div class="step">
+                <div class="icon-box">
+                  <i class="fa-sharp fa-solid fa-check"></i>
+                </div>
+                <h6>1. Select Package</h6>
+              </div>
+              <div class="step">
+                <div class="icon-box"><i class="fa-solid fa-envelope"></i></div>
+                <h6>2. Verify Email</h6>
+              </div>
+              <div class="step">
+                <div class="icon-box">
+                  <i class="fa-solid fa-dollar-sign"></i>
+                </div>
+                <h6>3. Payment</h6>
+              </div>
+            </div>
+          </div>
+          <div class="payment-form">
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="payment-card">
+                  <div class="heading">
+                    <h6>Professional</h6>
+                    <img class="badge2" src="../static/Polyg.png" alt="" />
+                  </div>
+                  <div class="price">
+                    <sub>$</sub>
+                    <h1>19</h1>
+                    <sub>/mo</sub>
+                  </div>
+                  <div class="check-rows">
+                    <h6><i class="fa-solid fa-check"></i>35 Paperlinks</h6>
+                    <h6><i class="fa-solid fa-check"></i>3 Team Member</h6>
+                    <h6><i class="fa-solid fa-check"></i>4 CC Flow</h6>
+                    <h6><i class="fa-solid fa-check"></i>Public Profile</h6>
+                    <h6><i class="fa-solid fa-check"></i>Company Ledger</h6>
+                  </div>
+                  <div class="btn-row">
+                    <button class="btn btn-success">Start Now</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-8">
+                <div class="payment-form">
+                  <div class="hook-row">
+                    <div class="info">
+                      Create business hook<i class="fa-solid fa-circle-info"></i>
+                    </div>
+                    <input type="text" class="form-control" />
+                  </div>
+                  <div class="sub-heading">Credit Card</div>
+                  <div class="form">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="form-group">
+                          <label for="">Email</label>
+                          <input type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-lg-12">
+                        <div class="form-group">
+                          <label for="">Card Information</label>
+                          <input type="text" class="form-control" placeholder="1234 1234 1234 1234" />
+                        </div>
+                        <br />
+                      </div>
+                      <div class="col-6">
+                        <div class="form-group">
+                          <input class="form-control" placeholder="MM/YY" />
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-group">
+                          <input class="form-control" placeholder="CVC" />
+                        </div>
+                      </div>
+                      <div class="col-lg-12">
+                        <div class="form-group">
+                          <label for="">Name on card</label>
+                          <input type="text" class="form-control" placeholder="1234 1234 1234 1234" />
+                        </div>
+                      </div>
+                      <div class="col-lg-12">
+                        <div class="form-group">
+                          <label for="">Country or region</label>
+                          <select name="" class="form-control" id="">
+                            <option value="">United States</option>
+                            <option value="">United States</option>
+                            <option value="">United States</option>
+                          </select>
+                        </div>
+                        <br />
+                      </div>
+                      <div class="col-lg-12">
+                        <div>
+                          <input class="form-control" placeholder="ZIP" />
+                        </div>
+                      </div>
+                      <div class="col-lg-12">
+                        <button class="btn btn-light register-btn">
+                          Pay {$ amount}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>

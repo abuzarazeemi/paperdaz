@@ -29,7 +29,17 @@ export default {
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
     ],
-    link: [{ rel: 'icon', type: 'image/png', href: '/icon.png' }],
+    link: [
+      { rel: 'icon', type: 'image/png', href: '/icon.png' },
+      // { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js' },
+      { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css' },
+      { rel: 'stylesheet', href: 'https://site-assets.fontawesome.com/releases/v6.1.1/css/all.css' },
+    ],
+    script: [
+      {
+        src: "https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js",
+      },
+    ],
   },
 
   router: {

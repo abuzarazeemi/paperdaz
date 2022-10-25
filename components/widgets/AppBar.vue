@@ -21,7 +21,7 @@
         </nuxt-link>
       </div>
       <div
-        class="transition left-0 transform text-sm font-medium gap-4 fixed top-0 bottom-0 w-56 bg-white flex flex-col p-6 shadow-lg lg:shadow-none lg:items-center lg:gap-9 lg:p-0 lg:relative lg:bg-transparent lg:w-auto lg:flex-row lg:translate-x-0"
+        class="transition left-0 transform text-sm font-medium gap-4 fixed top-0 bottom-0 w-56  flex flex-col p-6  lg:shadow-none lg:items-center lg:gap-9 lg:p-0 lg:relative lg:bg-transparent lg:w-auto lg:flex-row lg:translate-x-0"
         :class="[collapsed ? 'translate-x-0' : '-translate-x-56']"
       >
         <div class="flex justify-end lg:hidden">

@@ -82,17 +82,18 @@ export default Vue.extend({
     return
   },
   async asyncData({ $axios, error }) {
-    const packages = await $axios
-      .$get('/package')
-      .then((response) => {
-        return response.data
-      })
-      .catch((err) => {
-        error({
-          statusCode: 404,
-          message: err.message || 'Unable to fetch the data',
-        })
-      })
+    const packages = {}
+    // const packages = await $axios
+    //   .$get('/package')
+    //   .then((response) => {
+    //     return response.data
+    //   })
+    //   .catch((err) => {
+    //     error({
+    //       statusCode: 404,
+    //       message: err.message || 'Unable to fetch the data',
+    //     })
+    //   })
 
     return { packages }
   },

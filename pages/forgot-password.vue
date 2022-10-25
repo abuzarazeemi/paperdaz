@@ -1,7 +1,7 @@
 <template>
   <section class="bg-gradient-to-t from-white to-transparent">
     <div class="container py-20">
-      <div
+      <!-- <div
         class="w-full max-w-md mx-auto bg-white shadow-2xl rounded-xl px-6 py-10"
       >
         <h4 class="text-lg font-medium mb-2">Reset Your Password</h4>
@@ -33,7 +33,6 @@
           <p class="text-xs text-paperdazgreen-400 mb-10">
             Enter the email associated with your account
           </p>
-          <!-- <recaptcha /> -->
 
           <div class="flex flex-col items-center">
             <button
@@ -52,6 +51,37 @@
             </button>
           </div>
         </form>
+      </div> -->
+      <div class="reset-pass-section">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="left-form">
+                <div class="form form-outer">
+                  <div class="heading">
+                    <h1>Welcome Back!</h1>
+                    <h3>{UserName}</h3>
+                  </div>
+                  <h6>Create a password</h6>
+                  <div class="form-group">
+                    <label for="">New password</label>
+                    <input class="form-control" placeholder="Password" />
+                  </div>
+                  <div class="form-group">
+                    <label for="">Retype new password</label>
+                    <input class="form-control" placeholder="Password" />
+                  </div>
+                  <button class="btn btn-light register-btn">Register</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="right-image">
+                <img src="../static/card2.png" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>

@@ -157,4 +157,5 @@ export default Vue.extend({
     min-width: calc(100% / 3 - calc(12px * 4) / 1.5);
   }
 }
+}
 </style>
